@@ -1,0 +1,33 @@
+<h4 mat-dialog-title><span>Timeline</span></h4>
+<div mat-dialog-content>
+    <div class="content-wrapper">
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div *ngFor="let context of result" class="timeline">
+                  <div class="time-label">
+                    <span class="bg-red">{{context.date | date: "d-MMM-y"}}</span>
+                  </div>
+                  <div *ngFor="let t of context?.timeline">
+                    <i class="fa fa-envelope bg-blue"></i>
+                    <div class="timeline-item">
+                      <span class="time"><i class="fas fa-clock"></i> {{t.convertedTime}}</span>
+                      <h3 class="timeline-header">{{t.userName}}</h3>
+    
+                      <div class="timeline-body">
+                       {{t.notes}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </section>
+      </div>
+</div>
+      <div mat-dialog-actions style="float: right;">
+        <button mat-raised-button [mat-dialog-close]="1" class="clear-button back">Cancel</button>
+    </div>

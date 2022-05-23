@@ -1,0 +1,536 @@
+<div *ngIf="isSpinnerVisible" class="overlay">
+    <div class="overlay__wrapper">
+        <div class="overlay__spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</div>
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="col">
+                <p class="heading">Search Config</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Criteria</mat-label>
+                    <mat-select (selectionChange)="getSubCategories()" [(ngModel)]="criteria">
+                        <mat-option *ngFor="let x of criterias" [value]="x">{{x.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>User Type</mat-label>
+                    <mat-select (selectionChange)="getSubCategories()" [(ngModel)]="userType">
+                        <mat-option *ngFor="let x of userTypes" [value]="x">{{x}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <hr>
+        <div *ngIf="!isSpinnerVisible" class="row">
+            <div class="col">
+                <table [dataSource]="dataSource" class="table-margin w-100" mat-table>
+                    <ng-container matColumnDef="searchBy">
+                        <th *matHeaderCellDef mat-header-cell>Search By</th>
+                        <td *matCellDef="let element" mat-cell>{{element.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="lp">
+                        <th *matHeaderCellDef mat-header-cell>LP</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,1,element.data.LP.mapId)"
+                                              [checked]="element.data.LP.isActive === 1">
+                            </mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mp">
+                        <th *matHeaderCellDef mat-header-cell>MP</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,2,element.data.MP.mapId)"
+                                              [checked]="element.data.MP.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="gt">
+                        <th *matHeaderCellDef mat-header-cell>GT</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,3,element.data.GT.mapId)"
+                                              [checked]="element.data.GT.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nw">
+                        <th *matHeaderCellDef mat-header-cell>NW</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,4,element.data.NW.mapId)"
+                                              [checked]="element.data.NW.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fs">
+                        <th *matHeaderCellDef mat-header-cell>FS</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,5,element.data.FS.mapId)"
+                                              [checked]="element.data.FS.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nl">
+                        <th *matHeaderCellDef mat-header-cell>KZN</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,6,element.data.KZN.mapId)"
+                                              [checked]="element.data.KZN.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ec">
+                        <th *matHeaderCellDef mat-header-cell>EC</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,7,element.data.EC.mapId)"
+                                              [checked]="element.data.EC.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nc">
+                        <th *matHeaderCellDef mat-header-cell>NC</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,8,element.data.NC.mapId)"
+                                              [checked]="element.data.NC.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="wc">
+                        <th *matHeaderCellDef mat-header-cell>WC</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-slide-toggle (change)="toggleChange(element,$event,9,element.data.WC.mapId)"
+                                              [checked]="element.data.WC.isActive === 1"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- <div class="row" *ngIf="criteria.name === 'Parcel\nDescript\nion'">
+            <div class="col">
+                <table mat-table [dataSource]="parcelDataSource" class="table-margin w-100">
+                    <ng-container matColumnDef="searchBy">
+                        <th mat-header-cell *matHeaderCellDef>Search By</th>
+                        <td mat-cell *matCellDef="let element">{{element.searchBy}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="lp">
+                        <th mat-header-cell *matHeaderCellDef>LP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.lp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mp">
+                        <th mat-header-cell *matHeaderCellDef>MP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.mp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="gt">
+                        <th mat-header-cell *matHeaderCellDef>GT</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.gt === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nw">
+                        <th mat-header-cell *matHeaderCellDef>NW</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nw === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fs">
+                        <th mat-header-cell *matHeaderCellDef>FS</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.fs === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nl">
+                        <th mat-header-cell *matHeaderCellDef>NL</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nl === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ec">
+                        <th mat-header-cell *matHeaderCellDef>EC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.ec === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nc">
+                        <th mat-header-cell *matHeaderCellDef>NC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="wc">
+                        <th mat-header-cell *matHeaderCellDef>WC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.wc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="iUser">
+                        <th mat-header-cell *matHeaderCellDef>Internal User</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.iUser === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="pls">
+                        <th mat-header-cell *matHeaderCellDef>PLS/Architect</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.pls === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="other">
+                        <th mat-header-cell *matHeaderCellDef>Other</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.other === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="criteria.name === 'Free\nText'">
+            <div class="col">
+                <table mat-table [dataSource]="freeDataSource" class="table-margin w-100">
+                    <ng-container matColumnDef="searchBy">
+                        <th mat-header-cell *matHeaderCellDef>Search By</th>
+                        <td mat-cell *matCellDef="let element">{{element.searchBy}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="lp">
+                        <th mat-header-cell *matHeaderCellDef>LP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.lp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mp">
+                        <th mat-header-cell *matHeaderCellDef>MP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.mp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="gt">
+                        <th mat-header-cell *matHeaderCellDef>GT</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.gt === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nw">
+                        <th mat-header-cell *matHeaderCellDef>NW</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nw === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fs">
+                        <th mat-header-cell *matHeaderCellDef>FS</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.fs === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nl">
+                        <th mat-header-cell *matHeaderCellDef>NL</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nl === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ec">
+                        <th mat-header-cell *matHeaderCellDef>EC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.ec === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nc">
+                        <th mat-header-cell *matHeaderCellDef>NC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="wc">
+                        <th mat-header-cell *matHeaderCellDef>WC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.wc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="iUser">
+                        <th mat-header-cell *matHeaderCellDef>Internal User</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.iUser === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="pls">
+                        <th mat-header-cell *matHeaderCellDef>PLS/Architect</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.pls === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="other">
+                        <th mat-header-cell *matHeaderCellDef>Other</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.other === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="criteria.name === 'Section\nal Title\n'">
+            <div class="col">
+                <table mat-table [dataSource]="sectionDataSource" class="table-margin w-100">
+                    <ng-container matColumnDef="searchBy">
+                        <th mat-header-cell *matHeaderCellDef>Search By</th>
+                        <td mat-cell *matCellDef="let element">{{element.searchBy}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="lp">
+                        <th mat-header-cell *matHeaderCellDef>LP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.lp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mp">
+                        <th mat-header-cell *matHeaderCellDef>MP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.mp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="gt">
+                        <th mat-header-cell *matHeaderCellDef>GT</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.gt === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nw">
+                        <th mat-header-cell *matHeaderCellDef>NW</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nw === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fs">
+                        <th mat-header-cell *matHeaderCellDef>FS</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.fs === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nl">
+                        <th mat-header-cell *matHeaderCellDef>NL</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nl === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ec">
+                        <th mat-header-cell *matHeaderCellDef>EC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.ec === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nc">
+                        <th mat-header-cell *matHeaderCellDef>NC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="wc">
+                        <th mat-header-cell *matHeaderCellDef>WC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.wc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="iUser">
+                        <th mat-header-cell *matHeaderCellDef>Internal User</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.iUser === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="pls">
+                        <th mat-header-cell *matHeaderCellDef>PLS/Architect</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.pls === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="other">
+                        <th mat-header-cell *matHeaderCellDef>Other</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.other === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="criteria.name === 'NGI Data'">
+            <div class="col">
+                <table mat-table [dataSource]="ngiDataSource" class="table-margin w-100">
+                    <ng-container matColumnDef="searchBy">
+                        <th mat-header-cell *matHeaderCellDef>Search By</th>
+                        <td mat-cell *matCellDef="let element">{{element.searchBy}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="lp">
+                        <th mat-header-cell *matHeaderCellDef>LP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.lp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mp">
+                        <th mat-header-cell *matHeaderCellDef>MP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.mp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="gt">
+                        <th mat-header-cell *matHeaderCellDef>GT</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.gt === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nw">
+                        <th mat-header-cell *matHeaderCellDef>NW</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nw === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fs">
+                        <th mat-header-cell *matHeaderCellDef>FS</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.fs === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nl">
+                        <th mat-header-cell *matHeaderCellDef>NL</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nl === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ec">
+                        <th mat-header-cell *matHeaderCellDef>EC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.ec === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nc">
+                        <th mat-header-cell *matHeaderCellDef>NC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="wc">
+                        <th mat-header-cell *matHeaderCellDef>WC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.wc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="iUser">
+                        <th mat-header-cell *matHeaderCellDef>Internal User</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.iUser === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="pls">
+                        <th mat-header-cell *matHeaderCellDef>PLS/Architect</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.pls === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="other">
+                        <th mat-header-cell *matHeaderCellDef>Other</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.other === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="criteria.name === 'Data List  - Numeric Data'">
+            <div class="col">
+                <table mat-table [dataSource]="listDataSource" class="table-margin w-100">
+                    <ng-container matColumnDef="searchBy">
+                        <th mat-header-cell *matHeaderCellDef>Search By</th>
+                        <td mat-cell *matCellDef="let element">{{element.searchBy}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="lp">
+                        <th mat-header-cell *matHeaderCellDef>LP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.lp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mp">
+                        <th mat-header-cell *matHeaderCellDef>MP</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.mp === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="gt">
+                        <th mat-header-cell *matHeaderCellDef>GT</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.gt === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nw">
+                        <th mat-header-cell *matHeaderCellDef>NW</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nw === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="fs">
+                        <th mat-header-cell *matHeaderCellDef>FS</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.fs === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nl">
+                        <th mat-header-cell *matHeaderCellDef>NL</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nl === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ec">
+                        <th mat-header-cell *matHeaderCellDef>EC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.ec === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nc">
+                        <th mat-header-cell *matHeaderCellDef>NC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.nc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="wc">
+                        <th mat-header-cell *matHeaderCellDef>WC</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.wc === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="iUser">
+                        <th mat-header-cell *matHeaderCellDef>Internal User</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.iUser === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="pls">
+                        <th mat-header-cell *matHeaderCellDef>PLS/Architect</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.pls === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="other">
+                        <th mat-header-cell *matHeaderCellDef>Other</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [checked]="element.other === '1'"></mat-slide-toggle>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+                </table>
+            </div>
+        </div> -->
+    </mat-card-content>
+</mat-card>

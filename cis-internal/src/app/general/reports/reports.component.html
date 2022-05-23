@@ -1,0 +1,100 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <p class="heading">Reports</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  class="col">
+                            <form [formGroup]="reportForm">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Choose Module</mat-label>
+                                            <mat-select (selectionChange)="changeModule()" [(ngModel)]="module"
+                                                        formControlName="module">
+                                                <mat-option *ngFor="let x of modules" [value]="x">{{ x.caption }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>                 
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Choose Report</mat-label>
+                                            <mat-select [(ngModel)]="RID"
+                                                        formControlName="reportId">
+                                                        <mat-option *ngFor="let x of reportModules" [value]="x">{{ x.reportName }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div *ngIf="reportForm.valid" class="row">
+                                    <div class="col-lg-2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>From Date</mat-label>
+                                            <input [(ngModel)]="fromDate" [matDatepicker]="picker"
+                                                   formControlName="fromDate"
+                                                   matInput>
+                                            <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>To Date</mat-label>
+                                            <input [(ngModel)]="toDate" [matDatepicker]="picker1"
+                                                   formControlName="toDate"
+                                                   matInput>
+                                            <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>User Types</mat-label>
+                                            <mat-select multiple formControlName="userType">
+                                                <mat-option value="EXTERNAL">EXTERNAL</mat-option>
+                                                <mat-option value="INTERNAL">INTERNAL</mat-option>
+                                                <!-- <mat-option value="All">All</mat-option> -->
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Provinces</mat-label>
+                                            <mat-select formControlName="provinces" multiple>
+                                                <mat-option *ngFor="let x of provinces" [value]="x.provinceId">
+                                                    {{ x.provinceName }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-2 mat-form-field-wrapper">
+
+                                        <button (click)="getReport('pdf')"
+                                                [disabled]="!reportForm.valid"
+                                                class="fa fa-file-pdf-o fa-css btn btn-link"
+                                                matTooltip="Download report as pdf"></button>
+                                        <button (click)="getReport('csv')"
+                                                [disabled]="!reportForm.valid"
+                                                class="fa fa-file-excel-o fa-css btn btn-link"
+                                                matTooltip="Download repot as Excel"></button>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="row">
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+    </div>
+</div>

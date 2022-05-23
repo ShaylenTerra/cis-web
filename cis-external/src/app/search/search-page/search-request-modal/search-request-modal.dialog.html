@@ -1,0 +1,107 @@
+<div class="overlay" *ngIf="isSpinnerVisible">
+  <div class="overlay__wrapper">
+    <div class="overlay__spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</div>
+<div mat-dialog-title class="heading">Search Request Details</div>
+<div>
+  <div class="container-fluid" *ngIf="!refNo">
+    <div class="row my-2">
+      <table mat-table [dataSource]="datasource" class="table-margin w-100 search-req-detail-table">
+        <ng-container matColumnDef="province">
+          <th mat-header-cell *matHeaderCellDef>Province</th>
+          <td mat-cell *matCellDef="let element">{{element.province}}</td>
+        </ng-container>
+        <ng-container matColumnDef="searchType">
+          <th mat-header-cell *matHeaderCellDef>Search By</th>
+          <td mat-cell *matCellDef="let element">{{element.searchType}}</td>
+        </ng-container>
+        <ng-container matColumnDef="searchFilter">
+          <th mat-header-cell *matHeaderCellDef>Search Filter</th>
+          <td mat-cell *matCellDef="let element">{{element.searchFilter}}</td>
+        </ng-container>
+        <ng-container matColumnDef="searchNo">
+          <th mat-header-cell *matHeaderCellDef>Search Number #</th>
+          <td mat-cell *matCellDef="let element">{{element.searchNo}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="searchColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: searchColumns;"></tr>
+      </table>
+    </div>
+    <div class="row" *ngIf="!proceed">
+      <div class="col sub-heading text-center">
+        The data cannot be found, Are you sure the input is correct?
+      </div>
+    </div>
+    <div class="row" *ngIf="proceed">
+      <div class="col sub-heading text-center">
+        Do you want to Notify the Manager?
+      </div>
+    </div>
+    <div class="row" *ngIf="!proceed">
+      <div class="col text-center">
+        <button class="submit-button" (click)="proceed=true">Yes</button>
+        <button class="back-button" mat-dialog-close>No</button>
+      </div>
+    </div>
+    <div class="row" *ngIf="proceed" style="margin-top: 10px;">
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Choose File</mat-label>
+          <input matInput disabled [value]="uploadedFileName">
+          <button mat-icon-button matSuffix (click)="fileInput.click()">
+            <mat-icon class="attach">attach_file</mat-icon>
+          </button>
+          <input hidden (change)="selectFile($event)" #fileInput type="file" id="newFile">
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Comments</mat-label>
+          <textarea matInput rows="4" [(ngModel)]="comments"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-12 text-center">
+        <button class="submit-button" (click)="submit()">Submit</button>
+        <button class="back-button" mat-dialog-close>Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid" *ngIf="refNo">
+    <div class="text-center">
+      <div class="row mb-2">
+        <div class="col">
+          <img src="assets/images/logos/circle.png" alt="">
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col heading">
+          Manager Notified Successfully
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col desc-text">
+          Thank you for using our services
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col text">
+          Reference Number
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col heading" style="color: #c58b10;">
+          {{refNo}}
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col">
+          <button class="back-button" mat-dialog-close>Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

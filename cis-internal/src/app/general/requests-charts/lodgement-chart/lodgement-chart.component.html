@@ -1,0 +1,238 @@
+<div class="row my-3 mx-0">
+    <span class="col-10 p-0">
+        <h4>Reservation</h4>
+    </span>
+    <span class="col-2 p-0 ">
+        <button style="margin-top: 0px;width: 80px;display: flex;" (click)="showFilterRow()"
+            class="form-button back pull-right" type="submit">
+            <span class="float-right" style="cursor: pointer;display: inline-flex; padding: 5px">Filter</span>
+            <mat-icon style="padding-top: 3px;">filter_list</mat-icon>
+        </button>
+    </span>
+</div>
+<form [formGroup]="filterInformationRequest">
+    <div class="row" *ngIf="showFilter === true">
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Province</mat-label>
+                <mat-select style="height: 23px;" formControlName="provinceIds" multiple>
+                    <mat-option *ngFor="let topping of filteredProvince" [value]="topping.provinceId">
+                        {{topping.provinceName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="outline">
+                <mat-label>Date From</mat-label>
+                <input matInput formControlName="fromDate" [matDatepicker]="picker5" [max]="dateTo"
+                    [(ngModel)]="dateFromRequestInfo" required>
+                <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                <mat-datepicker #picker5></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="outline">
+                <mat-label>Date To</mat-label>
+                <input matInput formControlName="toDate" [matDatepicker]="picker6" [min]="dateFrom"
+                    [(ngModel)]="dateToRequestInfo" required>
+                <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                <mat-datepicker #picker6></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-5">
+            <span style="display: inline;">
+                <button mat-raised-button style="margin-top: 12px;" (click)="clearInformationRequest()"
+                    class="clear-button back pull-right" type="submit">Clear</button>
+                <button mat-raised-button style="margin-top: 12px; margin-right: 12px;"
+                    (click)="searchInformationRequest()" class="form-button bhover pull-right"
+                    type="submit">Search</button>
+            </span>
+        </div>
+    </div>
+</form>
+<hr>
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <p>Total Request</p>
+                <h3>{{informationTopCounts?.totalRequestCount}}</h3>
+            </div>
+            <div class="icon">
+                <i>
+                    <mat-icon style="font-size: 70px; display: inline !important;">work</mat-icon>
+                </i>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <p>Invoice Amount (ZAR)</p>
+                <h3>{{informationTopCounts?.invoiceAmount}}</h3>
+            </div>
+            <div class="icon">
+                <i>
+                    <mat-icon style="font-size: 70px; display: inline !important;">receipt</mat-icon>
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <p>Payment Received (ZAR)</p>
+                <h3>{{informationTopCounts?.paymentAmount}}</h3>
+            </div>
+            <div class="icon">
+                <i>
+                    <mat-icon style="font-size: 70px; display: inline !important;">payment</mat-icon>
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <p>Dispatch Request</p>
+                <h3>{{informationTopCounts?.dispatchedRequestCount}}</h3>
+            </div>
+            <div class="icon">
+                <i>
+                    <mat-icon style="font-size: 70px; display: inline !important;">local_shipping</mat-icon>
+                </i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+        <app-card cardTitle="Open Requests" [options]="true">
+            <div #openRequest>
+                <chart id="openRequest_chart" [type]="'doughnut'" [data]="PSOpenRequestChartData"
+                    [options]="pieChartOption"></chart>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+        <app-card cardTitle="Closed Requests" [options]="true">
+            <div #closeRequest>
+                <chart id="closeRequest_chart" [type]="'doughnut'" [data]="PSCloseRequestChartData"
+                    [options]="pieChartOption"></chart>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-xl-6 col-md-6" style="margin-top: 20px;">
+        <app-card cardTitle="Monthly Invoice Distribution" [options]="true">
+            <div #PSRequest>
+                <chart id="PSRequest_chart" [type]="'line'" [data]="PSRequestChartData"
+                    [options]="PSRequestChartOption">
+                </chart>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+        <app-card cardTitle="Billing" [options]="true">
+            <div #billingChart>
+                <chart id="billingchart" [type]="'bar'" [data]="BillingChartData" [options]="billingChartOption">
+                </chart>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+        <app-card cardTitle="Invoice Overview Status" [options]="true">
+
+            <div #InvoiceOverviewChart>
+                <chart id="InvoiceOverview_chart" [type]="'horizontalBar'" [data]="invoiceOverviewChartData"
+                    [options]="invoiceOverviewChartOption"></chart>
+            </div>
+
+        </app-card>
+    </div>
+
+    <div class="col-xl-6 col-md-6" style="margin-top: 20px;">
+        <app-card cardTitle="Monthly Request Distribution" [options]="true">
+            <div #PSTaskRequest>
+                <chart id="PSTask_chart" [type]="'line'" [data]="PSTaskChartData" [options]="PSTaskChartOption">
+                </chart>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-xl-4 col-md-4" style="margin-top: 20px;">
+        <app-card cardTitle="Manager Alerts" [options]="true">
+            <div #managerAlert>
+                <chart id="managerAlert_chart" [type]="'doughnut'" [data]="PSManagerAlertChartData"
+                    [options]="pieChartOption"></chart>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-xl-8 col-md-8" style="margin-top: 20px;">
+        <app-card cardTitle="Alert Details" [options]="true">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Reference Number</th>
+                            <th>Notification Type</th>
+                            <th>Dated</th>
+                            <th class="text-right">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let x of processSummaryAlertDetail  | slice: (PSboundaryPage-1) * PSpagesize : (PSboundaryPage-1) * PSpagesize + PSpagesize">
+                            <td>
+                                <div class="d-inline-block align-middle">
+                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                        <h6 (click)="openUserSummary(x.userName)">{{x.userName}}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-block align-middle">
+                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                        <h6 (click)="navigateToReference(x.referenceNo)">{{x.referenceNo}}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-block align-middle">
+                                    <div class="d-inline-block">
+                                        <h6>{{x.notificationType}}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-block align-middle">
+                                    <div class="d-inline-block">
+                                        <h6>{{x.dated | date: 'dd-MMM-yyyy hh:mm a'}}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <label *ngIf="x.status == 'In Progress'"
+                                    class="badge badge-light-danger">{{x.status}}</label>
+                                <label *ngIf="x.status == 'Dispatched'"
+                                    class="badge badge-light-primary">{{x.status}}</label>
+                                <label *ngIf="x.status == 'Approved'"
+                                    class="badge badge-light-success">{{x.status}}</label>
+                                <label *ngIf="x.status == 'Pending'"
+                                    class="badge badge-light-success">{{x.status}}</label>
+                                <label *ngIf="x.status == 'Canceled'"
+                                    class="badge badge-light-success">{{x.status}}</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="processSummaryAlertDetail?.length > 0" class="horizontal-scroll"
+                    style="justify-content: flex-end;display: flex;">
+                    <ngb-pagination [collectionSize]="processSummaryAlertDetail?.length" [pageSize]="PSpagesize"
+                        [(page)]="PSboundaryPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+                    </ngb-pagination>
+                </div>
+            </div>
+        </app-card>
+    </div>
+</div>

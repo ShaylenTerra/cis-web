@@ -1,0 +1,35 @@
+<h4 mat-dialog-title><span>Dispatch Document</span></h4>
+<div mat-dialog-content>
+        <div class="row">
+            <div class="col-12">
+                No of  Documents : {{dispatchDetails?.noOfDocument}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                Size of  Documents : {{dispatchDetails?.sizeInKb}} (KB)
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <a style="color:blue; cursor: pointer;" (click)="downloadZip()">Download ZIP</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <a style="color:blue; cursor: pointer;" (click)="processFTP()">Process to FTP</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <a style="color:blue; cursor: pointer;" (click)="sendDispatchEmail()">Send Email</a>
+            </div>
+        </div>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <!-- <button (click)="submit()" class="btnSubmit-css" mat-button>Submit</button> -->
+</div>

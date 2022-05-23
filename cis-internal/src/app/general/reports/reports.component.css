@@ -1,0 +1,53 @@
+.inner-box {
+    margin: 2px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.report-box {
+    margin: 1%;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+.left-col {
+    border: solid 2px #e2e2e3;
+    background-color: #e6e6e6;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 15%;
+}
+
+.right-col {
+    min-height: 83vh;
+    width: 85%;
+}
+
+.left-col-button {
+    width: 93.8%;
+    height: 60px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.left-col-button.extra {
+    margin-top: 46px;
+}
+
+.link-active {
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08);
+    background-color: #fafafa;
+}
+
+.right-col {
+    height: 78vh;
+    width: 80%;
+}
+
+.fa-css {
+    font-size: 35px;
+    color: #f48222;
+    font-weight: bold;
+    /* padding-left: 20px; */
+}

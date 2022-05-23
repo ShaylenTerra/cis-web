@@ -1,0 +1,55 @@
+<div class="main-page row">
+    <div class="col-md-6 p-0">
+        <div class="left-column-textbox mx-auto">
+            <p class="left-column-textbox-heading">
+                Welcome to The Department of Agriculture, Land Reform and Rural Development (DALRRD) Cadastral Information System website.
+            </p>
+            <p class="left-column-textbox-text">
+                The National Geomatics Management Service (NGMS) is a branch in The Department of Agriculture, Land Reform and Rural Development (DALRRD), whose primary objective is to provide efficient cadastral survey management services and to provide cadastral information services in support of land delivery and orderly development. The Branch is mandated to perform its functions through the Land Survey Act, 1997 (Act No. 8 of 199).
+            </p>
+            <p class="left-column-textbox-sub-heading">
+                This programme is responsible for the following:
+            </p>
+            <ul class="left-column-textbox-list">
+                <li>Regulation of Surveyor-General’s offices</li>
+                <li>Examining and approving all surveys for the registration of land and real rights</li>
+                <li>Maintaining cadastral documents</li>
+                <li>Archiving all cadastral surveys</li>
+                <li>Providing cadastral advisory and information services</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 p-0">
+        <div class="overlay" *ngIf="isSpinnerVisible">
+            <div class="overlay__wrapper">
+                <div class="overlay__spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+        </div>
+        <div class="login-form">
+            <div class="text-center">
+                <img class="logo" src="assets/images/logo-new.png" alt="">
+            </div>
+            <div class="mx-auto">
+                <h2 class="login-heading welcome text-center">Confirmation</h2>
+                <div>
+                    <div class="container">
+
+                        <div class="row mx-0 mt-2">
+                            <div class="col" style="color:green">
+                                {{message}}
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2 mb-4">
+                            <span class="col my-2" style="font-size: 14px;">
+                              <a [routerLink]="['/authentication/login']" style="color:#7856ff;"><u>
+                                  Sign In</u></a>
+                            </span>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

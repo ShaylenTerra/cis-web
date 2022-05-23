@@ -1,0 +1,513 @@
+<div class="top-spacing">
+    <p class="heading">My Profile</p>
+    <div class="overlay" *ngIf="isSpinnerVisible">
+        <div class="overlay__wrapper">
+            <div class="overlay__spinner">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card">
+            <div class="row mx-0" id="desktop-tab">
+                <div class="p-0 left-col">
+                    <div [ngClass]="[roleInfoTab ? 'link-active' : '']" (click)="changeTab('roleInfoTab')"
+                        class="left-col-button mx-auto">
+                        <span class="row mx-0 w-100 py-2">
+                            <span>
+                                <img src="assets/images/bootstrap-icons/briefcase.svg" class="my-2"
+                                    style="margin-left: 8px; width: 24px;" alt="">
+                            </span>
+                            <span class="float-right" style="margin-left: 15px; margin-right: 0;">
+                                <p class="desc-text m-0">Role Information</p>
+                                <p class="info-text m-0">Information about the Role.</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div [ngClass]="[personalInfoTab ? 'link-active' : '']" (click)="changeTab('personalInfoTab')"
+                        class="left-col-button mx-auto">
+                        <span class="row mx-0 w-100 py-2">
+                            <span>
+                                <img src="assets/images/bootstrap-icons/person-circle.svg" class="my-2"
+                                    style="margin-left: 8px; width: 24px;" alt="">
+                            </span>
+                            <span class="float-right" style="margin-left: 15px; margin-right: 0;">
+                                <p class="desc-text m-0">Personal Information</p>
+                                <p class="info-text m-0">View & Update of Personal Information.</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div [ngClass]="[updatePasswordTab ? 'link-active' : '']" (click)="changeTab('updatePasswordTab')"
+                        class="left-col-button mx-auto">
+                        <span class="row mx-0 w-100 py-2">
+                            <span>
+                                <img src="assets/images/bootstrap-icons/lock.svg" class="my-2"
+                                    style="margin-left: 8px; width: 24px;" alt="">
+                            </span>
+                            <span class="float-right" style="margin-left: 15px; margin-right: 0;">
+                                <p class="desc-text m-0">Update Password</p>
+                                <p class="info-text m-0">View & Update of Password.</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div [ngClass]="[updateSecurityTab ? 'link-active' : '']" (click)="changeTab('updateSecurityTab')"
+                        class="left-col-button mx-auto">
+                        <span class="row mx-0 w-100 py-2">
+                            <span>
+                                <img src="assets/images/bootstrap-icons/question-octagon.svg" class="my-2"
+                                    style="margin-left: 8px; width: 24px;" alt="">
+                            </span>
+                            <span class="float-right" style="margin-left: 15px; margin-right: 0;">
+                                <p class="desc-text m-0">Update Security Questions</p>
+                                <p class="info-text m-0">View & Update Security Questions.</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div [ngClass]="[updateEmailTab ? 'link-active' : '']" (click)="changeTab('updateEmailTab')"
+                        class="left-col-button mx-auto">
+                        <span class="row mx-0 w-100 py-2">
+                            <span>
+                                <img src="assets/images/bootstrap-icons/envelope-fill.svg" class="my-2"
+                                    style="margin-left: 8px; width: 24px;" alt="">
+                            </span>
+                            <span class="float-right" style="margin-left: 15px; margin-right: 0;">
+                                <p class="desc-text m-0">Update Email</p>
+                                <p class="info-text m-0">View & Update of Email.</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div [ngClass]="[deactivateAccountTab ? 'link-active' : '']"
+                        (click)="changeTab('deactivateAccountTab')" class="left-col-button mx-auto">
+                        <span class="row mx-0 w-100 py-2">
+                            <span>
+                                <img src="assets/images/bootstrap-icons/lock.svg" class="my-2"
+                                    style="margin-left: 8px; width: 24px;" alt="">
+                            </span>
+                            <span class="float-right" style="margin-left: 15px; margin-right: 0;">
+                                <p class="desc-text m-0">De-Activate Account</p>
+                                <p class="info-text m-0">Deactivating the Account.</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div [ngClass]="[document ? 'link-active' : '']" (click)="changeTab('document')"
+                        class="left-col-button mx-auto">
+                        <span class="row mx-0 w-100 py-2">
+                            <span style="margin-left: 8px">
+                                <mat-icon class="icon-c pt-2" style="padding-right: 27px;">assignment</mat-icon>
+                            </span>
+                            <span class="float-right" style="margin-left: 15px; margin-right: 0;">
+                                <p class="desc-text m-1">Supporting Document</p>
+                                <p class="info-text m-0">Supporting Document</p>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="right-col">
+                    <!-- <img src="assets/images/bootstrap-icons/x.svg" (click)="close()" class="cross" alt="" /> -->
+                    <div *ngIf="roleInfoTab" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <!-- <img src="assets/images/bootstrap-icons/x.svg" (click)="close()" class="cross" alt=""> -->
+                        <p class="heading" style="margin-top: 4%;"></p>
+                        <div class="row mx-0">
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Role</mat-label>
+                                        <mat-select matInput disabled [(ngModel)]="roleId" >
+                                            <mat-option *ngFor="let x of roles" [value]="x.roleId">
+                                                {{ x.roleName }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col">
+                                <section *ngFor="let x of provinces">
+                                    <mat-checkbox [disabled]="multipleProvinceSelection || (onlyOneProvinceSelected && x.isSelected)" style="float: left" class="mr-2"
+                                        [(ngModel)]="x.isSelected"
+                                        [value]="x.provinceId"
+                                        (change)="updateExternalRole(x)"
+                                    >{{x.provinceName}}
+
+                                    </mat-checkbox>
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div *ngIf="personalInfoTab" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <p class="sub-heading"></p>
+                        <div class="row my-3">
+                            <!-- <span style="margin-left: 1.4%; margin-right: 1%;">
+                                <img [src]="url ? url : 'assets/images/users/dp.jpg'"
+                                    style="width: 64px;border-radius: 50%;" alt="" (click)="fileInput.click()">
+                                <input hidden (change)="onFileChange($event)" #fileInput type="file" id="file">
+                            </span>
+                            <span class="my-2">
+                                <p class="info-text m-0"><b>{{user.firstName}} {{ user.surname}}</b></p>
+                                <p class="desc-text m-0">{{user.userRoles[0].roleName}}</p>
+                            </span> -->
+                            <span style="margin-left: 1.4%; margin-right: 1%;">
+                                <div class="outer">
+                                <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                                    style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                                    (mouseover)="image = 'assets/images/users/user.webp'" (mouseout)="image = url">
+                                <div class="overlayImg">
+                                    <mat-icon class="icon-c pt-1" [ngStyle]="{'color':'white'}"
+                                    style="cursor: pointer; font-size: 40px;border-radius: 50%;transform:translate(-50%,100%)" (click)="fileInput.click()">
+                                    add_a_photo</mat-icon>
+                                    <div id="text">
+                                        Change Photo
+                                    </div>
+                                </div>
+                                <input #fileInput (change)="onFileChange($event)" hidden id="file" type="file">
+                            </div>
+                        </span>
+                        </div>
+                         <form [formGroup]="personalForm">
+                            <div class="row mx-auto">
+                                <div class="col-2">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Title</mat-label>
+                                        <mat-select  matInput formControlName="title" >
+                                            <mat-option *ngFor="let x of titles" [value]="x.itemId">
+                                                {{x.caption}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-5">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput formControlName="firstName"  />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-5">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput formControlName="surname" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mx-auto">
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput  formControlName="email" readonly />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Organisation</mat-label>
+                                        <mat-select matInput  formControlName="organisation">
+                                            <mat-option *ngFor="let org of organizationTypes" [value]="org.itemId">
+                                                {{ org.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Sector</mat-label>
+                                        <mat-select matInput formControlName="sector" >
+
+                                            <mat-option *ngFor="let sec of sectors" [value]="sec.itemId">
+                                                {{ sec.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mx-auto">
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Address Line 1</mat-label>
+                                        <input matInput formControlName="add1">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Address Line 2</mat-label>
+                                        <input matInput formControlName="add2">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Address Line 3</mat-label>
+                                        <input matInput formControlName="add3">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mx-auto">
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Mobile</mat-label>
+                                        <input matInput formControlName="mobileNo" >
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Postal Code</mat-label>
+                                        <input matInput formControlName="postalCode">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Preferred Mode of Communication</mat-label>
+                                        <mat-select matInput  formControlName="modeOfCommunication">
+                                            <mat-option *ngFor="let com of communicationTypes" [value]="com.itemId">
+                                                {{ com.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mx-auto" style="font-size: 14px !important;font-weight: 500; margin-bottom: 100px;">
+                                <div class="col-4">
+                                    <mat-checkbox  formControlName="subscribeNews" >
+                                        Enable News Notifications
+                                    </mat-checkbox>
+                                </div>
+                                <div class="col-4">
+                                    <mat-checkbox formControlName="subscribeEvents">
+                                        Enable Events Notifications
+                                    </mat-checkbox>
+                                </div>
+                                <div class="col-4">
+                                    <mat-checkbox formControlName="subscribeNotifications" >
+                                        Enable Information Notifications
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="row absolute">
+                                <div class="col">
+                                    <button class="submit-button float-right" [disabled]="!personalForm.valid"
+                                        [ngClass]="personalForm.valid ? 'submit-button' : 'd-submit-button'"
+                                        (click)="saveProfile()">Save</button>
+                                </div>
+                            </div>
+                         </form>
+
+                        <form ></form>
+
+                    </div>
+                    <div *ngIf="updatePasswordTab" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <p class="sub-heading"></p>
+                        <form [formGroup]="resetPasswordForm">
+                            <div class="row">
+                                <div class="col-4">
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>Current Password</mat-label>
+                                        <input matInput type="password" formControlName="currentPassword"
+                                            [(ngModel)]="currentPassword" [type]="hide1 ? 'password' : 'text'">
+                                        <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                                            [attr.aria-pressed]="hide1">
+                                            <mat-icon (click)="hide1=!hide1">{{hide1 ? 'visibility_off' : 'visibility'}}
+                                            </mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>New Password</mat-label>
+                                        <input matInput type="password" formControlName="password"
+                                            [(ngModel)]="newPassword" [type]="hide2 ? 'password' : 'text'">
+                                        <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                                            [attr.aria-pressed]="hide2">
+                                            <mat-icon (click)="hide2=!hide2">{{hide2 ? 'visibility_off' : 'visibility'}}
+                                            </mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                    <small
+                                        *ngIf="resetPasswordForm.controls['password'].errors && resetPasswordForm.controls['password'].touched"
+                                        class="text-danger support-text">Password must contain at least 8 characters,
+                                        including UPPER/Lowercase and numbers</small>
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>Confirm Password</mat-label>
+                                        <input matInput type="password" formControlName="confirmPassword"
+                                            [(ngModel)]="confirmPassword" [type]="hide3 ? 'password' : 'text'">
+                                        <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                                            [attr.aria-pressed]="hide3">
+                                            <mat-icon (click)="hide3=!hide3">{{hide3 ? 'visibility_off' : 'visibility'}}
+                                            </mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                    <small
+                                        *ngIf="resetPasswordForm.controls['confirmPassword'].errors && resetPasswordForm.controls['confirmPassword'].touched"
+                                        class="text-danger support-text">Confirm Password should match with new
+                                        Password</small>
+                                </div>
+                            </div>
+                            <div class="row absolute">
+                                <div class="col">
+                                    <button class="submit-button float-right"
+                                        [ngClass]="!resetPasswordForm.valid ? 'd-submit-button' : 'submit-button'"
+                                        [disabled]="!resetPasswordForm.valid" (click)="updatePassword()">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="updateSecurityTab" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <p class="sub-heading"></p>
+                        <form [formGroup]="securityQuestionForm">
+                            <div class="row mx-auto">
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Security Question 1</mat-label>
+                                        <mat-select matInput  (selectionChange)="onSecqChange()"   formControlName="ques1">
+                                            <mat-option *ngFor="let x of securityQuestions" [value]="x.itemId">
+                                                {{ x.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Answer 1</mat-label>
+                                        <input  matInput formControlName="ans1">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mx-auto">
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Security Question 2</mat-label>
+                                        <mat-select matInput formControlName="ques2" (selectionChange)="onSecqChange()"
+                                            name="secq2">
+                                            <mat-option *ngFor="let x of securityQuestions" [value]="x.itemId">
+                                                {{ x.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Answer 2</mat-label>
+                                        <input  matInput formControlName="ans2">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mx-auto">
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Security Question 3</mat-label>
+                                        <mat-select matInput formControlName="ques3" (selectionChange)="onSecqChange()"
+                                            name="secq3">
+                                            <mat-option *ngFor="let x of securityQuestions" [value]="x.itemId">
+                                                {{ x.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Answer 3</mat-label>
+                                        <input  matInput formControlName="ans3" >
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row absolute">
+                                <div class="col">
+                                    <button class="submit-button float-right"
+                                        (click)="updateSecurityQuestions()" [disabled]="!securityQuestionForm.valid">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="updateEmailTab" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <p class="sub-heading"></p>
+                        <form [formGroup]="updateEmailForm">
+                            <div class="row mx-0">
+                                <div class="col-4">
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>Current Email</mat-label>
+                                        <input matInput formControlName="email" readonly>
+                                    </mat-form-field>
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>Enter New Email</mat-label>
+                                        <input matInput formControlName="newEmail"  >
+                                    </mat-form-field>
+                                    <small
+                                            *ngIf="updateEmailForm.controls['newEmail'].errors && updateEmailForm.controls['newEmail'].touched"
+                                            class="text-danger support-text">Valid Email Required</small>
+
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>Confirm New Email</mat-label>
+                                        <input matInput formControlName="confirmEmail"
+                                        >
+                                    </mat-form-field>
+                                    <small
+                                            *ngIf="updateEmailForm.controls['confirmEmail'].errors && updateEmailForm.controls['confirmEmail'].touched"
+                                            class="text-danger support-text">Confirm Email should match with New
+                                        Email</small>
+                                </div>
+                            </div>
+                            <div class="row absolute">
+                                <div class="col">
+                                    <button class="submit-button float-right"
+                                            [ngClass]="updateEmailForm.valid ? 'submit-button' : 'd-submit-button'"
+                                            (click)="updateEmail()" [disabled] = "!updateEmailForm.valid" >Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div *ngIf="deactivateAccountTab" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <p class="sub-heading"></p>
+                        <p class="desc-text">
+                            Deactivation of account will lead to no access of information related to account, and need
+                            approval of official required to activate the account again later.
+                        </p>
+                        <div class="row mx-0">
+                            <div class="col-4">
+                                <mat-form-field class="input-margin" appearance="outline">
+                                    <mat-label>Current Password</mat-label>
+                                    <input matInput  [type]="hide1 ? 'password' : 'text'" [(ngModel)]="currentPassword" required #deActivatePassword>
+                                    <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'"
+                                        [attr.aria-pressed]="hide1">
+                                        <mat-icon (click)="hide1=!hide1">{{hide1 ? 'visibility_off' : 'visibility'}}
+                                        </mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                <mat-checkbox #confirmed>I understand that all my account data will be lost.
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="row absolute">
+                            <div class="col">
+                                <button class="submit-button float-right" (click)="deActivate()" [disabled]="((!deActivatePassword.validity.valid) || (!confirmed.checked))">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="document" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <img (click)="close()" alt="" class="cross" src="assets/images/bootstrap-icons/x.svg">
+                        <p class="heading" style="margin-top: 4%;"></p>
+                        <div class="row mx-0">
+                            <div class="col">
+                                <!-- <div class="card"> -->
+                                    <div class="container-fluid my-3">
+                                        <div class="row" *ngFor="let document of supportingDoc">
+                                            <div class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Document Type</mat-label>
+                                                    <input [value]="document.DocumentType" disabled matInput type="text">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>File Name</mat-label>
+                                                    <input [value]="document.fileName" disabled matInput/>
+                                                    <button (click)="download(document.id, document.fileName)" mat-icon-button matSuffix>
+                                                        <mat-icon class="delete">get_app</mat-icon>
+                                                    </button>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

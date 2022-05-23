@@ -1,0 +1,21 @@
+<div mat-dialog-title>Email Preview</div>
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>Subject</mat-label>
+            <input matInput [(ngModel)]="subject">
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <!-- <mat-form-field appearance="outline"> -->
+            <!-- <mat-label>Email Body</mat-label> -->
+            <!-- <textarea [value]="body" cols="50" disabled matInput rows="8" style="color: black;"></textarea>
+            <span class="pull-right char" style="color: black;"><em>{{ 1000 - body?.length }} characters left</em></span> -->
+            <quill-editor [(ngModel)]="body" [styles]="{height: '200px'}">
+            </quill-editor>
+            <span class="pull-right char" style="color: black;"><em>{{ 1000 - body?.length }} characters left</em></span>
+        <!-- </mat-form-field> -->
+    </div>
+<div mat-dialog-actions class="float-right">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button mat-dialog-close mat-raised-button class="submit-button bover float-right" (click)="updateTemplate()">Update</button>
+</div>

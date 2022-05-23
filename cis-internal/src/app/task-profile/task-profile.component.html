@@ -1,0 +1,216 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-11">
+                <p class="heading">Task report</p>
+            </div>
+            <div class="col-1">
+                <div class="dropdown menu">
+                    <span data-toggle="dropdown">
+                        <img alt="" src="assets/images/Three dots.png">
+                    </span>
+                    <div class="dropdown-menu">
+                        <!-- <a class="dropdown-item">Mark as Pending</a>
+                        <a class="dropdown-item">Assign to Officer</a>
+                        <a class="dropdown-item">Change Province</a>
+                        <a class="dropdown-item">Referral Information</a> -->
+                        <a class="dropdown-item">Add Notes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row m-0 land-ref">
+                            <div class="col">
+                                <span class="label">Reference Number:</span>
+                                <br><span class="label-text">{{taskDetail.referenceNumber !== undefined ?
+                                    taskDetail.referenceNumber : taskDetail.referenceNo}}</span>
+                            </div>
+                            <div class="col">
+                                <span class="label">Process Name:</span>
+                                <br><span class="label-text">{{taskDetail.processName}}</span>
+                            </div>
+                            <div class="col">
+                                <span class="label">Posted on:</span>
+                                <br><span class="label-text">{{taskDetail.triggeredOn | date: "dd/MM/yyyy"}}
+                                    ({{taskDetail.triggeredOn | dateDifference}} Ago)</span>
+                            </div>
+                            <div class="col">
+                                <span class="label">Task Duration:</span>
+                                <br><span class="label-text">10 Days</span>
+                            </div>
+                            <div class="col">
+                                <span class="label">Task Status:</span>
+                                <br><span class="label-text">{{taskDetail.internalStatusCaption}}</span>
+                            </div>
+                            <div class="col">
+                                <span class="label">Priority:</span>
+                                <br><span class="label-text">{{taskDetail.priorityName}}</span>
+                            </div>
+                        </div>
+
+                        <div class="row m-0 task-history">
+                            <span class="title">Task history</span>
+                            <table [dataSource]="taskHistoryDataSource" class="task-history-table" mat-table>
+                                <ng-container matColumnDef="date">
+                                    <th *matHeaderCellDef mat-header-cell> Date</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.postedOn | date: "dd/MM/yyyy"}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="user">
+                                    <th *matHeaderCellDef mat-header-cell> User</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.actionTakenBy}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th *matHeaderCellDef mat-header-cell> Action</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.actionReq}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="duration">
+                                    <th *matHeaderCellDef mat-header-cell> Duration</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.postedOn | dateDifference}} </td>
+                                </ng-container>
+
+                                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                            </table>
+                            <div *ngIf="taskHistoryDataSource.length === 0" class="mx-auto p-10">
+                                No records found
+                            </div>
+                        </div>
+
+                        <div class="row m-0 task-history">
+                            <span class="title">Related Tasks</span>
+                            <table [dataSource]="relatedTasksDataSource" class="related-tasks-table" mat-table>
+                                <ng-container matColumnDef="date">
+                                    <th *matHeaderCellDef mat-header-cell> Date</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.triggeredOn}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="process">
+                                    <th *matHeaderCellDef mat-header-cell> Process</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.processName}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="description">
+                                    <th *matHeaderCellDef mat-header-cell> Description</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.requestNote}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="duration">
+                                    <th *matHeaderCellDef mat-header-cell> Duration</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.triggeredOn | dateDifference}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th *matHeaderCellDef mat-header-cell> Action</th>
+                                    <td *matCellDef="let element" mat-cell> Open Task</td>
+                                </ng-container>
+
+                                <tr *matHeaderRowDef="displayedColumns1" mat-header-row></tr>
+                                <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
+                            </table>
+                            <div *ngIf="relatedTasksDataSource.length === 0" class="mx-auto p-10">
+                                No records found
+                            </div>
+                        </div>
+
+                        <div class="row m-0 task-history">
+                            <span class="title">Supporting Documents</span>
+
+                            <mat-form-field *ngFor="let document of supportingDocuments" appearance="outline">
+                                <button (click)="downloaddoc2(document)" mat-icon-button matSuffix>
+                                    <mat-icon class="delete">get_app</mat-icon>
+                                </button>
+                                <button mat-icon-button matSuffix
+                                    matTooltip="Document Type:{{document.documentType}}  Size:{{document.sizeKb}} (KB) notes:{{document.notes}} Uploaded By:{{document.uploadedBy}} Uploaded On:{{document.uploadedOn | date : 'dd/MMMM/y HH:mm:ss'}}">
+                                    <mat-icon aria-label="Button that shows a red tooltip" class="t-button"
+                                        style="cursor: pointer;">
+                                        error_outline
+                                    </mat-icon>
+                                </button>
+                                <mat-label style="color:blue">{{document.documentName}}</mat-label>
+                                <input disabled matInput />
+                                <input #fileInput (change)="selectFile2($event)" hidden id="file" type="file">
+                            </mat-form-field>
+
+                            <div *ngIf="supportingDocuments.length === 0" class="mx-auto p-10">
+                                No records found
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row m-0 task-li">
+                            <span class="title">Application Details</span>
+                            <div class="app-details">
+                                <div *ngFor="let element of applicationDetailsArray" class="row m-0">
+                                    <div class="col-2">
+                                        <img [src]="element.icon">
+                                    </div>
+                                    <div class="col-10 p-l-0" style="cursor: pointer;"
+                                        (click)="onclickApplication(element)">
+                                        <a>{{element.item}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 task-li">
+                            <div class="app-details">
+                                <div class="col-12 p-l-0" class="row m-0">
+                                    <a style="cursor: pointer; color: blue; padding-left: 12px;"
+                                        (click)="viewReferral()">View Details Task Duration</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row m-0 task-li linked-details">
+                            <span class="title">Linked Details</span>
+                            <div class="app-details">
+                                <div *ngFor="let element of linkedDetailsArray" class="row m-0">
+                                    <div class="col-2">
+                                        <img src="assets/images/icon/Icons_Info_circle.svg">
+                                    </div>
+                                    <div class="col-10 p-l-0">
+                                        <p (click)='navigate(element)' style="cursor: pointer;">{{element}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 notes">
+                            <span class="title">Notes</span>
+                            <table [dataSource]="dataSource2" mat-table>
+                                <ng-container matColumnDef="date">
+                                    <th *matHeaderCellDef mat-header-cell> Date</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.date}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="user">
+                                    <th *matHeaderCellDef mat-header-cell> User</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.user}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="notes">
+                                    <th *matHeaderCellDef mat-header-cell> Notes</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.notes}} </td>
+                                </ng-container>
+
+                                <tr *matHeaderRowDef="displayedColumns2" mat-header-row></tr>
+                                <tr *matRowDef="let row; columns: displayedColumns2;" mat-row></tr>
+                            </table>
+                            <div *ngIf="dataSource2.length === 0" class="mx-auto p-10">
+                                No records found
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

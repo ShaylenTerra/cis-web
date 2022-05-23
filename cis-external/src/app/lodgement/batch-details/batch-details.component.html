@@ -1,0 +1,127 @@
+<div class="container-fluid">
+    <div class="row">
+        <div Class="col-12 col-lg-12 mt-3">
+
+            <mat-card class="card-table-tasks">
+                <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                    <!-- <div class="row"> -->
+                    <div class="row">
+                        <div Class="col-6 col-lg-6 mt-3">
+                            <h3>Lodge Documents / Batch Details</h3>
+                            <table [dataSource]="dataSource" class="table-margin w-100 inline-table" mat-table matSort
+                                *ngIf="paymentDetailsData.length > 0 && paymentDetailsData !== undefined">
+
+                                <ng-container matColumnDef="documentType">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                        style="width: 25%;border-top-left-radius: 8px;border-bottom-left-radius: 8px;">
+                                        Document
+                                        Type</th>
+                                    <td *matCellDef="let element" mat-cell>{{element?.documentType}}</td>
+                                    <td mat-footer-cell *matFooterCellDef>Total</td>
+                                </ng-container>
+                                <ng-container matColumnDef="purposeType">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 25%">Purpose
+                                        Type</th>
+                                    <td *matCellDef="let element" mat-cell>{{element?.purposeType}}</td>
+                                    <td mat-footer-cell *matFooterCellDef></td>
+                                </ng-container>
+                                <ng-container matColumnDef="count">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header style="width: 25%">No Of
+                                        Document</th>
+                                    <td *matCellDef="let element" mat-cell>
+                                        <div style="text-align: right;padding-right:25px;">
+                                            {{element?.count}}
+                                        </div>
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef>
+                                        <div style="text-align: right;padding-right:25px;">
+                                            {{totalDoc}}
+                                        </div>
+                                    </td>
+                                </ng-container>
+                                <!-- <ng-container matColumnDef="noOfPages">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header>No Of Pages</th>
+                            <td *matCellDef="let element" mat-cell>{{element.noOfPages}}</td>
+                            <td mat-footer-cell *matFooterCellDef>11</td>
+                        </ng-container> -->
+                                <ng-container matColumnDef="totalCost">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                        style="width: 25%;border-top-right-radius: 8px;border-bottom-right-radius: 8px;">
+                                        Estimated
+                                        Cost(R)</th>
+                                    <td *matCellDef="let element" mat-cell>
+                                        <div style="text-align: right;padding-right:3px;">
+                                            {{element?.totalCost | number : '1.2-2'}}
+                                        </div>
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef>
+                                        <div style="text-align: right;padding-right:3px;">{{totalAmount | number :
+                                            '1.2-2'}}
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                                <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
+                                <tr mat-footer-row *matFooterRowDef="columns; sticky: true"></tr>
+                            </table>
+                            <div fxLayoutAlign="center center" class="mt-4"
+                                *ngIf="paymentDetailsData?.length === 0 || paymentDetailsData === undefined">
+                                <p>No data available</p>
+                            </div>
+                            <div>
+                                <button mat-raised-button class="submit-button bover" (click)="issueBatch()"
+                                    [hidden]="!readonly || !hideData || (batchDetailsData !== undefined || batchDetailsData?.lodgementBatchSgDocuments.length > 0)"
+                                    style="height: 44px; width: 180px; margin-right: 5px;">Issue
+                                    Number</button>
+                            </div>
+                        </div>
+                        <div Class="col-6 col-lg-6 mt-3"
+                            *ngIf="batchDetailsData !== undefined && batchDetailsData?.lodgementBatchSgDocuments.length > 0">
+                            <h5>The batch was succesfully registerd batch Number: {{batchDetailsData?.batchNumberText}}
+                                Consisting of:</h5>
+                            <div style="margin-top: 20px;">
+                                <table [dataSource]="batchDataSource" class="table-margin w-100 inline-table" mat-table
+                                    matSort
+                                    *ngIf="batchDetailsData?.lodgementBatchSgDocuments.length > 0 && batchDetailsData !== undefined">
+
+                                    <ng-container matColumnDef="documentType">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                            style="width: 50%;border-top-left-radius: 8px;border-bottom-left-radius: 8px;">
+                                            Document Type</th>
+                                        <td *matCellDef="let element" mat-cell>{{element?.documentType}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="docNumberText">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                            style="width: 50%;border-top-right-radius: 8px;border-bottom-right-radius: 8px;">
+                                            Document Number</th>
+                                        <td *matCellDef="let element" mat-cell>{{element?.docNumberText}}</td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="batchcolumns" mat-header-row></tr>
+                                    <tr *matRowDef="let myRowData; columns: batchcolumns" mat-row></tr>
+                                </table>
+
+                                <span style="display: inline-flex;"
+                                    *ngIf="batchDetailsData?.lodgementBatchSgDocuments.length > 0 && batchDetailsData !== undefined">
+                                    <mat-icon style="cursor: pointer;color:black" (click)="downloadAck()">get_app
+                                    </mat-icon>
+                                    <a style="color: blue; cursor: pointer;" (click)="downloadAck()">
+                                        Preview Draft Acknowledgement Letter
+                                    </a>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- <div class="col-12 col-lg-4 mt-3">
+            <mat-card class="scroll">
+                <mat-card-content>
+
+                </mat-card-content>
+            </mat-card>
+        </div> -->
+    </div>
+</div>

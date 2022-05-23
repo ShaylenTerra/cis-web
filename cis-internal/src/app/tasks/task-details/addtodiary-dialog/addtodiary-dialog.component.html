@@ -1,0 +1,31 @@
+<h4 mat-dialog-title><span>Add To Diary</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select date</mat-label>
+                    <input [(ngModel)]="date" [matDatepicker]="picker1" [min]="minDate" formControlName="diariseDate"
+                           matInput required>
+                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Comment</mat-label>
+                    <textarea formControlName="comment" matInput required style="color: black;" #comment></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - comment?.value?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

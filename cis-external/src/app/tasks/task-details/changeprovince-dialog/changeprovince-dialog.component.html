@@ -1,0 +1,47 @@
+<h4 mat-dialog-title><span>Change Province</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <!-- <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select province</mat-label>
+                    <mat-select matInput formControlName="Province">
+                        <mat-option *ngFor="let province of provinces" value="province.provinceId">
+                            {{province.provinceName}}
+                        </mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select province</mat-label>
+                    <input [matAutocomplete]="auto2" formControlName="province" matInput required>
+                    <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="assignedProvinceSelected($event)"
+                                      [displayWith]="displayFn">
+                        <mat-option *ngFor="let x of assignedFilteredProvinces" [value]="x">
+                            {{x.provinceName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-8">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Note</mat-label>
+                        <textarea matInput formControlName="Notes" required></textarea>
+                </mat-form-field>
+            </div>
+        </div> -->
+
+
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

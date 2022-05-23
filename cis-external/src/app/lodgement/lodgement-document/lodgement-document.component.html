@@ -1,0 +1,365 @@
+<div>
+    <div class="padd-right" *ngFor="let data of lodgeDraftData">
+        <span class="row mx-0 mt-3">
+            <span class="col-12">
+                <mat-card class="card-table-tasks card filter-card">
+                    <mat-card-title style="background-color: #f1f1f1;">
+                        <span class="row p-l-0" [ngClass]="{'p-2':preview === true, 'top':readonly === true}">
+                            <span [ngClass]="!readonly ? 'col-md-3' : 'col-md-12 mt-1 p-4'">
+                                <h6 [ngClass]="!readonly ? 'mt-4' : 'mt-1'">{{data.documentType}} -
+                                    {{data.requestReason}}</h6>
+                            </span>
+                            <span class="col-md-7" [hidden]="preview || readonly">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Search Reservation</mat-label>
+                                    <mat-select [(ngModel)]="findProperty"
+                                        (selectionChange)="addDraftRequest(data?.stepId)" #propertySelect required>
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="propertyFilterCtrl"
+                                                (ngModelChange)="changeProperty($event)"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredProperty | async" [value]="x">
+                                            {{ x.designation }} - {{x.lpi}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-icon-button matSuffix type="button">
+                                        <mat-icon type="submit">search
+                                        </mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </span>
+                            <span class="col-md-2" [hidden]="preview || readonly">
+                                <span style="display: flex; float: right;">
+                                    <button [disabled]="preview" style="cursor: pointer; font-size: 25px; margin: 2px;border:none;background-color: transparent;
+                                                                    margin-left: -15px;">
+                                        <mat-icon matTooltip="Search Property from map" [disabled]="preview"
+                                            style="cursor: pointer; font-size: 32px;"
+                                            (click)="searchOnMap(data?.stepId, steps?.draftId)">
+                                            map
+                                        </mat-icon>
+                                    </button>
+                                </span>
+                            </span>
+                        </span>
+                    </mat-card-title>
+                    <mat-card-content class="table-tasks" style="overflow-x: hidden;margin-top: -5px;
+                    display: flex;">
+                        <span class="col-11 mt-3 p-l-0" style="margin-top:-20px !important">
+                            <!-- <div>
+                                <p>No parcel found, please search and add parcel</p>
+                            </div> -->
+                            <div class="row mx-0 mt-2" mat-line>
+                                <div class="node" fxFlex="1 0 100%" fxLayout="row wrap" fxLayoutAlign="start center">
+                                    <span class="col-4 p-r-0">
+                                        <p style="font-weight: bold;">
+                                            Parcel Details</p>
+                                    </span>
+
+                                    <span class="col-8 p-r-0">
+                                        <p style="font-weight: bold;text-align: left;">
+                                            Reservation Details</p>
+
+                                    </span>
+                                </div>
+                            </div>
+                            <div *ngFor="let y of data?.lodgementDraftRequests; let i= index" class="row mx-0 mt-2"
+                                mat-line>
+                                <div fxFlex="1 0 100%" fxLayout="row wrap" fxLayoutAlign="start center"
+                                    *ngIf="(preview || readonly) && y?.lodgementDraftDocuments.length > 0">
+                                    <span class="col-3 p-r-0" style="display: inline-flex;">
+                                        <mat-icon *ngIf="data.requestReason === '   ' && i !== 1"
+                                            style="cursor: pointer; font-size: 25px; margin: 2px;color:'#FFCC00'">
+                                        </mat-icon>
+                                        &nbsp;&nbsp;
+                                        <p class="truncate" style="cursor: pointer;"
+                                            matTooltip="{{y?.parentParcels?.designation}}">
+                                            <!-- {{y.designation}} -->
+                                            {{y?.parentParcels?.designation}}
+                                        </p>
+
+                                    </span>
+                                    <span class="col-1">
+                                        <!-- <div class="dropdown menu" style="float: right" [hidden]="preview || readonly"
+                                            *ngIf="data.requestReason === 'Subdivsion' && i == 0">
+                                            <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu"
+                                                #menuTrigger="matMenuTrigger" class="hover-display"
+                                                [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                            </span>
+                                            <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
+                                                [overlapTrigger]="true">
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                    <mat-icon matTooltip="View Property" color="primary"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        visibility
+                                                    </mat-icon> View
+                                                </button>
+                                            </mat-menu>
+                                        </div> -->
+                                        <div class="dropdown menu" style="float: right" [hidden]="preview"
+                                            *ngIf="data.requestReason !== 'Subdivsion'">
+                                            <span matTooltip=" More Options" [matMenuTriggerFor]="optionsMenu"
+                                                #menuTrigger="matMenuTrigger" class="hover-display"
+                                                [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                            </span>
+                                            <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
+                                                [overlapTrigger]="true">
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="navigateToLandProfile(y?.parentParcels?.lpi, y?.parentParcels?.recordId)">
+                                                    <mat-icon matTooltip="View Request" color="primary"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        visibility
+                                                    </mat-icon> View
+                                                </button>
+                                                <button mat-menu-item [hidden]="readonly"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="deleteRequest(y)">
+                                                    <mat-icon matTooltip="Remove Request"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        delete
+                                                    </mat-icon> Remove
+                                                </button>
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="landInfo(y)">
+                                                    <mat-icon matTooltip="Info"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        info
+                                                    </mat-icon> Info
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </span>
+
+                                    <span class="col-3 p-r-0">
+                                        <p class="truncate" matTooltip="{{y?.designation}}">
+                                            {{y?.designation}}</p>
+
+                                    </span>
+                                    <span class="col-2  p-r-0">
+                                        <p class="truncate"
+                                            [style.color]="y?.status === 'Lodged' || y?.status === 'Lodged-InProgress' ? '#dddddd' : ''">
+                                            {{y?.status}}</p>
+
+                                    </span>
+                                    <span class="col-2  p-r-0">
+                                        <p class="truncate">
+                                            {{y?.lodgementDraftDocuments.length}} Documents</p>
+
+                                    </span>
+                                    <span class="col-1">
+                                        <div class="dropdown menu" style="float: right" [hidden]="preview">
+                                            <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu2"
+                                                #menuTrigger="matMenuTrigger" class="hover-display"
+                                                [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                            </span>
+                                            <mat-menu style="display: flex-end;" #optionsMenu2="matMenu"
+                                                [overlapTrigger]="true">
+                                                <button mat-menu-item
+                                                    (click)="UploadLodgeDoc(data.stepId,y.requestId, data, y?.designation)"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                    <mat-icon matTooltip="Info"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        upload_file
+                                                    </mat-icon> Document upload
+                                                </button>
+                                                <button mat-menu-item
+                                                    (click)="navigateTaskProfile(y?.reservationWorkflowId)"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                    <mat-icon matTooltip="View Property" color="primary"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        visibility
+                                                    </mat-icon> View {{y?.reservationReferenceNumber}}
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+
+                                    </span>
+                                </div>
+
+                                <div fxFlex="1 0 100%" fxLayout="row wrap" fxLayoutAlign="start center"
+                                    *ngIf="!preview && !readonly">
+                                    <span class="col-3 p-r-0" style="display: inline-flex;">
+                                        <mat-icon *ngIf="data.requestReason === '   ' && i !== 1"
+                                            style="cursor: pointer; font-size: 25px; margin: 2px;color:'#FFCC00'">
+                                        </mat-icon>
+                                        &nbsp;&nbsp;
+                                        <p class="truncate" style="cursor: pointer;"
+                                            matTooltip="{{y?.parentParcels?.designation}}">
+                                            <!-- {{y.designation}} -->
+                                            {{y?.parentParcels?.designation}}
+                                        </p>
+
+                                    </span>
+                                    <span class="col-1">
+                                        <!-- <div class="dropdown menu" style="float: right" [hidden]="preview || readonly"
+                                                                                    *ngIf="data.requestReason === 'Subdivsion' && i == 0">
+                                                                                    <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu"
+                                                                                        #menuTrigger="matMenuTrigger" class="hover-display"
+                                                                                        [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                                                        <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                                                                    </span>
+                                                                                    <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
+                                                                                        [overlapTrigger]="true">
+                                                                                        <button mat-menu-item
+                                                                                            style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                                                            <mat-icon matTooltip="View Property" color="primary"
+                                                                                                style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                                                                visibility
+                                                                                            </mat-icon> View
+                                                                                        </button>
+                                                                                    </mat-menu>
+                                                                                </div> -->
+                                        <div class="dropdown menu" style="float: right" [hidden]="preview"
+                                            *ngIf="data.requestReason !== 'Subdivsion'">
+                                            <span matTooltip=" More Options" [matMenuTriggerFor]="optionsMenu"
+                                                #menuTrigger="matMenuTrigger" class="hover-display"
+                                                [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                            </span>
+                                            <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
+                                                [overlapTrigger]="true">
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="navigateToLandProfile(y?.parentParcels?.lpi, y?.parentParcels?.recordId)">
+                                                    <mat-icon matTooltip="View Request" color="primary"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        visibility
+                                                    </mat-icon> View
+                                                </button>
+                                                <button mat-menu-item [hidden]="readonly"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="deleteRequest(y)">
+                                                    <mat-icon matTooltip="Remove Request"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        delete
+                                                    </mat-icon> Remove
+                                                </button>
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="landInfo(y)">
+                                                    <mat-icon matTooltip="Info"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        info
+                                                    </mat-icon> Info
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </span>
+
+                                    <span class="col-3 p-r-0">
+                                        <p class="truncate" matTooltip="{{y?.designation}}">
+                                            {{y?.designation}}</p>
+
+                                    </span>
+                                    <span class="col-2  p-r-0">
+                                        <p class="truncate"
+                                            [style.color]="y?.status === 'Lodged' || y?.status === 'Lodged-InProgress' ? '#dddddd' : ''">
+                                            {{y?.status}}</p>
+
+                                    </span>
+                                    <span class="col-2  p-r-0">
+                                        <p class="truncate">
+                                            {{y?.lodgementDraftDocuments.length}} Documents</p>
+
+                                    </span>
+                                    <span class="col-1">
+                                        <div class="dropdown menu" style="float: right" [hidden]="preview">
+                                            <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu2"
+                                                #menuTrigger="matMenuTrigger" class="hover-display"
+                                                [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                            </span>
+                                            <mat-menu style="display: flex-end;" #optionsMenu2="matMenu"
+                                                [overlapTrigger]="true">
+                                                <button mat-menu-item
+                                                    (click)="UploadLodgeDoc(data.stepId,y.requestId, data, y?.designation)"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                    <mat-icon matTooltip="Info"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        upload_file
+                                                    </mat-icon> Document upload
+                                                </button>
+                                                <button mat-menu-item
+                                                    (click)="navigateTaskProfile(y?.reservationWorkflowId)"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                    <mat-icon matTooltip="View Property" color="primary"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        visibility
+                                                    </mat-icon> View {{y?.reservationReferenceNumber}}
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </span>
+                    </mat-card-content>
+                    <mat-card-footer style="background-color: #f1f1f1;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="col">
+                                    <button class="download-css float-left"  [hidden]="preview || readonly"
+                                        style="border:none;text-align: right;float:right;cursor: pointer;background-color: transparent;margin-left:10px">
+                                        <mat-icon matTooltip="Upload"  [hidden]="preview || readonly"
+                                            style="cursor: pointer; font-size: 32px;float: right;">
+                                            upload_file
+                                        </mat-icon>
+                                    </button>
+
+                                    <button class="map-css float-left"
+                                        style="border:none;text-align: right;float:right;cursor: pointer;background-color: transparent;margin-left:10px">
+                                        <mat-icon matTooltip="View on map"
+                                            (click)="viewOnMap(data?.stepId, steps?.draftId)"
+                                            style="cursor: pointer; font-size: 32px;float: right;">
+                                            map
+                                        </mat-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="col-md-6 ">
+                                <span style="float:right; margin: 10px;">
+                                    <span>
+                                        <a style="color: blue;cursor: pointer;" (click)="viewDetails(data?.stepId)">No.
+                                            of document
+                                        </a> : {{data.totalDocuments}}
+                                    </span>
+                                    <!-- &nbsp;&nbsp;
+                                    <span>
+                                        <a style="color: blue;cursor: pointer;" (click)="viewDetails()">No. of pages
+                                        </a> : {{data.page}}
+                                    </span> -->
+                                    <!-- &nbsp;&nbsp;
+                                    <span>
+                                        <a style="color: blue;cursor: pointer;" (click)="viewDetails(data?.stepId)">Estimated Cost
+                                            (R) </a> : {{data.Cost}}
+                                    </span> -->
+                                </span>
+                            </div>
+                        </div>
+                    </mat-card-footer>
+                </mat-card>
+            </span>
+
+
+        </span>
+    </div>
+</div>
+
+<div class="mt-4" *ngIf="(lodgeDraftData == null || lodgeDraftData.length == 0) && (!preview && !readonly)">
+    <center>No Data available. <a style="color: blue;cursor: pointer;" (click)="addDocument()">Click here to add new
+            Lodgement document / purpose</a></center>
+</div>
+<div [hidden]="readonly">
+    <button mat-fab class="menu-button bover" (click)="addDocument()" matTooltip="Add lodgement document/purpose">
+        <i class="material-icons">add</i>
+    </button>
+</div>

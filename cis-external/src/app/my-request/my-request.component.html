@@ -1,0 +1,1244 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div>
+
+            <div class="row">
+                <span class="col">
+                    <p class="heading">{{myRequest.processName}} : {{myRequest.actionRequired}} - {{myRequest.referenceNumber}}</p>
+                </span>
+            </div>
+
+            <div class="card cardNew">
+                <div class="row detail" id="desktop-tab">
+                    <div class="p-0 left-col"  [ngClass]="[showSideCollapser ? '' : 'small']">
+                        <div class="collapser">
+                            <mat-icon (click)="showSideCollapser=!showSideCollapser">
+                                {{showSideCollapser ? 'chevron_left' : 'chevron_right'}}
+                            </mat-icon>
+                        </div>
+                        <div *ngFor='let item of menuItems'>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div [ngClass]="[item.isActive ? 'link-active' : '']" (click)="changeTab(item.id)"
+                                        class="row profile-link left-col-button">
+                                        <div class="col-md-2">
+                                            <img [src]="item.isActive ? item.activeIconUrl : item.inActiveIconUrl"
+                                                class="my-2 image" alt="">
+                                        </div>
+                                        <div class="col-md-10" *ngIf="showSideCollapser">
+                                            <p class="desc-text m-0">{{item.title}}</p>
+                                            <p class="info-text m-0">{{item.description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-col" [ngClass]="[showSideCollapser ? '' : 'big']">
+                        <div *ngIf="activeTabId == 1 && myRequest.processName !== 'Referral Task'" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <p class="sub-heading">Request Logged by {{this.requestorInformation?.requestLoggedBy?.firstName == null ? '':this.requestorInformation?.requestLoggedBy?.firstName + ' ' +
+                                this.requestorInformation?.requestLoggedBy?.surName == null ? '' : this.requestorInformation?.requestLoggedBy?.surName}}</p>
+                            <!-- <p class="sub-heading">Type: </p> -->
+                            <div class="row mx-0">
+                                <div class="col-8">
+                                    <form [formGroup]="RequestersInfo">
+                                        <mat-form-field appearance="outline" class="input-margin">
+                                            <mat-label>Email</mat-label>
+                                            <input formControlName="email" matInput readonly />
+                                        </mat-form-field>
+                                        <span class="row mx-0">
+                                            <span class="col-6 pl-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>First Name</mat-label>
+                                                    <input formControlName="firstName" matInput readonly />
+                                                </mat-form-field>
+                                            </span>
+                                            <span class="col-6 pr-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>Last Name</mat-label>
+                                                    <input formControlName="lastName" matInput readonly />
+                                                </mat-form-field>
+                                            </span>
+                                        </span>
+                                        <span class="row mx-0">
+                                            <span class="col-6 pl-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                <mat-label>Phone</mat-label>
+                                                <input formControlName="phone" matInput readonly />
+                                            </mat-form-field>
+                                            </span>
+                                        </span>
+                                    </form>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row" *ngIf="requestor !== undefined">
+                                <div class="col-12 col-md-6 col-lg-4 m-t-10">
+                                  <p>Are you the requestor of data?</p>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4 m-t-10">
+                                  <mat-radio-group disabled [(ngModel)]="requestor">
+                                    <mat-radio-button class="m-r-10" value="Yes">Yes</mat-radio-button>
+                                    <mat-radio-button value="No">No</mat-radio-button>
+                                  </mat-radio-group>
+                                </div>
+                              </div>
+                            <form [formGroup]="requesterForm">
+                                <div *ngIf="requestor === 'No' || requestor === undefined" class=" m-t-10">
+                                    <div class="row">
+                                        <div *ngIf="requestor === 'No'" class="col-12 col-md-6 col-lg-4">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Requestor</mat-label>
+                                            <mat-select disabled [(ngModel)]="requestorClient"
+                                              [ngModelOptions]="{ standalone: true }" matInput>
+                                                <mat-option [value]="requestorClient">
+                                                    {{requestorClient}}
+                                                </mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Requestor Name</mat-label>
+                                            <input readonly formControlName="requesterName" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Requestor Surname</mat-label>
+                                            <input readonly formControlName="requesterSurame" matInput required />
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                                            requestorClient == 'ANONYMOUS' ||
+                                            requestorClient == 'SMS' ||
+                                            requestorClient == 'TELEPHONE'
+                                          ">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Contact Number</mat-label>
+                                            <input readonly formControlName="contactNumber" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                                            requestorClient == 'ANONYMOUS' ||
+                                            requestorClient == 'EMAIL'
+                                          ">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input readonly formControlName="Email" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                                            requestorClient == 'ANONYMOUS' ||
+                                            requestorClient == 'FAX'
+                                          ">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Fax</mat-label>
+                                            <input readonly formControlName="Fax" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                                            requestorClient == 'ANONYMOUS' ||
+                                            requestorClient == 'POST' ||
+                                            requestorClient == 'COURIER'
+                                          ">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 1</mat-label>
+                                            <input readonly formControlName="Address1" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                                            requestorClient == 'ANONYMOUS' ||
+                                            requestorClient == 'POST' ||
+                                            requestorClient == 'COURIER'
+                                          ">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 2</mat-label>
+                                            <input readonly formControlName="Address2" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                                            requestorClient == 'ANONYMOUS' ||
+                                            requestorClient == 'POST' ||
+                                            requestorClient == 'COURIER'
+                                          ">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 3</mat-label>
+                                            <input readonly formControlName="Address3" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                                            requestorClient == 'ANONYMOUS' ||
+                                            requestorClient == 'POST' ||
+                                            requestorClient == 'COURIER'
+                                          ">
+                                          <mat-form-field appearance="outline">
+                                            <mat-label>Postal Code</mat-label>
+                                            <input readonly formControlName="PostalCode" matInput />
+                                          </mat-form-field>
+                                        </div>
+                                      </div>
+                                    </div>
+                            </form>
+                            <p class="sub-heading">Delivery Information </p>
+                            <div class="row mx-0">
+                                <div class="col-8">
+                                    <form [formGroup]="RequestersInfo">
+                                        <mat-form-field appearance="outline" class="input-margin">
+                                            <mat-label>Request Type</mat-label>
+                                            <input formControlName="requestType" matInput readonly />
+                                        </mat-form-field>
+                                        <span *ngIf="myRequest.processName == 'Information Request'" class="row mx-0">
+                                            <span class="col-6 pl-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>Delivery Method</mat-label>
+                                                    <input formControlName="deliveryMethod" matInput readonly />
+                                                </mat-form-field>
+                                            </span>
+                                            <span class="col-6 pr-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>Data Delivery Media</mat-label>
+                                                    <input formControlName="formatType" matInput readonly />
+                                                </mat-form-field>
+                                            </span>
+                                        </span>
+                                        <div *ngIf="requestorInformation?.deliveryMethod != 'ELECTRONIC' && requestorInformation?.deliveryMethod != 'COLLECTION'">
+                                            <mat-form-field appearance="outline" class="input-margin"
+                                                *ngIf="myRequest.processName == 'Information Request' && requestorInformation?.deliveryMethod != 'COLLECTION'">
+                                                <mat-label>Phone</mat-label>
+                                                <input formControlName="phone" matInput readonly />
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" class="input-margin"
+                                                *ngIf="myRequest.processName == 'Information Request'">
+                                                <mat-label>Collection Address</mat-label>
+                                                <input formControlName="collectionAddress" matInput readonly />
+                                            </mat-form-field>
+                                            <span *ngIf="myRequest.processName == 'Information Request'" class="row mx-0">
+                                                <span class="col-6 pl-0" *ngIf="RequestersInfo.value.add1 !== undefined">
+                                                    <mat-form-field appearance="outline" class="input-margin">
+                                                        <mat-label>Address 1</mat-label>
+                                                        <input formControlName="add1" matInput readonly />
+                                                    </mat-form-field>
+                                                </span>
+                                                <span class="col-6 pr-0" *ngIf="RequestersInfo.value.add2 !== undefined">
+                                                    <mat-form-field appearance="outline" class="input-margin">
+                                                        <mat-label>Address 2</mat-label>
+                                                        <input formControlName="add2" matInput readonly />
+                                                    </mat-form-field>
+                                                </span>
+                                            </span>
+
+                                            <span *ngIf="myRequest.processName == 'Information Request'" class="row mx-0">
+                                                <span class="col-6 pl-0" *ngIf="RequestersInfo.value.add3 !== undefined">
+                                                    <mat-form-field appearance="outline" class="input-margin">
+                                                        <mat-label>Address 3</mat-label>
+                                                        <input formControlName="add3" matInput readonly />
+                                                    </mat-form-field>
+                                                </span>
+                                                <span class="col-6 pr-0" *ngIf="RequestersInfo.value.zipcode !== undefined">
+                                                    <mat-form-field appearance="outline" class="input-margin">
+                                                        <mat-label>Zip Code</mat-label>
+                                                        <input formControlName="zipcode" matInput readonly />
+                                                    </mat-form-field>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </form>
+                                    <div class="row" *ngIf="ownMedia !== undefined">
+                                        <div class="col-12">
+                                            <p>I will give my own media to department : {{ownMedia}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="activeTabId == 1 && myRequest.processName === 'Referral Task'" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <p class="sub-heading">Request Logged by {{this.requestorInformation?.requestLoggedBy?.firstName == null ? '':this.requestorInformation?.requestLoggedBy?.firstName + ' ' +
+                                this.requestorInformation?.requestLoggedBy?.surName == null ? '' : this.requestorInformation?.requestLoggedBy?.surName}}</p>
+                            <!-- <p class="sub-heading">Type: </p> -->
+                            <div class="row mx-0">
+                                <div class="col-8">
+                                    <form [formGroup]="RequestersInfo">
+                                        <mat-form-field appearance="outline" class="input-margin">
+                                            <mat-label>Email</mat-label>
+                                            <input formControlName="email" matInput readonly />
+                                        </mat-form-field>
+                                        <span class="row mx-0">
+                                            <span class="col-6 pl-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>First Name</mat-label>
+                                                    <input formControlName="firstName" matInput readonly />
+                                                </mat-form-field>
+                                            </span>
+                                            <span class="col-6 pr-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>Last Name</mat-label>
+                                                    <input formControlName="lastName" matInput readonly />
+                                                </mat-form-field>
+                                            </span>
+                                        </span>
+                                        <span class="row mx-0">
+                                            <span class="col-6 pl-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                <mat-label>Phone</mat-label>
+                                                <input formControlName="phone" matInput readonly />
+                                            </mat-form-field>
+                                            </span>
+                                        </span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="activeTabId == 2" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <p class="sub-heading">Request Item</p>
+                            <div>
+                                <div *ngFor="let item of ItemData;let i = index ">
+                                    <div class="row" *ngIf="item?.templateListItemId !== 567">
+                                        <div class="col-12 col-md-4">
+                                            <!-- <div class="row">
+                                                <img [src]="item.searchDetails.tempPreview?.preview" alt="" class="main-image" height="250"
+                                                    matTooltip="{{item.searchDetails.tempPreview?.scandate | date : 'dd/MMMM/y HH:mm:ss' }}">
+                                            </div>
+                                            <div class="row" style="margin-top: 16px;">
+                                                <div *ngFor="let img of item.searchDetails.imageArray" class="col-3 pr-1">
+                                                    <img (click)="selectImage($event)"
+                                                         [ngClass]="item.searchDetails.tempPreview.preview === img.preview ? 'selected-image' : 'bottom-image'"
+                                                         [src]="img.thumbnail"
+                                                         alt="" id="{{img.preview}}">
+                                                </div>
+                                            </div> -->
+                                            <div class="col">
+                                                <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                border-color: rgba(0,0,0,.2);">
+                                                <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                                                    width: '70px',
+                                                    height: '70px',
+                                                    'border-radius': '10px'
+                                                  }">
+                                                </ngx-skeleton-loader>
+                                                    <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions" [images]="item.searchDetails.imageArray" class="ngx-gallery"></ngx-gallery>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-8">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Region</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails.region}}</p>
+                                                        </span>
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Parcel Type</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails.parcelType}}
+                                                            </p>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-12 col-md-6 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Parcel</p>
+                                                            <p class="desc-text mt-0">{{(item.searchDetails.parcel != null && item.searchDetails.parcel != undefined) ? item.searchDetails.parcel :
+                                                                (item.searchDetails.erfNumber != null && item.searchDetails.erfNumber != undefined ? item.searchDetails.erfNumber : (item.searchDetails.farmNumber != null && item.searchDetails.farmNumber != undefined ? item.searchDetails.farmNumber : item.searchDetails.holdingNumber))}}</p>
+                                                        </span>
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Province</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails.province}}
+                                                            </p>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-12 col-md-6 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">SG Number</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails.sgNo}}</p>
+                                                        </span>
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">File Size(KB)</p>
+                                                            <p class="desc-text mt-0">
+                                                                {{item.searchDetails.totalFileSize}}</p>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-12 col-md-6 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Total Pages</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails.totalPages}}
+                                                            </p>
+                                                        </span>
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">LPI</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails.lpi}}</p>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-12 col-md-6 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Municipality</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails?.localMunicipalityName}}
+                                                            </p>
+                                                        </span>
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Portion</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails?.portion}}</p>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-12 col-md-6 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Document Type</p>
+                                                            <p class="desc-text mt-0">
+                                                                {{item.searchDetails?.documentType}}
+                                                            </p>
+                                                        </span>
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">Document Sub Type</p>
+                                                            <p class="desc-text mt-0">
+                                                                {{item.searchDetails?.documentSubType}}</p>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-12 col-md-6 gray-box" *ngIf="item.searchDetails.filterName != undefined">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <p class="info-text mb-0">{{item.searchDetails.filterName}}</p>
+                                                            <p class="desc-text mt-0">{{item.searchDetails.searchNumber}}</p>
+                                                        </span>
+                                                        <span class="col">
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 col-md-12 mt-5" *ngIf="item.cartData.diagrams">
+                                                    <div class="row">
+                                                        <div class="col text">CADASTRAL IMAGES</div>
+                                                    </div>
+                                                    <div class="row mx-0" style="margin-top: 43px;">
+                                                        <div class="col-12 p-0">
+                                                            <table mat-table [dataSource]="item.cartData.diagramsData"
+                                                                class="table-margin" style="width: 100%;">
+                                                                <ng-container matColumnDef="sno">
+                                                                    <th mat-header-cell *matHeaderCellDef
+                                                                        style="width: 33%;">Sno.</th>
+                                                                    <td mat-cell
+                                                                        *matCellDef="let element;let i = index;">{{i+1}}
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="format">
+                                                                    <th mat-header-cell *matHeaderCellDef
+                                                                        style="width: 33%;">Format</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.format.caption}}</td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="type">
+                                                                    <th mat-header-cell *matHeaderCellDef
+                                                                        style="width: 34%;">Type</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.type.caption}}</td>
+                                                                </ng-container>
+                                                                <tr mat-header-row *matHeaderRowDef="diagramColumns">
+                                                                </tr>
+                                                                <tr mat-row
+                                                                    *matRowDef="let row; columns: diagramColumns;"></tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-lg-6 mt-5" *ngIf="item.cartData.general">
+                                                    <div class="row">
+                                                        <div class="col text">General Data</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <table mat-table [dataSource]="item.cartData.generalData"
+                                                                class="w-100">
+                                                                <ng-container matColumnDef="sno">
+                                                                    <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                                                                    <td mat-cell
+                                                                        *matCellDef="let element;let i = index;">{{i+1}}
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="format">
+                                                                    <th mat-header-cell *matHeaderCellDef>Format</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.format.caption}}</td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="type">
+                                                                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.type.caption}}</td>
+                                                                </ng-container>
+                                                                <tr mat-header-row *matHeaderRowDef="columnType1"></tr>
+                                                                <tr mat-row *matRowDef="let row; columns: columnType1;">
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-lg-6 mt-5" *ngIf="item.cartData.certificates">
+                                                    <div class="row">
+                                                        <div class="col text">Certificates Data</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <table mat-table
+                                                                [dataSource]="item.cartData.certificatesData"
+                                                                class="w-100">
+                                                                <ng-container matColumnDef="sno">
+                                                                    <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                                                                    <td mat-cell
+                                                                        *matCellDef="let element;let i = index;">{{i+1}}
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="certType">
+                                                                    <th mat-header-cell *matHeaderCellDef>Certificate
+                                                                        Type</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.certType.caption}}</td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="format">
+                                                                    <th mat-header-cell *matHeaderCellDef>Format</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element?.format?.caption}}</td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="type">
+                                                                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element?.type?.caption}}</td>
+                                                                </ng-container>
+                                                                <tr mat-header-row *matHeaderRowDef="columnType2"></tr>
+                                                                <tr mat-row *matRowDef="let row; columns: columnType2;">
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-lg-6 mt-5" *ngIf="item.cartData.spatial">
+                                                    <div class="row">
+                                                        <div class="col text">Spatial Data</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <table mat-table [dataSource]="item.cartData.spatialData"
+                                                                class="w-100">
+                                                                <ng-container matColumnDef="sno">
+                                                                    <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                                                                    <td mat-cell
+                                                                        *matCellDef="let element;let i = index;">{{i+1}}
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="type">
+                                                                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.type.caption}}</td>
+                                                                </ng-container>
+                                                                <tr mat-header-row *matHeaderRowDef="columnType3"></tr>
+                                                                <tr mat-row *matRowDef="let row; columns: columnType3;">
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-lg-6 mt-5" *ngIf="item.cartData.alphaNumerics">
+                                                    <div class="row">
+                                                        <div class="col text">Alpha-Numerics Data</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <table mat-table
+                                                                [dataSource]="item.cartData.alphaNumericsData"
+                                                                class="w-100">
+                                                                <ng-container matColumnDef="sno">
+                                                                    <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                                                                    <td mat-cell
+                                                                        *matCellDef="let element;let i = index;">{{i+1}}
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="type">
+                                                                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.type.caption}}</td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="action">
+                                                                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        <mat-icon class="icon-css"
+                                                                            matTooltip="Delete Item" (click)="delete()">
+                                                                            delete
+                                                                        </mat-icon>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <tr mat-header-row *matHeaderRowDef="columnType3"></tr>
+                                                                <tr mat-row *matRowDef="let row; columns: columnType3;">
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-lg-6 mt-5" *ngIf="item.cartData.coordinates">
+                                                    <div class="row">
+                                                        <div class="col text">Coordinate Data</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <table mat-table [dataSource]="item.cartData.coordinateData"
+                                                                class="w-100">
+                                                                <ng-container matColumnDef="sno">
+                                                                    <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                                                                    <td mat-cell
+                                                                        *matCellDef="let element;let i = index;">{{i+1}}
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="type">
+                                                                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        {{element.type.caption}}</td>
+                                                                </ng-container>
+                                                                <tr mat-header-row *matHeaderRowDef="columnType4"></tr>
+                                                                <tr mat-row *matRowDef="let row; columns: columnType4;">
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-lg-6 mt-5" *ngIf="item.cartData.advisory">
+                                                    <div class="row">
+                                                        <div class="col text">Advisory</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Advisory</mat-label>
+                                                                <input matInput [value]="item.cartData.advisoryData"
+                                                                    disabled>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-lg-6 mt-5" *ngIf="item.cartData.misc">
+                                                    <div class="row">
+                                                        <div class="col text">Miscellaneous</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Miscellaneous</mat-label>
+                                                                <input matInput [value]="item.cartData.miscData"
+                                                                    disabled>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3" *ngIf="item?.templateListItemId === 567">
+                                        <div class="col-12 col-md-4">
+                                            <div class="row">
+                                                <div class="gallery-wrapper"
+                                                    style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                                -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                                border-color: rgba(0,0,0,.2);height: 380px;width: 300px;">
+                                                    <span fxLayoutAlign="center center">No Preview available</span>
+    
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                        <div class="col col-md-8">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <span class="info-text">Category</span>
+                                                            <br>
+                                                            <span
+                                                                class="desc-text">{{item.searchDetails?.categoryName}}</span>
+                                                        </span>
+                                                        <span class="col">
+                                                            <span class="info-text">Subcategory</span>
+                                                            <br>
+                                                            <span class="desc-text">{{item.searchDetails?.name}}</span>
+                                                        </span>
+                                                    </span>
+                                                </div>
+    
+                                                <div class="col-12 col-md-12 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <span class="desc-text"><b>Description</b></span>
+                                                            <br>
+                                                            <span
+                                                                class="info-text">{{item.searchDetails?.description}}</span>
+                                                        </span>
+                                                    </span>
+                                                </div>
+    
+                                                <div class="col-12 col-md-12 gray-box">
+                                                    <span class="desc-text"><b>Information Type</b></span>
+    
+                                                    <span class="row info-text">
+                                                        <div class="col-12 col-md-6">
+                                                            <!-- <mat-checkbox [checked]='true' [disableRipple]="true"
+                                                                (click)="$event.preventDefault()"> -->
+                                                                <span>{{item.searchDetails?.categoryName}} - <b>{{searchDetails?.name}}</b></span>
+                                                            <!-- </mat-checkbox> -->
+                                                        </div>
+                                                    </span>
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6">
+                                                            <span class="row">
+                                                                <span class="col">
+                                                                    <mat-form-field appearance="outline">
+                                                                        <mat-label>Format</mat-label>
+                                                                        <mat-select matInput disabled
+                                                                            [(ngModel)]="item.cartData.ngiData.format != null?item.cartData.ngiData.format.itemId:item.cartData.ngiData.format">
+                                                                            <mat-option *ngFor="let y of formatType"
+                                                                                [value]="y!= null?y.itemId:y">
+                                                                                {{y.caption}}
+                                                                            </mat-option>
+                                                                        </mat-select>
+                                                                    </mat-form-field>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="col-12 col-md-12 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <span class="desc-text"><b>Notes</b></span>
+                                                            <br>
+                                                            <div class="row f-css">
+                                                                <mat-form-field appearance="outline">
+                                                                    <!-- <mat-label>Notes</mat-label> -->
+                                                                    <textarea [(ngModel)]="item.cartData.ngiData.notes"
+                                                                        matInput style="color: black;"
+                                                                        disabled></textarea>
+                                                                    <!-- <span class="pull-right char"
+                                                                        style="color: black;"><em>{{ 1000 -
+                                                                            notes?.length }} characters
+                                                                            left</em></span> -->
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="activeTabId == 3" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <p class="sub-heading">Proof of payment upload</p>
+                            <form [formGroup]="proofOfPayment">
+                                <div class="row  mx-0">
+                                    <div class="col-md-4">
+                                            <mat-label>Invoice Amount</mat-label>
+                                            <br>
+                                            <mat-label> {{paymentInfo?.invoiceAmount == null ? 'R 0' : 'R ' + paymentInfo?.invoiceAmount}}</mat-label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-label>Due Date</mat-label>
+                                        <br>
+                                        <mat-label>{{paymentInfo?.invoiceDueDate != null ? (paymentInfo?.invoiceDueDate | date: 'dd-MMM-yyyy') : ''}}</mat-label>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-icon class="attach" style=" font-size: 25px;cursor: pointer;" (click)="downloadInvoice()">attach_file</mat-icon>
+                                    <mat-label style="margin-left: 7px; margin-bottom: 5px;">Download Invoice</mat-label>
+                                   
+                                   
+                                </div>
+                                </div>
+                                <div class="row mx-0">
+                                    <div class="col-4">
+                                        <!-- <mat-form-field class="input-margin" appearance="outline">
+                                            <mat-label>Other Documents</mat-label>
+                                            <mat-select matInput formControlName="documentTypeId"
+                                            [(ngModel)]="documentTypeIdSelected">
+                                                <mat-option selected
+                                                    [value]="133">
+                                                    POP
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field> -->
+                                        <mat-form-field appearance="outline" class="mt-2">
+                                            <mat-label>Choose File</mat-label>
+                                            <input matInput disabled disabled [value]="uploadedFileName">
+                                            <button mat-icon-button matSuffix (click)="fileInput.click()">
+                                                <mat-icon class="attach">attach_file</mat-icon>
+                                            </button>
+                                            <input hidden (change)="selectFile($event)" #fileInput type="file"
+                                                id="newFile" formControlName="file" required>
+                                        </mat-form-field>
+                                        <small
+                                        *ngIf="proofOfPayment.controls['file'].hasError('required') && proofOfPayment.controls['file'].touched"
+                                        class="text-danger support-text">File Required.</small>
+
+                                        <mat-form-field class="input-margin mt-2" appearance="outline">
+                                            <mat-label>Payment Date</mat-label>
+                                            <input matInput [matDatepicker]="dp3" [max]="maxDate" formControlName="paymentDate" required>
+                                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                                        </mat-form-field>
+                                        <small
+                                            *ngIf="proofOfPayment.controls['paymentDate'].hasError('required') && proofOfPayment.controls['paymentDate'].touched"
+                                            class="text-danger support-text">Payment Date Required.</small>
+
+                                        <mat-form-field class="input-margin mt-2" appearance="outline">
+                                            <mat-label>Paid Amount (R)</mat-label>
+                                            <input matInput formControlName="paidAmount" required>
+                                        </mat-form-field>
+                                        <small
+                                            *ngIf="proofOfPayment.controls['paidAmount'].hasError('required') && proofOfPayment.controls['paidAmount'].touched"
+                                            class="text-danger support-text">Paid Amount Required.</small>
+                                            <br>
+                                            <small
+                                            *ngIf="proofOfPayment.controls['paidAmount'].hasError('pattern') && proofOfPayment.controls['paidAmount'].touched"
+                                            class="text-danger support-text">Paid Amount must be numeric with 2 decimal point</small>
+
+                                        <mat-form-field class="input-margin mt-2" appearance="outline">
+                                            <mat-label>Referrence Number</mat-label>
+                                            <input matInput formControlName="paymentReferenceNo" required>
+                                        </mat-form-field>
+                                        <small
+                                        *ngIf="proofOfPayment.controls['paymentReferenceNo'].hasError('required') && proofOfPayment.controls['paymentReferenceNo'].touched"
+                                        class="text-danger support-text">Payment Reference No. Required.</small>
+
+                                        <mat-form-field class="input-margin mt-2" appearance="outline">
+                                            <mat-label>Notes</mat-label>
+                                            <textarea matInput rows="4" formControlName="comments" required></textarea>
+                                        </mat-form-field>
+                                        <small
+                                        *ngIf="proofOfPayment.controls['comments'].hasError('required') && proofOfPayment.controls['comments'].touched"
+                                        class="text-danger support-text">Comments Required.</small>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row mx-0 absolute absoluteNew">
+                                <div class="col p-0">
+                                    <div>
+                                        <button class="submit-button btn1 submit float-right"
+                                            (click)="uploadProofOfPayment()">Submit</button>
+                                        <!-- <button class="back-button btn1 cancel float-right"
+                                            (click)="close()">Cancel</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="activeTabId == 4" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <p class="sub-heading">Query Details</p>
+                            <div class="container-fluid">
+                                    <div class="row mx-0">
+                                        <div class="col-8">
+                                                <mat-form-field class="input-margin" appearance="outline">
+                                                    <mat-label>Issue Type</mat-label>
+                                                    <input matInput [(ngModel)]="issueType" readonly>
+                                                </mat-form-field>
+                                                <mat-form-field class="input-margin" appearance="outline">
+                                                    <mat-label>Description</mat-label>
+                                                    <input matInput [(ngModel)]="queryDescription" readonly>
+                                                </mat-form-field>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="activeTabId == 5 " style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <p class="sub-heading">Query Feedback</p>
+                            <form>
+                                <div class="row mx-0">
+                                    <div class="col-4">
+                                        <mat-label class="text-muted">Are you happy with reaponse?</mat-label>
+                                        <mat-radio-group class="radio-group">
+                                            <mat-radio-button value="1">Yes</mat-radio-button>
+                                            <mat-radio-button value="2">No</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <div class="row  mx-0">
+                                    <div class="col-8">
+                                        <mat-label class="text-muted">Note</mat-label>
+                                        <mat-form-field class="input-margin" appearance="outline">
+
+                                            <textarea readonly matInput></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div style="margin-left: 1.7%; margin-right: 1.7%;" *ngIf="activeTabId == 6">
+                            <p class="sub-heading">Notify Manager Details</p>
+                            <div class="row mx-0">
+                                <div class="col-8">
+                                    <form [formGroup]="notifyReview">
+                                        <mat-form-field appearance="outline" class="input-margin">
+                                            <mat-label>Email</mat-label>
+                                            <input formControlName="email" matInput readonly />
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline" class="input-margin">
+                                            <mat-label>Name</mat-label>
+                                            <input formControlName="name" matInput readonly />
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline" class="input-margin">
+                                            <mat-label>Search Type Name</mat-label>
+                                            <input formControlName="searchTypeName" matInput readonly />
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline" class="input-margin">
+                                            <mat-label>Search Number</mat-label>
+                                            <input formControlName="searchNumber" matInput readonly />
+                                        </mat-form-field>
+
+
+                                        <!-- <span *ngIf="taskDetail.processName == 'Information Request'" class="row mx-0">
+                                            <span class="col-6 pl-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>Address 3</mat-label>
+                                                    <input formControlName="add3" matInput readonly>
+                                                </mat-form-field>
+                                            </span>
+                                            <span class="col-6 pr-0">
+                                                <mat-form-field appearance="outline" class="input-margin">
+                                                    <mat-label>Zip Code</mat-label>
+                                                    <input formControlName="zipcode" matInput readonly>
+                                                </mat-form-field>
+                                            </span>
+                                        </span> -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-left: 1.7%; margin-right: 1.7%;" *ngIf="activeTabId == 7">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <mat-form-field appearance="outline" aria-readonly="" class="w-100">
+                                            <mat-label>Comments</mat-label>
+                                            <textarea matInput rows="4" readonly [(ngModel)]="comments"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown menu" *ngIf="activeTabId == 5">
+                            <span [matMenuTriggerFor]="dropdown">
+                                <img src="assets/images/Three dots.png" alt="">
+                            </span>
+                            <mat-menu #dropdown="matMenu">
+
+                                <a mat-menu-item (click)="cancelRequest()">
+                                    <mat-icon>cancel</mat-icon>
+                                    <span>Cancel Request</span>
+                                </a>
+                            </mat-menu>
+                        </div>
+                        <div class="dropdown menu" *ngIf="activeTabId == 3">
+                            <span [matMenuTriggerFor]="dropdown">
+                                <img src="assets/images/Three dots.png" alt="">
+                            </span>
+                            <mat-menu #dropdown="matMenu">
+                                <a (click)="cancelRequest()" mat-menu-item>Cancel Request</a>
+                                <!-- <a mat-menu-item>Log Query</a> -->
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--- accroding start here-->
+            <div class="mobile-according" id="mobileAccording">
+
+
+                <div class="col-md-12 box extra-box">
+
+                    <div>
+                        <p class="desc-text">Request Code:</p>
+                        <p class="text">REQ1561</p>
+                    </div>
+                    <div>
+                        <p class="desc-text">Task Type:</p>
+                        <p class="text">Info Request</p>
+                    </div>
+                    <div>
+                        <p class="desc-text">Task Situation:</p>
+                        <p class="text">Priority</p>
+                    </div>
+                    <div>
+                        <p class="desc-text">Task Status:</p>
+                        <p class="text">Open</p>
+                    </div>
+
+                </div>
+
+
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="assets/images/bootstrap-icons/briefcase.svg" class="icon-acc" alt="">
+                                <p class="desc-text">Requestor's Information</p>
+                                <p class="info-text">Basic info of the requestor.</p>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="accor-cnt">
+                            <p class="sub-heading">Requestor's Information</p>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <span class="row">
+                                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                            <mat-form-field class="input-margin" appearance="outline">
+                                                <mat-label>First Name</mat-label>
+                                                <input matInput>
+                                            </mat-form-field>
+                                        </span>
+                                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                            <mat-form-field class="input-margin" appearance="outline">
+                                                <mat-label>Last Name</mat-label>
+                                                <input matInput>
+                                            </mat-form-field>
+                                        </span>
+                                    </span>
+                                    <mat-form-field class="input-margin" appearance="outline">
+                                        <mat-label>Request Type</mat-label>
+                                        <mat-select matInput>
+                                            <mat-option *ngFor="let x of types" [value]="x">
+                                                {{ x.name }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <span class="row">
+                                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+                                            <mat-form-field class="input-margin" appearance="outline">
+                                                <mat-label>Data Delivery Media</mat-label>
+                                                <mat-select matInput>
+                                                    <mat-option *ngFor="let x of types" [value]="x">
+                                                        {{ x.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </span>
+                                    </span>
+                                    <span class="row">
+                                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+                                            <mat-form-field class="input-margin" appearance="outline">
+                                                <mat-label>Delivery Method</mat-label>
+                                                <mat-select matInput>
+                                                    <mat-option *ngFor="let x of types" [value]="x">
+                                                        {{ x.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="btn-section">
+                                <button class="back-button btn1 province">Move to Province</button>
+                                <button class="back-button btn1 officer">Assign to Officer</button>
+                                <button class="submit-button btn1 submit">Submit</button>
+                                <button class="back-button btn1 cancel" (click)="close()">Cancel</button>
+
+                            </div>
+
+                        </div>
+                    </mat-expansion-panel>
+
+
+
+
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="assets/images/bootstrap-icons/person-circle.svg" class="icon-acc"
+                                    alt="">
+                                <p class="desc-text">Request Item</p>
+                                <p class="info-text">Basic info of the requestor.</p>
+                            </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+
+                        <div class="accor-cnt">
+                            <p class="sub-heading">Request Items</p>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 padd-left padd-right">
+                                    <div class="card card-1 scroll">
+                                        <table mat-table [dataSource]="itemDataSource" class="table-margin">
+                                            <ng-container matColumnDef="items">
+                                                <th mat-header-cell *matHeaderCellDef>Items</th>
+                                                <td mat-cell *matCellDef="let element">{{element.items}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="actions">
+                                                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                                <td mat-cell *matCellDef="let element" class="table-bold-text"
+                                                    style="cursor: pointer;">Request Details
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="cost">
+                                                <th mat-header-cell *matHeaderCellDef>Cost</th>
+                                                <td mat-cell *matCellDef="let element"></td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="itemColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: itemColumns;"></tr>
+                                        </table>
+                                        <div class="row">
+                                            <span class="col-12">
+                                                <button class="back-button float-right"
+                                                    style="margin-right: 12px; margin-bottom: 12px;">
+                                                    <img src="assets/images/bootstrap-icons/plus.svg"
+                                                        alt="">
+                                                    Add Cost Items
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-section">
+                                <button class="back-button btn1 province">Move to Province</button>
+                                <button class="back-button btn1 officer">Assign to Officer</button>
+                                <button class="submit-button btn1 submit">Submit</button>
+                                <button class="back-button btn1 cancel" (click)="close()">Cancel</button>
+
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+
+
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="assets/images/bootstrap-icons/lock.svg" class="icon-acc" alt="">
+                                <p class="desc-text">Request Flow</p>
+                                <p class="info-text">Basic info of the requestor.</p>
+                            </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+
+                        <div class="accor-cnt">
+                            <!-- <p class="sub-heading">Request Items</p>
+                            <div class="row mx-0 w-75 justify-content-between">
+                                <p class="text">Request Code: <span class="color">REQ1561</span></p>
+                                <p class="text">Task Open Date: <span class="color">20/09/2020 05:12:09</span></p>
+                                <p class="text">Task Code: <span class="color">TASK0003005</span></p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 padd-left padd-right">
+                                    <div class="card card-1 scroll">
+                                        <table mat-table [dataSource]="flowDataSource" class="table-margin">
+                                            <ng-container matColumnDef="date">
+                                                <th mat-header-cell *matHeaderCellDef>Date</th>
+                                                <td mat-cell *matCellDef="let element">{{element.date}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="user">
+                                                <th mat-header-cell *matHeaderCellDef>User</th>
+                                                <td mat-cell *matCellDef="let element">{{element.user}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                                <td mat-cell *matCellDef="let element">{{element.action}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="duration">
+                                                <th mat-header-cell *matHeaderCellDef>Duration</th>
+                                                <td mat-cell *matCellDef="let element">{{element.duration}}</td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="flowColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: flowColumns;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="assets/images/bootstrap-icons/question-octagon.svg" class="icon-acc"
+                                    alt="">
+                                <p class="desc-text">Supporting Documents</p>
+                                <p class="info-text">Basic info of the requestor.</p>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="accor-cnt">
+                            <p class="sub-heading">Supporting Documents</p>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Attach Request Document</mat-label>
+                                        <input matInput disabled>
+                                        <button mat-icon-button matSuffix (click)="fileInput.click()">
+                                            <mat-icon class="attach">attach_file</mat-icon>
+                                        </button>
+                                        <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Payment Confirmation</mat-label>
+                                        <input matInput disabled>
+                                        <button mat-icon-button matSuffix (click)="fileInput.click()">
+                                            <mat-icon class="attach">attach_file</mat-icon>
+                                        </button>
+                                        <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Invoice</mat-label>
+                                        <input matInput disabled>
+                                        <button mat-icon-button matSuffix (click)="fileInput.click()">
+                                            <mat-icon class="attach">attach_file</mat-icon>
+                                        </button>
+                                        <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Supporting Documents</mat-label>
+                                        <input matInput disabled>
+                                        <button mat-icon-button matSuffix (click)="fileInput.click()">
+                                            <mat-icon class="attach">attach_file</mat-icon>
+                                        </button>
+                                        <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="btn-section">
+                                <button class="back-button btn1 province">Move to Province</button>
+                                <button class="back-button btn1 province">Move to Section</button>
+                                <button class="back-button btn1 officer">Assign to Officer</button>
+                                <button class="submit-button btn1 submit">Submit</button>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                </mat-accordion>
+            </div>

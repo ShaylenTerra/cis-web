@@ -1,0 +1,234 @@
+<div class="w-100 mx-0">
+    <div class="login-register-box top-spacing w-100">
+        <div class="overlay" *ngIf="isSpinnerVisible">
+            <div class="overlay__wrapper">
+                <div class="overlay__spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+        </div>
+        <div class="row w-100 mx-auto">
+            <div class="col-12 col-lg-8">
+                <span class="row rowmobile">
+                    <div class="col-md-6">
+                        <span class="col colOne">
+                            <p class="heading">My Requests</p>
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="col colOne" style="float: right; margin-top: 10px;">
+                            <form [formGroup]="serachrefform" (ngSubmit)="searchMyRequests()">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Search By Reference Number</mat-label>
+                                    <input matInput [(ngModel)]="referenceNo" formControlName="referenceNo"
+                                        (keyup)="resetMyRequests($event)">
+                                    <button type="button" mat-icon-button matSuffix>
+                                        <mat-icon type="submit" (click)="searchMyRequests()">search</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </form>
+                        </span>
+                    </div>
+                    <span class="col colTwo">
+                    </span>
+                </span>
+                <mat-card class="card-table-my-reuest">
+                    <mat-card-content class="table-tasks overflow-auto">
+                        <table mat-table [dataSource]="requestsData" class="table-margin w-100 m-0 inline-table"
+                            style="margin-bottom: 0;">
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>Select</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="referenceNumber">
+                                <th mat-header-cell *matHeaderCellDef>Reference</th>
+                                <td mat-cell *matCellDef="let element" class="my_request"
+                                    (click)="gotoRequestDetails(element)">{{element.referenceNumber}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="processName">
+                                <th mat-header-cell *matHeaderCellDef>Context</th>
+                                <td mat-cell *matCellDef="let element">{{element.processName}}</td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="actionRequired">
+                                <th mat-header-cell *matHeaderCellDef>Summary</th>
+                                <td mat-cell *matCellDef="let element">{{element.actionRequired}}</td>
+                            </ng-container> -->
+                            <ng-container matColumnDef="externalStatusCaption">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element">{{element.externalStatusCaption}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="pendingSince">
+                                <th mat-header-cell *matHeaderCellDef>Pending Since</th>
+                                <td mat-cell *matCellDef="let element">{{element.lastStatusUpdate |
+                                    dateDifference:serverDate}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="lastStatusUpdate">
+                                <th mat-header-cell *matHeaderCellDef>Last Status Updated</th>
+                                <td mat-cell *matCellDef="let element">{{element.lastStatusUpdate | date:
+                                    "d-MMM-y"}}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="requestsColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: requestsColumns;" (click)="navigate()"
+                                style="cursor: pointer;"></tr>
+                        </table>
+                        <!-- <div class="row" style="float: right;margin-top: 5px;margin-right: 2px;">
+                            {{PageFrom}} - {{PageTo}} of {{totalMyRequest}}
+                            <mat-icon style="cursor: pointer;" (click)="previous()">
+                                keyboard_arrow_left
+                            </mat-icon>
+                            &nbsp; &nbsp;<label></label>&nbsp;
+                            <mat-icon style="cursor: pointer;" (click)="next()">
+                                keyboard_arrow_right
+                            </mat-icon>
+                        </div> -->
+                        <div class="mx-auto p-10" *ngIf="requestsData === null || requestsData.length == 0">
+                            No records found
+                        </div>
+                        <div>
+                            <mat-paginator #paginator [length]="requestsLength" [pageSizeOptions]="[5]"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <br>
+                <span class="row rowmobile">
+                    <span class="col colOne">
+                        <p class="heading">My Queries</p>
+                    </span>
+                    <span class="col colTwo">
+                    </span>
+                </span>
+                <mat-card class="card-table-my-reuest">
+                    <mat-card-content class="table-tasks overflow-auto">
+                        <table mat-table [dataSource]="queriesData" class="table-margin w-100 m-0 inline-table">
+                            <ng-container matColumnDef="referenceNumber">
+                                <th mat-header-cell *matHeaderCellDef>Reference</th>
+                                <td mat-cell *matCellDef="let element" class="my_request"
+                                    (click)="gotoRequestDetails(element)">{{element.referenceNumber}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="processName">
+                                <th mat-header-cell *matHeaderCellDef>Context</th>
+                                <td mat-cell *matCellDef="let element">{{element.processName}}</td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="actionRequired">
+                                <th mat-header-cell *matHeaderCellDef>Summary</th>
+                                <td mat-cell *matCellDef="let element">{{element.actionRequired}}</td>
+                            </ng-container> -->
+                            <ng-container matColumnDef="externalStatusCaption">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element">{{element.externalStatusCaption}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="pendingSince">
+                                <th mat-header-cell *matHeaderCellDef>Pending Since</th>
+                                <td mat-cell *matCellDef="let element">{{element.lastStatusUpdate |
+                                    dateDifference:serverDate1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="lastStatusUpdate">
+                                <th mat-header-cell *matHeaderCellDef>Last Status Updated</th>
+                                <td mat-cell *matCellDef="let element">{{element.lastStatusUpdate | date:
+                                    "d-MMM-y"}}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="queriesColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: queriesColumns;"></tr>
+                        </table>
+                        <!-- <div class="row" style="float: right;margin-top: 5px;margin-right: 2px;">
+                            {{queryPageFrom}} - {{queryPageTo}} of {{totalquery}}
+                            <mat-icon style="cursor: pointer;" (click)="queryprevious()">
+                                keyboard_arrow_left
+                            </mat-icon>
+                            &nbsp; &nbsp;<label></label>&nbsp;
+                            <mat-icon style="cursor: pointer;" (click)="querynext()">
+                                keyboard_arrow_right
+                            </mat-icon>
+                        </div> -->
+                        <div>
+                            <mat-paginator #paginator [length]="queriesLength" [pageSizeOptions]="[5]"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+
+                <span class="row rowmobile">
+                    <span class="col colOne">
+                        <p class="heading">Active Tasks</p>
+                    </span>
+                    <span class="col colTwo">
+                    </span>
+                </span>
+                <mat-card class="card-table-tasks">
+                    <mat-card-content class="table-tasks overflow-auto">
+                        <table [dataSource]="dataSource1" class="table-responsive inline-table" mat-table>
+                            <ng-container matColumnDef="TimeAgo">
+                                <td *matCellDef="let element" mat-cell>
+                                    <div class="cell-time-ago">
+                                        <mat-icon class="watch">query_builder</mat-icon>
+                                        <p>{{element.triggeredOn |dateDifference:serverDate1}}</p>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Task">
+                                <td *matCellDef="let element" mat-cell>
+                                    <div class="cell-task">
+                                        {{element.processName}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="TaskId">
+                                <td *matCellDef="let element" mat-cell>
+                                    <div class="cell-task req-highlight">
+                                        <a (click)="gotoRequestDetails(element)"
+                                            style="color: blue;cursor: pointer;">{{element.referenceNo}}</a>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="CreatedAt">
+                                <td *matCellDef="let element" mat-cell style="float: right;padding-top: 10px;">
+                                    {{element.triggeredOn |date:
+                                    "d-MMM-y"}}
+                                </td>
+                            </ng-container>
+                            <tr *matRowDef="let row; columns: tasksColumns;" mat-row></tr>
+                        </table>
+
+                        <div>
+                            <mat-paginator #paginator [length]="dataLength" [pageSizeOptions]="[3]"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col col-lg-4">
+                <span class="row mx-0">
+                    <span class="col p-l-0">
+                        <p class="heading">Notifications</p>
+                    </span>
+                    <span class="col">
+                        <p class="float-right m-b-0 m-t-6 pt-2 common-style" style="cursor: pointer;"
+                            (click)="showAllNotifications()">More</p>
+                    </span>
+                </span>
+                <mat-card class="card-table-tasks">
+                    <mat-card-content class="table-tasks common-style">
+                        <div mat-line class="row mx-0" *ngFor="let notification of notifications|slice:0:3">
+                            <span class="col-auto p-r-0">
+                                <p [attr.data-letters]="notification.initials"></p>
+                            </span>
+                            <span class="col-auto">
+                                <p class="truncate" matTooltip="{{notification.subject}}">{{notification.subject}}</p>
+                                <p>{{notification.description}}</p>
+                            </span>
+                        </div>
+                        <div *ngIf="notifications.length === 0">
+                            No data found
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

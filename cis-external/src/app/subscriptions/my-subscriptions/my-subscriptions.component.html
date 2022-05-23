@@ -1,0 +1,121 @@
+<div class="main mx-auto">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <p class="heading">My Subscriptions</p>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col">
+                            <mat-form-field appearance="outline">
+                                    <mat-label>Location</mat-label>
+                                    <input matInput [(ngModel)]="location"
+                                    [matAutocomplete]="auto30" >
+                                    <mat-autocomplete #auto30="matAutocomplete" [displayWith]="displayLocation"
+                                    >
+                                      <mat-option *ngFor="let x of filteredLocation" [value]="x">
+                                        {{x.caption}}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select Type</mat-label>
+                                <mat-select [(ngModel)]="prePackageDataType">
+                                    <mat-option *ngFor="let listitem of listitems" [value]="listitem.itemId">{{listitem.caption}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Subscription Status</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">Active</mat-option>
+                                    <mat-option value="2">DeActive</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <mat-card-content>
+                    <table [dataSource]="dataSource" class="w-100" mat-table>
+                        <ng-container matColumnDef="referenceNo">
+                            <th *matHeaderCellDef mat-header-cell>Reference No.</th>
+                            <td *matCellDef="let element" class="refNo" mat-cell>{{element.referenceNo}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="subscriptionDate">
+                            <th *matHeaderCellDef mat-header-cell>Subscription Date</th>
+                            <td *matCellDef="let element"
+                                mat-cell>{{element.subscriptionDate | date :'dd/MMM/yyyy'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="type">
+                            <th *matHeaderCellDef mat-header-cell>Type</th>
+                            <td *matCellDef="let element" mat-cell>{{element.type}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="location">
+                            <th *matHeaderCellDef mat-header-cell>Location</th>
+                            <td *matCellDef="let element" mat-cell>{{element.location}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="locationName">
+                            <th *matHeaderCellDef mat-header-cell>Location Name</th>
+                            <td *matCellDef="let element" mat-cell>{{element.locationName}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="subscriptionName">
+                            <th *matHeaderCellDef mat-header-cell>Name</th>
+                            <td *matCellDef="let element" class="truncate" mat-cell>{{element.subscriptionName}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="frequency">
+                            <th *matHeaderCellDef mat-header-cell>Frequency</th>
+                            <td *matCellDef="let element" mat-cell>{{element.frequency}}</td>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="lastExecution">
+                            <th *matHeaderCellDef mat-header-cell>Last Execution</th>
+                            <td *matCellDef="let element" mat-cell>{{element.lastExecution}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                            <th *matHeaderCellDef mat-header-cell>Status</th>
+                            <td *matCellDef="let element" mat-cell>{{element.status}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="nextExecution">
+                            <th *matHeaderCellDef mat-header-cell>Next Execution</th>
+                            <td *matCellDef="let element" mat-cell>{{element.nextExecution}}</td>
+                        </ng-container> -->
+                        <ng-container matColumnDef="subscriptionStatus">
+                            <th *matHeaderCellDef mat-header-cell>Subscription Status</th>
+                            <td *matCellDef="let element" mat-cell>
+                                <mat-slide-toggle (change)="updateSubscription(element,element.subscriptionStatus)"
+                                                  [checked]="element.subscriptionStatus"
+                                                  [(ngModel)]="element.subscriptionStatus"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="View">
+                            <th *matHeaderCellDef mat-header-cell>View</th>
+                            <td *matCellDef="let element" class="table-details" mat-cell>
+                                <a (click)="openDialog(element)" style="cursor: pointer;">
+                                    View
+                                    <!-- <mat-icon matTooltip="Download">file_download</mat-icon> -->
+                                </a>
+                            </td>
+                        </ng-container>
+                        <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                        <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="dataLength" [pageSizeOptions]="[10, 15, 20]" [pageSize]="10"
+                                   showFirstLastButtons>
+                    </mat-paginator>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div *ngIf="isSpinnerVisible" class="overlay">
+    <div class="overlay__wrapper">
+        <div class="overlay__spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</div>
+<mat-card class="main-card">
+    <mat-card-content class="table-tasks overflow-auto">
+        <div class="row float-left">
+            <span class="heading col-7" style="display: inline-block;">Holiday List for Year </span>
+            <mat-form-field appearance="outline" class="col-5" style="display: inline-block;">
+                <mat-label>Select Year</mat-label>
+                <mat-select (selectionChange)="yearSelection($event.value)" [(value)]="selectedYear">
+                    <mat-option *ngFor="let year of years" [value]="year">
+                        {{year}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <table [dataSource]="data" class="table-margin w-100 m-0 inline-table" mat-table>
+            <ng-container matColumnDef="sno">
+                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                <td *matCellDef="let element; let i = index;" mat-cell>{{i + 1}}</td>
+            </ng-container>
+            <ng-container matColumnDef="day">
+                <th *matHeaderCellDef mat-header-cell>Date</th>
+                <td *matCellDef="let element" mat-cell>{{element.holidayDate | date:
+                    "d-MMM-y"}}</td>
+            </ng-container>
+            <ng-container matColumnDef="occasion">
+                <th *matHeaderCellDef mat-header-cell>Occasion</th>
+                <td *matCellDef="let element" mat-cell>{{element.description}}</td>
+            </ng-container>
+            <tr *matHeaderRowDef="cols" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: cols;" mat-row></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

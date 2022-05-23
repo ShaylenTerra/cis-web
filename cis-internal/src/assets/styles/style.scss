@@ -1,0 +1,166 @@
+/*
+Template Name: Material Pro Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/**
+ * Table Of Content
+ *
+ * 	1. Globals
+ *	2. Headers
+ *	3. Navigations
+ *	4. Banners
+ *	5. Footers
+ *	6. app
+ *	7. Widgets
+ *	8. Custom Templates
+ */
+
+@import 'variable';
+
+
+@import 'icons/themify-icons/themify-icons.css';
+@import 'icons/font-awesome/css/font-awesome.css';
+@import 'spinner';
+@import 'app';
+@import 'header';
+@import 'widgets';
+@import 'pages';
+@import 'sidebar';
+@import 'dark-sidebar';
+@import 'responsive';
+@import 'rtl';
+@import 'progress-bars';
+@import 'card';
+
+
+// Red Theme
+
+.danger {
+	@import 'colors/red';
+	@include angular-material-theme($red-app-theme);
+}
+
+// Blue Theme
+
+.blue {
+	@import 'colors/blue';
+	@include angular-material-theme($blue-app-theme);
+}
+
+// Green Theme
+
+.green {
+	@import 'colors/green';
+	@include angular-material-theme($green-app-theme);
+}
+
+// Dark Theme
+
+.dark {
+	@import 'colors/dark';
+	@include angular-material-theme($dark-theme);
+}
+
+
+$custom-typography: mat-typography-config($font-family: 'Roboto'
+);
+@include mat-core($custom-typography);
+
+.small-box {
+  
+	display: block;
+	margin-bottom: 20px;
+	position: relative;
+  
+	// content wrapper
+	> .inner {
+	  padding: 10px;
+	}
+  
+	> .small-box-footer {
+	  background: rgba(#111, 0.1);
+	  color: rgba(#fff, 0.8);
+	  display: block;
+	  padding: 3px 0;
+	  position: relative;
+	  text-align: center;
+	  text-decoration: none;
+	  z-index: 10;
+  
+	  &:hover {
+		background: rgba(#111, 0.15);
+		color: #fff;
+	  }
+	}
+  
+	h3 {
+	  font-size: 2.2rem;
+	  font-weight: bold;
+	  margin: 0 0 10px 0;
+	  padding: 0;
+	  white-space: nowrap;
+	  color: #fff;
+	}
+  
+	p {
+	  font-size: 1rem;
+	  color: #fff;
+	  > small {
+		color: #d2d6de;
+		display: block;
+		font-size: 0.9rem;
+		margin-top: 5px;
+	  }
+	}
+  
+	h3,
+	p {
+	  z-index: 5;
+	}
+  
+	// the icon
+	.icon {
+	  color: white;//rgba(#111, 0.15);
+	  z-index: 0;
+  
+	  > i {
+		font-size: 90px;
+		position: absolute;
+		right: 15px;
+		top: 15px;
+		transition: all 0.3s linear;
+  
+		&.fa,
+		&.fas,
+		&.far,
+		&.fab,
+		&.glyphicon,
+		&.ion {
+		  font-size: 70px;
+		  top: 20px;
+		}
+	  }
+  
+	}
+  
+	// Small box hover state
+	&:hover {
+	  text-decoration: none;
+  
+	  // Animate icons on small box hover
+	  .icon > i {
+		font-size: 95px;
+  
+		&.fa,
+		&.fas,
+		&.far,
+		&.fab,
+		&.glyphicon,
+		&.ion {
+		  font-size: 75px;
+		}
+	  }
+	}
+  }

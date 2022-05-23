@@ -1,0 +1,87 @@
+<div style="margin-left: 1.7%; margin-right: 1.7%;">
+    <p class="sub-heading">Referral Inputs</p>
+    <div class="row mx-0">
+        <div class="col-12 p-0">
+            <div *ngIf="referrals?.length > 0 && referrals !== undefined">
+                <table [dataSource]="refData" class="table-margin w-100 m-0" mat-table>
+                    <ng-container matColumnDef="referenceNo">
+                        <th style="width: 10%;" *matHeaderCellDef mat-header-cell>Ref No.</th>
+                        <td style="width: 10%; padding-bottom: 14px; color: blue; cursor: pointer;"
+                            *matCellDef="let element" mat-cell (click)="navigate(element)">
+                            {{element.referenceNo}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="triggeredOn">
+                        <th style="width: 10%;" *matHeaderCellDef mat-header-cell>Triggered On
+                        </th>
+                        <td style="width: 10%; padding-bottom: 14px;" *matCellDef="let element" mat-cell>
+                            {{element.triggeredOn |
+                            date:"dd/MMM/yyyy"}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="fromUser">
+                        <th style="width: 10%;" *matHeaderCellDef mat-header-cell>From User</th>
+                        <td style="width: 10%; padding-bottom: 14px;" *matCellDef="let element" mat-cell>
+                            {{element.fromUser}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="requestNote">
+                        <th style="width: 15%;" *matHeaderCellDef mat-header-cell>Request Note
+                        </th>
+                        <td style="width: 15%; padding-bottom: 14px;" *matCellDef="let element" mat-cell>
+                            {{element.requestNote}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="toUser">
+                        <th style="width: 10%;" *matHeaderCellDef mat-header-cell>To User</th>
+                        <td style="width: 10%; padding-bottom: 14px;" *matCellDef="let element" mat-cell>
+                            {{element.toUser}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="referralInput">
+                        <th style="width: 20%;" *matHeaderCellDef mat-header-cell>Referral Input
+                        </th>
+                        <td *matCellDef="let element" mat-cell><span class="truncate"
+                                style="-webkit-line-clamp: 3; height:57px; margin-bottom: 5px">{{element.referralInput}}</span>
+                            <a style="cursor: pointer !important;" (click)="openReferralInput(element)"
+                                *ngIf="element.referralInput !== null">View more</a>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                        <th style="width: 10%;" *matHeaderCellDef mat-header-cell>Created On
+                        </th>
+                        <td style="width: 10%; padding-bottom: 14px;" *matCellDef="let element" mat-cell>
+                            {{element.createdOn |
+                            date:"dd/MMM/yyyy"}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th style="width: 5%;" *matHeaderCellDef mat-header-cell>Status</th>
+                        <td style="width: 5%; padding-bottom: 14px;" *matCellDef="let element" mat-cell>
+                            {{element.status}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="sms">
+                        <th style="width: 5%;" *matHeaderCellDef mat-header-cell>SMS</th>
+                        <td style="width: 5%; padding-bottom: 14px;" *matCellDef="let element" mat-cell>
+                            <mat-icon (click)="sendSMS()" style="cursor: pointer;">sms
+                            </mat-icon>
+                        </td>
+                    </ng-container>
+                    <!--<ng-container matColumnDef="email">
+                                                <th *matHeaderCellDef mat-header-cell>Email</th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    <mat-icon (click)="sendEmail()" style="cursor: pointer;">email
+                                                    </mat-icon>
+                                                </td>
+                                            </ng-container>-->
+                    <tr *matHeaderRowDef="refCols" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: refCols;" mat-row></tr>
+
+                </table>
+                <div>
+                    <mat-paginator #paginator [length]="refDataLength" [pageSizeOptions]="[10, 15, 20]" [pageSize]="10"
+                        showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+
+            </div>
+            <div fxLayoutAlign="center center" class="mt-4" *ngIf="referrals?.length === 0 || referrals === undefined">
+                <p>No referral task added</p>
+            </div>
+        </div>
+    </div>
+</div>

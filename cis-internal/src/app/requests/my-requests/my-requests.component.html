@@ -1,0 +1,56 @@
+<div class="top-spacing">
+    <div class="row">
+        <span class="col">
+            <p class="heading">Previous Requests</p>
+        </span>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-card class="card-table-tasks">
+                <mat-card-content class="table-tasks overflow-auto">
+                    <table [dataSource]="requestsData" class="table-margin w-100 m-0 inline-table" mat-table>
+                        <ng-container matColumnDef="select">
+                            <th *matHeaderCellDef mat-header-cell>Select</th>
+                            <td *matCellDef="let element" mat-cell>
+                                <mat-checkbox></mat-checkbox>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="reference">
+                            <th *matHeaderCellDef mat-header-cell>Reference</th>
+                            <td *matCellDef="let element" mat-cell style="color: blue;">
+                                {{element.referenceCode}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="context">
+                            <th *matHeaderCellDef mat-header-cell>Context</th>
+                            <td *matCellDef="let element" mat-cell>{{element.context}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="summary">
+                            <th *matHeaderCellDef mat-header-cell>Summary</th>
+                            <td *matCellDef="let element" mat-cell>{{element.summary}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                            <th *matHeaderCellDef mat-header-cell>Status</th>
+                            <td *matCellDef="let element" mat-cell>{{element.status}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="pendingSince">
+                            <th *matHeaderCellDef mat-header-cell>Pending Since</th>
+                            <td *matCellDef="let element" mat-cell>{{element.pendingSince}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="lastStatusUpdatedOn">
+                            <th *matHeaderCellDef mat-header-cell>Last Status Updated</th>
+                            <td *matCellDef="let element" mat-cell>{{element.lastStatusUpdated}}</td>
+                        </ng-container>
+                        <tr *matHeaderRowDef="requestsColumns" mat-header-row></tr>
+                        <tr (click)="navigate()" *matRowDef="let row; columns: requestsColumns;" mat-row
+                            style="cursor: pointer;"></tr>
+                    </table>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <button mat-raised-button [routerLink]="['/home']" class="back-button">Back</button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

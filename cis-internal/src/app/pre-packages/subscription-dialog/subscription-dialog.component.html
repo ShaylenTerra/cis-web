@@ -1,0 +1,22 @@
+<div class="row m-0 feature-opt">
+    <div class="col-12 p-0">
+        <p>Are you sure you want to subscribe {{data.desc.name}} {{this.data.referenceType}}?</p>
+        <!-- <mat-radio-group>
+             <mat-radio-button value="1" *ngIf="configData.daily == true">Daily</mat-radio-button>
+             <mat-radio-button value="2" *ngIf="configData.monthly == true">Monthly</mat-radio-button>
+             <mat-radio-button value="3" *ngIf="configData.yearly == true">Yearly</mat-radio-button>
+             <mat-radio-button value="4" *ngIf="configData.weekly == true">Weekly</mat-radio-button>
+         </mat-radio-group> -->
+    </div>
+
+</div>
+<div class="row m-0 feature-opt">
+    <div class="col-md-6 m-t-30 p-r-0" style="float: left;">
+        <button [mat-dialog-close]="1" class="cancel-button cancel" style="float: right;" mat-button mat-raised-button type="button">
+            Cancel
+        </button>
+    </div>
+    <div class="col-6 m-t-30 p-r-0" style="float: right;">
+        <button (click)="subscribe()" class="submit-button bover" mat-raised-button type="button">Submit Request</button>
+    </div>
+</div>

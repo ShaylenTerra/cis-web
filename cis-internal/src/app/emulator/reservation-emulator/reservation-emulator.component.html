@@ -1,0 +1,308 @@
+<div class="container-fluid">
+  <div class="row">
+    <span class="col ml-3">
+      <p class="heading">Reservation Emulator</p>
+    </span>
+    <div class="col-lg-12">
+      <!-- <div class="row">
+        <div class="col"> -->
+      <mat-card>
+        <mat-card-content>
+          <form [formGroup]="emulatorForm">
+            <div class="row">
+
+              <span class="col col-md-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Reservation Reason</mat-label>
+                  <mat-select [(ngModel)]="searchType" formControlName="reservationReason" #searchTypeSelect required
+                    (selectionChange)="onChangeReasonType($event.value)">
+                    <mat-option>
+                      <ngx-mat-select-search [formControl]="ReservationReasonFilterCtrl"
+                        [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                        noEntriesFoundLabel="'No result found'">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let x of filteredReservationReason | async" [value]="x">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+              <span class="col col-md-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Parcel Type</mat-label>
+                  <mat-select [(ngModel)]="reservationTypeFilter" formControlName="reservationType" matInput
+                    (selectionChange)="onChangeReasonSubType($event.value)">
+                    <mat-option *ngFor="let x of reservationTypeFilters" [value]="x">{{ x.caption }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+              <span class="col col-md-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Sub Type</mat-label>
+                  <mat-select [(ngModel)]="reservationSubTypeFilter" formControlName="reservationSubType" matInput
+                    required (selectionChange)="onChangeSubType($event)">
+                    <mat-option *ngFor="let data of subType" [value]="data">{{ data.caption }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+              <span class="col col-md-3" *ngIf="searchType?.itemId !== ReservationReason?.REDESIGNATION">
+                <mat-form-field appearance="outline">
+                  <mat-label>No of Parcels Requested</mat-label>
+                  <input formControlName="numberOfRequested" autocomplete="off" matInput required
+                    [disabled]="disableParcel" [readonly]="disableParcel" />
+                </mat-form-field>
+              </span>
+
+              <span class="col col-md-3" *ngIf="searchType?.itemId === ReservationReason?.REDESIGNATION">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{text2}}</mat-label>
+                  <mat-select [(ngModel)]="toTownshipModel" [ngModelOptions]="{ standalone: true }" #toTownshipSelect
+                    required>
+                    <mat-option>
+                      <ngx-mat-select-search [formControl]="toTownshipFilterCtrl"
+                        [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                        noEntriesFoundLabel="'No result found'">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let x of filteredToTownship | async" [value]="x.boundaryId">
+                      {{ x?.majorRegionOrAdminDistrict }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+            </div>
+            <div class="row">
+              <span class="col col-md-3">
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Province</mat-label>
+                  <mat-select [(ngModel)]="province" formControlName="assignedProvince"
+                    (selectionChange)="changeProvince()" #provinceSelect required>
+                    <mat-option>
+                      <ngx-mat-select-search [formControl]="provinceFilterCtrl" [ngModelOptions]="{ standalone: true }"
+                        placeholderLabel="Search..." noEntriesFoundLabel="'No result found'">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let x of filteredProvince | async" [value]="x">
+                      {{ x.provinceName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+
+              <!-- <span class="col col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Administration District/Registration
+                                  Division</mat-label>
+                                <mat-select formControlName="assignedTownship" [(ngModel)]="MunicipalityModel" #municipalitySelect>
+                                  <mat-option>
+                                    <ngx-mat-select-search [formControl]="municipalityFilterCtrl"
+                                      [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                      noEntriesFoundLabel="'No result found'">
+                                    </ngx-mat-select-search>
+                                  </mat-option>
+                                  <mat-option *ngFor="let x of filteredMunicipality | async" [value]="x.mdbCode">
+                                    {{ x?.municipality }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </span> -->
+
+              <span class="col col-md-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{text}}</mat-label>
+                  <mat-select formControlName="assignedTownship" [(ngModel)]="TownshipModel" #townshipSelect required>
+                    <mat-option>
+                      <ngx-mat-select-search [formControl]="townshipFilterCtrl" [ngModelOptions]="{ standalone: true }"
+                        placeholderLabel="Search..." noEntriesFoundLabel="'No result found'">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let x of filteredTownship | async" [value]="x.boundaryId">
+                      {{ x?.majorRegionOrAdminDistrict }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+              <span class="col col-md-3"
+                *ngIf="searchType?.itemId === ReservationReason?.CREATIONOFTOWNALLOTMENTAREASTOWNSHIPS">
+                <mat-form-field appearance="outline">
+                  <mat-label>New Township/Allotment Name</mat-label>
+                  <input autocomplete="off" matInput [(ngModel)]="newTownshipName"
+                    [ngModelOptions]="{ standalone: true }" />
+                </mat-form-field>
+              </span>
+              <span class="col col-md-3" *ngIf="showParcel">
+                <mat-form-field appearance="outline">
+                  <mat-label>Parcel</mat-label>
+                  <input [(ngModel)]="parcel" [ngModelOptions]="{ standalone: true }" autocomplete="off" matInput />
+                </mat-form-field>
+              </span>
+            </div>
+          </form>
+          <div class="row"></div>
+          <div class="row" style="top: 10px !important">
+            <span class="col">
+              <button style="float: right;" mat-raised-button (click)="search()" class="submit-button bover pull-left"
+                type="submit">
+                Emulate
+              </button>
+              <label class="text-small"
+                style="float: right; font-size: 16px !important; margin-right: 10px;">{{reservationSubTypeFilter?.description}}</label>
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!-- </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="data != null && data.length > 0">
+  <div class="row">
+    <span class="col ml-3">
+      <p class="sub-heading">Parent Parcel</p>
+    </span>
+    <div class="col-lg-12">
+      <mat-card>
+        <mat-card-content style="overflow-x: hidden;">
+          <div>
+            <!-- <span class="col">
+                <p class="sub-heading">Parent Parcel</p>
+              </span> -->
+            <table mat-table [dataSource]="dataSource" matSort class=" table-tasks w-100">
+              <ng-container matColumnDef="sgNo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Sg No</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.sgNo}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="lpi">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>LPI</th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="multicolortext">{{element.lpi}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="documentType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Document Type</th>
+                <td mat-cell *matCellDef="let element"> {{element.documentType}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="documentSubType">
+                <th mat-header-cell *matHeaderCellDef>Document Sub Type</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.documentSubType}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="region">
+                <th mat-header-cell *matHeaderCellDef>Region</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.region}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="regionTownship">
+                <th mat-header-cell *matHeaderCellDef>Region Township</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.regionTownship}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="parcel">
+                <th mat-header-cell *matHeaderCellDef>Parcel</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.parcel}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="designation">
+                <th mat-header-cell *matHeaderCellDef>Designation</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.designation}}
+                </td>
+              </ng-container>
+              <!-- <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon style="cursor: pointer;" matTooltip="Profile">
+                    visibility
+                  </mat-icon>
+                  &nbsp;
+                  <mat-icon style="cursor: pointer;" matTooltip="map">
+                    map
+                  </mat-icon>
+                </td>
+              </ng-container> -->
+              <tr mat-header-row *matHeaderRowDef="columns"></tr>
+              <tr mat-row *matRowDef="let row; columns: columns"></tr>
+            </table>
+            <mat-paginator [length]="dataLength" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]">
+            </mat-paginator>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div *ngIf="data === null">
+  <div class="row">
+    <span class="col-md-6">
+    </span>
+    <span class="col-md-6">
+      <p class="sub-heading">No data found</p>
+    </span>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="ReservationDetailsdata != null && ReservationDetailsdata.length > 0">
+  <div class="row">
+    <span class="col ml-3">
+      <p class="sub-heading">Reservation System</p>
+    </span>
+    <div class="col-lg-12">
+      <mat-card>
+        <mat-card-content style="overflow-x: hidden;">
+          <div>
+            <span class="col">
+              <!-- <p class="sub-heading">Reservation System</p> -->
+              <p class="sub-heading">System: {{algo}}</p>
+            </span>
+            <table mat-table [dataSource]="dataSource1" matSort class=" table-tasks w-100">
+              <ng-container matColumnDef="lpi">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="tabledheader">LPI</th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="multicolortext">{{element.lpi}}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="designation">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="tabledheader">Designation</th>
+                <td mat-cell *matCellDef="let element"> {{element.designation}} </td>
+              </ng-container>
+              <ng-container matColumnDef="parcel">
+                <th mat-header-cell *matHeaderCellDef class="tabledheader">Parcel</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.parcel}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="portion">
+                <th mat-header-cell *matHeaderCellDef class="tabledheader">Portion</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.portion}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="leaseNo">
+                <th mat-header-cell *matHeaderCellDef class="tabledheader">Lease Number</th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.leaseNo}}
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="columns2"></tr>
+              <tr mat-row *matRowDef="let row; columns: columns2"></tr>
+            </table>
+            <mat-paginator [length]="ReservationDetailsLength" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]">
+            </mat-paginator>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

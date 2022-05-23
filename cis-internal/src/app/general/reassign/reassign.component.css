@@ -1,0 +1,172 @@
+.mat-column-taskType {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #c58b10;
+    width: 16%;
+}
+
+.mat-column-action {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.submit-button {
+    border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  width: 120px;
+  background-color: #016533;
+  border: 0;
+  height: 40px;
+  color: white;
+}
+  
+.bover:hover {
+    background-color: #c58b10;;
+  }
+
+.s-open {
+    width: 30px;
+    height: 14px;
+    border-radius: 2px;
+    color: #fafafa;
+    font-size: 10px;
+    background-color: #ddc269;
+    padding: 5px;
+}
+
+.s-pending {
+    width: 52px;
+    height: 14px;
+    border-radius: 2px;
+    color: #fafafa;
+    font-size: 10px;
+    background-color: #c58b10;
+    padding: 5px;
+}
+
+.s-completed {
+    width: 56px;
+    height: 14px;
+    border-radius: 2px;
+    color: #fafafa;
+    font-size: 10px;
+    background-color: #9c69dd;
+    padding: 5px;
+}
+
+  
+table th
+/*To remove the horizontal line after header*/
+
+{
+border-bottom: 0 solid
+}
+.table-details {
+    color: #0880c3 !important;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (max-width: 768px) {
+    .tab-grid-remove .card.filter-card {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .table-margin tr th, .table-margin tr td {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 576px) {
+}
+
+.app-top {
+    margin: 0 0 3em;
+}
+
+.fc-time {
+    display: none;
+}
+
+.fc-past {
+    background-color: black;
+}
+
+.inline-table {
+    display: inline-table;
+}
+
+.table-tasks span:nth-child(2) p:first-child {
+    font-size: 16px;
+    color: #333333;
+}
+
+.table-tasks span:nth-child(2) p:nth-child(2) {
+    font-size: 14px;
+    color: #666666;
+}
+
+.mat-column-createdAt {
+    text-align: right;
+    padding-right: 16px !important;
+    font-weight: bold;
+    color: #666666;
+}
+
+
+.mat-row-cell {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #666666;
+}
+
+.card-table-tasks {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+.table-tasks tr.mat-row {
+    background-color: #F1F1F1;
+    border-bottom: 8px solid #fafafa;
+}
+
+.table-tasks tr.mat-footer-row {
+    background-color: #F1F1F1;
+    border-bottom: 8px solid #fafafa;
+    text-align: center;
+}
+
+.high-priority {
+    color: red;
+}
+
+.medium-priority {
+    color: orange;
+}
+
+.other-priority {
+    color: black;
+}

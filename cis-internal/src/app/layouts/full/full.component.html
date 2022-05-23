@@ -1,0 +1,95 @@
+<div [dir]="dir"
+     [ngClass]="{'minisidebar': minisidebar, 'boxed': boxed, 'danger': danger, 'blue': blue, 'green': green, 'dark': dark }"
+     class="main-container">
+    <mat-toolbar class="topbar telative row p-1 height" color="#faf9ec">
+        <a (click)="navigate(1)" fxLayout="row" fxShow="false" fxShow.gt-sm>
+            <b>
+                <img alt="homepage" class="pull-left pl-0" src="assets/images/logo-new1.png" style="height: 50px;">
+            </b>
+        </a>
+        <span class="example-spacer"></span>
+
+        <div *ngFor='let element of topMenu.iconsInfo' fxLayout="row" fxShow="false" fxShow.gt-sm id="desktop-menu">
+            <a (click)="navigate(element.id)" class="m-icons">
+                <img [alt]="element.altRoute" [matTooltip]="element.toolTip" [src]="element.currentStateUrl">
+            </a>
+        </div>
+
+        <div id="mobile-menu">
+            <div class="text-left">
+                <img alt="homepage" class="pull-left pl-0" src="assets/images/logo-new.png" style="height: 50px;">
+            </div>
+            <div class="text-right">
+                <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" mat-icon-button>
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <a href="/home">
+                            Home
+                        </a>
+                    </button>
+                    <button mat-menu-item>
+                        <a [routerLink]="['/tasks/task-list']">
+                            Tasks
+                        </a>
+                    </button>
+                    <button mat-menu-item>
+                        <a>
+                            Land Info
+                        </a>
+                    </button>
+                    <button mat-menu-item>
+                        <a>
+                            Maps
+                        </a>
+                    </button>
+                    <button mat-menu-item>
+                        <a [routerLink]="['/queries/my-queries']">
+                            Queries
+                        </a>
+                    </button>
+                    <button mat-menu-item>
+                        <a [routerLink]="['/config/list-management']">
+                            Configurations
+                        </a>
+                    </button>
+                    <button mat-menu-item>
+                        <a [routerLink]="['/profile']">
+                            Profile
+                        </a>
+                    </button>
+                    <button mat-menu-item>
+                        <a [routerLink]="['/authentication/login']">
+                            Sign Out
+                        </a>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+        <span class="example-spacer"></span>
+        <app-header fxLayout="row" fxShow="false" fxShow.gt-sm>
+            <button class="ml-xs overflow-visible" mat-icon-button>
+                <mat-icon>exit_to_app</mat-icon>
+                Signout
+            </button>
+        </app-header>
+    </mat-toolbar>
+
+    <mat-sidenav-container [ngClass]="{'minisidebar': minisidebar}" [style.marginTop.px]="mobileQuery.matches ? 0 : 0"
+                           class="example-sidenav-container">
+        <!-- <mat-sidenav #snav id="snav" class="pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'" fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches" (open)="sidebarOpened = true" (close)="sidebarOpened = false" [perfectScrollbar]="config">
+
+            <app-sidebar class="app-sidebar"></app-sidebar> 
+
+        </mat-sidenav> -->
+        <mat-sidenav-content class="page-wrapper">
+            <div class="page-content">
+                <router-outlet>
+                    <app-spinner></app-spinner>
+                </router-outlet>
+            </div>
+
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

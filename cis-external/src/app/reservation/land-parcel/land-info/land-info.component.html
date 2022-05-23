@@ -1,0 +1,9 @@
+<h4 mat-dialog-title><span>{{data.designation}}<i class="fa fa-window-close" aria-hidden="true" (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span></h4>
+<div mat-dialog-content>
+    <p *ngFor="let record of records let i = index">{{i+1}}. <a
+            style="cursor: pointer; color: blue;">{{record?.referenceNo}}</a> by Applicant {{record?.firstName}}
+        {{record?.surName}} request
+        {{record?.status}}</p>
+    <p *ngIf="recordFound === 'NO'" fxLayoutAlign="center center">No reservation information found.</p>
+</div>

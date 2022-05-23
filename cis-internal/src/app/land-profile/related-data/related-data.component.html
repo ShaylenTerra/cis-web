@@ -1,0 +1,32 @@
+<h4 mat-dialog-title><span matTooltip={{tooltip}} >Key Documents for: {{ parcelDescription }}</span></h4>
+<div mat-dialog-content>
+    <div class="row m-0 task-timeline">
+
+        <div class="row m-0">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <!-- <div style="text-align: center;" >
+                    <button type="button" (click)="downloadFileUrl()" style="border: 0; background: none;text-align: center">
+                        <mat-icon style="margin:5px 5px ;color: #f48222;"   matTooltip="Download image" >get_app</mat-icon>
+                    </button>
+                </div>
+                <img [src]="selectedImageSource" width="100%" matTooltip="{{lpiObject?.scanDate | date : 'dd/MMMM/y HH:mm:ss' }}"> -->
+                <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                            -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                            border-color: rgba(0,0,0,.2);">
+                    <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                        width: '70px',
+                        height: '70px',
+                        'border-radius': '10px'
+                        }">
+                    </ngx-skeleton-loader>
+                    <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions" [images]="imgData.imageArray" class="ngx-gallery"></ngx-gallery>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <!-- <button (click)="submit()" class="btnSubmit-css" mat-button>Submit</button> -->
+</div>

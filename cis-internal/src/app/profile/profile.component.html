@@ -1,0 +1,417 @@
+<div class="top-spacing">
+    <div class="row">
+        <span class="col">
+            <p class="heading">My Profile</p>
+        </span>
+    </div>
+    <div class="card" id="desktop-tab">
+        <div class="row mx-0">
+            <div class="p-0 left-col">
+                <div (click)="changeTab('personalInfo')" [ngClass]="personalInfo ? 'link-active' : ''"
+                     class="left-profile-col-button mx-auto extra">
+                    <span class="row mx-0 w-100 py-2">
+                        <span style="margin-left: 8px">
+                            <mat-icon class="icon-c pt-1" style="padding-right: 27px;">person</mat-icon>
+                        </span>
+                    <span class="float-right">
+                            <p class="desc-text m-1">Personal Information</p>
+                            <p class="info-text m-0">Information about the person.</p>
+                        </span>
+                    </span>
+                </div>
+                <div (click)="changeTab('roleInfo')" [ngClass]="roleInfo ? 'link-active' : ''"
+                     class="left-profile-col-button mx-auto">
+                    <span class="row mx-0 w-100 py-2">
+                        <span style="margin-left: 8px">
+                            <mat-icon class="icon-c pt-2" style="padding-right: 27px;">group</mat-icon>
+                        </span>
+                    <span class="float-right">
+                            <p class="desc-text m-1">Role Information</p>
+                            <p class="info-text m-0">Information about the Roles.</p>
+                        </span>
+                    </span>
+                </div>
+                <div (click)="changeTab('document')" [ngClass]="document ? 'link-active' : ''"
+                     class="left-profile-col-button mx-auto">
+                    <span class="row mx-0 w-100 py-2">
+                        <span style="margin-left: 8px">
+                            <mat-icon class="icon-c pt-2" style="padding-right: 27px;">assignment</mat-icon>
+                        </span>
+                    <span class="float-right">
+                            <p class="desc-text m-1">Supporting Document</p>
+                            <p class="info-text m-0">Supporting Document</p>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="right-col">
+                <div fxLayoutAlign="center" style="position: relative;top: -50px;">
+                    <div class="outer">
+                        <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                            style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                            (mouseover)="'assets/images/users/user.webp'" (mouseout)="url">
+                        <div class="overlayImg">
+                            <mat-icon class="icon-c pt-1" [ngStyle]="{'color':'white'}"
+                            style="cursor: pointer; font-size: 40px;border-radius: 50%;transform:translate(-50%,100%)" (click)="openDialog()">
+                            <!-- (click)="fileInput.click()"> -->
+                            add_a_photo</mat-icon>
+                            <div id="text">
+                                Change Photo
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="personalInfo" style="margin-left: 1.7%; margin-right: 1.7%;">
+                    <div class="row mx-0 mt-4">
+                        <span class="col-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>First Name</mat-label>
+                                <input [(ngModel)]="firstName" readonly matInput type="text">
+                            </mat-form-field>
+                        </span>
+                        <span class="col-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Last Name</mat-label>
+                                <input [(ngModel)]="lastName" readonly matInput type="text">
+                            </mat-form-field>
+                        </span>
+                    </div>
+                    <div class="row mx-0">
+                        <span class="col-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input [(ngModel)]="email" readonly matInput type="email" readonly>
+                            </mat-form-field>
+                        </span>
+                        <span class="col-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Mobile</mat-label>
+                                <input [(ngModel)]="mobileNo" readonly matInput type="tel">
+                            </mat-form-field>
+                        </span>
+                        <!-- <span class="col-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Telephone</mat-label>
+                                <input type="tel" matInput [(ngModel)]="telephoneNo">
+                            </mat-form-field>
+                        </span> -->
+                    </div>
+                    <form [formGroup]="moreInformationForm">
+                        <div class="container-fluid my-3">
+                            <div class="row mx-0 mt-4">
+                                <div class="col">
+                                    <mat-checkbox class="Enable-Information-Notification" matInput formControlName="subscribeNotifications">
+                                        Enable Information Notifications</mat-checkbox>
+                                </div>
+                         
+                                <div class="col">
+                                    <mat-checkbox class="Enable-News-Notification" matInput formControlName="subscribeNews">
+                                        Enable News Notifications</mat-checkbox>
+                                </div>
+                        
+                                <div class="col">
+                                    <mat-checkbox class="Enable-Events-Notification" matInput formControlName="subscribeEvents">
+                                        Enable Events Notifications</mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="row mx-0 absoluteNew">
+                                <div class="col p-0">
+                                    <div>
+                                        <button mat-raised-button (click)="updateUserMetaData()"
+                                                class="submit-button bhover float-right mr-4">Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        
+                    </form>
+                    <!-- <button class="submit-button" (click)="onSubmit()">Save</button> -->
+                </div>
+                <div *ngIf="roleInfo" style="margin-left: 1.7%; margin-right: 1.7%;">
+                    <img (click)="close()" alt="" class="cross" src="assets/images/bootstrap-icons/x.svg">
+                    <!-- <p class="heading" style="margin-top: 4%;">Role Information</p> -->
+                    <div class="row mx-0">
+                        <div class="col">
+                            <div class="card mt-4">
+                                <table [dataSource]="dataSource" class="table-margin" mat-table>
+                                    <ng-container matColumnDef="roleName">
+                                        <th *matHeaderCellDef mat-header-cell>Role Name</th>
+                                        <td *matCellDef="let element" class="t-b" mat-cell>{{element.roleName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="sectionName">
+                                        <th *matHeaderCellDef mat-header-cell>Section Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.sectionName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="provinceName">
+                                        <th *matHeaderCellDef mat-header-cell>Province Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.provinceName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="isPrimary">
+                                        <th *matHeaderCellDef mat-header-cell style="border-top-right-radius: 8px;
+                                        border-bottom-right-radius: 8px;">Is Primary</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <span *ngIf="element.isPrimary === 1" class="bg-fl">
+                                                YES
+                                            </span>
+                                            <span *ngIf="element.isPrimary === 0" class="bg-ss">
+                                                NO
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                                    <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="document" style="margin-left: 1.7%; margin-right: 1.7%;">
+                    <img (click)="close()" alt="" class="cross" src="assets/images/bootstrap-icons/x.svg">
+                    <!-- <p class="heading" style="margin-top: 4%;">Supporting Document</p> -->
+                    <div class="row mx-0">
+                        <div class="col">
+                            <!-- <div class="card"> -->
+                                <div class="container-fluid my-3">
+                                    <div class="row" *ngFor="let document of supprotingDoc">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Document Type</mat-label>
+                                                <input [value]="document.DocumentType" disabled matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>File Name</mat-label>
+                                                <input [value]="document.fileName" disabled matInput/>
+                                                <button (click)="download(document.id, document.fileName)" mat-icon-button matSuffix>
+                                                    <mat-icon class="delete">get_app</mat-icon>
+                                                </button>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--- accroding start here-->
+    <div class="mobile-according" id="mobileAccording">
+
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon class="icon-c pt-1">person</mat-icon>
+                        <p class="desc-text">Personal Information</p>
+                        <p class="info-text">Information about the person.</p>
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                    This is a summary of the content
+                </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <div *ngIf="personalInfo" class="accor-cnt">
+                    <img (click)="close()" alt="" class="cross" src="assets/images/bootstrap-icons/x.svg">
+                    <p class="heading">Personal Information</p>
+                    <div class="row my-3">
+                        <span style="margin-left: 1.4%; margin-right: 1%;">
+                            <img alt="" src="assets/images/1_tv9pIQPhwumDnYBfCoapYg@3x.png" style="width: 64px;">
+
+                        </span>
+                        <span class="my-2">
+                            <p class="info-text one"><b>{{firstName}} {{lastName}}</b></p>
+                            <p class="desc-text one">{{role}}</p>
+                        </span>
+                    </div>
+                    <div class="row mx-0 mt-4">
+                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>First Name</mat-label>
+                                <input [(ngModel)]="firstName" matInput type="text">
+                            </mat-form-field>
+                        </span>
+                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Last Name</mat-label>
+                                <input [(ngModel)]="lastName" matInput type="text">
+                            </mat-form-field>
+                        </span>
+                    </div>
+                    <div class="row mx-0">
+                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input [(ngModel)]="email" matInput type="email" readonly>
+                            </mat-form-field>
+                        </span>
+                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Mobile</mat-label>
+                                <input [(ngModel)]="mobileNo" matInput type="tel">
+                            </mat-form-field>
+                        </span>
+                        <span class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Telephone</mat-label>
+                                <input [(ngModel)]="telephoneNo" matInput type="tel">
+                            </mat-form-field>
+                        </span>
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 text-right">
+                            <button mat-raised-button (click)="onSubmit()" class="submit-button">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+
+
+            <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon class="icon-c pt-2">group</mat-icon>
+                        <p class="desc-text">Role Information</p>
+                        <p class="info-text">Information about the Roles.</p>
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                    Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <div class="accor-cnt">
+                    <img (click)="close()" alt="" class="cross" src="assets/images/bootstrap-icons/x.svg">
+                    <p class="heading" style="margin-top: 4%;">Role Information</p>
+                    <div class="row mx-0">
+                        <div class="col">
+                            <div class="card scroll tbl">
+                                <table [dataSource]="dataSource" class="table-margin" mat-table>
+                                    <ng-container matColumnDef="roleName">
+                                        <th *matHeaderCellDef mat-header-cell>Role Name</th>
+                                        <td *matCellDef="let element" class="t-b" mat-cell>{{element.roleName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="sectionName">
+                                        <th *matHeaderCellDef mat-header-cell>Section Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.sectionName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="provinceName">
+                                        <th *matHeaderCellDef mat-header-cell>Province Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.provinceName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="isPrimary">
+                                        <th *matHeaderCellDef mat-header-cell>Active</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <span *ngIf="element.isPrimary === 'P'" class="bg-fl">
+                                                Pending Approval
+                                            </span>
+                                            <span *ngIf="element.isPrimary === 'Y'" class="bg-ss">
+                                                Yes
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                                    <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>
+    <!--- accroding start here-->
+
+</div>
+
+
+<!-- <div class="justify-content-center">
+    <div>
+        <mat-card style="width:80%;">
+            <mat-card-content>
+                <mat-tab-group>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="icon-c">person</mat-icon> Personal Information
+                        </ng-template>
+                        <form>
+                            <div class="row mx-0 mt-4">
+                                <span class="col-4">
+                                    <mat-form-field>
+                                        <mat-label>First Name</mat-label>
+                                        <input type="text" value="Raman" name="firstname" matInput>
+                                    </mat-form-field>
+                                </span>
+                                <span class="col-4">
+                                    <mat-form-field>
+                                        <mat-label>Last Name</mat-label>
+                                        <input type="text" value="Joshi" matInput>
+                                    </mat-form-field>
+                                </span>
+                            </div>
+                            <div class="row mx-0">
+                                <span class="col-4">
+                                    <mat-form-field>
+                                        <mat-label>Email</mat-label>
+                                        <input type="email" matInput value="raman.joshi@abc.com">
+                                    </mat-form-field>
+                                </span>
+                                <span class="col-3">
+                                    <mat-form-field>
+                                        <mat-label>Mobile</mat-label>
+                                        <input type="tel" matInput value="8689835231">
+                                    </mat-form-field>
+                                </span>
+                                <span class="col-3">
+                                    <mat-form-field>
+                                        <mat-label>Telephone</mat-label>
+                                        <input type="tel" matInput value="022-123456">
+                                    </mat-form-field>
+                                </span>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <button mat-stroked-button type="button" class="add-p"
+                                    (click)="saveProfle()">Save</button>
+                            </div>
+                        </form>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="icon-c">group</mat-icon> Role Information
+                        </ng-template>
+                        <br>
+                        <div class="text-white">
+                            <div class="row mx-0 bg-tl">
+                                <span class="col-3">Role Name</span>
+                                <span class="col-3">Section Name</span>
+                                <span class="col-3">Province Name</span>
+                                <span class="col-3">Active</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row mx-0 bg-tt">
+                            <span class="col-3">Deputy Surveyor General</span>
+                            <span class="col-3">Accounts</span>
+                            <span class="col-3">Free State</span>
+                            <span class="col-3"><span class="bg-fl">Approval Pending</span></span>
+                        </div>
+                        <hr>
+                        <div class="row mx-0  bg-tt">
+                            <span class="col-3">National Administrator</span>
+                            <span class="col-3"> </span>
+                            <span class="col-3">Limpopo</span>
+                            <span class="col-3"> <span class="bg-ss">Yes</span></span>
+                        </div>
+                        <hr>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div> -->

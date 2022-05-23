@@ -1,0 +1,276 @@
+<div class="container-fluid">
+    <div class="row">
+        <div [ngClass]="!preview && !readonly? 'col-12 col-lg-8 mt-3' : 'col-12 col-lg-12 mt-3'">
+
+            <mat-card class="scroll">
+                <mat-card-content>
+                    <table [dataSource]="dataSource" class="table-margin w-100 m-0 inline-table"
+                        style="border-collapse: collapse;" mat-table matSort>
+                        <ng-container matColumnDef="Sno">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 5%;border: 1px solid #dadce0;text-align: center; padding-left: 15px !important;">
+                                S.No.</th>
+                            <td *matCellDef="let element, let i = index;" mat-cell
+                                style="border: 1px solid #dadce0;text-align: right;padding: 5px;">
+                                {{element.Sno}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="payDate">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 5%;border: 1px solid #dadce0;text-align: center">Payment Date</th>
+                            <td *matCellDef="let element" mat-cell style="border: 1px solid #dadce0;text-align: center">
+                                {{element.payDate | date:'dd-MMM-yyyy'}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="amount">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 12%;border: 1px solid #dadce0;text-align: center">Paid Amount(R)</th>
+                            <td *matCellDef="let element" mat-cell
+                                style="border: 1px solid #dadce0;text-align: right;padding: 5px;">
+                                <div>
+                                    {{element.amount | number : '1.2-2'}}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="refNumber">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 15%;border: 1px solid #dadce0;text-align: center">Reference
+                                Number</th>
+                            <td *matCellDef="let element" mat-cell
+                                style="border: 1px solid #dadce0;text-align: left;padding: 5px;">
+                                {{element.refNumber}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="receiptNo">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 15%;border: 1px solid #dadce0;text-align: center">Receipt
+                                Number</th>
+                            <td *matCellDef="let element" mat-cell
+                                style="border: 1px solid #dadce0;text-align: left;padding: 5px;">
+                                {{element.receiptNo}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="paymentMethod">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 10%;border: 1px solid #dadce0;text-align: center">Payment
+                                Method</th>
+                            <td *matCellDef="let element" mat-cell
+                                style="border: 1px solid #dadce0;text-align: left;padding: 5px;">
+                                {{element.paymentMethod}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="notes">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 10%;border: 1px solid #dadce0;text-align: center">Notes
+                            </th>
+                            <td *matCellDef="let element" mat-cell
+                                style="border: 1px solid #dadce0;text-align: left;padding: 5px;">
+                                {{element.notes}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                style="width: 15%;border: 1px solid #dadce0;text-align: center"
+                                [ngClass]="{'status': preview === true}">
+                                Verification
+                                Status</th>
+                            <td *matCellDef="let element" mat-cell
+                                style="border: 1px solid #dadce0;text-align: left;padding: 5px;">
+                                {{element.status}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Action" [hidden]="!preview">
+                            <th *matHeaderCellDef mat-header-cell
+                                style="width: 5%;border: 1px solid #dadce0;text-align: center;">Action
+                            </th>
+                            <td *matCellDef="let element" mat-cell
+                                style="cursor: pointer;border: 1px solid #dadce0;text-align: center;">
+                                <div class="dropdown menu" style="text-align: center;">
+                                    <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu"
+                                        #menuTrigger="matMenuTrigger" class="hover-display"
+                                        [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                        <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                    </span>
+                                    <mat-menu style="display: flex-end;" #optionsMenu="matMenu" [overlapTrigger]="true">
+                                        <button mat-menu-item
+                                            style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                            (click)="viewDoc(element.payId,element.docName)">
+                                            <mat-icon matTooltip="View Document" color="primary"
+                                                style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                visibility
+                                            </mat-icon> View Document
+                                        </button>
+                                        <!-- <button mat-menu-item [hidden]="readonly"
+                                            style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                            <mat-icon matTooltip="Edit Document"
+                                                style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                edit
+                                            </mat-icon> Edit
+                                        </button> -->
+                                        <button mat-menu-item [hidden]="readonly"
+                                            style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                            (click)="removePayment(element.payId)">
+                                            <mat-icon matTooltip="Remove document"
+                                                style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                delete
+                                            </mat-icon> Remove
+                                        </button>
+                                        <button mat-menu-item [hidden]="!readonly || !hideData"
+                                            (click)="verifyPayment(element)"
+                                            style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                            <mat-icon matTooltip="Verify Payment"
+                                                style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                check
+                                            </mat-icon> Verify Payment
+                                        </button>
+                                        <button mat-menu-item [hidden]="!readonly || !hideData"
+                                            (click)="notifyApplicant(element)"
+                                            style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                            <mat-icon matTooltip="Notify Applicant"
+                                                style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                info
+                                            </mat-icon> Notify Applicant
+                                        </button>
+                                    </mat-menu>
+                                </div>
+
+                            </td>
+                        </ng-container>
+                        <tr *matHeaderRowDef="columns" mat-header-row style="border: 1px solid #dadce0;"></tr>
+                        <tr *matRowDef="let myRowData; columns: columns" mat-row style="border: 1px solid #dadce0;">
+                        </tr>
+                    </table>
+                    <div fxLayoutAlign="center center" class="mt-4"
+                        *ngIf="lodgementDraftPaymentsData?.length === 0 || lodgementDraftPaymentsData === undefined">
+                        <p>No data available</p>
+                    </div>
+                    <!-- <mat-paginator #paginator [length]="dataLength" [pageSizeOptions]="[10,15,20]" [pageSize]="10"
+                        showFirstLastButtons>
+                    </mat-paginator> -->
+                    <div class="table-footer">
+
+                        <div class="row m-3 p-2">
+                            <span style="width: 25%">Total</span>
+                            <span>{{total | number : '1.2-2'}}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-4">
+                        <span>
+                            Estimated Lodgement Cost (R) &nbsp;{{totalAmount | number : '1.2-2'}} &nbsp;
+                            &nbsp;<a style="cursor: pointer;color: blue;" (click)="viewDetails()">
+                                View details</a>
+                        </span>
+                        <span class="specer"></span>
+                        <span style="display: inline-flex;">
+                            <mat-icon style="cursor: pointer;color:black" (click)="generateInvoice()">get_app
+                            </mat-icon>
+                            <a style="cursor: pointer;color: blue;" (click)="generateInvoice()">
+
+                                Perform Invoice
+                            </a>
+                        </span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-12 col-lg-4 mt-3" [hidden]="preview  || readonly">
+            <mat-card class="scroll">
+                <mat-card-content>
+                    <form [formGroup]="form">
+
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Payment date</mat-label>
+                                    <input [matDatepicker]="picker1" [max]="currentDate" readonly autocomplete="off"
+                                        formControlName="PaymentDate" matInput required>
+                                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-error
+                                        *ngIf="form.controls['PaymentDate'].hasError('required') && form.controls['PaymentDate'].touched"
+                                        class="text-danger support-text">Payment date is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Paid Amount</mat-label>
+                                    <input formControlName="PaidAmount" autocomplete="off" matInput required>
+                                    <mat-error
+                                        *ngIf="form.controls['PaidAmount'].hasError('required') && form.controls['PaidAmount'].touched"
+                                        class="text-danger support-text">Paid amount is required</mat-error>
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Reference Number</mat-label>
+                                    <input formControlName="ReferenceNumber" autocomplete="off" matInput required>
+                                    <mat-error
+                                        *ngIf="form.controls['ReferenceNumber'].hasError('required') && form.controls['ReferenceNumber'].touched"
+                                        class="text-danger support-text">Reference number is required</mat-error>
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Note</mat-label>
+                                    <textarea formControlName="Notes" autocomplete="off" matInput rows="3"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Choose File</mat-label>
+                                    <input [value]="uploadedFileName" required disabled matInput>
+                                    <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                                        <mat-icon class="attach">attach_file</mat-icon>
+                                    </button>
+                                    <input #fileInput (change)="selectFile($event.target.files)" hidden id="file"
+                                        type="file">
+                                    <mat-error
+                                        *ngIf="form.controls['uploadedFileName'].hasError('required') && form.controls['uploadedFileName'].touched"
+                                        class="text-danger support-text">File is required</mat-error>
+                                </mat-form-field>
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-label>Payment Method</mat-label>
+                                <br>
+                                <br>
+                                <mat-radio-group class="example-radio-group" formControlName="PaymentMethod" required>
+                                    <mat-radio-button class="example-radio-button m-1"
+                                        *ngFor="let data of paymentMethodData" [value]="data.itemId">
+                                        {{data.caption}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                <small
+                                    *ngIf="form.controls['PaymentMethod'].hasError('required') && form.controls['PaymentMethod'].touched"
+                                    class="text-danger support-text">Payment method is required</small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <button mat-raised-button class="submit-button bover float-right"
+                                    (click)="saveLodgementPayment('Lodgement Payment')">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

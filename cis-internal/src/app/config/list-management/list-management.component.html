@@ -1,0 +1,193 @@
+<div class="top-spacing">
+    <div class="row">
+        <span class="col">
+            <p class="heading">List Management</p>
+        </span>
+    </div>
+    <mat-spinner *ngIf="isSpinnerVisible" class="center">
+    </mat-spinner>
+    <div *ngIf="!isSpinnerVisible" class="card">
+        <div class="row mx-0">
+            <div class="p-0 left-col">
+                <div (click)="tab='userRoles'" [ngClass]="tab=='userRoles' ? 'link-active' : ''"
+                     class="left-col-button mx-auto">
+                    <span class="row mx-0 w-100 py-2">
+                        <p class="desc1-text m-1">Roles</p>
+                    </span>
+                </div>
+                <div (click)="tab='provinces'" [ngClass]="tab=='provinces' ? 'link-active' : ''"
+                     class="left-col-button mx-auto">
+                    <span class="row mx-0 w-100 py-2">
+                        <p class="desc1-text m-1">Provinces</p>
+                    </span>
+                </div>
+                <div (click)="tab='addOthers'" [ngClass]="tab=='addOthers' ? 'link-active' : ''"
+                     class="left-col-button mx-auto">
+                    <span class="row mx-0 w-100 py-2">
+                        <p class="desc1-text m-1">Add Others</p>
+                    </span>
+                </div>
+            </div>
+            <div class="right-col">
+                <div *ngIf="tab=='provinces'" style="margin-left: 1.7%; margin-right: 1.7%;">
+                    <div class="row mt-3">
+                        <span class="col-11">
+                            <!-- <button mat-raised-button class="submit-button bover">Add</button> -->
+                        </span>
+                        <span class="col-1">
+                            <a (click)="download(7)" class="download-css float-right">
+                                <mat-icon matTooltip="Download">file_download</mat-icon>
+                            </a>
+                        </span>
+                    </div>
+                    <br>
+                    <mat-card class="card-table-tasks">
+                        <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                            <table [dataSource]="provinces" class="table-margin w-100 m-0 inline-table" mat-table>
+                                <ng-container matColumnDef="descode">
+                                    <th *matHeaderCellDef mat-header-cell> Code</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.provinceShortName}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="desmode">
+                                    <th *matHeaderCellDef mat-header-cell> Province Name</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.provinceName}} </td>
+                                </ng-container>
+                                <tr *matHeaderRowDef="desgColums" mat-header-row></tr>
+                                <tr *matRowDef="let row; columns: desgColums;" mat-row></tr>
+                            </table>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div *ngIf="tab=='userRoles'" style="margin-left: 1.7%; margin-right: 1.7%;">
+                    <div class="row ">
+                        <div class="col-2 mt-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>User Type</mat-label>
+                                <mat-select (selectionChange)="changeRoleTable()" matInput [(ngModel)]="roleValue">
+                                  <mat-option value="EXTERNAL">External</mat-option>
+                                  <mat-option value="INTERNAL">Internal</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+                        <div class="col-9 mt-2 float-left">
+                            <button mat-raised-button class="submit-button bover float-left" (click)="addRole()">Add</button>
+                        </div>
+                        <div class="col-1 mt-2">
+                            <a (click)="download(9)" class="download-css float-right">
+                                <mat-icon matTooltip="Download">file_download</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                    <mat-card class="card-table-tasks">
+                        <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                            <table [dataSource]="roles" class="table-margin w-100 m-0 inline-table" mat-table>
+                                <ng-container matColumnDef="descode">
+                                    <th *matHeaderCellDef mat-header-cell> Code</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.roleCode}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="roleName">
+                                    <th *matHeaderCellDef mat-header-cell> Role Name</th>
+                                    <td *matCellDef="let element" mat-cell> {{element.roleName}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="action">
+                                    <th *matHeaderCellDef mat-header-cell>Action</th>
+                                    <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                        <a (click)="updateRole(element,1)"
+                                              *ngIf="element.isActive === 0">Activate</a>
+                                        <a (click)="updateRole(element,0)"
+                                              *ngIf="element.isActive === 1">De-Activate</a>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="edit">
+                                    <th *matHeaderCellDef mat-header-cell>Edit</th>
+                                    <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                  
+                                              <div style="cursor: pointer;">
+                                                <span  class="details">
+                                                   <mat-icon (click)="editRole(element)">edit</mat-icon>
+                                                    <!-- <mat-icon (click)="viewRole(element.id)" class="float-right mt-2" style="cursor: pointer;">get_app</mat-icon> -->
+                                                </span>
+                                            </div>
+                                    </td>
+                                </ng-container>
+                                <tr *matHeaderRowDef="roleColums" mat-header-row></tr>
+                                <tr *matRowDef="let row; columns: roleColums;" mat-row></tr>
+                            </table>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div *ngIf="tab=='addOthers'" style="margin-left: 1.7%; margin-right: 1.7%;">
+                    <div class="row mt-3">
+                        <div class="col-10 col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select Category</mat-label>
+                                <mat-select (selectionChange)="fetchListData()" [(ngModel)]="category">
+                                    <mat-option *ngFor="let x of masterList" [value]="x">{{x.caption}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 col-md-6 mt-2">
+                            <button mat-raised-button (click)="add()" [disabled]="!category" class="submit-button bover float-left">Add
+                            </button>
+                            &nbsp;&nbsp;
+                            <a style="color: blue;cursor: pointer;" [disabled]="!category" (click)="openDefaultList()">Set Default Value</a>
+                        </div>
+                    </div>
+                    <div *ngIf="category" class="row mt-2">
+                        <div class="col">
+                            <mat-card class="card-table-tasks">
+                                <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                    <table [dataSource]="dataSource" class="table-margin w-100 m-0 inline-table" mat-table>
+                                        <ng-container matColumnDef="itemCode">
+                                            <th *matHeaderCellDef mat-header-cell>Item Code</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.itemCode}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="name">
+                                            <th *matHeaderCellDef mat-header-cell>Name</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.caption}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="active">
+                                            <th *matHeaderCellDef mat-header-cell>Status</th>
+                                            <td *matCellDef="let element" mat-cell>
+                                                <span *ngIf="element.isActive === 1">Active</span>
+                                                <span *ngIf="element.isActive === 0">Inactive</span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="isDefault">
+                                            <th *matHeaderCellDef mat-header-cell>Is Default</th>
+                                            <td *matCellDef="let element" mat-cell>
+                                                <span *ngIf="element.isDefault === 1">Yes</span>
+                                                <span *ngIf="element.isDefault === 0 || element.isDefault === null">No</span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th *matHeaderCellDef mat-header-cell>Action</th>
+                                            <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                                <a (click)="changeStatus(element.itemId,1)"
+                                                    *ngIf="element.isActive === 0">Activate</a>
+                                                <a (click)="changeStatus(element.itemId,0)"
+                                                    *ngIf="element.isActive === 1">De-Activate</a>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="edit">
+                                            <th *matHeaderCellDef mat-header-cell>Edit</th>
+                                            <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                                <div style="cursor: pointer;">
+                                                    <span  class="details">
+                                                        <mat-icon (click)="editOtherList(element)">edit</mat-icon>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <tr *matHeaderRowDef="dataCols" mat-header-row></tr>
+                                        <tr *matRowDef="let row; columns: dataCols;" mat-row></tr>
+                                    </table>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

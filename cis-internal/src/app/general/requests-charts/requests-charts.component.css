@@ -1,0 +1,102 @@
+::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+.form-button {
+    width: 75px;
+    height: 36px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    border-radius: 8px;
+    border: 0;
+    background-color: green; 
+    /* #f48222; */
+}
+
+.clear-button {
+    width: 75px;
+    height: 36px;
+    color: green;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    border-radius: 8px;
+    border: 1px solid black;
+    background-color: #ffffff; 
+    /* #f48222; */
+}
+
+canvas
+{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart {
+    overflow: auto;
+  }
+
+  .back:hover{
+    background-color: lightgray;
+    color: black;
+}
+
+.bhover:hover{
+    background: #c58b10;
+}
+
+.table thead th {
+    border-bottom: 1px solid #e2e5e8;
+    font-size: 13px;
+    color: #37474f;
+    background: #ecf0f5;
+    text-transform: uppercase;
+}
+.table td, .table th {
+    padding: 0.32rem;
+}
+.badge {
+    font-size: 80%;
+    padding: .35em .6em;
+    font-weight: 600;
+}
+
+.badge-light-danger {
+    background: rgba(255,82,82,.2);
+    border-color: #ffcfcf;
+    color: #ff5252;
+}
+
+.badge-light-primary {
+    background: rgba(70,128,255,.2);
+    border-color: #cbdbff;
+    color: #4680ff;
+}
+
+.badge-light-success {
+    background: rgba(156,204,101,.2);
+    border-color: #e3f1d4;
+    color: #9ccc65;
+}
+
+.badge {
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: initial;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* .mat-form-field-flex{
+    height: 53px  !important;
+} */

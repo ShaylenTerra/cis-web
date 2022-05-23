@@ -1,0 +1,258 @@
+<div class="container-fluid">
+    <div class="row">
+        <div [ngClass]="preview || readonly? 'col-12 col-lg-12 mt-3' : 'col-12 col-lg-8 mt-3'">
+            <mat-card class="scroll">
+                <mat-card-content>
+                    <div class="row mx-0">
+                        <div class="col-md-12">
+                            <label style="font-weight: bold;">Supporting Document:</label>
+                        </div>
+                        <!-- <div class="col-md-6 mt-2">
+                            <div class="row">
+                                <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                                    -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                                    border-color: rgba(0,0,0,.2);">
+                                    <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                                                                            width: '70px',
+                                                                            height: '70px',
+                                                                            'border-radius': '10px'
+                                                                          }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions"
+                                        [images]="imageArray" class="ngx-gallery"></ngx-gallery>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-12 mt-2">
+                            <!-- <mat-form-field *ngFor="let document of supportingDocuments" appearance="outline">
+                                <button mat-icon-button matSuffix>
+                                    <mat-icon class="delete" (click)="downloadsupportingDoc(document)">get_app
+                                    </mat-icon>
+                                </button>
+                                <button mat-icon-button matSuffix>
+                                    <mat-icon class="delete" (click)="deleteSupportingDoc(document)">delete</mat-icon>
+                                </button>
+                                <button mat-icon-button matSuffix
+                                    matTooltip="Document Name:{{document.name}}  Uploaded On:{{document.dated | date : 'dd/MMMM/y HH:mm:ss'}}">
+                                    <mat-icon aria-label="Button that shows a red tooltip" class="t-button"
+                                        style="cursor: pointer;">
+                                        error_outline
+                                    </mat-icon>
+                                </button>
+                                <mat-label style="color:blue">{{document.name}}</mat-label>
+                                <input disabled matInput />
+                                <input #fileInput (change)="selectFile2($event)" hidden id="file" type="file">
+                            </mat-form-field> -->
+
+                            <table [dataSource]="dataSourceList"
+                                *ngIf="supportingDocuments.length > 0 && supportingDocuments !== undefined"
+                                class="table-margin w-100 m-0 inline-table" mat-table matSort>
+                                <ng-container matColumnDef="name">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header style="padding-left: 10px;border-top-left-radius: 8px;
+                                                border-bottom-left-radius: 8px;width: 25%;">
+                                        Name</th>
+                                    <td *matCellDef="let element, let i = index;" mat-cell>
+                                        {{element?.name}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="type">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
+                                    <td *matCellDef="let element" mat-cell style="padding-left:3px; ">
+                                        {{element?.type}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="notes">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Notes</th>
+                                    <td *matCellDef="let element" mat-cell>
+                                        {{element?.notes}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="dated">
+                                    <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                        [ngClass]="{'paymentdate' : preview === true || readonly === true}">Date
+                                    </th>
+                                    <td *matCellDef="let element" mat-cell>
+                                        {{element?.dated | date:'dd-MMM-yyyy'}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="Action">
+                                    <th *matHeaderCellDef mat-header-cell>Action</th>
+                                    <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                        <div class="dropdown menu" style="float: right">
+                                            <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu"
+                                                #menuTrigger="matMenuTrigger" class="hover-display"
+                                                [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                            </span>
+                                            <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
+                                                [overlapTrigger]="true">
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="downloadsupportingDoc(element)">
+                                                    <mat-icon matTooltip="View Property" color="primary"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        visibility
+                                                    </mat-icon> View
+                                                </button>
+                                                <button mat-menu-item [hidden]="readonly"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="deleteSupportingDoc(element)">
+                                                    <mat-icon matTooltip="Remove Property"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        delete
+                                                    </mat-icon> Remove
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+
+                                    </td>
+                                </ng-container>
+                                <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                                <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
+                            </table>
+                            <mat-paginator *ngIf="supportingDocuments.length > 0 && supportingDocuments !== undefined"
+                                [hidden]="preview" #paginator [length]="dataLength" [pageSizeOptions]="[10,15,20]"
+                                [pageSize]="10" showFirstLastButtons>
+                            </mat-paginator>
+
+                            <div fxLayoutAlign="center center" class="mt-4"
+                                *ngIf="supportingDocuments?.length === 0 || supportingDocuments === undefined">
+                                <p>No data available</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form [formGroup]="uploadDocForm" [hidden]="!hideData">
+                        <div class="row mx-0 mt-4">
+                            <div class="col-md-3">
+                                <label style="font-weight: bold;">Supporting Document:</label>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field appearance="outline" class="input-margin">
+                                    <mat-label>Other Documents</mat-label>
+                                    <mat-select formControlName="documentType" matInput>
+                                        <mat-option *ngFor="let listItem of otherDocType" [value]="listItem.itemId">
+                                            {{listItem.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <mat-form-field appearance="outline" class="mt-2">
+                                    <mat-label>Choose File</mat-label>
+                                    <input [value]="uploadedFileName1" disabled matInput />
+                                    <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                                        <mat-icon class="attach">attach_file</mat-icon>
+                                    </button>
+                                    <input #fileInput (change)="selectFile2($event.target.files)" hidden id="newFile"
+                                        type="file">
+                                    <!-- <p>{{docName}}</p> -->
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-3">
+
+                            </div>
+                            <div class="col-6">
+                                <mat-form-field appearance="outline" class="input-margin mt-2">
+                                    <mat-label>Comment</mat-label>
+                                    <textarea formControlName="comment" matInput style="color: black;"
+                                        #supportingDocComment></textarea>
+                                    <span class="pull-right char" style="color: black;"><em>{{ 1000 -
+                                            supportingDocComment?.value?.length }} characters left</em></span>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-3">
+                                <button mat-raised-button style="width: 130px" (click)="submitDoc()"
+                                    class="submit-button submit bhover float-right mb-4 mt-4">Add Document
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row mx-0" [hidden]="additionalDocuments.length <= 0 || workflowId === undefined">
+                        <div class="col-3"></div>
+                        <div class="col-9">
+                            <mat-form-field *ngFor="let document of additionalDocuments" appearance="outline">
+                                <button (click)="downloaddoc2(document)" mat-icon-button matSuffix>
+                                    <mat-icon class="delete">get_app</mat-icon>
+                                </button>
+                                <button (click)="deleteDoc2(document)" mat-icon-button matSuffix>
+                                    <mat-icon class="delete">delete</mat-icon>
+                                </button>
+                                <button mat-icon-button matSuffix
+                                    matTooltip="Document Type:{{document.documentType}}  Size:{{document.sizeKb}} (KB) notes:{{document.notes}} Uploaded By:{{document.uploadedBy}} Uploaded On:{{document.uploadedOn | date : 'dd/MMMM/y HH:mm:ss'}}">
+                                    <mat-icon aria-label="Button that shows a red tooltip" class="t-button"
+                                        style="cursor: pointer;">
+                                        error_outline
+                                    </mat-icon>
+                                </button>
+                                <mat-label style="color:blue">{{document.documentName}}</mat-label>
+                                <input disabled matInput />
+                                <input #fileInput (change)="selectFile2($event)" hidden id="file" type="file">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-12 col-lg-4 mt-3" [hidden]="preview || readonly">
+            <mat-card>
+                <mat-card-content>
+                    <form [formGroup]="uploadDocForm">
+
+                        <div class="col-12">
+                            <mat-form-field appearance="outline" class="input-margin">
+                                <mat-label>Other Document</mat-label>
+                                <mat-select formControlName="documentType" matInput required>
+                                    <mat-option *ngFor="let listItem of otherDocType" [value]="listItem.itemId">
+                                        {{listItem.caption}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="uploadDocForm.controls['documentType'].hasError('required') && uploadDocForm.controls['documentType'].touched"
+                                    class="text-danger support-text">Document Type required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12">
+                            <mat-form-field appearance="outline" class="mt-2">
+                                <mat-label>Choose File</mat-label>
+                                <input [value]="uploadedFileName1" required disabled matInput />
+                                <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                                    <mat-icon class="attach">attach_file</mat-icon>
+                                </button>
+                                <input #fileInput (change)="selectFile2($event.target.files)" hidden id="newFile"
+                                    type="file" required>
+                                <mat-error
+                                    *ngIf="uploadDocForm.controls['uploadedFileName'].hasError('required') && uploadDocForm.controls['uploadedFileName'].touched"
+                                    class="text-danger support-text">File is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12">
+                            <mat-form-field appearance="outline" class="input-margin mt-2">
+                                <mat-label>Comment</mat-label>
+                                <textarea formControlName="notes" rows="3" matInput style="color: black;"
+                                    #notes></textarea>
+                                <span class="pull-right char" style="color: black;"><em>{{ 1000 -
+                                        notes?.value?.length }} characters left</em></span>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <button mat-raised-button class="submit-button bover float-right"
+                                    (click)="addDocument()">
+                                    Add Document
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

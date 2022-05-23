@@ -1,0 +1,44 @@
+<h4 mat-dialog-title><span>Subscription Execution Details</span></h4>
+<div mat-dialog-content>
+    <mat-card>
+        <mat-card-content>
+            <table [dataSource]="dataSource" class="w-100" mat-table>
+              
+                <ng-container matColumnDef="ftpLocation">
+                    <th *matHeaderCellDef mat-header-cell>FTP Location</th>
+                    <td *matCellDef="let element"
+                        mat-cell>{{element.ftpLocation }}</td>
+                </ng-container>
+                <ng-container matColumnDef="executionDate">
+                    <th *matHeaderCellDef mat-header-cell>Execution Date</th>
+                    <td *matCellDef="let element" class="refNo" mat-cell>{{element.executionDate| date :'dd/MMM/yyyy'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="message">
+                    <th *matHeaderCellDef mat-header-cell>Message</th>
+                    <td *matCellDef="let element" mat-cell>{{element.message}}</td>
+                </ng-container>
+                <ng-container matColumnDef="nextExecutionDate">
+                    <th *matHeaderCellDef mat-header-cell>Next Execution Date</th>
+                    <td *matCellDef="let element" mat-cell>{{element.nextExecutionDate | date :'dd/MMM/yyyy'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="notificationStatus">
+                    <th *matHeaderCellDef mat-header-cell>Notification Status</th>
+                    <td *matCellDef="let element" mat-cell>{{element.notificationStatus}}</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th *matHeaderCellDef mat-header-cell>Status</th>
+                    <td *matCellDef="let element" class="truncate" mat-cell>{{element.status}}</td>
+                </ng-container>
+  
+                <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+            </table>
+            <mat-paginator #paginator [length]="dataLength" [pageSizeOptions]="[10, 15, 20]" [pageSize]="10"
+                           showFirstLastButtons>
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button mat-raised-button [mat-dialog-close]="1" class="cancel-button cancel" mat-button>Cancel</button>
+</div>

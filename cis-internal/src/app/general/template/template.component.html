@@ -1,0 +1,212 @@
+<mat-card>
+    <mat-card-content>
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+                    <img alt="" src="assets/images/bootstrap-icons/telephone-fill.svg"> Office Address
+                </ng-template>
+                <div class="container-fluid">
+                    <div class="row my-5">
+                        <div class="col">
+                            <p class="heading">Office Address</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div *ngFor="let x of contacts" class="contact">
+                                <span class="row">
+                                    <span class="col">
+                                        <img (click)="EditProvinceAddressTemplate(x)" alt=""
+                                             class="float-right pencil"
+                                             src="assets/images/bootstrap-icons/pencil.svg">
+                                    </span>
+                                </span>
+                            <p class="sub-heading mt-5">{{x.provinceName}}</p>
+                            <p class="text mt-5">
+                                <img alt="" src="assets/images/bootstrap-icons/geo-alt.svg">
+                                <strong>Address:</strong> {{x.provinceAddress.provinceAddress}}
+                            </p>
+                            <img alt="" class="mt-5" src="assets/images/bootstrap-icons/envelope-fill.svg">
+                            <p class="text mt-2"><a>{{x.provinceAddress.provinceEmail}}</a></p>
+                            <p class="desc-text my-5">
+                                <img alt=""
+                                     src="assets/images/bootstrap-icons/telephone-fill.svg"> {{x.provinceAddress.provinceContactNumber}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <img alt="" src="assets/images/bootstrap-icons/file-earmark.svg"> Templates
+                </ng-template>
+                <div class="container-fluid">
+                    <div class="row my-5">
+                        <span class="col-2">
+                            <p class="heading">Templates</p>
+                        </span>
+                        <span class="col-10 float-right">
+                            <button mat-raised-button class="submit-button bover float-right" (click)="addTemplate()">Add</button>
+                        </span>
+                    </div>
+                    <div *ngIf="isSpinnerVisible">
+                        <mat-spinner></mat-spinner>
+                    </div>
+                    <div *ngIf="!isSpinnerVisible" class="row">
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col-10">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Module</mat-label>
+                                        <mat-select (selectionChange)="moduleChange()" [(value)]="selectedModule"
+                                                    matInput
+                                                    required>
+                                            <mat-option *ngFor="let module of modules" [value]="module">
+                                                {{ module.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Notification Template</mat-label>
+                                        <mat-select (selectionChange)="templateChange()" [(value)]="selectedTemplate"
+                                                    matInput
+                                                    required>
+                                            <mat-option *ngFor="let temp of currentBind?.templates" [value]="temp">
+                                                {{ temp.templateName }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div *ngIf="showAdd" class="col-2">
+                                    <mat-icon (click)="addTemplate()" style="padding-top: 15px; cursor: pointer;">
+                                        add
+                                    </mat-icon>
+                                </div> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Template Type</mat-label>
+                                        <mat-select (selectionChange)="templateTypeChange()"
+                                                    [(value)]="selectedTempType" matInput
+                                                    required>
+                                            <mat-option *ngFor="let type of tempTypes" [value]="type">
+                                                {{ type.caption }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="tempTypeShow === 286" class="col-9">
+                            <div class="row">
+                                <div class="col">
+                                    <span style="display: inline-flex;">
+                                    <p class="sub-heading">Email Template</p>&nbsp;&nbsp;
+                                    <a style="color: blue;cursor: pointer;" (click)="tempdialog()">View History</a></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    Subject:
+                                    <mat-form-field appearance="outline" *ngIf="dataBind != undefined">
+                                        <input [(ngModel)]="dataBind.subject" matInput value="The subject of the Email">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col" *ngIf="dataBind != undefined">
+                                    Body:
+                                    <quill-editor [(ngModel)]="dataBind.mailBody" [styles]="{height: '200px'}">
+                                    </quill-editor>
+                                    <span class="pull-right char" style="color: black;"><em>{{ 4000 - dataBind.mailBody?.length }} characters left</em></span>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <button mat-raised-button (click)="updateTemplate()" class="submit-button bover">Update
+                                        Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="tempTypeShow === 288" class="col-9">
+                            <div class="row">
+                                <div class="col">
+                                    <span style="display: inline-flex;">
+                                    <p class="sub-heading">SMS Template</p>
+                                    &nbsp;&nbsp;
+                                    <a style="color: blue;cursor: pointer;" (click)="tempdialog()">View History</a>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Body</mat-label>
+                                        <textarea matInput [(ngModel)]="dataBind.smsBody" cols="50" rows="5" style="color: black;">  </textarea>
+                                        <span class="pull-right char" style="color: black;"><em>{{ 1000 - dataBind.smsBody?.length }} characters left</em></span>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <button mat-raised-button (click)="updateTemplate()" class="submit-button bover">Update
+                                        Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="tempTypeShow === 287" class="col-9">
+                            <div class="row">
+                                <div class="col">
+                                    <span style="display: inline-flex;">
+                                    <p class="sub-heading">PDF Template</p>
+                                    &nbsp;&nbsp;
+                                    <a style="color: blue;cursor: pointer;" (click)="tempdialog()">View History</a>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <!-- <mat-form-field appearance="outline">
+                                        <mat-label *ngIf="fileData; else newFile">{{fileData.name}}</mat-label>
+                                        <ng-template #newFile>
+                                            <mat-label>Upload Word Document</mat-label>
+                                        </ng-template>
+                                        <input disabled matInput>
+                                        <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                                            <mat-icon>attach_file</mat-icon>
+                                        </button>
+                                        <input #fileInput (change)="onFileChange($event)" hidden id="file" type="file">
+                                    </mat-form-field> -->
+                                    <div class="row">
+                                        <div class="col" *ngIf="dataBind != undefined">
+                                            <quill-editor [(ngModel)]="dataBind.pdfBody" [styles]="{height: '200px'}">
+                                            </quill-editor>
+                                            <span class="pull-right char" style="color: black;"><em>{{ 4000 - dataBind.pdfBody?.length }} characters left</em></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <!-- <button (click)="getPdf()" class="submit-button">Preview
+                                    </button> -->
+                                    <button mat-raised-button (click)="updateTemplate()" class="submit-button bover">Update
+                                        Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

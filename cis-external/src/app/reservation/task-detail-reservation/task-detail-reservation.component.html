@@ -1,0 +1,79 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div class="container-fluid pr-0">
+            <span class="row mx-0">
+                <span class="col-lg-11 p-l-0" style="display: inline-flex;">
+                    <i style="font-size: 30px; cursor: pointer; margin-right: 20px"
+                        (click)="nvaigateToReservationList()" class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                    <h2>{{resData?.referenceNumber || resData?.referenceNo}} -
+                        {{resData?.actionRequiredDescription}} {{resDraftData?.name}} of
+                        {{resDraftData?.provinceName}}</h2>
+                </span>
+            </span>
+            <div class="row mx-0 tab-grid-remove">
+                <div class="col-lg-12">
+                    <mat-tab-group>
+                        <mat-tab label="Applicant Details">
+                            <app-applicant-reservation *ngIf="resDraftData !== undefined"
+                                (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData"
+                                [readonly]="readonly" [processName]="processName"></app-applicant-reservation>
+                        </mat-tab>
+                        <mat-tab label="Application Details">
+                            <app-application-reservation *ngIf="resDraftData !== undefined"
+                                (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData"
+                                [readonly]="readonly"></app-application-reservation>
+                        </mat-tab>
+                        <mat-tab label="Land Parcel" *ngIf="processName === 'Reservation Request'">
+                            <app-land-parcel *ngIf="resDraftData !== undefined && draftId !== undefined"
+                                [draftId]="draftId" [provinceId]="provinceId" [readonly]="readonly"
+                                [showOutcome]="false"></app-land-parcel>
+                        </mat-tab>
+                        <mat-tab label="Transferee Details" *ngIf="processName === 'Reservation Transfer'">
+                            <app-transferee-details *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                                (outputFromChild)="receiveChildData($event)" [readonly]="readonly">
+                            </app-transferee-details>
+                        </mat-tab>
+                        <mat-tab label="Transfer Details" *ngIf="processName === 'Reservation Transfer'">
+                            <app-transfer-details *ngIf="resDraftData !== undefined" [draftId]="draftId"
+                                [provinceId]="provinceId" [readonly]="readonly" [showOutcome]="false">
+                            </app-transfer-details>
+                        </mat-tab>
+                        <mat-tab label="Annexure" *ngIf="processName === 'Reservation Request'">
+                            <app-annexure-reservation *ngIf="resDraftData !== undefined && draftId !== undefined"
+                                [draftData]="resDraftData" [draftId]="draftId" [readonly]="readonly"
+                                [supportingDoc]="supportingDoc" [workflowId]="workflowId" [resubmitData]="resubmitData">
+                            </app-annexure-reservation>
+                        </mat-tab>
+                        <mat-tab label="Annexure" *ngIf="processName === 'Reservation Transfer'">
+                            <app-annexure-transfer *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                                [draftId]="draftId" [readonly]="readonly" [workflowId]="workflowId"
+                                [resubmitData]="resubmitData" [processId]="processId" [supportingDoc]="supportingDoc">
+                            </app-annexure-transfer>
+                        </mat-tab>
+                        <mat-tab label="Reservation Detail" *ngIf="showtab && processName !== 'Reservation Transfer'">
+                            <app-detail-reservation *ngIf="resDraftData !== undefined && draftId !== undefined"
+                                [workflowId]="workflowId" [provinceId]="provinceId" [draftData]="resDraftData"
+                                [draftId]="draftId"></app-detail-reservation>
+                        </mat-tab>
+                        <mat-tab label="Acknowledgement Letter"
+                            *ngIf="showtab && processName !== 'Reservation Transfer'">
+                            <app-acknowledgement-letter *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                                [draftId]="draftId">
+                            </app-acknowledgement-letter>
+                        </mat-tab>
+                        <mat-tab label="Request Flow">
+                            <app-requestflow-reservation [workflowId]="workflowId"></app-requestflow-reservation>
+                        </mat-tab>
+                        <mat-tab label="Referral Input" *ngIf="processName === 'Reservation Transfer'">
+                            <app-referral-input [workflowId]="workflowId"></app-referral-input>
+                        </mat-tab>
+                        <mat-tab label="Decision" *ngIf="processName === 'Reservation Transfer'">
+                            <app-reservation-decision *ngIf="resDraftData !== undefined && draftId !== undefined"
+                                [taskDetail]="resData" [draftData]="resDraftData" [draftId]="draftId"
+                                [workflowId]="workflowId" [readonly]="readonly"></app-reservation-decision>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>

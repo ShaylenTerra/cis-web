@@ -1,0 +1,16 @@
+
+<div class="row mt-4" *ngIf="showdetails === false">
+    <div class="col mb-3">
+    <span class="float-right">
+        <button mat-raised-button class="submit-button bover" (click)="issueReservationDetail()"
+            style="height: 44px; margin-right: 5px;width: 210px;">Issue Reservation Details</button>
+    </span>
+    </div>
+    
+</div>
+<div fxLayoutAlign="center center" class="row mt-4" *ngIf="showdetails === false">
+    <p>No reservation issued</p>
+</div>
+<div *ngIf="showdetails === true">
+    <app-land-parcel [draftId]="draftId" [provinceId]="provinceId" [readonly]="true" [showOutcome]="true"></app-land-parcel>
+</div>

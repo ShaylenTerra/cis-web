@@ -1,0 +1,245 @@
+<div class="main-page row">
+  <div class="col-md-6 p-0">
+    <div class="left-column-textbox mx-auto">
+      <p class="left-column-textbox-heading">
+        Welcome to The Department of Agriculture, Land Reform and Rural Development (DALRRD) Cadastral Information System website.
+      </p>
+      <p class="left-column-textbox-text">
+        The National Geomatics Management Service (NGMS) is a branch in The Department of Agriculture, Land Reform and Rural Development (DALRRD), whose primary objective is to provide efficient cadastral survey management services and to provide cadastral information services in support of land delivery and orderly development. The Branch is mandated to perform its functions through the Land Survey Act, 1997 (Act No. 8 of 199).
+      </p>
+      <p class="left-column-textbox-sub-heading">
+        This programme is responsible for the following:
+      </p>
+      <ul class="left-column-textbox-list">
+        <li>Regulation of Surveyor-General’s offices</li>
+        <li>Examining and approving all surveys for the registration of land and real rights</li>
+        <li>Maintaining cadastral documents</li>
+        <li>Archiving all cadastral surveys</li>
+        <li>Providing cadastral advisory and information services</li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="login-form">
+      <div class="text-center">
+        <img alt="" class="logo" src="assets/images/logo-new.png">
+      </div>
+      <h2 class="login-heading welcome text-center">Registration</h2>
+      <!-- <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+        <ng-template matStepperIcon="edit">
+          <mat-icon>check</mat-icon>
+        </ng-template>
+        <mat-step [stepControl]="userFormGroup">
+          <form [formGroup]="userFormGroup">
+            <ng-template matStepLabel>User Information</ng-template>
+            <div class="row mx-0 mt-2">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter Departmental Username</mat-label>
+                  <input [(ngModel)]="depUserName" formControlName="username" matInput required />
+                </mat-form-field>
+                <small
+                  *ngIf="userFormGroup.controls['username'].hasError('required') && userFormGroup.controls['username'].touched"
+                  class="text-danger support-text">Departmental Username Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter Password</mat-label>
+                  <input [(ngModel)]="password" [type]="hide1 ? 'password' : 'text'" formControlName="password"
+                    matInput>
+                  <button [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1" mat-icon-button matSuffix
+                    type="button">
+                    <mat-icon (click)="hide1=!hide1">{{hide1 ? 'visibility_off' : 'visibility'}}
+                    </mat-icon>
+                  </button>
+                </mat-form-field>
+                <small
+                  *ngIf="userFormGroup.controls['password'].hasError('required') && userFormGroup.controls['password'].touched"
+                  class="text-danger support-text">Departmental Password Required.</small>
+                <small
+                  *ngIf="errorMsg != undefined"
+                  class="text-danger support-text">{{errorMsg}}</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col mt-2" style="font-size: 14px;">
+                I already have an account, <a [routerLink]="['/authentication/login']" style="color:#7856ff;">SignIn</a>
+              </span>
+              <span class="col mt-2">
+                <button (click)="validateUser(stepper)" class="submit-button" type="button">Confirm and Next</button>
+              </span>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [editable]="isEditable"> -->
+      <form [formGroup]="roleFormGroup">
+        <!-- <ng-template matStepLabel>Role Information</ng-template> -->
+        <div class="row mx-0 mt-2">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input formControlName="firstName" matInput required>
+              <!-- <mat-error *ngFor="let validation of error_messege.firstName">
+                <mat-error class="error-messege"
+                  *ngIf="f.get('firstName').hasError(validation.type) && (f.get('firstName').dirty || f.get('firstName').touched)">
+                  {{validation.message}}
+                </mat-error>
+              </mat-error> -->
+            </mat-form-field>
+            <small
+              *ngIf="roleFormGroup.controls['firstName'].hasError('required') && roleFormGroup.controls['firstName'].touched"
+              class="text-danger support-text">First Name Required.</small>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input formControlName="lastName" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mx-0">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>User Name</mat-label>
+              <input [value]="depUserName" disabled matInput />
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input [value]="email" disabled matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mx-0">
+          <span class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Province Name</mat-label>
+              <mat-select [(ngModel)]="province" formControlName="province" required>
+                <mat-option *ngFor="let x of provinces" [value]="x">
+                  {{ x.provinceName }}
+                </mat-option>
+              </mat-select>
+              <!-- <mat-error *ngFor="let validation of error_messege.province">
+                      <mat-error class="error-messege"
+                        *ngIf="f.get('province').hasError(validation.type) && (f.get('province').dirty || f.get('province').touched)">
+                        {{validation.message}}
+                      </mat-error>
+                    </mat-error> -->
+            </mat-form-field>
+            <small
+              *ngIf="roleFormGroup.controls['province'].hasError('required') && roleFormGroup.controls['province'].touched"
+              class="text-danger support-text">Province Required.</small>
+          </span>
+        </div>
+        <!-- <div class="row mx-0">
+          <span class="col">
+            <mat-radio-group aria-label="Select an option" formControlName="roleType">
+              <div class="row mx-0">
+                <span class="col">
+                  <mat-radio-button class="c-css" value="1">Provincial Role</mat-radio-button>
+                </span>
+                <span class="col">
+                  <mat-radio-button #section class="c-css" value="2">Sectional Role</mat-radio-button>
+                </span>
+              </div>
+
+            </mat-radio-group>
+            <small
+              *ngIf="roleFormGroup.controls['roleType'].hasError('required') && roleFormGroup.controls['roleType'].touched"
+              class="text-danger support-text">Role Type Required.</small>
+          </span>
+        </div> 
+        <div *ngIf="section.checked" class="row mx-0 mt-2">
+          <span class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Section Name</mat-label>
+              <mat-select [(ngModel)]="selectedSection" formControlName="sectionId" name="sec"
+                [required]="section.checked">
+                <mat-option *ngFor="let x of sections" [value]="x">{{x.caption}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <small
+              *ngIf="roleFormGroup.controls['sectionId'].hasError('required') && roleFormGroup.controls['sectionId'].touched"
+              class="text-danger support-text">Section Role Required.</small>
+          </span>
+        </div>-->
+        <div class="row mx-0 mt-2">
+          <span class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Section Name</mat-label>
+              <mat-select [(ngModel)]="selectedSection"  (selectionChange)="getRoleBysectionId($event)" formControlName="sectionId" name="sec">
+                <mat-option *ngFor="let x of sections" [value]="x">{{x.caption}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </span>
+        </div>
+        <div class="row mx-0">
+          <span class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Role Name</mat-label>
+              <mat-select [(ngModel)]="role" formControlName="role" matInput required>
+                <mat-option *ngFor="let x of roles" [value]="x">{{x.roleName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <small *ngIf="roleFormGroup.controls['role'].hasError('required') && roleFormGroup.controls['role'].touched"
+              class="text-danger support-text">Role Required.</small>
+          </span>
+        </div>
+        <div class="row mx-0">
+          <span class="col">
+            <mat-form-field appearance="outline">
+              <mat-label *ngIf="fileData; else newFile">{{fileData.name}}</mat-label>
+              <ng-template #newFile>
+                <mat-label>Signed access document</mat-label>
+              </ng-template>
+              <input readonly matInput formControlName="file">
+              <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                <mat-icon>attach_file</mat-icon>
+              </button>
+              <!-- <input hidden (change)="selectFile($event)" #fileInput type="file" id="file"> -->
+              <!-- <input #fileInput hidden id="file" type="file"> -->
+              <input hidden (change)="onFileChange($event)" #fileInput type="file" id="file" formControlName="file" required>
+            </mat-form-field>
+            <small *ngIf="roleFormGroup.controls['file'].hasError('required') && roleFormGroup.controls['file'].touched"
+            class="text-danger support-text">file Required.</small>
+          </span>
+        </div>
+        <div class="row mx-0">
+        <span class="col" style="color:green;font-size: small;">
+          <span>Max file size limit is 10MB</span>
+        </span>
+      </div>
+        <div class="row mx-0 mt-3">
+          <span class="col">
+            <mat-checkbox class="Enable-Information-Notification" formControlName="subscribeNotifications" matInput>
+              Enable Information Notifications</mat-checkbox>
+          </span>
+          <span class="col">
+            <mat-checkbox class="Enable-News-Notification" formControlName="subscribeNews" matInput>
+              Enable News Notifications</mat-checkbox>
+          </span>
+        </div>
+        <div class="row mx-0">
+          <span class="col">
+            <mat-checkbox class="Enable-Events-Notification" formControlName="subscribeEvents" matInput>
+              Enable Events Notifications</mat-checkbox>
+          </span>
+        </div>
+        <div class="row mx-0 mt-2 mb-4">
+          <span class="col mt-2">
+            <button class="back-button" (click)="backToLogin()" type="button">Cancel</button>
+          </span>
+          <span class="col mt-2 mb-2">
+            <button mat-raised-button (click)="confirm()" class="submit-button bover float-right" style="width: 210px;" type="button">Submit</button>
+          </span>
+        </div>
+      </form>
+      <!--</mat-step>
+       </mat-horizontal-stepper> -->
+
+    </div>
+  </div>
+</div>

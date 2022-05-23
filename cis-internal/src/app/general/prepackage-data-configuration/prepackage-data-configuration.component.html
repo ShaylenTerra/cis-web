@@ -1,0 +1,90 @@
+<mat-card>
+    <mat-card-content>
+
+        <div class="row mx-0 my-3">
+            <span class="col p-0">
+                <h3 style="display: inline-block;">Pre Packaged Data Configuration</h3>
+            </span>
+            <span class="col p-0">
+                <button mat-raised-button (click)="openDialog(null)" class="submit-button bover float-right" style="cursor: pointer;">
+                    Add
+                    <!-- <mat-icon matTooltip="Download">file_download</mat-icon> -->
+                </button>
+
+            </span>
+        </div>
+        <hr>
+        <mat-card class="card-table-tasks">
+            <mat-card-content class="table-tasks overflow-auto" style="overflow-x: hidden;">
+                <table (matSortChange)="sortData($event)" [dataSource]="dataSource" [matSort]
+                       class="table-margin w-100 m-0 inline-table"
+                       mat-table>
+                    <ng-container matColumnDef="name">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+                        <td *matCellDef="let element" mat-cell>{{element.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="prepackageDataType">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
+                        <td *matCellDef="let element" mat-cell>{{element.prepackageDataType}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="active">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
+                        <td *matCellDef="let element" mat-cell>{{element.active == 1 ? 'Active' : 'Deactivated'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="cost">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Cost</th>
+                        <td *matCellDef="let element" mat-cell>{{element.cost}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th *matHeaderCellDef mat-header-cell>Action</th>
+                        <td *matCellDef="let element" class="table-details" mat-cell>
+                            <a (click)="openDialog(element)" style="cursor: pointer;">
+                                View
+                                <!-- <mat-icon matTooltip="Download">file_download</mat-icon> -->
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+                </table>
+                <div class="row" style="float: right;margin-top: 5px;margin-right: 2px;">
+                    {{PageFrom}} - {{PageTo}} of {{totalprepackage}}
+                    <mat-icon (click)="previous()" style="cursor: pointer;">
+                        keyboard_arrow_left
+                    </mat-icon>
+                    &nbsp; &nbsp;<label></label>&nbsp;
+                    <mat-icon (click)="next()" style="cursor: pointer;">
+                        keyboard_arrow_right
+                    </mat-icon>
+                </div>
+                <div *ngIf="configData.length === 0" class="mx-auto p-10">
+                    No records found
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+
+    </mat-card-content>
+</mat-card>
+
+<div class="row">
+    <div class="col">
+        <mat-card>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col">
+                        <p class="heading">Pre Packaged Data - Background Scheduled Services</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <button mat-raised-button (click)="prepackageChange()" class="submit-button bhover buttonsize" style="width:45% !important" type="submit">Execute Change Data Subscription Service</button>
+                        <button mat-raised-button (click)="executeAll()" class="submit-button bhover buttonsize" style="width:45% !important" type="submit">Execute PrePackage Data Subscriptions Service</button> 
+                    </div>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

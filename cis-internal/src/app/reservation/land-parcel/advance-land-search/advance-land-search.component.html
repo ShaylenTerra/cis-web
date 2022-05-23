@@ -1,0 +1,442 @@
+<h4 mat-dialog-title><span>Advance Search<i class="fa fa-window-close" aria-hidden="true" (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span></h4>
+<div mat-dialog-content>
+
+    <div class="row">
+        <span class="col col-md-4">
+            <form [formGroup]="provinceForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Province</mat-label>
+                    <mat-select [(ngModel)]="province" formControlName="assignedProvince" #provinceSelect disabled>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="provinceFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredProvince | async" [value]="x">
+                            {{ x.provinceName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </span>
+        <span class="col col-md-4">
+            <form [formGroup]="criteriaForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Search By</mat-label>
+                    <mat-select [(ngModel)]="searchType" formControlName="assignedCriteria" #searchTypeSelect disabled>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="searchTypeFilterCtrl"
+                                (ngModelChange)="getSearchTypeConfig(false, false, false)"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredCriteria | async" [value]="x">
+                            {{ x.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </span>
+        <span class="col col-md-4">
+            <form [formGroup]="searchFiltersForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Search Filter</mat-label>
+                    <mat-select (selectionChange)="getSearchFilter()" [(ngModel)]="searchFilter"
+                        formControlName="assignedSearchFilters" matInput disabled>
+                        <mat-option *ngFor="let x of searchFilters" [value]="x">{{ x.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </span>
+
+    </div>
+    <div [hidden]="showMunicipalityERF" class="row">
+        <span class="col col-md-4">
+            <form [formGroup]="municipalityForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Muncipality</mat-label>
+                    <mat-select formControlName="assignedMunicipality" [(ngModel)]="municipalityModel"
+                        #municipalitySelect>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="municipalityFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredMuncipality | async" [value]="x.mdbCode">
+                            {{ x.municipality }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </span>
+        <span class="col col-md-4">
+            <form [formGroup]="townshipForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Township/Allotment</mat-label>
+                    <mat-select formControlName="assignedTownship" [(ngModel)]="TownshipModel" #townshipSelect>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="townshipFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredTownship | async" [value]="x.mdbCode">
+                            {{ x.majorRegionOrAdminDistrict }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </span>
+        <span class="col col-md-4">
+            <form [formGroup]="ERF">
+                <mat-form-field appearance="outline">
+                    <mat-label>ERF Number</mat-label>
+                    <input formControlName="parcelNumber" matInput />
+                </mat-form-field>
+            </form>
+        </span>
+        <span class="col col-md-4">
+            <form [formGroup]="ERF">
+                <mat-form-field appearance="outline">
+                    <mat-label>Portion Number</mat-label>
+                    <input formControlName="portion" matInput />
+                </mat-form-field>
+            </form>
+        </span>
+    </div>
+    <div class="row" style="top: 10px !important">
+        <span class="col">
+            <button mat-raised-button (click)="search()" class="submit-button bover pull-left" type="submit">
+                Search
+            </button>
+        </span>
+        <span style="float: right">
+            <mat-slide-toggle (change)="onChange($event)" [checked]="device" ngDefaultControl>Card/Table
+            </mat-slide-toggle>
+        </span>
+    </div>
+    <div *ngIf="NgiData && device == false" class="row mx-0">
+        <div *ngFor="let x of NgiData" class="col col-md-6 p-0">
+            <mat-card *ngIf="searchFilter?.templateListItemId === 567" (click)="openNgiDetails(x)"
+                class="card-BaseList-group" style="cursor: pointer">
+                <mat-card-content>
+                    <div class="row">
+                        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(x) : null"
+                            [checked]="selection.isSelected(x)" matTooltip="Add to cart">
+                        </mat-checkbox>
+                        <span class="col p-0">
+                            <a class="download-css float-right" style="cursor: pointer">
+                                <mat-icon>visibility</mat-icon>
+                            </a>
+                        </span>
+                    </div>
+                    <span class="row">
+                        <span class="col my-2">
+                            <p class="desc-text m-0">
+                                <b>{{x.categoryName}}</b>
+                                <br>
+                                <!-- <b>test</b> -->
+                            </p>
+                        </span>
+                    </span>
+                    <span class="row">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>{{x.name}}</b>
+                            </p>
+                        </span>
+                    </span>
+                    <span class="row">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>{{x.description}}</b>
+                            </p>
+                        </span>
+                    </span>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <div class="row mx-0 ml-3" *ngIf="(results || NgiData)">
+        <div class="col">
+            <span style="margin: 0px 10px 10px !important;padding: 10px !important;float: right;"
+                *ngIf="(results.length > 0 || NgiData?.length > 0)">
+                <button [disabled]="selection.selected.length === 0" mat-raised-button (click)="addToCart()"
+                    class="submit-button bover pull-left " type="submit">
+                    Add to Cart
+                </button>
+            </span>
+        </div>
+    </div>
+
+    <div class="row mx-0 ml-3" *ngIf="(results || NgiData)">
+        <div class="col-md-8">
+            <span *ngIf="(results.length > 0 || NgiData?.length > 0)">{{ pageFromValue }} - {{ pageToValue }} Out Of {{
+                pageSize }}</span>
+            <span class="ml-2" *ngIf="totalTemplateRecords > 0"> ----- {{foundRecord}} Results found out of
+                {{totalTemplateRecords}} inputs
+                <a (click)="downloadTemplateResult()" style="cursor: pointer; color:blue">Click here to download the
+                    list</a>
+            </span>
+
+        </div>
+        <div class="col-md-4" *ngIf="(results.length > 0 || NgiData?.length > 0)">
+            <ngb-pagination style="float: right" [collectionSize]="pageSize" [pageSize]="20" [(page)]="boundaryPage"
+                [maxSize]="20" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+    <div *ngIf="results && device == false" class="row mx-0">
+        <div *ngFor="let x of results" class="col col-md-6 p-0">
+            <mat-card *ngIf="searchFilter.templateListItemId !== 567" (click)="openDetails(x)"
+                class="card-BaseList-group" style="cursor: pointer">
+                <mat-card-content>
+                    <div class="row">
+                        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(x) : null"
+                            [checked]="selection.isSelected(x)" matTooltip="Add to cart">
+                        </mat-checkbox>
+                        <span class="col p-0">
+                            <a class="download-css float-right" style="cursor: pointer">
+                                <mat-icon>visibility</mat-icon>
+                            </a>
+                        </span>
+                    </div>
+                    <span class="row">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>SG No:</b>
+                            </p>
+                            <p class="desc-text m-0">{{ x.sgNo }}</p>
+                        </span>
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>Region:</b>
+                            </p>
+                            <p class="desc-text m-0">
+                                {{
+                                x.region != undefined && x.region != null
+                                ? x.region
+                                : x.minorRegion
+                                }}
+                            </p>
+                        </span>
+                    </span>
+                    <span class="row">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>Document Type:</b>
+                            </p>
+                            <p class="desc-text m-0">{{ x.documentType }}</p>
+                        </span>
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>Parcel:</b>
+                            </p>
+                            <p class="desc-text m-0">
+                                {{
+                                x.parcel != null && x.parcel != undefined
+                                ? x.parcel
+                                : x.erfNumber != null && x.erfNumber != undefined
+                                ? x.erfNumber
+                                : x.farmNumber != null && x.farmNumber != undefined
+                                ? x.farmNumber
+                                : x.holdingNumber
+                                }}
+                            </p>
+                        </span>
+                    </span>
+                    <span class="row">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>LPI:</b>
+                            </p>
+                            <p class="desc-text m-0">{{ x.lpi }}</p>
+                        </span>
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>Document Sub-Type:</b>
+                            </p>
+                            <p class="desc-text m-0">{{ x.documentSubType }}</p>
+                        </span>
+                    </span>
+                    <span class="row">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>Municipality:</b>
+                            </p>
+                            <p class="desc-text m-0">{{ x.localMunicipalityName }}</p>
+                        </span>
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>Portion Number:</b>
+                            </p>
+                            <p class="desc-text m-0">{{ x.portion }}</p>
+                        </span>
+                    </span>
+                    <span class="row" *ngIf="
+                      searchType.searchTypeId === 1 &&
+                      searchFilter.searchTypeId !== 2
+                    ">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>{{ searchFilter.name }}:</b>
+                            </p>
+                            <p class="desc-text m-0">{{ this.searchNumber }}</p>
+                        </span>
+                        <span class="col my-2"> </span>
+                    </span>
+                    <span class="row" *ngIf="
+                      searchType.searchTypeId === 47 &&
+                      searchFilter.searchTypeId !== 483
+                    ">
+                        <span class="col my-2">
+                            <p class="info-text m-0">
+                                <b>{{ searchFilter.name }}:</b>
+                            </p>
+                            <p class="desc-text m-0">
+                                {{
+                                searchFilter.searchTypeId == 48
+                                ? x.sgNo
+                                : searchFilter.searchTypeId == 481
+                                ? x.surveyRecordNo
+                                : x.compilationNo
+                                }}
+                            </p>
+                        </span>
+                        <span class="col my-2"> </span>
+                    </span>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+
+    <div *ngIf="results != undefined && results.length > 0 && device == true && searchFilter?.templateListItemId !== 567"
+        class="row mx-0">
+        <!-- <div> -->
+        <mat-card class="card-table-tasks" style="cursor: pointer; width: -webkit-fill-available">
+            <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                <!-- <div class="row"> -->
+                <table [dataSource]="dataSource" class="table-margin w-100 inline-table" mat-table matSort>
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row" style="padding-top: 10px;; padding-right: 10px;">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                matTooltip="Add to cart">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="sgNo">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                            SG No
+                        </th>
+                        <td (click)="openDetails(element)" *matCellDef="let element" class="my_request" mat-cell>
+                            <a (click)="openDetails(element)" style="color: blue;cursor: pointer;"> {{ element.sgNo }}
+                            </a>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lpi">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>LPI</th>
+                        <td *matCellDef="let element" mat-cell>{{ element.lpi }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="documentType">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                            Document Type
+                        </th>
+                        <td *matCellDef="let element" mat-cell>
+                            {{ element.documentType }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="documentSubtype">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                            Document SubType
+                        </th>
+                        <td *matCellDef="let element" mat-cell>
+                            {{ element.documentSubType }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="region">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                            Region
+                        </th>
+                        <td *matCellDef="let element" mat-cell>
+                            {{
+                            element.region != undefined && element.region != null
+                            ? element.region
+                            : element.minorRegion
+                            }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="parcel">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                            Parcel
+                        </th>
+                        <td *matCellDef="let element" mat-cell>
+                            {{
+                            element.parcel != null && element.parcel != undefined
+                            ? element.parcel
+                            : element.erfNumber != null &&
+                            element.erfNumber != undefined
+                            ? element.erfNumber
+                            : element.farmNumber != null &&
+                            element.farmNumber != undefined
+                            ? element.farmNumber
+                            : element.holdingNumber
+                            }}
+                        </td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                    <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
+                </table>
+                <!-- </div> -->
+                <!-- <div class="row mx-0 ml-3">
+                          <div class="col" *ngIf="results.length > 0">
+                            {{ pageFromValue }} - {{ pageToValue }} Out Of {{ pageSize }}
+                          </div>
+                          <div class="col" *ngIf="results.length > 0">
+                            <ngb-pagination style="float: right" [collectionSize]="pageSize" [pageSize]="20" [(page)]="boundaryPage"
+                              [maxSize]="20" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+                            </ngb-pagination>
+                          </div>
+                        </div>
+            
+                        <span style="margin: 10px !important;padding: 10px !important;float: right;">
+                          <button mat-raised-button (click)="addToCart()" class="submit-button bover pull-left " type="submit">
+                            Add to Cart
+                          </button>
+                        </span> -->
+
+            </mat-card-content>
+        </mat-card>
+        <!-- </div> -->
+    </div>
+
+
+    <div class="row mx-0 ml-3" *ngIf="(results || NgiData)">
+        <div class="col" *ngIf="(results.length > 0 || NgiData?.length > 0)">
+            {{ pageFromValue }} - {{ pageToValue }} Out Of {{ pageSize }}
+        </div>
+        <div class="col" *ngIf="(results.length > 0 || NgiData?.length > 0)">
+            <ngb-pagination style="float: right" [collectionSize]="pageSize" [pageSize]="20" [(page)]="boundaryPage"
+                [maxSize]="20" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+
+    <span style="margin: 10px !important;padding: 10px !important;float: right;" *ngIf="(results || NgiData)">
+        <button [disabled]="selection.selected.length === 0" *ngIf="(results.length > 0 || NgiData?.length > 0)"
+            mat-raised-button (click)="addToCart()" class="submit-button bover pull-left " type="submit">
+            Add to Cart
+        </button>
+    </span>
+</div>

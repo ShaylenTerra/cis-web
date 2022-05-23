@@ -1,0 +1,11 @@
+<router-outlet>
+    <!-- <mat-spinner *ngIf="showLoader">
+    </mat-spinner> -->
+    <div [ngClass]="showLoader?'overlay':''">
+        <div class="overlay__wrapper">
+            <div class="overlay__spinner">
+                <mat-spinner *ngIf="showLoader" style="z-index: 1 !important;"></mat-spinner>
+            </div>
+        </div>
+    </div>
+</router-outlet>

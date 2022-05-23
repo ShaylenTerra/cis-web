@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Edit address for {{data.province.provinceName}} </h1>
+<div mat-dialog-content>
+    <form [formGroup]="cardForm">
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <textarea [(ngModel)]="data.province.provinceAddress.provinceAddress" formControlName="provinceAddress"
+                          matInput style="color: black;"></textarea>
+                          <span class="pull-right char" style="color: black;"><em>{{ 1000 - data.province.provinceAddress.provinceAddress?.length }} characters left</em></span>
+            </mat-form-field>
+            <small *ngIf="cardForm.controls['provinceAddress'].hasError('required') && cardForm.controls['provinceAddress'].touched"
+                   class="text-danger support-text">{{data.province.provinceName}} Address is Required.</small>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input [(ngModel)]="data.province.provinceAddress.provinceEmail" formControlName="email" matInput>
+            </mat-form-field>
+            <small *ngIf="cardForm.controls['email'].hasError('required') && cardForm.controls['email'].touched"
+                   class="text-danger support-text">{{data.province.provinceName}} email is Required.</small>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Contact Number</mat-label>
+                <input [(ngModel)]="data.province.provinceAddress.provinceContactNumber" formControlName="contactNumber"
+                       matInput>
+            </mat-form-field>
+            <small *ngIf="cardForm.controls['contactNumber'].hasError('required') && cardForm.controls['contactNumber'].touched"
+                   class="text-danger support-text">{{data.province.provinceName}} contact number is Required.</small>
+        </div>
+
+    </form>
+
+</div>
+<div mat-dialog-actions>
+    <button (click)="saveProvinceAddress()" [disabled]="!cardForm.valid" color="primary" mat-raised-button>Save</button>
+    <button cdkFocusInitial mat-dialog-close mat-raised-button>Cancel</button>
+</div>

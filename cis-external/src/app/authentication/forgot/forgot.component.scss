@@ -1,0 +1,50 @@
+.main-page {
+    width: 100%;
+    min-height: 100%;
+    background-color: #ffffff;
+    margin: 0;
+    background-image: url('../../../assets/images/background.png');
+    background-size: cover;
+    background-repeat: 50%;
+}
+
+.container-fluid {
+    padding-top: 10%;
+}
+
+.submit-button {
+    width: 120px;
+    height: 40px;
+    float: right;
+}
+
+.back-button {
+    width: 120px;
+    height: 40px;
+}
+
+.forgot {
+    font-size: 14px;
+    color: #7856ff;
+    font-weight: 500;
+}
+
+.logo {
+    margin-top: 1.3%;
+    margin-bottom: 3.3%;
+    width: 24%;
+    height: 6.3%;
+    object-fit: contain;
+}
+
+.login-heading {
+    margin-top: 1.9%;
+    margin-bottom: 3.8%;
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.72;
+    letter-spacing: normal;
+    color: #515151;
+}

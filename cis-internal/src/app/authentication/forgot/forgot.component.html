@@ -1,0 +1,129 @@
+<div class="login-register" style="background-image:url(assets/images/background/login-register.jpg);">
+    <div class="login-register-box">
+        <mat-card>
+            <mat-card-content>
+                <div class="text-center">
+                    <img alt="homepage" src="assets/images/logo-icon.png">
+                    <h4 class="m-t-0">Recover Password</h4>
+                </div>
+                <div *ngIf="step1">
+                    <form [formGroup]="firstForm">
+                        <p class="text-center font-14">Enter your email and we'll send you the password reset link.</p>
+                        <div fxLayout="column" fxLayoutAlign="space-around">
+                            <div class="pb-1">
+                                <mat-form-field style="width: 100%">
+                                    <input formControlName="email" matInput placeholder="Email address" type="email">
+                                </mat-form-field>
+                                <small *ngIf="firstForm.controls['email'].hasError('required') && firstForm.controls['email'].touched"
+                                       class="text-danger support-text">You must include an email address.</small>
+                                <small *ngIf="firstForm.controls['email'].errors?.email && firstForm.controls['email'].touched"
+                                       class="text-danger support-text">You must include a valid email address.</small>
+                            </div>
+                            <button (click)="submitStep1()" [disabled]="!firstForm.valid"
+                                    class="btn-block btn-lg m-t-20"
+                                    color="primary"
+                                    mat-raised-button>Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div *ngIf="step2" style="width: 900px;">
+                    <form [formGroup]="secondForm">
+                        <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="fill">
+                  <input [readonly]="true" [value]="secq1" matInput type="text">
+                </mat-form-field>
+              </span>
+                            <span class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Answer 1</mat-label>
+                  <input [(ngModel)]="ans1" [formControl]="secondForm.controls['ans1']" matInput type="text">
+                </mat-form-field>
+              </span>
+                        </div>
+                        <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="fill">
+                  <input [readonly]="true" [value]="secq2" matInput type="text">
+                </mat-form-field>
+              </span>
+                            <span class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Answer 2</mat-label>
+                  <input [(ngModel)]="ans2" [formControl]="secondForm.controls['ans2']" matInput type="text">
+                </mat-form-field>
+              </span>
+                        </div>
+                        <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="fill">
+                  <input [readonly]="true" [value]="secq3" matInput type="text">
+                </mat-form-field>
+              </span>
+                            <span class="col">
+                <mat-form-field appearance="fill">
+                  <mat-label>Answer 3</mat-label>
+                  <input [(ngModel)]="ans3" [formControl]="secondForm.controls['ans3']" matInput type="text">
+                </mat-form-field>
+              </span>
+                        </div>
+                        <button (click)="submitStep2()" [disabled]="!secondForm.valid" class="btn-block btn-lg m-t-20"
+                                color="primary"
+                                mat-raised-button>Submit
+                        </button>
+                    </form>
+                </div>
+
+                <div *ngIf="step3" style="width: 600px;">
+                    <form [formGroup]="thirdForm">
+                        <div class="row">
+                            <mat-form-field style="width: 100%">
+                                <mat-label>New Password</mat-label>
+                                <input [(ngModel)]="newPassword" [type]="hide1 ? 'password' : 'text'"
+                                       formControlName="newPassword"
+                                       matInput
+                                       type="password">
+                                <button [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1" mat-icon-button
+                                        matSuffix>
+                                    <mat-icon (click)="hide1=!hide1">{{hide1 ? 'visibility_off' : 'visibility'}}
+                                    </mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <small
+                                    *ngIf="thirdForm.controls['newPassword'].hasError('required') && thirdForm.controls['newPassword'].touched"
+                                    class="text-danger support-text">You must include password.</small>
+                        </div>
+                        <div class="row">
+                            <mat-form-field style="width: 100%">
+                                <mat-label>Confirm Password</mat-label>
+                                <input [(ngModel)]="confirmPassword" [type]="hide2 ? 'password' : 'text'"
+                                       formControlName="confirmPassword"
+                                       matInput
+                                       type="password">
+                                <button [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2" mat-icon-button
+                                        matSuffix>
+                                    <mat-icon (click)="hide2=!hide2">{{hide2 ? 'visibility_off' : 'visibility'}}
+                                    </mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <small
+                                    *ngIf="thirdForm.controls['confirmPassword'].hasError('required') && thirdForm.controls['confirmPassword'].touched"
+                                    class="text-danger support-text">You must include confirm password.</small>
+                            <small *ngIf="thirdForm.controls['confirmPassword'].errors?.equalTo"
+                                   class="text-danger support-text">Passwords
+                                do not match.</small>
+                        </div>
+                        <button (click)="submitStep3()" [disabled]="!thirdForm.valid" class="btn-block btn-lg m-t-20"
+                                color="primary"
+                                mat-raised-button>Submit
+                        </button>
+                    </form>
+                </div>
+
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

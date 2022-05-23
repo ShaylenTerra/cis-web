@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="overlay" *ngIf="isSpinnerVisible">
+    <div class="overlay__wrapper">
+      <div class="overlay__spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-card>
+        <mat-card-content>
+          <form [formGroup]="form">
+            <div class="row mt-3">
+              <div class="col-12 col-md-6 col-lg-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Reference Number</mat-label>
+                  <input matInput formControlName="referenceNo" [(ngModel)]="referenceNo">
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+              <button class="submit-button" [disabled]="!form.valid" (click)="submit()">Submit</button>
+            </div>
+          </div>
+          <div class="row mt-5" *ngIf="result">
+            <div class="col">
+              <span class="font-weight-bold">{{result.processName}}</span> with reference number
+              <span class="font-weight-bold">{{result.referenceNumber}}</span>, dated
+              <span class="font-weight-bold">{{result.triggeredOn | date : 'd-MMM-y'}}</span> is
+              <span class="font-weight-bold">{{result.externalStatusCaption}}</span>
+            </div>
+          </div>
+          <div class="row mt-5" *ngIf="errmsg">
+            <div class="col">
+              <span class="font-weight-bold" style="color: red;">{{errmsg}}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

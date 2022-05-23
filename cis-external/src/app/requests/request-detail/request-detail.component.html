@@ -1,0 +1,77 @@
+<div class="row mx-0">
+  <span class="col">
+    <p class="heading">Land Information</p>
+  </span>
+</div>
+<mat-card>
+  <mat-card-content>
+    <div class="row mx-0">
+      <div class="col-md-6">
+        <img src="assets/images/carousel@3x.png" style="width: 520px; height: 492px; cursor: pointer;"
+          (click)="openCarousel()">
+      </div>
+      <div class="col-md-6">
+        <span class="row">
+          <img src="assets/images/Group 334@3x.png" style="width: 20px; height: 20px;" alt="">
+          <p class="sub-heading">35, Angle Road, Johannesburg, Gauteng</p>
+        </span>
+        <span class="row">
+          <span class="col info-text">Farm Name:</span>
+          <span class="col info-text">Farm Number:</span>
+        </span>
+        <span class="row">
+          <span class="col text">MAMELODI</span>
+          <span class="col text">608</span>
+        </span>
+        <span class="row mt-2">
+          <span class="col box">
+            <p class="sub-heading">Description</p>
+            <p class="text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat....</p>
+          </span>
+        </span>
+        <span class="row mt-2">
+          <span class="col box">
+            <span class="row mt-2">
+              <span class="col info-text">Admin Department:</span>
+              <span class="col info-text">Parcel Type:</span>
+            </span>
+            <span class="row">
+              <span class="col text">JR</span>
+              <span class="col text">FARM</span>
+            </span>
+            <span class="row mt-2">
+              <span class="col info-text">LPI Code:</span>
+              <span class="col info-text">Document Type:</span>
+            </span>
+            <span class="row">
+              <span class="col text">TOJR00006080000</span>
+              <span class="col text">DIAGRAM</span>
+            </span>
+            <span class="row mt-2">
+              <span class="col info-text">SG Number:</span>
+              <span class="col info-text">File Size:</span>
+            </span>
+            <span class="row">
+              <span class="col text">A3974/1986</span>
+              <span class="col text">3 MB</span>
+            </span>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <span class="col">
+        <button class="back-button mx-2" [routerLink]="['/requests/my-requests']">Back</button>
+      </span>
+      <span class="col-5 float-right text-right">
+        <button class="back-button mx-2" style="width: 156px;" (click)="onWishlist()">Add to wishlist</button>
+        <button class="back-button mx-2" style="width: 140px;">View on Map</button>
+        <button class="submit-button ml-2">Buy Land</button>
+      </span>
+    </div>
+  </mat-card-content>
+</mat-card>

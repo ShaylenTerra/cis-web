@@ -1,0 +1,40 @@
+::ng-deep .ngx-timepicker {
+    border-bottom: none !important;
+}
+
+.submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    width: 120px;
+    background-color: #016533;
+    border: 0;
+    height: 44px;
+    color: white;
+}
+.bover:hover {
+    background-color: #c58b10;;
+}
+
+.cancel:hover{
+    background-color: lightgray;
+}
+
+.cancel-button {
+    width: 120px;
+    height: 40px;
+    color: green;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    border-radius: 8px;
+    border: 1px solid black;
+    background-color: #ffffff; 
+}

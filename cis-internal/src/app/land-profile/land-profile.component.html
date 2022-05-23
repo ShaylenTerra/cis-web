@@ -1,0 +1,307 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-11">
+                <p class="heading">Land Parcel Profile</p>
+            </div>
+            <div class="col-1">
+                <div class="dropdown menu">
+                    <span [matMenuTriggerFor]="dropdown" data-toggle="dropdown">
+                        <img alt="" src="assets/images/Three dots.png">
+                    </span>
+                        <mat-menu #dropdown="matMenu">
+                            <!-- <a mat-menu-item>
+                                <mat-icon>pending_actions</mat-icon>
+                                Numbering
+                            </a> -->
+                            <a (click)="addNotes()" mat-menu-item>
+                                <mat-icon>assignment</mat-icon>
+                                <span>Add Notes</span>
+                            </a>
+                        </mat-menu>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Region</p>
+                                <p class="desc-text mt-0">{{lpi ? lpi.region !== undefined ? lpi.region : lpi.minorRegion : ''}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Parcel Type</p>
+                                <p class="desc-text mt-0">{{lpi ? lpi.parcelType : ''}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Parcel</p>
+                                <p class="desc-text mt-0">{{(lpi.parcel != null && lpi.parcel != undefined) ? lpi.parcel :
+                                    (lpi.erfNumber != null && lpi.erfNumber != undefined ? lpi.erfNumber : (lpi.farmNumber != null && lpi.farmNumber != undefined ? lpi.farmNumber : lpi.holdingNumber))}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Province</p>
+                                <p class="desc-text mt-0">{{lpi.province}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">SG Number</p>
+                                <p class="desc-text mt-0">{{lpi.sgNo}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">File Size (KB)</p>
+                                <p class="desc-text mt-0">
+                                    {{lpi.totalFileSize}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Total Pages</p>
+                                <p class="desc-text mt-0">{{lpi.totalPages}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">LPI</p>
+                                <p class="desc-text mt-0">{{lpi.lpi}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Municipality</p>
+                                <p class="desc-text mt-0">{{lpi?.localMunicipalityName}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Portion</p>
+                                <p class="desc-text mt-0">{{lpi?.portion}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Document Type</p>
+                                <p class="desc-text mt-0">{{lpi?.documentType}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Document Sub Type</p>
+                                <p class="desc-text mt-0">{{lpi?.documentSubType}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box" *ngIf="lpi.filterName != undefined">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">{{lpi?.filterName}}</p>
+                                <p class="desc-text mt-0">{{lpi?.searchNumber}}
+                                </p>
+                            </span>
+                            <span class="col">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row m-0 task-history">
+                    <div class="row">
+                        <span class="title">Timeline</span>
+                        <table [dataSource]="timelineData" mat-table>
+                            <ng-container matColumnDef="dated">
+                                <th *matHeaderCellDef mat-header-cell> Date</th>
+                                <td *matCellDef="let element" mat-cell> {{element.dated}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="process">
+                                <th *matHeaderCellDef mat-header-cell> Process</th>
+                                <td *matCellDef="let element" mat-cell> {{element.process}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="summary">
+                                <th *matHeaderCellDef mat-header-cell> Summary</th>
+                                <td *matCellDef="let element" mat-cell> {{element.summary}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ref">
+                                <th *matHeaderCellDef mat-header-cell> Ref#</th>
+                                <td *matCellDef="let element" mat-cell> {{element.ref}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <th *matHeaderCellDef mat-header-cell></th>
+                                <td *matCellDef="let element" mat-cell> {{element.action}} </td>
+                            </ng-container>
+
+                            <tr *matHeaderRowDef="timelineCols" mat-header-row></tr>
+                            <tr *matRowDef="let row; columns: timelineCols;" mat-row></tr>
+                        </table>
+                        <div *ngIf="timelineData.length === 0" class="mx-auto p-10">
+                            No records found
+                        </div>
+                    </div>
+                    <!-- <br> -->
+                    <!-- <div class="row">
+                        <div class="col-6">
+                            <img class="m-1 p-1" src="assets/images/land-profile/char-1.png" width="100%">
+                        </div>
+                        <div class="col-6">
+                            <img class="m-1 p-1" src="assets/images/land-profile/chart-2.png" width="100%">
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="row m-0 task-timeline">
+                    <span class="title">Image (Key Documents)</span>
+                    <div class="row m-0">
+                        <!-- <div class="col-4 title-img"> -->
+                            <!-- <mat-icon (click)="openDialog()" class="carousel-button">zoom_in</mat-icon>
+                            <img [src]="lpi?.tempPreview?.preview" alt="" width="100%"
+                                            matTooltip="{{lpi?.tempPreview?.scandate | date : 'dd/MMMM/y HH:mm:ss' }}"> -->
+                        <div class="gallery-wrapper" >
+                            <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                                width: '70px',
+                                height: '70px',
+                                'border-radius': '10px'
+                                }">
+                            </ngx-skeleton-loader>
+                            <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions" [images]="this.lpi.imageArray" class="ngx-gallery"></ngx-gallery>
+                            </div>
+                        <!-- </div> -->
+                        <!-- <div class="col-8">
+                            <div class="row m-0 title-img">
+                                <div class="col-4" *ngFor="let img of lpi?.imageArray">
+                                    <img (click)="selectImage(img)" width="100%"
+                                                        [ngClass]="lpi.tempPreview.preview === img.preview ? 'selected-image' : 'bottom-image'"
+                                                        [src]="img.thumbnail"
+                                                        alt="" id="{{img.preview}}">
+                                </div>
+                       
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="row m-0 title-deed">
+                    <span class="title">Related Data</span>
+                    <table [dataSource]="relatedData" mat-table>
+                        <ng-container matColumnDef="documentType">
+                            <th *matHeaderCellDef mat-header-cell> Document Type</th>
+                            <td *matCellDef="let element" mat-cell> {{element.documentType}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="sgno">
+                            <th *matHeaderCellDef mat-header-cell> SG Number</th>
+                            <td *matCellDef="let element" mat-cell> {{element.sgNo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="documentNumber" >
+                            <th *matHeaderCellDef mat-header-cell> Document Number</th>
+                            <td *matCellDef="let element" mat-cell> {{element.documentNumber}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="documentSubtype">
+                            <th *matHeaderCellDef mat-header-cell> Document Sub Type</th>
+                            <td *matCellDef="let element" mat-cell> {{element.documentSubType}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="description">
+                            <th *matHeaderCellDef mat-header-cell> Description</th>
+                            <td *matCellDef="let element" mat-cell style="word-wrap: break-word"> {{element.description}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="view">
+                            <th *matHeaderCellDef mat-header-cell></th>
+                            <td *matCellDef="let element" mat-cell style="cursor: pointer" > <mat-icon (click)="showRelatedDataDetails(element.sgNo,element.description, element.recordId)" >information</mat-icon> </td>
+                        </ng-container>
+                        <tr *matHeaderRowDef="relatedDataColumns" mat-header-row></tr>
+                        <tr *matRowDef="let row; columns: relatedDataColumns;" mat-row></tr>
+                    </table>
+                    <div *ngIf="relatedData?.length === 0" class="mx-auto p-10">
+                        No records found
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="row m-0 map">
+                    <span class="title">Map</span>
+                    <span class="title" style="float: right;">
+                        <mat-icon style="float: right;cursor: pointer;" (click)="openViewMapDialog()" class="carousel-button">zoom_in</mat-icon>
+                    </span>
+                    <iframe allowfullscreen="true" frameborder="0" height="250px" id="iFrameURL"
+                            [src]="mapsrc" width="100%"></iframe>
+                </div>
+                <div class="row m-0 title-deed">
+                    <span class="title">Title Deed Information</span>
+                    <table [dataSource]="dataSource1" mat-table>
+                        <ng-container matColumnDef="number">
+                            <th *matHeaderCellDef mat-header-cell> Number</th>
+                            <td *matCellDef="let element" mat-cell> {{element.number}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="regDate">
+                            <th *matHeaderCellDef mat-header-cell> Registration Date</th>
+                            <td *matCellDef="let element" mat-cell> {{element.regDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="saleDate">
+                            <th *matHeaderCellDef mat-header-cell> Sale Date</th>
+                            <td *matCellDef="let element" mat-cell> {{element.saleDate}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="price">
+                            <th *matHeaderCellDef mat-header-cell> Price</th>
+                            <td *matCellDef="let element" mat-cell> {{element.price}} </td>
+                        </ng-container>
+
+                        <tr *matHeaderRowDef="displayedColumns1" mat-header-row></tr>
+                        <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
+                    </table>
+                    <div *ngIf="dataSource1.length === 0" class="mx-auto p-10">
+                        No records found
+                    </div>
+                </div>
+                <div class="row m-0 title-deed" >
+                    <span class="title">Note</span>
+                    <button mat-raised-button (click)="timelineDialog()" style="float: right; margin-top: 7px;" class="form-button bhover pull-right">Show Timeline</button>
+                    <hr>
+                    <!-- <span class="title">Notes</span> -->
+                    <table [dataSource]="dataSource2" mat-table>
+                        <ng-container matColumnDef="noteType">
+                            <th *matHeaderCellDef mat-header-cell> Note Type</th>
+                            <td *matCellDef="let element" mat-cell> {{element.noteType}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="userName">
+                            <th *matHeaderCellDef mat-header-cell> User</th>
+                            <td *matCellDef="let element" mat-cell> {{element.userName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="notes">
+                            <th *matHeaderCellDef mat-header-cell> Notes</th>
+                            <td *matCellDef="let element" mat-cell> {{element.notes}} </td>
+                        </ng-container>
+
+                        <tr *matHeaderRowDef="displayedColumns2" mat-header-row></tr>
+                        <tr *matRowDef="let row; columns: displayedColumns2;" mat-row></tr>
+                    </table>
+                            
+                    <div *ngIf="dataSource2.length === 0" class="mx-auto p-10">
+                        No records found
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,55 @@
+<h4 mat-dialog-title><span>My Data Request</span></h4>
+<div mat-dialog-content style="overflow: auto;">
+    
+<table [dataSource]="requestsData" class="table-margin w-100"
+    mat-table style="font-size: 12px !important;font-weight: 500;">
+      
+        <!-- <ng-container matColumnDef="userid" style="padding: 5px;">
+            <th *matHeaderCellDef mat-header-cell>User Id</th>
+            <td style="padding: 5px;" *matCellDef="let element" mat-cell>{{element.userid}}</td>
+        </ng-container> -->
+        <ng-container matColumnDef="objectName" style="padding: 5px;">
+            <th *matHeaderCellDef mat-header-cell>Object Name</th>
+            <td style="padding: 5px;" *matCellDef="let element" mat-cell>{{element.objectName}}</td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="process">
+            <th *matHeaderCellDef mat-header-cell>Process</th>
+            <td *matCellDef="let element" mat-cell>{{element.process}}</td>
+        </ng-container>
+        <ng-container matColumnDef="processDate">
+            <th *matHeaderCellDef mat-header-cell>ProcessDate</th>
+            <td *matCellDef="let element" mat-cell>{{element.processDate}}</td>
+        </ng-container> -->
+        <ng-container matColumnDef="query" style="padding: 5px;">
+            <th *matHeaderCellDef mat-header-cell>Query</th>
+            <td style="padding: 5px;" class="truncate" *matCellDef="let element" [matTooltip]="element.query" mat-cell>{{element.query}}</td>
+        </ng-container>
+        <ng-container matColumnDef="requestStatus" style="padding: 5px;">
+            <th *matHeaderCellDef mat-header-cell>Request Status</th>
+            <td style="padding: 5px;" *matCellDef="let element" mat-cell>{{element.process}}</td>
+        </ng-container>
+        <ng-container matColumnDef="requestDate" >
+            <th *matHeaderCellDef mat-header-cell>RequestDate</th>
+            <td style="padding: 5px;" *matCellDef="let element" mat-cell>{{element.requestDate | date:"dd/MMM/yyyy HH:mm:ss"}}</td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="totalRecord">
+            <th *matHeaderCellDef mat-header-cell>TotalRecord</th>
+            <td *matCellDef="let element" mat-cell>{{element.totalRecord}}</td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="action" style="padding: 5px;">
+            <th *matHeaderCellDef mat-header-cell>Action</th>
+            <td style="padding: 5px;" *matCellDef="let element" mat-cell>
+                <button mat-raised-button class="submit-button" style="width: 170px;" (click)="reexecuteQuery(element)" type="submit">Re execute Query</button> 
+            </td>
+        </ng-container>
+   
+        <tr *matHeaderRowDef="requestsColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: requestsColumns;" mat-row></tr>
+</table>
+</div>
+
+        <div mat-dialog-actions style="float: right;">
+            <button [mat-dialog-close]="1" class="clear-button back" style="width: 120px;" mat-raised-button>Cancel</button>
+        </div>
+

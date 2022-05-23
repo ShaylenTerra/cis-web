@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-8 mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="heading">My Delegations</p>
+                </div>
+            </div>
+            <mat-card class="scroll">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <table [dataSource]="dataSource" class="table-margin w-100" mat-table>
+                                <ng-container matColumnDef="sno">
+                                    <th *matHeaderCellDef mat-header-cell>S.No.</th>
+                                    <td *matCellDef="let element; let i = index;" mat-cell>{{i + 1}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="delegated">
+                                    <th *matHeaderCellDef mat-header-cell>Delegated To</th>
+                                    <td *matCellDef="let element"
+                                        mat-cell>{{getInternalUserName(element.delegateUserId)}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="start">
+                                    <th *matHeaderCellDef mat-header-cell>Start Date</th>
+                                    <td *matCellDef="let element" mat-cell>{{getDate(element.fromDate)}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="end">
+                                    <th *matHeaderCellDef mat-header-cell>End Date</th>
+                                    <td *matCellDef="let element" mat-cell>{{getDate(element.toDate)}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="desc">
+                                    <th *matHeaderCellDef mat-header-cell>Description</th>
+                                    <td *matCellDef="let element" mat-cell>{{element.description}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="status">
+                                    <th *matHeaderCellDef mat-header-cell>Active</th>
+                                    <td *matCellDef="let element" mat-cell>
+                                        <span *ngIf="element.statusItemId === 108">YES</span>
+                                        <span *ngIf="element.statusItemId === 109">NO</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="action">
+                                    <th *matHeaderCellDef mat-header-cell>Action</th>
+                                    <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                        <span (click)="changeStatus(element, 109)" *ngIf="element.statusItemId === 108">De-Activate</span>
+                                        <span (click)="changeStatus(element, 108)" *ngIf="element.statusItemId === 109">Activate</span>
+                                    </td>
+                                </ng-container>
+                                <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                                <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
+                            </table>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-paginator (page)="pageChange($event)" [length]="dataLength"
+                                                   [pageSizeOptions]="[10, 25, 50, 100]"
+                                                   [pageSize]="pageSize" class="float-right">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-12 col-lg-4 mt-3">
+            <div class="row">
+                <div class="col">
+                    <p class="heading">New Delegation</p>
+                </div>
+            </div>
+            <mat-card>
+                <mat-card-content>
+                    <form [formGroup]="form">
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Delegate To</mat-label>
+                                    <mat-select [(ngModel)]="internalUser" formControlName="delegateTo">
+                                        <mat-option *ngFor="let x of internalUsers"
+                                                    [value]="x">{{x.firstName}} {{x.surname}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <small *ngIf="form.controls['delegateTo'].hasError('required') && form.controls['delegateTo'].touched"
+                                class="text-danger support-text">Delegate to is required.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Start date</mat-label>
+                                    <input [(ngModel)]="startDate" [matDatepicker]="picker1" formControlName="startDate"
+                                           matInput>
+                                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                                <small *ngIf="form.controls['startDate'].hasError('required') && form.controls['startDate'].touched"
+                                class="text-danger support-text">Start Date is required.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>End date</mat-label>
+                                    <input [(ngModel)]="endDate" [matDatepicker]="picker2" formControlName="endDate"
+                                           matInput>
+                                    <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                                <small *ngIf="form.controls['endDate'].hasError('required') && form.controls['endDate'].touched"
+                                class="text-danger support-text">End Date is required.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Description</mat-label>
+                                    <textarea [(ngModel)]="description" formControlName="description" matInput
+                                              rows="3" style="color: black;"></textarea>
+                                              <span class="pull-right char" style="color: black;"><em>{{ 1000 - description?.length }} characters left</em></span>
+                                </mat-form-field>
+                                <small *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+                                class="text-danger support-text">Description is required.</small>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                        <div class="col">
+                          <mat-form-field appearance="outline">
+                            <mat-label *ngIf="selectedFiles; else newFile">{{selectedFiles.item(0).name}}</mat-label>
+                            <ng-template #newFile>
+                              <mat-label>Supporting documents</mat-label>
+                            </ng-template>
+                            <input matInput disabled>
+                            <button mat-icon-button matSuffix (click)="fileInput.click()">
+                              <mat-icon>attach_file</mat-icon>
+                            </button>
+                            <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+                          </mat-form-field>
+                        </div>
+                      </div> -->
+                        <div class="row">
+                            <div class="col">
+                                <button mat-raised-button (click)="submitDelegation()" class="submit-button bover float-right">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,141 @@
+<div class="container-fluid">
+    <div class="row">
+        <div Class="col-12 col-lg-12">
+
+            <mat-card class="card-table-tasks">
+                <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                    <!-- <div class="row"> -->
+                    <div class="row">
+                        <div Class="col-12 col-lg-12">
+                            <div class="ml-3">
+                                <!-- <span class="row mx-0">
+                                    <span class="col-12">
+                                        <h3>Lodgement Document</h3>
+                                    </span>
+                                </span> -->
+                                <span class="row mx-0 mt-2">
+                                    <span class="col-12">
+                                        <mat-card class="card-table-tasks"
+                                            style="cursor: pointer; width: -webkit-fill-available">
+                                            <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                                <table [dataSource]="lodgeDocumentDataSource"
+                                                    *ngIf="(lodgementDocumentData !== undefined && lodgementDocumentData !== null) || lodgementDocumentData.length > 0"
+                                                    class="table-margin w-100 m-0 inline-table" mat-table matSort>
+                                                    <ng-container matColumnDef="documentName">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                            style="padding-left: 10px; width:12%;border-top-left-radius: 8px;border-bottom-left-radius: 8px;">
+                                                            Name
+                                                        </th>
+                                                        <td *matCellDef="let element, let i = index;" mat-cell>
+                                                            {{element?.documentName}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="documentType">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                            style="width:12%">Type
+                                                        </th>
+                                                        <td *matCellDef="let element" mat-cell
+                                                            style="padding-left:3px; ">
+                                                            {{element?.documentType}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="purposeType">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                            style="width:13%">Purpose
+                                                            Type</th>
+                                                        <td *matCellDef="let element" mat-cell
+                                                            style="padding-left:3px; ">
+                                                            {{element?.purposeType}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="dated">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                            style="width:13%">Date</th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{element?.dated | date:'dd-MMM-yyyy'}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="notes">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                            style="width:13%">Notes
+                                                        </th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{element?.notes}}
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="assignNumber">
+                                                        <th *matHeaderCellDef mat-header-cell style="width:13%">Assign
+                                                            Number</th>
+                                                        <td *matCellDef="let element" mat-cell class="table-details"
+                                                            (click)="assignNumber()">
+                                                            Assign Number
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="documentNumber">
+                                                        <th *matHeaderCellDef mat-header-cell style="width:13%">Document
+                                                            Number</th>
+                                                        <td *matCellDef="let element" mat-cell class="table-details">
+                                                            Document Number
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="Action" [hidden]="!preview">
+                                                        <th *matHeaderCellDef mat-header-cell
+                                                            style="width:7%;border-top-right-radius: 8px;border-bottom-right-radius: 8px;">
+                                                            Action
+                                                        </th>
+                                                        <td *matCellDef=" let element" mat-cell
+                                                            style="cursor: pointer;text-align: center;">
+                                                            <div class="dropdown menu" style="text-align: center;">
+                                                                <span matTooltip="More Options"
+                                                                    [matMenuTriggerFor]="optionsMenu"
+                                                                    #menuTrigger="matMenuTrigger" class="hover-display"
+                                                                    [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                                    <img alt="" src="assets/images/Three dots.png"
+                                                                        class="mb-3">
+                                                                </span>
+                                                                <mat-menu style="display: flex-end;"
+                                                                    #optionsMenu="matMenu" [overlapTrigger]="true">
+                                                                    <button mat-menu-item
+                                                                        style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                                        <mat-icon matTooltip="View Document"
+                                                                            color="primary"
+                                                                            style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                                            visibility
+                                                                        </mat-icon> View
+                                                                    </button>
+                                                                </mat-menu>
+                                                            </div>
+
+                                                        </td>
+                                                    </ng-container>
+                                                    <tr *matHeaderRowDef="lodgeDocumentcolumns" mat-header-row></tr>
+                                                    <tr *matRowDef="let element; columns: lodgeDocumentcolumns" mat-row>
+                                                    </tr>
+                                                </table>
+
+                                                <div fxLayoutAlign="center center" class="mt-4" style="width: 100%;"
+                                                    *ngIf="lodgementDocumentData?.length === 0 || lodgementDocumentData === undefined">
+                                                    <p>No data available</p>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- <div class="col-12 col-lg-4 mt-3">
+            <mat-card class="scroll">
+                <mat-card-content>
+
+                </mat-card-content>
+            </mat-card>
+        </div> -->
+    </div>
+</div>

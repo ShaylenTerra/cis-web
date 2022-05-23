@@ -1,0 +1,45 @@
+<div mat-dialog-title>Add New Fee Scale</div>
+<form [formGroup]="scaleForm">
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>Fee Name</mat-label>
+            <input [(ngModel)]="scale.name" formControlName="feeScaleName" matInput>
+        </mat-form-field>
+        <!-- <small *ngIf="scaleForm.controls['name'].hasError('required') && scaleForm.controls['name'].touched"
+            class="text-danger support-text">Fee Scale name is Required.</small> -->
+    </div>
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>Effective Date</mat-label>
+            <input [(ngModel)]="scale.eDate" [matDatepicker]="picker" formControlName="effectiveDate" matInput>
+            <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <!-- <small *ngIf="scaleForm.controls['eDate'].hasError('required') && scaleForm.controls['eDate'].touched"
+            class="text-danger support-text">Date is Required.</small> -->
+    </div>
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea [(ngModel)]="scale.description" formControlName="description" matInput style="color: black;"></textarea>
+            <span class="pull-right char" style="color: black;"><em>{{ 1000 - scale.description?.length }} characters left</em></span>
+        </mat-form-field>
+        <!-- <small
+            *ngIf="scaleForm.controls['description'].hasError('required') && scaleForm.controls['description'].touched"
+            class="text-danger support-text">Description is Required.</small> -->
+    </div>
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>Upload Gazatte</mat-label>
+            <input [value]="uploadedFileName" disabled matInput>
+            <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                <mat-icon class="attach">attach_file</mat-icon>
+            </button>
+            <input #fileInput (change)="selectFile($event)" hidden id="file" type="file">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="float-right">
+        <button mat-dialog-close mat-raised-button class="cancel-button cancel">Cancel</button>
+        <button (click)="addFeeScale()" class="submit-button bover float-right" [disabled]="!scaleForm.valid" color="primary" mat-raised-button>Save</button>
+    </div>
+</form>

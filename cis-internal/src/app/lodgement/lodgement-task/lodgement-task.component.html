@@ -1,0 +1,81 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div class="container-fluid pr-0">
+            <span class="row mx-0">
+                <span class="col-lg-11 p-l-0" style="display: inline-flex;">
+                    <i style="font-size: 30px; cursor: pointer; margin-right: 20px" (click)="nvaigateToLodgementList()"
+                        class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                    <h2><a style="color: blue; cursor: pointer !important;" (click)="navigateTaskProfile()">
+                            {{lodgeData?.referenceNumber}} </a> - {{lodgeData?.actionRequiredCaption}}
+                        {{lodgeData?.reservationName}} of {{lodgeData?.provinceName}}</h2>
+                </span>
+                <div class="col-lg-1">
+                    <div class="dropdown menu" style="margin-top:12px" [hidden]="topHeaderMenu">
+                        <span [matMenuTriggerFor]="dropdown">
+                            <img alt="" src="assets/images/Three dots.png">
+                        </span>
+                        <mat-menu #dropdown="matMenu">
+                            <!-- <a mat-menu-item [hidden]="showDelete" (click)="processActionOnDraft('delete')">
+                                <mat-icon>delete</mat-icon>
+                                Delete
+                            </a> -->
+                            <a mat-menu-item [hidden]="showCancel" (click)="processActionOnDraft('cancel')">
+                                <mat-icon>cancel</mat-icon>
+                                Cancel
+                            </a>
+                            <a mat-menu-item [hidden]="showModify" (click)="processActionOnDraft('modify')">
+                                <mat-icon>edit</mat-icon>
+                                Modify
+                            </a>
+                        </mat-menu>
+                    </div>
+                </div>
+            </span>
+            <div class="row mx-0 tab-grid-remove">
+                <div class="col-lg-12">
+                    <mat-tab-group selectedIndex="0" (selectedTabChange)="changeTab($event)">
+                        <mat-tab label="Applicant Details">
+                            <app-applicant-lodgement *ngIf="lodgeDraftData !== undefined && tabIndex === 0" [draftData]="lodgeDraftData"
+                                (outputFromChild)="receiveChildData($event)" [readonly]="readonly" [preview]="preview">
+                            </app-applicant-lodgement>
+                        </mat-tab>
+                        <mat-tab label="Application Details">
+                            <app-application-lodgement *ngIf="lodgeDraftData !== undefined && tabIndex === 1"
+                                (outputFromChild)="receiveChildData($event)" [draftData]="lodgeDraftData"
+                                [readonly]="readonly" [preview]="preview"></app-application-lodgement>
+                        </mat-tab>
+                        <mat-tab label="Lodgement Document">
+                            <app-lodgement-document *ngIf="tabIndex === 2" [draftId]="draftId" [provinceId]="provinceId" [readonly]="readonly"
+                                [showOutcome]="false"></app-lodgement-document>
+                        </mat-tab>
+                        <mat-tab label="Payment Details">
+                            <app-payment-details *ngIf="tabIndex === 3" [draftId]="draftId" [provinceId]="provinceId" [readonly]="readonly"
+                                [showOutcome]="false" [preview]="preview" [draftData]="lodgeDraftData" [hideData]="false">
+                            </app-payment-details>
+                        </mat-tab>
+                        <mat-tab label="Annexure">
+                            <app-annexure-lodgement *ngIf="lodgeDraftData !== undefined && tabIndex === 4" [draftData]="lodgeDraftData"
+                                [draftId]="draftId" [readonly]="readonly" [workflowId]="workflowId"
+                                [resubmitData]="resubmitData" [preview]="preview" [hideData]="false">
+                            </app-annexure-lodgement>
+                        </mat-tab>
+                        <mat-tab label="Summary">
+                            <app-summary-lodgement *ngIf="tabIndex === 5" [draftId]="draftId" [provinceId]="provinceId" [readonly]="readonly"
+                                [showOutcome]="false" [preview]="preview" [draftData]="lodgeDraftData">
+                            </app-summary-lodgement>
+                        </mat-tab>
+                        <mat-tab label="Batch Details" *ngIf="lodgeDraftData !== undefined">
+                            <app-batch-details *ngIf="tabIndex === 6" [taskDetail]="lodgeData" [draftData]="lodgeDraftData" [draftId]="draftId"
+                                [workflowId]="workflowId" [readonly]="readonly" [hideData]="false">
+                            </app-batch-details>
+                        </mat-tab>
+                        <mat-tab label="Numbering" *ngIf="lodgeDraftData !== undefined">
+                            <app-numbering *ngIf="tabIndex === 7" [taskDetail]="lodgeData" [draftData]="lodgeDraftData" [draftId]="draftId"
+                                [workflowId]="workflowId" [readonly]="readonly">
+                            </app-numbering>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>

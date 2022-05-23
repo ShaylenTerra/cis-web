@@ -1,0 +1,208 @@
+.main-page {
+    width: 100%;
+    min-height:100%;
+    background-color: #ffffff;
+    margin: 0;
+    background-image: url('../../../assets/images/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.spin {
+    z-index: 1000;
+}
+
+.left-column {
+    margin: 0;
+}
+
+.right-column {
+    // background-color: #fafafa;
+    margin: 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: #DDC269;
+}
+
+.login-form {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 7.8%;
+    margin-bottom: 5%;
+    height: fit-content;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.container {
+    margin-bottom: 5%;
+}
+
+.submit-button {
+    background-color: #298f5c;
+    width: 120px;
+    height: 44px;
+    color: #fafafa;
+    line-height: 1.44;
+}
+
+.back-button {
+    width: 120px;
+    height: 44px;
+}
+
+.left-column-textbox {
+    margin-top: 7.8%;
+    width: 80%;
+    height: fit-content;
+}
+
+.left-column-textbox-heading {
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    font-size: 26px;
+    // font-size: 40px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+}
+
+.left-column-textbox-sub-heading {
+    margin-top: 6%;
+    font-size: 18px;
+    // font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #f1f1f1;
+}
+
+.left-column-textbox-text {
+    margin-top: 3.6%;
+    font-size: 16px;
+    // font-size: 22px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    // line-height: 32px;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+}
+
+.left-column-textbox-list {
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+    list-style: none;
+    margin: 0px;
+    padding: 0;
+}
+.back-button {
+    width: 210px;
+    height: 44px;
+}
+.left-column-textbox-list li {
+    background-image: url(../../../assets/images/circle.png);
+    background-repeat: no-repeat;
+    background-position: left top 7px;
+    padding-left: 35px;
+}
+
+.logo {
+    margin-top: 5.3%;
+    width: 34%;
+    height: 8.3%;
+    object-fit: contain;
+}
+
+.heading.welcome {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.forgot {
+    font-size: 14px;
+    color: #7856ff;
+    font-weight: 500;
+}
+
+::ng-deep .mat-checkbox.mat-accent {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.login-newto {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-newto a {
+    color: #7856ff;
+}
+
+.spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.login-heading {
+    margin-top: 5.9%;
+    margin-bottom: 8.8%;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.72;
+    letter-spacing: normal;
+    color: #515151;
+}
+
+::ng-deep .matIcon-forgot .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-suffix {
+    top: 0;
+}
+
+@media screen and (max-width: 1024px) {
+    .left-column-textbox-heading {
+        font-size: 22px;
+    }
+    .left-column-textbox-text {
+        font-size: 16px;
+    }
+    .left-column-textbox-sub-heading {
+        font-size: 16px;
+    }
+    .left-column-textbox-list {
+        font-size: 16px;
+        font-weight: normal;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .main-page {
+        height: auto;
+    }
+}
+
+.forgot:hover {
+    color:lightblue
+  }

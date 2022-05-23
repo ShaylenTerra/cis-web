@@ -1,0 +1,156 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <span class="col-10">
+                <p (click)="navigate()" class="heading" style="cursor: pointer;">Data Viewer</p>
+                </span>
+        </div>
+        <div class="row">
+            <div class="col-4">
+              
+                <!-- <mat-form-field appearance="outline" style="width:50%;margin-top: 30px;">
+                    <mat-label>Province</mat-label>
+                    <mat-select  multiple>
+                      <mat-option *ngFor="let topping of filteredProvince" [value]="topping.provinceName">{{topping.provinceName}}</mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+
+                  <mat-form-field appearance="outline" style="width:30%;margin-top: 30px;margin-right: 2px;">
+                    <mat-label>Type</mat-label>
+                    <mat-select (selectionChange)="onObjectTypeChange($event.value)" [(ngModel)]="selectedType">
+                        <mat-option *ngFor="let x of filteredObjectType" [value]="x">{{x}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" style="width:60%;margin-top: 30px;">
+                    <mat-label>Objects</mat-label>
+                    <mat-select (selectionChange)="onObjectChangeGetColumns($event.value)" [(ngModel)]="selectedObject">
+                      <mat-option *ngFor="let x of objectNames" [value]="x">{{x.objectName}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="col-4">
+                <!-- <div>
+                    <h4>Filter</h4>
+                </div>
+                <mat-form-field appearance="outline" style="width:30%;margin: 2px;">
+                    <mat-label>Filter</mat-label>
+                    <mat-select >
+                      <mat-option  value="Table">Option1</mat-option>
+                      <mat-option  value="View">Option2</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" style="width:30%;margin: 2px;">
+                    <mat-label>Filter</mat-label>
+                    <mat-select >
+                      <mat-option  value="=">=</mat-option>
+                      <mat-option  value="<">></mat-option>
+                      <mat-option  value=">">></mat-option>
+                      <mat-option  value="like">like</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" style="width:30%;margin: 2px;">
+                    <mat-label>Filter</mat-label>
+                    <input matInput />
+                  </mat-form-field> -->
+            </div>
+            <div class="col-4">
+                <button mat-raised-button (click)="dataRequest()" class="submit-button bhover buttonsize" style="width:33% !important" type="submit" *ngIf="requestsDataSource.length > 0">Data Request</button>
+                <!-- <button (click)="clear()" class="submit-button bhover buttonsize" type="submit">Export csv</button> -->
+                <button mat-raised-button (click)="myRequest()" class="submit-button bhover buttonsize" style="width:33% !important" type="submit">My Request</button> 
+               <button mat-raised-button (click)="clear()" class="clear-button back buttonsize" type="submit">Clear All</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-9">
+                <div *ngIf="showQuery === true">
+                    <span>
+                        <span class="mb-5">
+                            <p class="sub-heading" style="margin-bottom: 10px;"> Query
+                                <span class="text-css">{{selectedObject?.description}}</span></p>
+                        </span>
+                        <span class="mt-5">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Query</mat-label>
+                                <textarea matInput [(ngModel)]="query" class="query-css" cols="100" rows="5" style="color:black; line-height: 1.6;"> {{query}} </textarea>
+                                <!-- <span class="pull-right char" style="color: black;"><em>{{ 1000 - query?.length }} characters left</em></span> -->
+                            </mat-form-field>
+                        </span>
+                        <span>
+                            <span class="float-left">
+                                <button mat-raised-button (click)="execute()" class="submit-button bhover" type="submit">Execute</button>
+                            </span>
+                            
+                        </span>
+                    </span>
+                </div>
+                <div *ngIf="showQuery === false">
+                    <p> select Views, Columns to auto generate query.</p>
+                </div>
+            </div>
+            <div class="col-3" style="height: 250px; overflow-x: auto;">
+                <span>
+                    <p class="sub-heading" style="margin-bottom: 10px;"> Columns </p>
+                </span>
+                <span class="text-css">Select Fileds to see respective values in results.</span>
+                <mat-grid-list cols="2" rowHeight="2:0.4">
+                    <mat-grid-tile *ngFor="let element of colsDetail">
+                        <mat-checkbox (change)="updateSelection(element)"
+                                      [(ngModel)]="element.isSelected"
+                                      style="margin-left: 15px;font-size: 12PX;">
+                            {{element.name}}
+                        </mat-checkbox>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+        </div>
+        <div class="row mt-1 pt-5">
+            <div *ngIf="showResults === true" class="col-md-12">
+                <span class="float-left" *ngIf ="totalRecords != undefined">
+                    <h5>Total {{totalRecords}} records found</h5>
+                </span>
+                <span class="float-right">
+                    <mat-icon class="float-right mt-2" (click)="exportAsXLSX()" style="cursor: pointer;">get_app</mat-icon>
+                </span>
+            </div>
+            <div [hidden]="showResults === false" class="col-md-12">
+                <!-- <mat-form-field class="dd">
+                    <input autocomplete="off" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field> -->
+                <div class="table-container mat-elevation-z8">
+                <table mat-table [dataSource]="requestsData" matSort
+                style="font-size: 12px !important;font-weight: 500;">
+                    <ng-container *ngFor="let column of requestsColumns" [matColumnDef]="column.columnDef">
+                      <th *cdkHeaderCellDef mat-sort-header style="padding: 10px; border: solid 1px lightgray;">
+                        <p class="header-cell" (click)="onchangestatus(column)">{{ column.header }}</p>
+                        <input *ngIf="headerstatus == column.header" (keyup)="applyFilter($event.target.value)"/>
+                      </th>
+                      <td style="padding: 10px; border: solid 1px lightgray; white-space: nowrap;" *cdkCellDef="let row">{{ column.cell(row) }}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                 
+                </div>
+                <div>
+                    <mat-paginator #paginator [length]="flowDataLength"
+                        [pageSizeOptions]="[15, 25, 50]"
+                        [pageSize]="10" showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+                <!-- <ag-grid-angular
+                    style="width: 100%; height: 530px;"
+                    class="ag-theme-alpine"
+                    [rowData]="requestsDataSource"
+                    [columnDefs]="columnDefs"
+                    [pagination]="true"
+                    [paginationPageSize]="10" >
+                </ag-grid-angular> -->
+            </div>
+            <div class="col-md-12">
+                <span class="float-left" *ngIf ="showResults == null">
+                    <h5>{{errMsg}}</h5>
+                </span>
+            </div>
+            </div>
+    </mat-card-content>
+</mat-card>

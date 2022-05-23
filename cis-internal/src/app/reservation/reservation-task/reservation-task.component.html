@@ -1,0 +1,87 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div class="container-fluid pr-0">
+            <span class="row mx-0">
+                <span class="col-lg-11 p-l-0" style="display: inline-flex;">
+                    <i style="font-size: 30px; cursor: pointer; margin-right: 20px"
+                        (click)="nvaigateToReservationList()" class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                    <h2><a style="color: blue; cursor: pointer !important;" (click)="navigateTaskProfile()">
+                            {{resData?.referenceNumber}} </a> - {{resData?.actionRequiredDescription}}
+                        {{resData?.reservationName}} of {{resData?.provinceName}}</h2>
+                </span>
+                <div class="col-lg-1">
+                    <div class="dropdown menu" style="margin-top:12px" [hidden]="topHeaderMenu">
+                        <span [matMenuTriggerFor]="dropdown">
+                            <img alt="" matTooltip="More Action" src="assets/images/Three dots.png">
+                        </span>
+                        <mat-menu #dropdown="matMenu">
+                            <!-- <a mat-menu-item [hidden]="showDelete" (click)="processActionOnDraft('delete')">
+                                <mat-icon>delete</mat-icon>
+                                Delete
+                            </a> -->
+                            <a mat-menu-item [hidden]="showCancel" (click)="processActionOnDraft('cancel')">
+                                <mat-icon>cancel</mat-icon>
+                                Cancel
+                            </a>
+                            <a mat-menu-item [hidden]="showModify" (click)="processActionOnDraft('modify')">
+                                <mat-icon>edit</mat-icon>
+                                Modify
+                            </a>
+                        </mat-menu>
+                    </div>
+                </div>
+            </span>
+            <div class="row mx-0 tab-grid-remove">
+                <div class="col-lg-12">
+                    <mat-tab-group>
+                        <mat-tab label="Applicant Details">
+                            <app-applicant-reservation *ngIf="resDraftData !== undefined"
+                                (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData"
+                                [readonly]="readonly"></app-applicant-reservation>
+                        </mat-tab>
+                        <mat-tab label="Application Details">
+                            <app-application-reservation *ngIf="resDraftData !== undefined"
+                                (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData"
+                                [readonly]="readonly"></app-application-reservation>
+                        </mat-tab>
+                        <mat-tab label="Land Parcel" *ngIf="processId !== 239">
+                            <app-land-parcel *ngIf="resDraftData !== undefined && draftId !== undefined"
+                                [draftId]="draftId" [provinceId]="provinceId" [readonly]="readonly"
+                                [showOutcome]="false"></app-land-parcel>
+                        </mat-tab>
+                        <mat-tab label="Transferee Details" *ngIf="processId === 239">
+                            <app-transferee-details *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                                (outputFromChild)="receiveChildData($event)" [readonly]="readonly">
+                            </app-transferee-details>
+                        </mat-tab>
+                        <mat-tab label="Transfer Details" *ngIf="processId === 239">
+                            <app-transfer-details *ngIf="resDraftData !== undefined" [draftId]="draftId"
+                                [provinceId]="provinceId" [readonly]="readonly" [showOutcome]="false">
+                            </app-transfer-details>
+                        </mat-tab>
+                        <mat-tab label="Annexure" *ngIf="processId !== 239">
+                            <app-annexure-reservation *ngIf="resDraftData !== undefined && draftId !== undefined"
+                                [draftData]="resDraftData" [draftId]="draftId" [readonly]="readonly"
+                                [supportingDoc]="supportingDoc" [workflowId]="workflowId" [resubmitData]="resubmitData">
+                            </app-annexure-reservation>
+                        </mat-tab>
+                        <mat-tab label="Annexure" *ngIf="processId === 239">
+                            <app-annexure-transfer *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                                [draftId]="draftId" [readonly]="readonly" [workflowId]="workflowId"
+                                [resubmitData]="resubmitData" [processId]="processId" [supportingDoc]="supportingDoc">
+                            </app-annexure-transfer>
+                        </mat-tab>
+                        <mat-tab label="Request Flow">
+                            <app-requestflow-reservation [workflowId]="workflowId"></app-requestflow-reservation>
+                        </mat-tab>
+                        <mat-tab label="Reservation Outcome" *ngIf="processId !== 239">
+                            <app-outcome-reservation *ngIf="resDraftData !== undefined && draftId !== undefined"
+                                [workflowId]="workflowId" [provinceId]="provinceId" [draftData]="resDraftData"
+                                [draftId]="draftId"></app-outcome-reservation>
+                        </mat-tab>
+
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>

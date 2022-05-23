@@ -1,0 +1,195 @@
+<h4 mat-dialog-title><span>Feedback<i class="fa fa-window-close" aria-hidden="true" (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span></h4>
+<div>
+    <!-- <div class="row mx-0 mt-4">
+        <span class="col">
+            <h3>Feedback</h3>
+        </span>
+    </div> -->
+    <div class="row mx-0">
+        <span class="col-4">
+            <!-- <mat-form-field appearance="outline">
+                <mat-label>Province</mat-label>
+                <mat-select [(ngModel)]="province" #provinceSelect required>
+                    <mat-option>
+                        <ngx-mat-select-search [formControl]="provinceFilterCtrl"
+                            [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                            noEntriesFoundLabel="'No result found'">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let x of filteredProvince | async" [value]="x">
+                        {{ x.provinceName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Province</mat-label>
+                <mat-select style="height: 23px;" [(ngModel)]="provinceIds" [ngModelOptions]="{ standalone: true }"
+                    multiple>
+                    <mat-option *ngFor="let data of provincepdata" [value]="data.provinceId">
+                        {{data.provinceName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </span>
+    </div>
+
+    <div class="row mx-0">
+        <div class="col-6">
+            <app-card cardTitle="No of Request" [options]="true">
+                <div #PSTaskRequest>
+                    <chart id="PSTask_chart" [type]="'line'" [data]="PSTaskChartData" [options]="PSTaskChartOption">
+                    </chart>
+                </div>
+            </app-card>
+        </div>
+        <div class="col-6">
+            <h4>Your Rating <span style="float: right;">
+                    <div class="app">
+                        <div class="container1">
+                            <!-- <div class="item">
+                                                <label for="0">
+                                                    <input class="radio" type="radio" name="feedback" id="0" value="0">
+                                                    <span>🤬</span>
+                                                </label>
+                                            </div> -->
+
+                            <div class="item">
+                                <label for="1">
+                                    <input class="radio" type="radio" name="feedback" id="1" value=1
+                                        [(ngModel)]="rating" [ngModelOptions]="{ standalone: true }">
+                                    <span matTooltip="Poor">🙁</span>
+                                </label>
+                            </div>
+
+                            <div class="item">
+                                <label for="2">
+                                    <input class="radio" type="radio" name="feedback" id="2" value=2
+                                        [(ngModel)]="rating" [ngModelOptions]="{ standalone: true }">
+                                    <span matTooltip="Ok">😐</span>
+                                </label>
+                            </div>
+
+                            <div class="item">
+                                <label for="3">
+                                    <input class="radio" type="radio" name="feedback" id="3" value=3
+                                        [(ngModel)]="rating" [ngModelOptions]="{ standalone: true }">
+                                    <span matTooltip="Happy">😊</span>
+                                </label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </span></h4>
+            <mat-form-field appearance="outline">
+                <mat-label>Notes</mat-label>
+                <textarea [(ngModel)]="notes" rows="6" maxLength="1000" [ngModelOptions]="{ standalone: true }" matInput
+                    style="color: black;"></textarea>
+                <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.length }}
+                        characters left</em></span>
+            </mat-form-field>
+
+            <span class="float-right" style="margin-bottom: 0;">
+                <button mat-raised-button class="submit-button bover" style="height: 44px; margin-right: 5px;"
+                    (click)="submit()">My Rating</button>
+            </span>
+
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-12">
+            <h4>Rating Details</h4>
+            <hr>
+        </div>
+        <div class="col-6">
+
+            <div>
+                <div class="app">
+                    <div class="container2">
+                        <div class="row mx-0">
+                            <div class="col-4 item">
+                                <label for="4">
+                                    <input class="radio2" type="radio">
+                                    <span matTooltip="Poor" [matTooltipPosition]="'left'">🙁</span>
+                                </label>
+                            </div>
+                            <div class="col-8 ">
+                                <mat-progress-bar class="mt-4" style="color: green;" mode="determinate" name="20"
+                                    [value]="poorRating">
+                                    {{poorRating}}
+                                </mat-progress-bar>
+                                <div style="position:relative; top: -22px; text-align-last: center; color: #fff;">
+                                    {{poorRating | number : '1.2-2'}}%
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mx-0">
+                            <div class="col-4 item">
+                                <label for="5">
+                                    <input class="radio2" type="radio">
+                                    <span matTooltip="Ok" [matTooltipPosition]="'left'">😐</span>
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <mat-progress-bar class="mt-4" style="color: green;margin-bottom:-5;" mode="determinate"
+                                    name="30" [value]="okRating">
+                                    {{okRating}}
+                                </mat-progress-bar>
+                                <div style="position:relative; top: -22px; text-align-last: center; color: #fff;">
+                                    {{okRating | number : '1.2-2'}}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-0">
+                            <div class="col-4 item">
+                                <label for="6">
+                                    <input class="radio2" type="radio">
+                                    <span matTooltip="Happy" [matTooltipPosition]="'left'">😊</span>
+                                </label>
+                            </div>
+                            <div class="col-8">
+                                <mat-progress-bar class="mt-4" style="color: green;" mode="determinate" name="60"
+                                    [value]="happyRating">
+                                    {{happyRating}}
+                                </mat-progress-bar>
+                                <div style="position:relative; top: -22px; text-align-last: center; color: #fff;">
+                                    {{happyRating | number : '1.2-2'}}%
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="timeline timeline2" style="padding: 10px;margin-top: 20px!important;"
+                        *ngFor="let data of applicantFeedback">
+                        <div class="time-label">
+                            <span class="bg-red">{{data.dated | date:"d-MMM-yy"}}</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-check" style="background-color: green;color: white;"></i>
+                            <div class="timeline-item">
+                                <span class="time" style="padding: 10px;"><i class="fas fa-clock"></i>
+                                    {{data.dated | date:'h:mm a'}}</span>
+                                <h4 class="timeline-header">Terratest 2 Admin</h4>
+                                <div class="timeline-body">
+                                    {{data.notes}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

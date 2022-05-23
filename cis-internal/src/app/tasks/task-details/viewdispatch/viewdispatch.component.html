@@ -1,0 +1,72 @@
+<h4 mat-dialog-title><span>Add Dispatch Documents</span> <span> {{data.value.sno}} {{data.value.item}}</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="uploadDocForm">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" class="input-margin">
+                    <mat-label>Document Type</mat-label>
+                    <mat-select formControlName="documentType" matInput [(ngModel)]="doctype">
+                        <mat-option  *ngFor="let listItem of listItems"
+                                    [value]="listItem.itemId">
+                            {{listItem.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="mt-2">
+                    <mat-label>Choose File</mat-label>
+                    <input disabled matInput required>
+                    <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                        <mat-icon class="attach">attach_file</mat-icon>
+                    </button>
+                    <input #fileInput (change)="selectFile($event.target.files)" hidden
+                           id="newFile" type="file" required> 
+                    <p>{{docName}}</p>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="input-margin mt-2">
+                    <mat-label>Comment</mat-label>
+                    <textarea formControlName="notes" matInput style="color: black;" #notes required></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.value?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <div *ngFor="let document of supportingDocuments">
+                    <mat-label>{{document.documentName}}</mat-label>
+                   
+                    <!-- <button mat-icon-button matSuffix (click)="fileInput.click()">
+                <mat-icon class="attach">attach_file</mat-icon>
+            </button> -->
+                    <button mat-icon-button matSuffix (click)="download(document)">
+                        <mat-icon>get_app</mat-icon>
+                    </button>
+                    <button  mat-icon-button matSuffix  matTooltip="Document Name:{{document.documentName}}  Size:{{document.sizeKb}} (KB) notes:{{document.notes}}  Uploaded On:{{document.uploadedOn | date : 'dd/MMMM/y HH:mm:ss'}}">
+                        <mat-icon aria-label="Button that shows a red tooltip"
+                        class="t-button" style="cursor: pointer;">
+                             error_outline
+                         </mat-icon>
+                    </button>
+                    <!-- <input #fileInput (change)="selectFile($event)" hidden id="file" type="file"> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-12 col-md-6">
+         
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+            
+            </div>
+        </div> -->
+
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

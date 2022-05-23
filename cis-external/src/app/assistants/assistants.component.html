@@ -1,0 +1,66 @@
+<div class="top-spacing">
+    <div class="row mx-0">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <p class="heading">Assistants</p>
+        </div>
+        <div class="col">
+             <span class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <button class="submit-button mx-2 my-3" type="button" (click)="addNewAssistant()">Add Assistant</button>
+             </span>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div class="col">
+            <div class="card scroll">
+                <div *ngIf="isSpinnerVisible">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <table mat-table [dataSource]="dataSource" class="table-margin" *ngIf="!isSpinnerVisible">
+                    <ng-container matColumnDef="USERNAME">
+                        <th mat-header-cell *matHeaderCellDef class="p-r-10">User Name</th>
+                        <td mat-cell *matCellDef="let element">{{element.userName}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="FIRSTNAME">
+                        <th mat-header-cell *matHeaderCellDef class="p-r-10">First Name</th>
+                        <td mat-cell *matCellDef="let element">{{element.firstName}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="SURNAME">
+                        <th mat-header-cell *matHeaderCellDef class="p-r-10">Last Name</th>
+                        <td mat-cell *matCellDef="let element">{{element.surname}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="detach">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="dropdown" style="cursor: pointer;" >
+                                                    <span data-toggle="dropdown">
+                                                        <img alt=""  src="assets/images/Three dots.png">
+                                                    </span>
+                                <span class="dropdown-menu" >
+                                    <a (click)="openDecisionDialog(element)" *ngIf="element.assistantStatusId=='107'"
+                                       class="dropdown-item" >Approve/Reject</a>
+
+                                      <a (click)="openDecisionDialog(element)" *ngIf="element.assistantStatusId=='106'"
+                                         class="dropdown-item" >Unlink</a>
+
+<!--                                      <a (click)="openDecisionDialog(element)" *ngIf="element.assistantStatusId=='106'"-->
+<!--                                         class="dropdown-item" >View</a>-->
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="assistantsColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: assistantsColumns;"></tr>
+                </table>
+
+                <div class="row">
+                    <span class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right">
+                        <mat-paginator #paginator [length]="dataLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+                            showFirstLastButtons>
+                        </mat-paginator>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

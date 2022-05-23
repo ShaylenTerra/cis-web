@@ -1,0 +1,112 @@
+<div class="main-page row">
+    <div class="col-md-6 p-0">
+        <div class="left-column-textbox mx-auto">
+            <p class="left-column-textbox-heading">
+                Welcome to The Department of Agriculture, Land Reform and Rural Development (DALRRD) Cadastral Information System website.
+            </p>
+            <p class="left-column-textbox-text">
+                The National Geomatics Management Service (NGMS) is a branch in The Department of Agriculture, Land Reform and Rural Development (DALRRD), whose primary objective is to provide efficient cadastral survey management services and to provide cadastral information services in support of land delivery and orderly development. The Branch is mandated to perform its functions through the Land Survey Act, 1997 (Act No. 8 of 199).
+            </p>
+            <p class="left-column-textbox-sub-heading">
+                This programme is responsible for the following:
+            </p>
+            <ul class="left-column-textbox-list">
+                <li>Regulation of Surveyor-General’s offices</li>
+                <li>Examining and approving all surveys for the registration of land and real rights</li>
+                <li>Maintaining cadastral documents</li>
+                <li>Archiving all cadastral surveys</li>
+                <li>Providing cadastral advisory and information services</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 p-0">
+        <div class="login-form">
+            <div>
+                <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#c58b10" type = "timer"
+                [fullScreen] = "true"><p style="color: white; font-size: larger;" > Please wait while we are preparing your home page... </p></ngx-spinner>
+            </div>
+            <div class="text-center">
+                <img class="logo" src="assets/images/logo-new.png" alt="">
+            </div>
+            <div class="mx-auto">
+                <h2 class="login-heading welcome text-center">Log In</h2>
+                <div>
+                    <div class="container">
+                        <form role="form" id="login-form" (submit)="onSubmit()">
+                            <div class="row mx-0 mt-2">
+                                <div class="col">
+                                    <mat-form-field id="email" appearance="outline">
+                                        <mat-label>Enter Email Address</mat-label>
+                                        <input matInput [formControl]="form.controls['email']">
+                                    </mat-form-field>
+                                    <small
+                                        *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+                                        class="text-danger support-text">Email Required.</small>
+                                </div>
+                            </div>
+                            <div class="row mx-0">
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Enter Password</mat-label>
+                                        <input matInput [type]="hide1 ? 'password' : 'text'"
+                                            [formControl]="form.controls['password']">
+                                        <button type="button" mat-icon-button matSuffix
+                                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+                                            <mat-icon (click)="hide1=!hide1">{{hide1 ? 'visibility_off' : 'visibility'}}
+                                            </mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                    <small
+                                        *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched"
+                                        class="text-danger support-text">Password Required.</small>
+                                    <small
+                                        *ngIf="errorMsg != undefined"
+                                        class="text-danger support-text">{{errorMsg}}</small>
+                                </div>
+                            </div>
+                            <!-- <div class="row mx-0">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <a [routerLink]="[ '/authentication/forgot']" class="forgot">I forgot my
+                                            password</a>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <mat-checkbox value="auto">Keep me signed in</mat-checkbox>
+                                </div>
+                            </div> -->
+                            <div class="row mx-0 mt-1">
+                                <span class="col">
+                                    <mat-checkbox id="rememberme" value="rememberme">Keep me signed in</mat-checkbox>
+                                </span>
+                                <span class="col">
+                                    <a [routerLink]="[ '/authentication/forgot']" class="forgot float-right">I forgot my
+                                        password</a>
+                                </span>
+                            </div>
+
+
+                            <div class="row mx-0 mt-2">
+                                <span class="col mt-2">
+                                    New user? <a [routerLink]="[ '/authentication/register']" class="forgot"><u>Click
+                                            here to
+                                            Register</u></a>
+                                </span>
+                                <span class="col mt-2">
+                                    <button class="submit-button pull-right" type="submit" style="width: 210px;"
+                                        [ngClass]="'submit-button'">Sign In</button>
+                                </span>
+                            </div>
+                            
+                            <div class="row mx-0 mt-3"  style="padding-bottom: 1%;">
+                                <!-- <div class="col" style="font-size: 14px;font-weight: 500;">
+                                </div> -->
+                                <div class="col mt-3 float-right">
+                                    <a [href]="portalUrl" class="forgot" style="float:right;">Click here to redirect on the portal</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

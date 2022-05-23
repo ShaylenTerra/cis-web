@@ -1,0 +1,84 @@
+::ng-deep .mat-tooltip {
+    background: #084b29;
+    color: white
+}
+
+.dropdown-item {
+    cursor: pointer !important;
+}
+
+.dropdown-item:hover {
+    background: #084b29;
+    color: white
+}
+
+.dropdown-menu {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.apps-menu {
+    margin-right: 25px;
+    font-size: 33px;
+    color: #888888
+}
+
+.menu-items {
+    font-size: 14px;
+    font-weight: 500;
+    width: 350px;
+    height: 300px;
+    margin-top: 10%;
+    overflow-y: scroll;
+}
+
+.menu-item {
+    margin: 5px;
+    padding: 10px;
+    border: 0;
+    cursor: pointer;
+    background-color: #f9f9f9;
+}
+
+.menu-item p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1rem;
+}
+
+.menu-item:hover p {
+    overflow: visible;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+}
+
+.menu-item:hover {
+    background-color: #F1F1F1;
+}
+
+.menu-item .mat-icon {
+    display: block;
+    margin: 0px auto;
+    margin-bottom: 5px;
+}
+
+.icon-css {
+    font-size: 25px;
+    color: #f48222;
+    font-weight: bold;
+}
+
+.fa-css {
+    font-size: 35px;
+    color: #f48222;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.cart-menu {
+    margin-right: 25px;
+    font-size: 33px;
+    color: #084b29;
+}

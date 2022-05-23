@@ -1,0 +1,68 @@
+<div>
+    <div class="row w-100 mx-auto"  fxLayoutAlign="center center">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" >
+            <span class="row mx-0">
+                <span class="col">
+                    <p class="heading heading-r-top">Post Request</p>
+                </span>
+            </span>
+            <mat-card>
+                <mat-card-content>
+                    <form [formGroup]="form">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Process</mat-label>
+                            <mat-select matInput  formControlName="processid">
+                                <mat-option *ngFor="let process of process" [value]="process.processId">
+                                    {{ process.processName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <small
+                            *ngIf="form.controls['selectedIssueType'].hasError('required') && form.controls['selectedIssueType'].touched"
+                            class="text-danger support-text">Issue Type Required.</small> -->
+                        <br>
+                        <div>
+                            <form [formGroup]="provinceForm">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Province</mat-label>
+                                <input [(ngModel)]="province" [matAutocomplete]="auto3" formControlName="assignedProvince"
+                                       matInput>
+                                <mat-autocomplete #auto3="matAutocomplete"
+                                                  [displayWith]="displayProvince">
+                                  <mat-option *ngFor="let x of filteredProvince" [value]="x">
+                                    {{x.provinceName}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                            </form>
+                        </div>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Notes</mat-label>
+                            <textarea matInput placeholder="Notes" style="color: black;" formControlName="notes"  rows="7" #notes></textarea>
+                            <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.value?.length }} characters left</em></span>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Attachments</mat-label>
+                            <input disabled matInput>
+                            <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                                <mat-icon class="attach">attach_file</mat-icon>
+                            </button>
+                            <input #fileInput (change)="selectAttachments($event.target.files)" hidden
+                                  id="newFile" type="file">
+                            <!-- <p>{{docName}}</p> -->
+                        </mat-form-field>
+                        <br>
+                        <div class="row">
+                            <span class="col">
+                                <button mat-raised-button class="submit-button float-right bover mx-2"
+                                    (click)="postRequest()">Submit</button>
+                            </span>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

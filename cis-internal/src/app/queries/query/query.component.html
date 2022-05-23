@@ -1,0 +1,74 @@
+<div class="w-100">
+    <div class="login-register-box w-100">
+        <div class="row w-100">
+            <div class="col-8">
+                <span class="row mx-0">
+                    <span class="col">
+                        <p class="Headings">Queries</p>
+                    </span>
+                </span>
+                <table [dataSource]="dataSource" class="m-0 p-0 w-100" mat-table>
+                    <ng-container matColumnDef="issueType">
+                        <th *matHeaderCellDef mat-header-cell>Issue Type</th>
+                        <td *matCellDef="let element" mat-cell>{{element.issueType}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="issueStatus">
+                        <th *matHeaderCellDef mat-header-cell>Issue Status</th>
+                        <td *matCellDef="let element" class="s-f" mat-cell>{{element.issueStatus}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdDate">
+                        <th *matHeaderCellDef mat-header-cell> Date Created</th>
+                        <td *matCellDef="let element" mat-cell>{{element.createdDate}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th *matHeaderCellDef mat-header-cell>Action</th>
+                        <td *matCellDef="let element" class="s-f1" mat-cell>View Details</td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                </table>
+                <!-- <mat-paginator #paginator [length]="dataLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+                </mat-paginator> -->
+            </div>
+            <div class="col-4">
+                <span class="row mx-0">
+                    <span class="col">
+                        <p class="Headings">Create New Query</p>
+                    </span>
+                </span>
+                <mat-card>
+                    <mat-card-content>
+                        <form>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Issue Type</mat-label>
+                                <mat-select (selectionChange)="issueTypeChange()" [(value)]="selectedIssueType" matInput
+                                            required>
+                                    <mat-option *ngFor="let type of issueTypes" [value]="type">
+                                        {{ type }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <br>
+                            <div *ngIf="showField">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>SpecifyType</mat-label>
+                                    <input matInput required type="text">
+                                </mat-form-field>
+                            </div>
+                            <br>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Issue Description</mat-label>
+                                <textarea matInput placeholder="Issue Description" required rows="7" style="color: black;" #issueDescription></textarea>
+                                <span class="pull-right char" style="color: black;"><em>{{ 1000 - issueDescription?.value?.length }} characters left</em></span>
+                            </mat-form-field>
+                            <br>
+                            <div>
+                                <button mat-raised-button (click)="submit()" class="submit">Post Query</button>
+                            </div>
+                        </form>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

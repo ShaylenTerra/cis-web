@@ -1,0 +1,58 @@
+.main-container {
+    height: 100%;
+}
+
+mat-toolbar {
+    background-color: #faf9ec;
+    border-bottom: 3px solid #084b29;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.m-icons {
+    margin-right: 7px;
+    margin-left: 4px;
+}
+
+span {
+    display: inherit;
+    font-family: 'Roboto';
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #016533;
+}
+
+.main-container {
+    background-color: #efefef;
+}
+
+.land {
+    color: #999999;
+}
+
+.topbar.height {
+    height: 60px;
+    min-height: 60px;
+    /*z-index: 1; ADDED FOR IMAGE GALLERY */
+}
+
+#mobile-menu {
+    display: none;
+}
+
+@media screen and (max-width: 1080px) {
+    #desktop-menu {
+        display: none;
+    }
+
+    #mobile-menu {
+        display: block;
+        width: 100%;
+    }
+}

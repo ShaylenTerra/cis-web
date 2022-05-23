@@ -1,0 +1,50 @@
+.back-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    background-color: #fff;
+    border: 0;
+    width: 120px;
+    height: 44px;
+}
+
+.back:hover{
+    background-color: lightgray;
+}
+
+.bover:hover {
+    background-color: #c58b10;;
+  }
+
+.submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    width: 120px;
+    background-color: #016533;
+    border: 0;
+    height: 44px;
+    color: white;
+}
+
+.search-req-detail-table td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold !important;
+}
+
+.btn-css {
+    width: 73px;
+    height: 31px;
+    border-radius: 4.8px;
+    color: white;
+    background-color: #f48222;
+}

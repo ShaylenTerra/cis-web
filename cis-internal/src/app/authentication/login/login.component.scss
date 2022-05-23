@@ -1,0 +1,181 @@
+.main-page {
+  width: 100%;
+  height:100%;
+  // background-color: #ffffff;
+  margin: 0;
+  background-image: url('../../../assets/images/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.left-column {
+  margin: 0;
+}
+
+.right-column {
+  // background-color: #fafafa;
+  margin: 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #DDC269;
+}
+
+// .mat-form-field-wrapper {
+//   padding-bottom: 0.1em;
+//   padding-top: 1.3em;
+// }
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0 0;
+}
+.login-form {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 7.8%;
+  margin-bottom: 5%;
+  height: fit-content;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.container {
+  margin-bottom: 5%;
+}
+
+.bover:hover {
+    background-color: #c58b10;;
+}
+
+.submit-button {
+  background-color: #298f5c;
+  width: 120px;
+  height: 44px;
+  color: #fafafa;
+  // line-height: 1.44;
+}
+
+.back-button {
+  width: 120px;
+  height: 44px;
+}
+
+.left-column-textbox {
+  margin-top: 7.8%;
+  width: 80%;
+  height: fit-content;
+}
+
+.left-column-textbox-heading {
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  font-size: 26px;
+  // font-size: 40px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+
+.left-column-textbox-sub-heading {
+  margin-top: 6%;
+  font-size: 18px;
+  // font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #f1f1f1;
+}
+
+.left-column-textbox-text {
+  margin-top: 3.6%;
+  font-size: 16px;
+  // font-size: 22px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  // line-height: 32px;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+
+.left-column-textbox-list {
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  list-style: none;
+  margin: 0px;
+  padding: 0;
+}
+
+.left-column-textbox-list li {
+  background-image: url(../../../assets/images/circle.png);
+  background-repeat: no-repeat;
+  background-position: left top 7px;
+  padding-left: 35px;
+}
+
+.logo {
+  margin-top: 5.3%;
+  width: 34%;
+  height: 8.3%;
+  object-fit: contain;
+}
+
+.heading.welcome {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.forgot {
+  font-size: 14px;
+  color: #7856ff;
+  font-weight: 500;
+}
+
+::ng-deep .mat-checkbox.mat-accent {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.login-newto {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-newto a {
+  color: #7856ff;
+}
+
+.login-heading {
+  margin-top: 5.9%;
+  margin-bottom: 8.8%;
+  font-size: 32px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.72;
+  letter-spacing: normal;
+  color: #515151;
+}
+
+.forgot:hover {
+  color:lightblue
+}

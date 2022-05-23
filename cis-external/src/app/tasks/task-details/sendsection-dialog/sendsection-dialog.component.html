@@ -1,0 +1,56 @@
+<h4 mat-dialog-title><span>Send To Section</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Assign to Section</mat-label>
+                    <mat-select (selectionChange)="assignedSectionSelected($event)" formControlName="reassignedToSection" #searchSectionSelect required>
+                        <mat-option>
+                        <ngx-mat-select-search [formControl]="searchSectionFilterCtrl"
+                         [ngModelOptions]="{ standalone: true }"
+                            placeholderLabel="Search..." noEntriesFoundLabel="'No result found'">
+                        </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of assignedFilteredSection | async" [value]="x">
+                            {{x.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Assign to User</mat-label>
+                    <mat-select (selectionChange)="assignedUserSelected($event)" formControlName="reassignedToUser" #searchUserSelect required>
+                        <mat-option>
+                        <ngx-mat-select-search [formControl]="searchUserFilterCtrl"
+                         [ngModelOptions]="{ standalone: true }"
+                            placeholderLabel="Search..." noEntriesFoundLabel="'No result found'">
+                        </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of assignedFilteredUsers | async" [value]="x">
+                            {{x.userName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Notes</mat-label>
+                    <textarea [(ngModel)]="notes" formControlName="notes" matInput required style="color: black;"></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

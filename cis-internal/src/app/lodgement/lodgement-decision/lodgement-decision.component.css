@@ -1,0 +1,101 @@
+.mat-radio-button {
+    margin-left: 15px;
+}
+
+.radio-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.radio-margin {
+    margin: 0 10px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.radio-button {
+    margin: 5px;
+}
+
+.t-button {
+    margin-top: 16px;
+}
+
+.t-tooltip-red {
+    background: #b71c1c;
+}
+
+.multiline-tooltip {
+    white-space: pre;
+}
+
+div.cell{
+    display: grid;
+    border-style: solid 1px;
+    background-color: green;
+}
+
+div.cell1{
+    display: grid;
+    border-style: solid 1px;
+    background-color: lightgray;
+}
+
+.absolute {
+    bottom: 24px;
+    width: 100%;
+}
+
+.bhover:hover{
+    background: #c58b10;
+}
+.submit {
+    background-color: green;
+    margin-right: 3.2%;
+}
+
+.submit-button {
+    margin-right: 10px;
+    line-height: 2;
+    background-color: #298f5c;
+    width: 109px;
+    height: 40px;
+    color: #fafafa;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+.absolute.absoluteNew {
+    width: 100%;
+}
+.box {
+    margin-top: 25px;
+    height: fit-content;
+    border-radius: 8px;
+    border: solid 1px #d4d4d4;
+    background-color: #ffffff;
+}
+
+.box {
+    width: 13%;
+    border-radius: 8px;
+    border: solid 1px #e2e2e3;
+    background-color: #fafafa;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+
+.circle {
+    border-radius: 48%;
+    color: #c58b10;
+    width: 250px;
+    height: 180px;
+    border: solid 5px #c58b10;
+}

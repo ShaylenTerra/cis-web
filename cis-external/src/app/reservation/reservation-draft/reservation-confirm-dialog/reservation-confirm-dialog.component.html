@@ -1,0 +1,7 @@
+<div>
+    <h4 fxLayoutAlign="space-around center" >Are you sure you want to delete reservation {{data?.name}} of {{data?.provinceName}}?</h4>
+    <div fxLayoutAlign="center center" mat-dialog-actions>
+        <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>No</button>
+        <button (click)="deleteDraft()" class="submit-button bover" mat-raised-button>Yes</button>
+    </div>
+</div>

@@ -1,0 +1,393 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+html,
+body {
+    height: 100%;
+    font-family: 'Roboto';
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+}
+
+
+/* Text Classes */
+
+.heading {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.sub-heading {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.desc-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+}
+
+.info-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666666;
+}
+
+.small-text {
+    font-size: 10px;
+    font-weight: 500;
+    color: #666666;
+}
+
+
+/* Table */
+
+.card {
+    border-radius: 8px !important;
+}
+
+.table-margin {
+    margin: 8px 8px 54px 8px;
+}
+
+.table-bold-text {
+    color: #DEC269 !important;
+    font-weight: bold;
+}
+
+.table-details {
+    color: #DEC269 !important;
+    font-style: italic;
+    cursor: pointer;
+}
+
+
+/* Universal Component Classes */
+
+.mat-header-row {
+    height: 36px !important;
+    background-color: #ddc269 !important;
+}
+
+.mat-header-cell {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #333333 !important;
+}
+
+th {
+    border-bottom: 0 solid !important;
+}
+
+.mat-row {
+    height: 36px !important;
+}
+
+.mat-cell {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #666666 !important;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+}
+
+.mat-form-field {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: -0.37em !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #c58b10 !important;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #066636 !important;
+}
+
+.mat-focused .mat-form-field-label {
+    color: #c58b10 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: .65em 0 !important;
+    /* Original top/bottom value was 1em. */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    position: absolute;
+    top: 0.5em !important;
+}
+
+::ng-deep .mat-input-element {
+    position: relative;
+    top: -1.2em !important;
+    /* Adjust accordingly to keep placeholder/input text vertically centered. */
+}
+
+::ng-deep .mat-form-field-label-wrapper {
+    top: -1.2em !important;
+    /* Adjust accordingly to keep <mat-label> text vertically centered. */
+}
+
+.mat-select-placeholder {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #016533 !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #016533 !important;
+}
+
+/* Buttons */
+
+.back-button {
+    border-radius: 8px;
+    border: solid 2px #066636;
+    background-color: #fafafa;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #066636;
+}
+
+.submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    background-color: #016533;
+    border: 0;
+}
+
+.d-submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    background-color: lightgray !important;
+    color: black;
+    border: 0;
+}
+
+
+/* .submit-button:hover {
+    background-color: #ddc269;
+} */
+
+
+/* Spinner */
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #DEC269 !important;
+}
+
+.mat-spinner,
+.mat-spinner svg {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate] circle {
+    animation-duration: 6s !important;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: transparent;
+    z-index: 1001;
+}
+
+.overlay__wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.overlay__spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* SnackBar */
+
+.success-snack-bar,
+.success-snack-bar button {
+    background: #066636 !important;
+    color: white !important;
+}
+
+.warning-snack-bar,
+.warning-snack-bar button {
+    background: #dfca14 !important;
+    color: white !important;
+}
+
+.error-snack-bar,
+.error-snack-bar button {
+    background: #ff0000 !important;
+    color: white !important;
+}
+
+/* checkbox */
+
+.mat-checkbox .mat-checkbox-frame {
+    border-color: #DDC269;
+}
+
+.mat-checkbox-checked .mat-checkbox-background {
+    background-color: #066636 !important;
+}
+
+
+/* Drop downs */
+
+.mat-option {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #666666 !important;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+}
+
+input.mat-input-element {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #333333;
+}
+
+.padd-left {
+    padding-left: 0px;
+}
+
+.padd-right {
+    padding-right: 0px;
+}
+
+.top-spacing {
+    margin-top: 30px;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+.mat-menu-panel {
+    overflow: hidden !important;
+}
+
+@media screen and (max-width: 1440px) {}
+
+@media screen and (max-width: 1366px) {}
+
+@media screen and (max-width: 1299px) {}
+
+@media screen and (max-width: 1280px) {}
+
+@media screen and (max-width: 1152px) {}
+
+@media screen and (max-width: 1024px) {}
+
+@media screen and (max-width: 992px) {}
+
+@media screen and (max-width: 959px) {}
+
+@media screen and (max-width: 823px) {}
+
+@media screen and (max-width: 812px) {}
+
+@media screen and (max-width: 800px) {}
+
+@media screen and (max-width: 768px) {
+    .heading.heading-r-top {
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .scroll {
+        overflow-y: scroll;
+        overflow-x: scroll;
+    }
+}
+
+@media screen and (max-width: 753px) {}
+
+@media screen and (max-width: 711px) {}
+
+@media screen and (max-width: 667px) {}
+
+@media screen and (max-width: 640px) {}
+
+@media screen and (max-width: 569px) {}
+
+@media screen and (max-width: 533px) {}
+
+@media screen and (max-width: 480px) {}
+
+@media screen and (max-width: 424px) {
+    .heading {
+        font-size: 16px;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 414px) {}
+
+@media screen and (max-width: 400px) {}
+
+@media screen and (max-width: 390px) {}
+
+@media screen and (max-width: 375px) {}
+
+@media screen and (max-width: 360px) {}
+
+@media screen and (max-width: 320px) {}

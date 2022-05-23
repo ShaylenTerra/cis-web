@@ -1,0 +1,248 @@
+<div class="padd-right" [hidden]="preview">
+    <span class="row mx-0 mt-3">
+        <span class="col-12">
+            <div>
+                <mat-card>
+                    <form [formGroup]="formApplication" class="m-3 p-3">
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Name:</label>
+                            </div>
+                            <div class="col-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Name</mat-label>
+                                    <input formControlName="name" [readonly]="readonly" matInput required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Description:</label>
+                            </div>
+                            <div class="col-6">
+                                <quill-editor #quill [styles]="{height: '200px'}" formControlName="description" required
+                                    [ngModelOptions]="{ standalone: true }">
+                                </quill-editor>
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label class="mt-4" style="font-weight: bold;">File Refrence:</label>
+                            </div>
+                            <div class="col-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>File Refrence</mat-label>
+                                    <input formControlName="fileReference" matInput autocomplete="off">
+
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <mat-card class="gray-card">
+                                <mat-card-content>
+                                    <div class="row">
+                                        <p class="heading">Delivery Method</p>
+                                    </div>
+                                    <div class="row">
+                                        <p>Select the delivery method you would want to use for the requesting items and
+                                            enter the necessary
+                                            details.
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <mat-radio-group [(ngModel)]="selectedMode" aria-label="Select an option"
+                                            formControlName="deliveryMethodItemId">
+                                            <mat-radio-button *ngFor="let x of selectedModes" [value]="x.itemId"
+                                                class="r-margin">{{x.caption}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                    <div *ngIf="selectedMode === 79 || selectedMode === 168">
+                                        <div class="row">
+                                            <p class="heading">Confirm your Address</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="add-text">Confirm the address or add a new address by editing the
+                                                current
+                                                address.
+                                            </p>
+                                        </div>
+                                        <div class="row f-css">
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Receiver's Name</mat-label>
+                                                    <input [(ngModel)]="name" [ngModelOptions]="{standalone: true}"
+                                                        disabled matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Email Address</mat-label>
+                                                    <input [(ngModel)]="emailDelivery"
+                                                        [ngModelOptions]="{standalone: true}" disabled matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Address Line 1</mat-label>
+                                                    <input [(ngModel)]="add1" [ngModelOptions]="{standalone: true}"
+                                                        disabled matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label> Address Line 2</mat-label>
+                                                    <input [(ngModel)]="add2" [ngModelOptions]="{standalone: true}"
+                                                        disabled matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label> Address Line 3</mat-label>
+                                                    <input [(ngModel)]="add3" [ngModelOptions]="{standalone: true}"
+                                                        disabled matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Phone No.</mat-label>
+                                                    <input [(ngModel)]="phone" [ngModelOptions]="{standalone: true}"
+                                                        disabled matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Postal Code</mat-label>
+                                                    <input [(ngModel)]="postalCode"
+                                                        [ngModelOptions]="{standalone: true}" disabled matInput>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="selectedMode === 80">
+                                        <div class="row">
+                                            <p style="font-size: small;">Your Items Should be collected in the below
+                                                location once after we
+                                                schedule date and
+                                                time.
+                                            </p>
+                                        </div>
+                                        <div class="row f-css">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Collect From:</mat-label>
+                                                <textarea [value]="collectionAddress" disabled matInput
+                                                    style="color: black;"></textarea>
+                                                <!-- <span class="pull-right char" style="color: black;"><em>{{ 1000 -
+                                                        collectionAddress?.length }} characters left</em></span> -->
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row" [hidden]="selectedMode === 206 ? false : true">
+                                        <div class="col-6 col-md-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>IsPrimary</mat-label>
+                                                <mat-select matInput [(ngModel)]="isPrimary"
+                                                    formControlName="isPrimaryEmail"
+                                                    (selectionChange)="setPrimaryEmail($event)" [readonly]="readonly">
+                                                    <mat-option [value]="1" [readonly]="readonly"> Primary</mat-option>
+                                                    <mat-option [value]="0" [readonly]="readonly"> Secondary
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-6 col-md-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Email Address</mat-label>
+                                                <input [(ngModel)]="electronicEmail"
+                                                    [ngModelOptions]="{standalone: true}" [readonly]="readonly"
+                                                    [disabled]='disableEmail' matInput>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="row my-3 ">
+                            <div class="col mb-3">
+                                <span class="float-right">
+                                    <button [hidden]="readonly" mat-raised-button class="submit-button bover"
+                                        (click)="updateDraft('Application')"
+                                        style="height: 44px; margin-right: 5px;">Update</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card>
+            </div>
+        </span>
+    </span>
+</div>
+
+
+
+<div class="padd-right" [hidden]="!preview">
+    <span class="row mx-0 mt-3">
+        <span class="col-12">
+            <div>
+                <mat-card>
+                    <form [formGroup]="formApplication" class="m-3 p-3">
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Name:</label>
+                            </div>
+                            <div class="col-6">
+                                <label>{{formApplication.get('name').value}}</label>
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Description:</label>
+                            </div>
+                            <div class="col-6">
+                                <span [innerHTML]="formApplication.get('description').value | safeHtml"></span>
+                            </div>
+                        </div>
+                        <!-- <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Survey Date(if any):</label>
+                            </div>
+                            <div class="col-6">
+                                <label>{{formApplication.get('surveyDate').value | date:"d-MMM-y"}}</label>
+                            </div>
+                        </div> -->
+
+                        <div class="row mt-4">
+                            <p class="heading">Delivery Method</p>
+                        </div>
+                        <div class="row">
+                            <p>Select the delivery method you would want to use for the requesting items and
+                                enter the necessary
+                                details.
+                            </p>
+                        </div>
+                        <div class="row">
+                            <label class="mt-4">{{deliveryMethodName}}</label>
+                        </div>
+                        <div class="row" *ngIf="formApplication.get('deliveryMethodItemId').value === 206">
+                            <div class="col-6 col-md-6">
+                                <label class="mt-4"
+                                    *ngIf="formApplication.get('isPrimaryEmail').value == 1 || formApplication.get('isPrimaryEmail').value == null">Primary
+                                    Email</label>
+                                <label class="mt-4" *ngIf="formApplication.get('isPrimaryEmail').value == 0">Secondary
+                                    Email</label>
+
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <label class="mt-4">{{electronicEmail}}</label>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </mat-card>
+            </div>
+        </span>
+    </span>
+</div>

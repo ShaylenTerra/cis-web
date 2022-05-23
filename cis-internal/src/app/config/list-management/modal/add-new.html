@@ -1,0 +1,23 @@
+<h4 mat-dialog-title><span>Add New {{data.title}}</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="inputForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input [(ngModel)]="data.name" [formControl]="inputForm.controls['name']" matInput required>
+        </mat-form-field>
+        <small *ngIf="inputForm.controls['name'].hasError('required') && inputForm.controls['name'].touched"
+               class="text-danger support-text">Name is required.</small>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input [(ngModel)]="data.description" [formControl]="inputForm.controls['description']" matInput placeholder="Description"
+                   required>
+        </mat-form-field>
+        <small *ngIf="inputForm.controls['description'].hasError('required') && inputForm.controls['description'].touched"
+               class="text-danger support-text">Description is required.</small>
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button (click)="onNoClick()" class="back-button back" mat-raised-button>Cancel</button>
+    <button class="submit-button bover" (click)="submit()" mat-raised-button>Save</button>
+</div>

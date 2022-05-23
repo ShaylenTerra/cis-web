@@ -1,0 +1,81 @@
+<div mat-dialog-title>Apply Leave </div>
+<div mat-dialog-content>
+<form [formGroup]="newLeave">
+    <mat-card>
+        <mat-card-content>
+            <div class="container-fluid">
+             <div class="row">
+                <div class="col">
+                    <mat-checkbox #timeInput>Apply with time</mat-checkbox>
+                </div>
+             </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Leave type</mat-label>
+                        <mat-select formControlName="leaveType">
+                            <mat-option *ngFor="let x of leaveTypes" [value]="x">{{x.caption}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start date</mat-label>
+                        <input  [matDatepicker]="picker1" formControlName="startDate" (dateInput)="setTime(timeInput.checked,startDate.value,1)" matInput>
+                        <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #picker1 ></mat-datepicker>
+                        <ngx-timepicker-field  *ngIf="timeInput.checked"  formControlName="fromTime" [defaultTime]="'08:00 am'" [controlOnly]="true"  style="display: inline-block;" matSuffix>
+                        </ngx-timepicker-field>
+                    </mat-form-field>
+                    </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End date</mat-label>
+                        <input [matDatepicker]="picker2" formControlName="endDate" matInput id="endDate" (dateInput)="setTime(timeInput.checked,endDate.value,2)">
+                        <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <ngx-timepicker-field *ngIf="timeInput.checked"  formControlName="toTime" [defaultTime]="'05:00 pm'" [controlOnly]="true"  style="display: inline-block;" matSuffix>
+                        </ngx-timepicker-field>
+                    </mat-form-field>
+                    <div *ngIf="(endDate.invalid ||newLeave.errors?.smallDate) && (endDate.dirty || endDate.touched)"
+                         class="alert alert-danger">
+                        <div *ngIf="newLeave.errors?.smallDate">
+                            {{newLeave.errors?.smallDate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea  matInput rows="3" formControlName="description" style="color: black;" #description></textarea>
+                        <span class="pull-right char" style="color: black;"><em>{{ 1000 - description?.value?.length }} characters left</em></span>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Upload Supporting Documents</mat-label>
+                        <input [value]="uploadedFileName" disabled matInput>
+                        <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                            <mat-icon class="attach">attach_file</mat-icon>
+                        </button>
+                        <input #fileInput (change)="selectFile($event)" hidden id="file" type="file">
+                    </mat-form-field>
+                </div>
+            </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</form>
+</div>
+
+<div mat-dialog-actions class="float-right">
+    <button mat-dialog-close mat-raised-button class="cancel-button cancel">Cancel</button>
+    <button (click)="addNewLeave()" [disabled]="!newLeave.valid" class="submit-button bover float-right" style="width: 170px;" mat-raised-button>Submit Request</button>
+</div>

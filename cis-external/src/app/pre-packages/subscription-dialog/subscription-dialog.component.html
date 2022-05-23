@@ -1,0 +1,13 @@
+<div class="row m-0 feature-opt">
+    <div class="col-12 p-0">
+         <p>Are you sure you want to subscribe {{data.desc.name}} {{this.data.referenceType}}?</p>
+    </div>
+</div>
+<div class="row m-0 feature-opt">
+    <div class="col-md-6 m-t-30 p-r-0" style="float: right;">
+    <button type="button" mat-raised-button class="cancel-button cancel" style="float: right;" mat-button [mat-dialog-close]="1">Cancel</button>
+    </div>
+    <div class="col-6 m-t-30 p-r-0" style="float: right;">
+        <button type="button" mat-raised-button class="submit-button bover" (click)="subscribe()">Submit Request</button>
+    </div>
+</div>

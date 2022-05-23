@@ -1,0 +1,17 @@
+.submit-button {
+  width: 100px;
+  height: 40px;
+  margin: 8px;
+}
+
+.back-button {
+  width: 100px;
+  height: 40px;
+  margin: 8px;
+}
+
+.search-req-detail-table td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold !important;
+}

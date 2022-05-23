@@ -1,0 +1,52 @@
+<div>
+            <div class="row w-100 mx-auto"  fxLayoutAlign="center center">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" >
+                    <span class="row mx-0">
+                        <span class="col">
+                            <p class="heading heading-r-top">Post a Query</p>
+                        </span>
+                    </span>
+                    <mat-card>
+                        <mat-card-content>
+                            <form [formGroup]="form">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Issue Type</mat-label>
+                                    <mat-select matInput [(value)]="selectedIssueType"
+                                        formControlName="selectedIssueType" (selectionChange)="issueTypeChange()"
+                                        required>
+                                        <mat-option *ngFor="let type of issueTypes" [value]="type.itemId">
+                                            {{ type.caption }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <small
+                                    *ngIf="form.controls['selectedIssueType'].hasError('required') && form.controls['selectedIssueType'].touched"
+                                    class="text-danger support-text">Issue Type Required.</small>
+                                <br>
+                                <div *ngIf="showField">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>SpecifyType</mat-label>
+                                        <input matInput type="text" [(ngModel)]="customIssueType"
+                                            formControlName="customIssueType" required>
+                                    </mat-form-field>
+                                </div>
+                                <br>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Issue Description</mat-label>
+                                    <textarea matInput placeholder="Issue Description" formControlName="description"
+                                        [(ngModel)]="description" rows="7"></textarea>
+                                </mat-form-field>
+                                <br>
+                                <div class="row">
+                                    <span class="col">
+                                        <button class="submit-button float-center mx-2"
+                                           
+                                            (click)="postQuery()">Submit</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+</div>

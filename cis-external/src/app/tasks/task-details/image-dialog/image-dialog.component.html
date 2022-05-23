@@ -1,0 +1,46 @@
+<div class="container-fluid justify-content-center">
+    <div class="row">
+        <div class="col">
+            <mat-icon (click)="onCancel()" style="cursor: pointer; float: right;">close</mat-icon>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="overflow: scroll;">
+            <div class="carousel slide mx-auto" data-ride="carousel" id="carouselExampleIndicators">
+                <!-- <ol class="carousel-indicators">
+                  <li *ngFor="let image of images; let i = index;" data-target="#carouselExampleIndicators" [data-slide-to]='i'
+                    class="active"></li> -->
+                <!-- <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> -->
+                <!-- </ol> -->
+                <div class="carousel-inner">
+                    <div *ngFor="let image of images" [ngClass]="images.indexOf(image) == 0 ? 'active' : ''"
+                         class="carousel-item"
+                         style="height: 500px; overflow: scroll;">
+                        <div class="row">
+                            <button mat-raised-button (click)="downloadImage(image.src)"
+                                    style="margin: 0px auto; border: 0; background: none;"
+                                    type="button">Download
+                            </button>
+                        </div>
+                        <img [src]="image.src" alt="" class="d-block w-100">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" data-slide="prev" href="#carouselExampleIndicators" role="button">
+                    <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" data-slide="next" href="#carouselExampleIndicators" role="button">
+                    <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="row" style="margin-top: 30px;">
+                <div *ngFor="let image of images" class="col-3 pr-1">
+                    <img [src]="image.src" alt="" width="100">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

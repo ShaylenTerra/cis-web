@@ -1,0 +1,125 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div class="container-fluid pr-0">
+            <span class="row mx-0">
+                <span class="col-lg-11 p-l-0" style="display: inline-flex;">
+                    <p class="Headings">Examination</p>
+                </span>
+            </span>
+            <div class="row mx-0 tab-grid-remove">
+               
+                <div class="col-lg-8">
+
+                    <div class="padd-right">
+                        <span class="row mx-0">
+                            <span class="col padd-right">
+
+                                <mat-card class="card-table-tasks">
+
+                                    <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                        <div class="row p-0 m-0">
+                                            <div class="col-md-6 mt-3">
+                                                <div class="sub-heading">Examination Submissions</div>
+                                            </div>
+                                            <div class="col-md-5 mt-2 float-right">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Search By Reference Number</mat-label>
+                                                    <input matInput autocomplete="off">
+                                                    <button mat-icon-button matSuffix type="button">
+                                                        <mat-icon type="submit">search
+                                                        </mat-icon>
+                                                    </button>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                       <table class="table-margin w-100 m-0 inline-table" mat-table #table2 matSort>
+
+                                        <ng-container matColumnDef="referenceNumber">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                style="padding-left: 10px;border-top-left-radius: 8px;border-bottom-left-radius: 8px;">
+                                                Reference</th>
+                                            <td class="cell-task" mat-cell
+                                                style="padding-left: 10px;color: blue;cursor: pointer;">
+                                                <!-- {{element.referenceNumber}} -->
+                                                <button mat-button>Proceed</button>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="reservationName">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+                                            <td  class="cell-task" mat-cell>
+                                                <!-- {{element.reservationName}} -->
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="processName">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header>Context
+                                            </th>
+                                            <td class="cell-task" mat-cell>
+                                                <!-- {{element.processName}} -->
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="provinceName">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header>Province</th>
+                                            <td class="cell-task" mat-cell>
+                                                <!-- {{element.provinceName}} -->
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="actionRequiredCaption">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header>Stage
+                                            </th>
+                                            <td  class="cell-task" mat-cell>
+                                                <!-- {{element.actionRequiredCaption}} -->
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="internalStatusCaption">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header> Status
+                                            </th>
+                                            <td class="cell-task" mat-cell>
+                                                <!-- <span [className]="element.internalStatusCaption === 'Approved' ? 's-Approved' : 
+                                                (element.internalStatusCaption === 'In Progress' ? 's-InProgress' : 
+                                                (element.internalStatusCaption === 'Pending' ? 's-pending' : 
+                                                (element.internalStatusCaption === 'Reserved' ? 's-Reserved' : 
+                                                's-completed')))">
+                                                {{element.internalStatusCaption}}
+                                                </span> -->
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="triggeredOn">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header> Pending Since
+                                            </th>
+                                            <td class="cell-task" mat-cell>
+                                               <!--  <span
+                                                    *ngIf="element.internalStatusCaption === 'Reserved' || 
+                                                element.internalStatusCaption === 'Canceled' ||element.internalStatusCaption === 'Deleted'? false : true">
+                                                    {{element.triggeredOn |
+                                                    dateDifference:serverDate}} 
+                                                </span> -->
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="lastStatusUpdate">
+                                            <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                style="border-top-right-radius: 8px;border-bottom-right-radius: 8px;">
+                                                Last Updated</th>
+                                            <td class="cell-task" mat-cell>
+                                                <!-- {{element.lastStatusUpdate |
+                                                date:"d-MMM-y"}} -->
+                                            </td>
+                                        </ng-container>
+                                        
+                                        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                                        </table> 
+                                    </mat-card-content>
+                                </mat-card>
+
+                            </span>
+                        </span>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

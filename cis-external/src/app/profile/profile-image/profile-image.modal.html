@@ -1,0 +1,33 @@
+<div class="heading" mat-dialog-title>Update Profile Picture</div>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="outer">
+                <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                    style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                    (mouseover)="'assets/images/users/user.webp'" (mouseout)="url">
+                <div class="overlayImg">
+                    <mat-icon class="icon-c pt-1" [ngStyle]="{'color':'white'}"
+                    style="cursor: pointer; font-size: 40px;border-radius: 50%;transform:translate(-50%,100%)" (click)="fileInput.click()">
+                    add_a_photo</mat-icon>
+                    <div id="text">
+                        Change Photo
+                    </div>
+                </div>
+                <input #fileInput (change)="fileChangeEvent($event)" hidden id="file" type="file">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+            [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="4 / 3" [resizeToWidth]="256"
+            [cropperMinWidth]="128" [onlyScaleDown]="true" [roundCropper]="true" [canvasRotation]="canvasRotation"
+            [transform]="transform" [alignImage]="'left'" [style.display]="showCropper ? null : 'none'" format="png"
+            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
+            (loadImageFailed)="loadImageFailed()" *ngIf="crop == true" style="height:300px; width: 300px;"></image-cropper>
+        </div>
+    </div>
+    <div class="float-right">
+        <button mat-raised-button class="cancel-button cancel" (click)="cancel()">Cancel</button>
+        <button mat-raised-button *ngIf="crop == true"  class="submit-button bover float-right" style="margin-left: 8px;" (click)="save()">Save</button>
+    </div>
+</div>

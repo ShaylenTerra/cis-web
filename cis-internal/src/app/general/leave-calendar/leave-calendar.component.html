@@ -1,0 +1,179 @@
+
+<mat-card>
+<mat-card-content>
+    <mat-tab-group mat-stretch-tabs>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                My Leave
+            </ng-template>
+            <div class="container-fluid">
+                <div class="row mt-3">
+                    <div class="col-10">
+                        <span class="heading">My Leave </span><mat-icon (click)="employeeDetails(userId)" style="cursor:pointer">calendar_today</mat-icon>
+                    </div>
+                    <div class="col-2">
+                        <button mat-raised-button class="submit-button bover float-right" (click)="addNewNewLeave()">Apply Leave </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <mat-card class="scroll">
+                            <mat-card-content>
+                                <div class="row">
+                                    <table [dataSource]="dataSource" class="table-margin w-100" mat-table>
+                                        <ng-container matColumnDef="sno">
+                                            <th *matHeaderCellDef mat-header-cell>S.No.</th>
+                                            <td *matCellDef="let element, let i = index;" mat-cell>{{i + 1}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="start">
+                                            <th *matHeaderCellDef mat-header-cell>Start Date</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.startDate | date: 'dd-MMM-yyyy'}}
+                                                <span *ngIf="element.fromTime">({{element.fromTime}})</span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="leaveType">
+                                            <th *matHeaderCellDef mat-header-cell>Leave Type</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.leaveTypeCaption}}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="end">
+                                            <th *matHeaderCellDef mat-header-cell>End Date</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.endDate | date: 'dd-MMM-yyyy'}}
+                                                <span *ngIf="element.toTime">({{element.toTime}})</span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="desc">
+                                            <th *matHeaderCellDef mat-header-cell>Description</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.description}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="status">
+                                            <th *matHeaderCellDef mat-header-cell>Status</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.status}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="docs">
+                                            <th *matHeaderCellDef mat-header-cell>Documents</th>
+                                            <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                                <mat-icon *ngIf="element.documentCount>0" (click)="downloadSupportingDocuments(element.leaveId,5052)">description</mat-icon>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th *matHeaderCellDef mat-header-cell>Action</th>
+                                            <td *matCellDef="let element" mat-cell>
+                                                <mat-icon *ngIf="element.status=='PENDING'" (click)="removeItem(element)" style="cursor:pointer">delete</mat-icon>
+                                                <mat-icon *ngIf="element.status!='PENDING'">done</mat-icon>
+                                            </td>
+                                            <!--<td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                    <span (click)="activateUserHoliday(element.leaveId)"
+                                          *ngIf="element.status==='INACTIVE'">Activate</span>
+                                    <span (click)="deActivateUserHoliday(element.leaveId)"
+                                          *ngIf="element.status==='ACTIVE'">De-Activate</span>
+                                </td>-->
+                                        </ng-container>
+                                        <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                                        <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
+                                    </table>
+                                    <mat-paginator [length]="dataLength" [pageSizeOptions]="[5, 10, 25, 50]" [pageSize]="10" #myLeavePaginator>
+                                    </mat-paginator>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                   
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Leave Review
+            </ng-template>
+            <div class="container-fluid">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <span class="heading">Leave Review</span>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <mat-card class="scroll">
+                            <mat-card-content>
+                                <div class="row">
+                                    <table [dataSource]="reviewDataSource" class="table-margin w-100" mat-table>
+                                        <ng-container matColumnDef="sno">
+                                            <th *matHeaderCellDef mat-header-cell>S.No.</th>
+                                            <td *matCellDef="let element, let i = index;" mat-cell>{{i + 1}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="name">
+                                            <th *matHeaderCellDef mat-header-cell>Name</th>
+                                            <td *matCellDef="let element" mat-cell>
+                                                <a (click)="employeeDetails(element.userId)" style="cursor:pointer">{{element.userName}}</a>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="start">
+                                            <th *matHeaderCellDef mat-header-cell>Start Date</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.startDate | date: 'dd-MMM-yyyy'}}
+                                                <span *ngIf="element.fromTime">({{element.fromTime}})</span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="end">
+                                            <th *matHeaderCellDef mat-header-cell>End Date</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.endDate | date: 'dd-MMM-yyyy'}}
+                                                <span *ngIf="element.toTime">({{element.toTime}})</span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="leaveType">
+                                            <th *matHeaderCellDef mat-header-cell>Leave Type</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.leaveTypeCaption}}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="desc">
+                                            <th *matHeaderCellDef mat-header-cell>Description</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.description}}</td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="status">
+                                            <th *matHeaderCellDef mat-header-cell>Status</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.status}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="docs">
+                                            <th *matHeaderCellDef mat-header-cell>Documents</th>
+                                            <td *matCellDef="let element" mat-cell style="cursor: pointer;">
+                                                <mat-icon *ngIf="element.documentCount>0" (click)="downloadSupportingDocuments(element.leaveId,5052)">description</mat-icon>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th *matHeaderCellDef mat-header-cell>Action</th>
+                                            <td *matCellDef="let element" mat-cell>
+                                                <div class="dropdown" style="cursor: pointer;" >
+                                                    <span data-toggle="dropdown">
+                                                        <img alt=""
+                                                             src="assets/images/Three dots.png">
+                                                    </span>
+                                                    <span class="dropdown-menu">
+                                                        <a (click)="openDecisionDialog(element)"
+                                                           class="dropdown-item" *ngIf="element.status=='PENDING'">Approve/Reject</a>
+                                                        <a (click)="openDecisionDialog(element)"
+                                                           class="dropdown-item" *ngIf="element.status!='PENDING'">View</a>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <tr *matHeaderRowDef="leaveReviewColumns" mat-header-row></tr>
+                                        <tr *matRowDef="let myRowData; columns: leaveReviewColumns" mat-row></tr>
+                                    </table>
+                                    <mat-paginator [length]="reviewDataLength" [pageSizeOptions]="[5, 10, 25, 50]" [pageSize]="10" #myLeaveReviewPaginator>
+                                    </mat-paginator>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card-content>
+
+</mat-card>
+

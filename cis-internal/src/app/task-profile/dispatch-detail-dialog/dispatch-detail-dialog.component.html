@@ -1,0 +1,466 @@
+<h4 mat-dialog-title><span>Dispatch Details</span></h4>
+                            <div>
+                                <hr>
+                                <div *ngFor="let item of DispatchItemData;let j = index" class="row"
+                                     style="display: flex;margin-top:20px">
+                                     <div class="col-3 pr-1" *ngIf="item.searchDetails != undefined && item.templateListItemId !== 567">
+                                        <!-- <img [src]="item.searchDetails.tempPreview?.preview" alt="" class="main-image"
+                                        matTooltip="{{item.searchDetails.tempPreview?.scandate | date : 'dd/MMMM/y HH:mm:ss' }}"> -->
+                                        <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                    -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                    border-color: rgba(0,0,0,.2);">
+                                            <ngx-skeleton-loader *ngIf="showImageLoader" count="5"
+                                                appearance="circle" [theme]="{
+                                        width: '70px',
+                                        height: '70px',
+                                        'border-radius': '10px'
+                                      }"></ngx-skeleton-loader>
+                                            <ngx-gallery *ngIf="!showImageLoader" #gallery2
+                                                [options]="galleryOptions" [images]="item.searchDetails.imageArray"
+                                                class="ngx-gallery">
+                                            </ngx-gallery>
+                                        </div>
+                                        <span class="row justify-content-center mt-3">
+                                            <button mat-raised-button class="yellow-button bmapover"
+                                                (click)="openViewMapDialog(item.searchDetails)">View Map</button>
+                                            <button mat-raised-button (click)="navigate(item)"
+                                                class="yellow-button bmapover">View
+                                                Profile</button>
+                                        </span>
+                                        <!-- <div class="row" style="margin-top: 16px;">
+                                        <div *ngFor="let img of item.searchDetails.imageArray" class="col-3 pr-1">
+                                            <img (click)="selectImage($event)"
+                                                [ngClass]="item.searchDetails.tempPreview.preview === img.preview ? 'selected-image' : 'bottom-image'"
+                                                [src]="img.thumbnail" alt="" id="{{img.preview}}">
+                                        </div>
+                                    </div> -->
+                                    </div>
+                                    <div class="col-3 pr-1" *ngIf="item.searchDetails != undefined && item.templateListItemId === 567">
+                                        <div class="gallery-wrapper"
+                                                style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                            -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                                            border-color: rgba(0,0,0,.2);height: 380px;width: 230px;">
+                                                <span fxLayoutAlign="center center">No Preview available</span>
+    
+                                            </div>
+                                    </div>
+                                    <div class="col-9" *ngIf="item.searchDetails != undefined">
+                                        <div class="row" *ngIf="item.templateListItemId !== 567">
+                                            <div class="col-12 col-md-6 gray-box">
+                                                <span class="row">
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Region</p>
+                                                        <p class="desc-text mt-0">{{item.searchDetails ?
+                                                            item.searchDetails.region !== undefined ?
+                                                            item.searchDetails.region :
+                                                            item.searchDetails.minorRegion :
+                                                            ''}}</p>
+                                                    </span>
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Parcel Type</p>
+                                                        <p class="desc-text mt-0">{{item.searchDetails ?
+                                                            item.searchDetails.parcelType : ''}}
+                                                        </p>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-6 gray-box">
+                                                <span class="row">
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Parcel</p>
+                                                        <p class="desc-text mt-0">{{(item.searchDetails.parcel !=
+                                                            null
+                                                            &&
+                                                            item.searchDetails.parcel != undefined) ?
+                                                            item.searchDetails.parcel :
+                                                            (item.searchDetails.erfNumber != null &&
+                                                            item.searchDetails.erfNumber != undefined ?
+                                                            item.searchDetails.erfNumber :
+                                                            (item.searchDetails.farmNumber !=
+                                                            null && item.searchDetails.farmNumber != undefined ?
+                                                            item.searchDetails.farmNumber :
+                                                            item.searchDetails.holdingNumber))}}</p>
+                                                    </span>
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Province</p>
+                                                        <p class="desc-text mt-0">{{item.searchDetails.province}}
+                                                        </p>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-6 gray-box">
+                                                <span class="row">
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">SG Number</p>
+                                                        <p class="desc-text mt-0">{{item.searchDetails.sgNo}}</p>
+                                                    </span>
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">File Size (KB)</p>
+                                                        <p class="desc-text mt-0">
+                                                            {{item.searchDetails.totalFileSize}}</p>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-6 gray-box">
+                                                <span class="row">
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Total Pages</p>
+                                                        <p class="desc-text mt-0">{{item.searchDetails.totalPages}}
+                                                        </p>
+                                                    </span>
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">LPI</p>
+                                                        <p class="desc-text mt-0">{{item.searchDetails.lpi}}</p>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-6 gray-box">
+                                                <span class="row">
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Municipality</p>
+                                                        <p class="desc-text mt-0">
+                                                            {{item.searchDetails?.localMunicipalityName}}
+                                                        </p>
+                                                    </span>
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Portion</p>
+                                                        <p class="desc-text mt-0">{{item.searchDetails?.portion}}
+                                                        </p>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-6 gray-box">
+                                                <span class="row">
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Document Type</p>
+                                                        <p class="desc-text mt-0">
+                                                            {{item.searchDetails?.documentType}}
+                                                        </p>
+                                                    </span>
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">Document Sub Type</p>
+                                                        <p class="desc-text mt-0">
+                                                            {{item.searchDetails?.documentSubType}}
+                                                        </p>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-12 col-md-6 gray-box"
+                                                *ngIf="item.searchDetails.filterName != undefined">
+                                                <span class="row">
+                                                    <span class="col">
+                                                        <p class="info-text mb-0">{{item.searchDetails?.filterName}}
+                                                        </p>
+                                                        <p class="desc-text mt-0">
+                                                            {{item.searchDetails?.searchNumber}}
+                                                        </p>
+                                                    </span>
+                                                    <span class="col">
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="item.templateListItemId === 567">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <span class="info-text">Category</span>
+                                                            <br>
+                                                            <span
+                                                                class="desc-text">{{item.searchDetails?.categoryName}}</span>
+                                                        </span>
+                                                        <span class="col">
+                                                            <span class="info-text">Subcategory</span>
+                                                            <br>
+                                                            <span class="desc-text">{{item.searchDetails?.name}}</span>
+                                                        </span>
+                                                    </span>
+                                                </div>
+    
+                                                <div class="col-12 col-md-12 gray-box">
+                                                    <span class="row">
+                                                        <span class="col">
+                                                            <span class="desc-text"><b>Description</b></span>
+                                                            <br>
+                                                            <span
+                                                                class="info-text">{{item.searchDetails?.description}}</span>
+                                                        </span>
+                                                    </span>
+                                                </div>
+    
+                                                <div class="col-12 col-md-12 gray-box">
+                                                    <span class="desc-text"><b>Information Type</b></span>
+    
+                                                    <span class="row info-text">
+                                                        <div class="col-12 col-md-6">
+                                                            <!-- <mat-checkbox [checked]='true' [disableRipple]="true"
+                                                                (click)="$event.preventDefault()"> -->
+                                                                <span>{{item.searchDetails?.categoryName}}<b>{{searchDetails?.name}}</b> </span>
+                                                            <!-- </mat-checkbox> -->
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 43px;">
+                                            <div class="col">
+                                                <table [dataSource]="item.cartDispatchItems" class="w-100"
+                                                    mat-table>
+                                                    <ng-container matColumnDef="sno">
+                                                        <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                                        <td *matCellDef="let element" mat-cell>{{element.sno}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="Item">
+                                                        <th *matHeaderCellDef mat-header-cell>Item</th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{element.item}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="type">
+                                                        <th *matHeaderCellDef mat-header-cell>Type</th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{
+                                                            element?.item == 130 || element?.item ==
+                                                            127 ?
+                                                            '' :
+                                                            (element?.item == 126 || element?.item ==
+                                                            129
+                                                            || element?.item == 125)
+                                                            ? element.type : element.type
+    
+                                                            }}</td>
+                                                    </ng-container>
+                                                    <!-- <ng-container matColumnDef="type"
+                                                    *ngIf="element?.Item == 130 || element?.Item == 127>
+                                                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{element.type?.caption}}</td>
+                                                </ng-container> -->
+                                                    <ng-container matColumnDef="details">
+                                                        <th *matHeaderCellDef mat-header-cell>Details</th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{
+                                                            element?.details
+                                                            }}
+                                                            <!-- {{element?.Item == 129 ? element.certType?.caption : ''}} -->
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="time">
+                                                        <th *matHeaderCellDef mat-header-cell>Time Required</th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{element.timeRequired}}</td>
+                                                    </ng-container>
+    
+                                                    <ng-container matColumnDef="comment">
+                                                        <th *matHeaderCellDef mat-header-cell>Comments</th>
+                                                        <td *matCellDef="let element; let index = index" mat-cell>
+                                                            <textarea readonly
+                                                                (change)="UpdatedDispatchItem(element.comments,'comment',index,j)"
+                                                                [(ngModel)]="element.comments" rows="1"
+                                                                style="border-radius: 4px; color: black;"
+                                                                class="autogrow"
+                                                                value="element.comments"></textarea>
+                                                            <!-- <span class="pull-right char" style="color: black;"><em>{{ 1000 - comment?.length }} characters left</em></span> -->
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="prepared">
+                                                        <th *matHeaderCellDef mat-header-cell>Prepared</th>
+                                                        <td *matCellDef="let element; let index = index" mat-cell>
+                                                            <mat-slide-toggle disabled
+                                                                (change)="UpdatedDispatchItem($event.checked,'dispatchStatus',index,j)"
+                                                                [(ngModel)]="element.dispatchStatus"
+                                                                ngDefaultControl value="element.dispatchStatus">
+                                                            </mat-slide-toggle>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="View">
+                                                        <th *matHeaderCellDef mat-header-cell>View</th>
+                                                        <td *matCellDef="let element" mat-cell><a
+                                                                style="cursor: pointer;"
+                                                                (click)="viewdispatch(element)">View</a></td>
+                                                    </ng-container>
+                                                    <tr *matHeaderRowDef="dispatchcolumns" mat-header-row></tr>
+                                                    <tr *matRowDef="let row; columns: dispatchcolumns;" mat-row>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="item.templateListItemId === 567">
+                                            <div class="col">
+                                                <span class="desc-text"><b>Notes</b>
+                                                </span>
+                                                <br>
+                                                <div class="row f-css">
+                                                    <mat-form-field appearance="outline">
+                                                    <!-- <mat-label>Notes</mat-label> -->
+                                                    <textarea [(ngModel)]="item.cartDispatchItems[0].notes"
+                                                        matInput style="color: black;" disabled></textarea>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <hr>
+
+                                <div class="row">
+                                    
+                                    <div class="col-3">
+                                        <mat-label>Dispatch Method</mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input  matInput  [(ngModel)]="dispatchMethodName" readonly type="text"/>
+                                        </mat-form-field>
+                                    </div>   
+                                    <div class="col-4">
+                                      
+                                    </div> 
+                                    <div class="col-3" style="margin-top: 30px;">
+                                         <!-- <a style="color:blue; cursor: pointer;" (click)="dispatchdoc()">Download Document</a> -->
+                                    </div>
+                                </div>
+                                <form [formGroup]="dispatchMethod">
+                                   
+                                <div class="row">
+                                    
+                                        <div class="col-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Reference Number</mat-label>
+                                                <input formControlName="referenceNumber" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+    
+                                        <div class="col-3" *ngIf="DispatchItemDeliveryData == 'EMAIL'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Primary Email</mat-label>
+                                                <input formControlName="primaryEmail" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+    
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'EMAIL'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Secondary Email</mat-label>
+                                                <input formControlName="secondaryEmail" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'COLLECTION' && DispatchItemDeliveryData == 'COURIER'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Data Dispatched</mat-label>
+                                                <input formControlName="dataDispatched" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+    
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'COLLECTION'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Collector Name</mat-label>
+                                                <input formControlName="collectorName" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+    
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'COLLECTION'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Collector Surname</mat-label>
+                                                <input formControlName="collectorSurname" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'COLLECTION'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Collector Contact Number</mat-label>
+                                                <input formControlName="collectorContactNumber" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'POST'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Postal AddressLine 1</mat-label>
+                                                <input formControlName="postaladdressLine1" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'POST'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Postal AddressLine 2</mat-label>
+                                                <input formControlName="postaladdressLine2" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'POST'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Postal AddressLine 3</mat-label>
+                                                <input formControlName="postaladdressLine3" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'POST'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Postal Code</mat-label>
+                                                <input formControlName="postalCode" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'COURIER'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Courier Name</mat-label>
+                                                <input formControlName="courierName" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'COURIER'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Contact Person</mat-label>
+                                                <input formControlName="contactPerson" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div class="col-3"  *ngIf="DispatchItemDeliveryData == 'FTP'">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>FTP Details</mat-label>
+                                                <input formControlName="ftpDetails" readonly matInput type="text"/>
+                                            </mat-form-field>
+                                        </div>
+                                    
+                                 
+                                </div>
+                            </form>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Dispatch Reference Number</mat-label>
+                                            <input [(ngModel)]="dispatchRefNo" readonly matInput type="text"/>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Dispatch data</mat-label>
+                                            <input [(ngModel)]="dispatchData" readonly matInput/>
+                                            <!-- <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker> -->
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Dispatch date</mat-label>
+                                            <input [(ngModel)]="dispatchDate" readonly matInput/>
+                                            <!-- <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker> -->
+                                        </mat-form-field>
+                                    </div>
+                                    
+                                </div>
+                                <!-- <div class="row my-3">
+                                    <div class="col">
+                                        <span class="float-right">
+                                            <button (click)="saveDispatchData()"
+                                                        class="back-button"
+                                                        style="height: 44px; margin-right: 5px;">Save</button>
+                                        </span>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div mat-dialog-actions style="float: right;">
+                                <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+                            </div>

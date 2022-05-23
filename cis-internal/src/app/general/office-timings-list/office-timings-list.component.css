@@ -1,0 +1,9 @@
+.mat-column-sno {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.mat-column-occasion {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}

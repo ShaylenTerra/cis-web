@@ -1,0 +1,14 @@
+<div>
+    <h4 fxLayoutAlign="space-around center" mat-dialog-title>
+        <!-- <span>Would you like to add an event to {{date}} ?</span> -->
+        <span>Event : {{bindObj.title}} </span>
+        <span>Date : {{bindObj.eventDate}} </span>
+    </h4>
+    <!-- <div mat-dialog-content>
+    
+</div> -->
+    <div fxLayoutAlign="center center" mat-dialog-actions>
+        <button [mat-dialog-close]="1" class="btnCancel-css" mat-raised-button>Cancel</button>
+        <button (click)="submit()" [mat-dialog-close]="1" class="btnSubmit-css" mat-raised-button>Ok</button>
+    </div>
+</div>

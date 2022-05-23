@@ -1,0 +1,68 @@
+.main-container {
+    height: 100%;
+}
+
+mat-toolbar {
+    border-bottom: 3px solid #f48222;
+    background-color: #faf9ec;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.m-icons {
+    margin-right: 5px;
+    margin-left: 3px;
+}
+
+span {
+    display: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #016533;
+}
+
+.main-container {
+    background-color: #efefef;
+}
+
+.land {
+    color: #999999;
+}
+
+.link-hd {
+    border-bottom: 4px solid transparent;
+    position: relative;
+    top: 3px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+/* .link-hd:hover, .link-hd.active {
+    border-bottom: 4px solid #f48222;
+} */
+
+.topbar.height {
+    height: 60px;
+    min-height: 60px;
+}
+
+#mobile-menu {
+    display: none;
+}
+
+@media screen and (max-width: 960px) {
+    #desktop-menu {
+        display: none;
+    }
+    #mobile-menu {
+        display: block;
+        width: 100%;
+    }
+}

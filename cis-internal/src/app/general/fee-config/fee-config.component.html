@@ -1,0 +1,110 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-10">
+                <p class="heading">Fee Configuration</p>
+            </div>
+            <div class="col-2">
+                <span (click)="addNewFeeScale()" class="desc-text"
+                      style="text-decoration: underline; color: #016533; cursor: pointer;">Add New Fee Scale
+                </span>
+            </div>
+        </div>
+        <div *ngIf="isSpinnerVisible">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div *ngIf="!isSpinnerVisible" class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Fee Scale</mat-label>
+                    <mat-select (selectionChange)="scaleChange($event.value)" [(ngModel)]="selectedScale">
+                        <mat-option *ngFor="let scale of feeScales" [value]="scale">
+                            {{scale.feeScaleName}} ({{scale.effectiveDate | date:"dd/MMM/yyyy"}})
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span style="opacity: 0.4;font-size: 12px;">
+                    {{selectedScale ? selectedScale.description : ''}}.&nbsp;&nbsp;<a (click)="getScaleDoc()"
+                                                                                      style="cursor: pointer;">Download PDF
+                        <mat-icon style="font-size: 15px;">picture_as_pdf</mat-icon>
+                    </a>
+                </span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <button mat-raised-button (click)="AddCategoryModalDialog()" class="submit-button bover">Add Category</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-9 col-lg-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select Category</mat-label>
+                    <mat-select (selectionChange)="categorySelected($event.value)" [(ngModel)]="cat">
+                        <mat-option *ngFor='let item of catogories' [value]="item">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-lg-6">
+                <mat-form-field appearance="outline" style="opacity: 0.4;">
+                    <mat-label>Description</mat-label>
+                    <textarea [value]="catDes" matInput style="color: black;"></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - catDes?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button mat-raised-button (click)="AddSubCategoryModalDialog()" [disabled]="!selectedCategory" class="submit-button bover">Add
+                    Sub-Category
+                </button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-lg-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select Sub Category</mat-label>
+                    <mat-select (selectionChange)="subCategoryChange($event.value)" [(ngModel)]="subcat">
+                        <mat-option *ngFor='let subItem of subCategories' [value]="subItem">
+                            {{subItem.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-lg-6">
+                <mat-form-field appearance="outline" style="opacity: 0.4;">
+                    <mat-label>Description</mat-label>
+                    <textarea [value]="subCatDes" matInput style="color: black;"></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - subCatDes?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="subcatid" class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Fee Rand ZAR</mat-label>
+                    <input [(ngModel)]="feeRand" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-select [(ngModel)]="feeType">
+                        <mat-option *ngFor='let item of feeTypes' [value]="item">
+                            {{item.feeType}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="subcatid" class="row">
+            <div class="col">
+                <mat-slide-toggle (change)="onChange($event)" [checked]="isActive" ngDefaultControl>Is Active
+                </mat-slide-toggle>
+                <button mat-raised-button (click)="update()" class="btn-css float-right">Update</button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,647 @@
+<div class="container-fluid">
+    <div *ngIf="isSpinnerVisible" class="overlay">
+        <div class="overlay__wrapper">
+            <div class="overlay__spinner">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <i style="font-size: 30px; cursor: pointer;" (click)="nvaigateToSeach()"
+                class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+        </div>
+    </div>
+    <mat-card>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-6">
+                    <p class="heading">My Cart</p>
+                </div>
+                <div class="col-6 text-right">
+                    <!-- <mat-icon class="icon-css" style="cursor: pointer;font-size: x-large;" (click)="boxfun()">
+                        more_horiz
+                    </mat-icon> -->
+                    <button mat-mini-fab class="icon-css" style="cursor: pointer;" (click)="boxfun()"
+                        matTooltip="View Requester Data">
+                        <mat-icon>supervised_user_circle</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="row float-right">
+                <div id="SearchCourse" class="selectbox float-right" *ngIf="box == 1"
+                    style="top: 47px; width: 550px; height: auto; display: block;overflow: hidden;">
+
+                    <div class="toolbox" style="padding: 8px;">
+                        <span style="margin-left: 10px;margin-top: 10px;">Requester Data</span>
+                        <mat-icon style="float: right; cursor: pointer;" (click)="closebox()">
+                            close
+                        </mat-icon>
+                    </div>
+                    <div id="scrollbar" class="gridscroll">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <p>Are you the requestor of data?</p>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <mat-radio-group [(ngModel)]="requestor">
+                                    <mat-radio-button class="m-r-10" value="yes">Yes</mat-radio-button>
+                                    <mat-radio-button value="no">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <form [formGroup]="requesterForm">
+                            <div *ngIf="requestor === 'no'">
+                                <div class="row">
+                                    <div *ngIf="requestor === 'no'" class="col-12 col-md-6 col-lg-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Requestor</mat-label>
+                                            <mat-select (selectionChange)="setValidation()"
+                                                [(ngModel)]="requesterType" [ngModelOptions]="{ standalone: true }" matInput>
+                                                <mat-option *ngFor="let item of reqTypes" [value]="item.itemId">
+                                                    {{item.caption}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Requestor Name</mat-label>
+                                            <input formControlName="firstName" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Requestor Surname</mat-label>
+                                            <input formControlName="surName" matInput required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6" *ngIf="
+                                requesterType == 439 ||
+                                requesterType == 444 ||
+                                requesterType == 445
+                              ">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Contact Number</mat-label>
+                                            <input formControlName="contactNo" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6" *ngIf="
+                                requesterType == 439 ||
+                                requesterType == 440
+                              ">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input formControlName="email" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6"  *ngIf="
+                                requesterType == 439 ||
+                                requesterType == 441
+                              ">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Fax</mat-label>
+                                            <input formControlName="fax" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6" *ngIf="
+                                requesterType == 439 ||
+                                requesterType == 442 ||
+                                requesterType == 443
+                              ">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 1</mat-label>
+                                            <input formControlName="addressLine1" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6" *ngIf="
+                                requesterType == 439 ||
+                                requesterType == 442 ||
+                                requesterType == 443
+                              ">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 2</mat-label>
+                                            <input formControlName="addressLine2" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6" *ngIf="
+                                requesterType == 439 ||
+                                requesterType == 442 ||
+                                requesterType == 443
+                              ">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 3</mat-label>
+                                            <input formControlName="addressLine3" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6" *ngIf="
+                                requesterType == 439 ||
+                                requesterType == 442 ||
+                                requesterType == 443
+                              ">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Postal Code</mat-label>
+                                            <input formControlName="postalCode" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="cartData && cartData.length === 0" class="row">
+                <div class="col text-center sub-heading">
+                    <div class="row mt-5 mb-2">
+                        <div class="col">
+                            Your Cart is currently Empty.
+                        </div>
+                    </div>
+                    <div class="row mb-5 mt-2">
+                        <div class="col">
+                            <button mat-raised-button [routerLink]="['/search/search-page']" class="yellow-button">Add
+                                Items</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let item of cartData" class="box">
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown float-right" style="cursor: pointer;">
+                            <span data-toggle="dropdown">
+                                <img alt="" src="assets/images/Three dots.png">
+                            </span>
+                            <div class="dropdown-menu">
+                                <a (click)="editProduct(item)" class="dropdown-item">Edit</a>
+                                <a (click)="removeProduct(item)" class="dropdown-item">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="item.jsonData.templateListItemId !== 567">
+                    <div class="col-12 col-md-3">
+                        <div class="row">
+                            <div class="col">
+                                <!-- <img [src]="item.jsonData.searchDetails.tempPreview?.preview" alt="" class="main-image"
+                                    height="250"
+                                    matTooltip="{{item.jsonData.searchDetails.tempPreview?.scandate | date : 'dd/MMMM/y HH:mm:ss' }}"> -->
+                                <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                border-color: rgba(0,0,0,.2);">
+                                    <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                                    width: '70px',
+                                    height: '70px',
+                                    'border-radius': '10px'
+                                  }">
+                                    </ngx-skeleton-loader>
+                                    <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions"
+                                        [images]="item.jsonData.searchDetails.imageArray" class="ngx-gallery">
+                                    </ngx-gallery>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row" style="margin-top: 16px;">
+                            <div *ngFor="let img of item.jsonData.searchDetails.imageArray" class="col-3 pr-1">
+                                <img (click)="selectImage(img)"
+                                    [ngClass]="item.jsonData.searchDetails.tempPreview.preview === img.preview ? 'selected-image' : 'bottom-image'"
+                                    [src]="img.thumbnail" alt="" id="{{img.preview}}">
+                            </div>
+
+                        </div> -->
+                    </div>
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col-12 col-md-6 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <p class="info-text mb-0">Region</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails ?
+                                            item.jsonData.searchDetails.region !== undefined ?
+                                            item.jsonData.searchDetails.region : item.jsonData.searchDetails.minorRegion
+                                            : ''}}
+                                        </p>
+                                    </span>
+                                    <span class="col">
+                                        <p class="info-text mb-0">Parcel Type</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails ?
+                                            item.jsonData.searchDetails.parcelType : ''}}</p>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-12 col-md-6 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <p class="info-text mb-0">Parcel</p>
+                                        <p class="desc-text mt-0">{{(item.jsonData.searchDetails.parcel != null &&
+                                            item.jsonData.searchDetails.parcel != undefined) ?
+                                            item.jsonData.searchDetails.parcel :
+                                            (item.jsonData.searchDetails.erfNumber != null &&
+                                            item.jsonData.searchDetails.erfNumber != undefined ?
+                                            item.jsonData.searchDetails.erfNumber :
+                                            (item.jsonData.searchDetails.farmNumber != null &&
+                                            item.jsonData.searchDetails.farmNumber != undefined ?
+                                            item.jsonData.searchDetails.farmNumber :
+                                            item.jsonData.searchDetails.holdingNumber))}}</p>
+                                    </span>
+                                    <span class="col">
+                                        <p class="info-text mb-0">Province</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.province}}</p>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-12 col-md-6 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <p class="info-text mb-0">SG Number</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.sgNo}}</p>
+                                    </span>
+                                    <span class="col">
+                                        <p class="info-text mb-0">File Size</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.totalFileSize}}</p>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-12 col-md-6 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <p class="info-text mb-0">Total Pages</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.totalPages}}</p>
+                                    </span>
+                                    <span class="col">
+                                        <p class="info-text mb-0">LPI</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.lpi}}</p>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-12 col-md-6 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <p class="info-text mb-0">Municipality</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.localMunicipalityName}}
+                                        </p>
+                                    </span>
+                                    <span class="col">
+                                        <p class="info-text mb-0">Portion</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.portion}}</p>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-12 col-md-6 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <p class="info-text mb-0">Document Type</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.documentType}}</p>
+                                    </span>
+                                    <span class="col">
+                                        <p class="info-text mb-0">Document Sub Type</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.documentSubType}}</p>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-12 col-md-6 gray-box"
+                                *ngIf="item.jsonData.searchDetails.filterName != undefined">
+                                <span class="row">
+                                    <span class="col">
+                                        <p class="info-text mb-0">{{item.jsonData.searchDetails.filterName}}</p>
+                                        <p class="desc-text mt-0">{{item.jsonData.searchDetails.searchNumber}}</p>
+                                    </span>
+                                    <span class="col">
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="item.jsonData.cartData.diagrams" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">CADASTRAL IMAGES</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table [dataSource]="item.jsonData.cartData.diagramsData" class="w-100"
+                                            mat-table>
+                                            <ng-container matColumnDef="sno">
+                                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                                <td *matCellDef="let element;let i = index;" mat-cell>{{i + 1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="format">
+                                                <th *matHeaderCellDef mat-header-cell>Format</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.format.caption}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="type">
+                                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.type?.caption}}</td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="columnType1" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: columnType1;" mat-row></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="item.jsonData.cartData.general" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">General Data</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table [dataSource]="item.jsonData.cartData.generalData" class="w-100"
+                                            mat-table>
+                                            <ng-container matColumnDef="sno">
+                                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                                <td *matCellDef="let element;let i = index;" mat-cell>{{i + 1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="format">
+                                                <th *matHeaderCellDef mat-header-cell>Format</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.format.caption}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="type">
+                                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.type?.caption}}</td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="columnType1" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: columnType1;" mat-row></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="item.jsonData.cartData.certificates" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">Certificates Data</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table [dataSource]="item.jsonData.cartData.certificatesData" class="w-100"
+                                            mat-table>
+                                            <ng-container matColumnDef="sno">
+                                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                                <td *matCellDef="let element;let i = index;" mat-cell>{{i + 1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="certType">
+                                                <th *matHeaderCellDef mat-header-cell>Certificate Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.certType.caption}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="format">
+                                                <th *matHeaderCellDef mat-header-cell>Format</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.format.caption}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="type">
+                                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.type?.caption}}</td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="columnType2" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: columnType2;" mat-row></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="item.jsonData.cartData.spatial" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">Spatial Data</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table [dataSource]="item.jsonData.cartData.spatialData" class="w-100"
+                                            mat-table>
+                                            <ng-container matColumnDef="sno">
+                                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                                <td *matCellDef="let element;let i = index;" mat-cell>{{i + 1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="type">
+                                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.type.caption}}</td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="columnType3" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: columnType3;" mat-row></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="item.jsonData.cartData.alphaNumerics" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">Alpha-Numerics Data</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table [dataSource]="item.jsonData.cartData.alphaNumericsData" class="w-100"
+                                            mat-table>
+                                            <ng-container matColumnDef="sno">
+                                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                                <td *matCellDef="let element;let i = index;" mat-cell>{{i + 1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="type">
+                                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.type?.caption}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="action">
+                                                <th *matHeaderCellDef mat-header-cell>Action</th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    <mat-icon (click)="delete()" class="icon-css"
+                                                        matTooltip="Delete Item">
+                                                        delete
+                                                    </mat-icon>
+                                                </td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="columnType3" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: columnType3;" mat-row></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="item.jsonData.cartData.advisory" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">Advisory</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Advisory</mat-label>
+                                            <input [value]="item.jsonData.cartData.advisoryData" disabled matInput>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="item.jsonData.cartData.misc" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">Miscellaneous</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Miscellaneous</mat-label>
+                                            <input [value]="item.jsonData.cartData.miscData" disabled matInput>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div *ngIf="item.jsonData.cartData.coordinates" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">Coordinates</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">Coordinate Data will be added.</div>
+                                </div>
+                            </div> -->
+                            <div *ngIf="item.jsonData.cartData.coordinates" class="col-12 col-lg-6 mt-5">
+                                <div class="row">
+                                    <div class="col text">Coordinates Data</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table [dataSource]="item.jsonData.cartData.coordinateData" class="w-100"
+                                            mat-table>
+                                            <ng-container matColumnDef="sno">
+                                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                                <td *matCellDef="let element;let i = index;" mat-cell>{{i + 1}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="type">
+                                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.type.caption}}</td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="columnType4" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: columnType4;" mat-row></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row mt-1" *ngIf="item.jsonData.templateListItemId === 567">
+                    <div class="col-12 col-md-3">
+                        <div class="row">
+                            <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                        -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                        border-color: rgba(0,0,0,.2);height: 380px;width: 300px;">
+                                <span fxLayoutAlign="center center">No Preview available</span>
+                                <!-- <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                                                width: '70px',
+                                                height: '150px',
+                                                'border-radius': '10px'
+                                              }">
+                                            </ngx-skeleton-loader> -->
+                                <!-- <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions"
+                                                [images]="imageArray" class="ngx-gallery"></ngx-gallery> -->
+                            </div>
+                        </div>
+                        <!-- <div class="row" style="margin-top: 16px;" *ngIf="imageArray != undefined">
+                                        <div class="col-3 pr-1" *ngFor="let x of imageArray; let i = index;">
+                                            <img (click)="selectImage(x)"
+                                                [ngClass]="selectedImageID === x.preview ? 'selected-image' : 'bottom-image'"
+                                                [src]="x.thumbnail" alt="" id="{{x.preview}}">
+                                        </div>
+                                    </div> -->
+                    </div>
+                    <div class="col col-md-9">
+                        <div class="row">
+                            <div class="col-12 col-md-12 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <span class="info-text">Category</span>
+                                        <br>
+                                        <span class="desc-text">{{item.jsonData.searchDetails?.categoryName}}</span>
+                                    </span>
+                                    <span class="col">
+                                        <span class="info-text">Subcategory</span>
+                                        <br>
+                                        <span class="desc-text">{{item.jsonData.searchDetails?.name}}</span>
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-12 col-md-12 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <span class="desc-text"><b>Description</b></span>
+                                        <br>
+                                        <span class="info-text">{{item.jsonData.searchDetails?.description}}</span>
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-12 col-md-12 gray-box">
+                                <span class="desc-text"><b>Information Type</b></span>
+                                <!-- <span *ngFor="let x of infoData; let i = index;" class="col-12 col-md-6 col-lg-3">
+                                                                            <mat-checkbox>
+                                                                            </mat-checkbox>
+                                                                        </span> -->
+                                <span class="row info-text">
+                                    <div class="col-12 col-md-6">
+                                        <!-- <mat-checkbox [checked]='true' [disableRipple]="true"
+                                            (click)="$event.preventDefault()"> -->
+                                            <span>{{item.jsonData.searchDetails?.categoryName}}</span> - <span><b>{{item.jsonData.searchDetails?.name}}</b></span>
+                                        <!-- </mat-checkbox> -->
+                                    </div>
+                                </span>
+                                <div class="row">
+                                    <div class="col-12 col-md-3">
+                                        <span class="row">
+                                            <span class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Format</mat-label>
+                                                    <mat-select matInput disabled
+                                                        [(ngModel)]="item.jsonData.cartData.ngiData.format != null?item.jsonData.cartData.ngiData.format.itemId:item.jsonData.cartData.ngiData.format">
+                                                        <mat-option
+                                                            *ngFor="let y of formatType" [value]="y!= null?y.itemId:y">
+                                                            {{y.caption}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-12 col-md-12 gray-box">
+                                <span class="row">
+                                    <span class="col">
+                                        <span class="desc-text"><b>Notes</b></span>
+                                        <br>
+                                        <div class="row f-css">
+                                            <mat-form-field appearance="outline">
+                                                <!-- <mat-label>Notes</mat-label> -->
+                                                <textarea [(ngModel)]="item.jsonData.cartData.ngiData.notes" matInput
+                                                    style="color: black;" disabled></textarea>
+                                                <span class="pull-right char" style="color: black;"><em>{{ 1000 -
+                                                        notes?.length }} characters
+                                                        left</em></span>
+                                            </mat-form-field>
+                                        </div>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                                      
+                                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div class="bottom-menu">
+    <div class="row bottom-row">
+        <div class="col">
+            <button mat-raised-button [routerLink]="[ '/search/search-details']"
+                class="yellow-button pull-left m-l-40">Back</button>
+            <button mat-raised-button (click)="selectDelivery()" class="yellow-button pull-right delivery-css">Select
+                Delivery Method
+            </button>
+            <button mat-raised-button (click)="emptyCart()" class="yellow-button pull-right">Empty Cart</button>
+        </div>
+    </div>
+</div>

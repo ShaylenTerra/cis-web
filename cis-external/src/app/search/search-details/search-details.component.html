@@ -1,0 +1,489 @@
+<div class="container-fluid">
+    <div class="overlay" *ngIf="isSpinnerVisible">
+        <div class="overlay__wrapper">
+            <div class="overlay__spinner">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <i style="font-size: 30px; cursor: pointer;" (click)="nvaigateToSeach()"
+                class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+        </div>
+    </div>
+    <mat-card>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <div class="row">
+                        <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                            -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                            border-color: rgba(0,0,0,.2);">
+                                <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                                    width: '70px',
+                                    height: '70px',
+                                    'border-radius': '10px'
+                                    }">
+                                </ngx-skeleton-loader>
+                                <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions" [images]="imageArray" class="ngx-gallery"></ngx-gallery>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-9">
+                    <div class="row">
+                        <div class="col-12 col-md-6 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">Region</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.region : ''}}</span>
+                                </span>
+                                <span class="col">
+                                    <span class="info-text">Parcel Type</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.parcelType : ''}}</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-6 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">Parcel</span>
+                                    <br>
+                                    <span class="desc-text">{{
+                                        searchDetails != undefined ? ((searchDetails.parcel != null && searchDetails.parcel != undefined) ? 
+                                         searchDetails.parcel : (searchDetails.erfNumber != null && searchDetails.erfNumber != undefined ? 
+                                         searchDetails.erfNumber : (searchDetails.farmNumber != null && searchDetails.farmNumber != undefined ? 
+                                         searchDetails.farmNumber : searchDetails.holdingNumber))) : ''}}</span>
+                                </span>
+                                <span class="col">
+                                    <span class="info-text">Province</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.province : ''}}</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-6 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">SG Number</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.sgNo : ''}}</span>
+                                </span>
+                                <span class="col">
+                                    <span class="info-text">File Size</span>
+                                    <br>
+                                    <span class="desc-text">{{totalFileSize}}</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-6 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">Total Pages</span>
+                                    <br>
+                                    <span class="desc-text">{{totalPages}}</span>
+                                </span>
+                                <span class="col">
+                                    <span class="info-text">LPI</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.lpi : ''}}</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-6 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">Municipality</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.localMunicipalityName :
+                                        ''}}</span>
+                                </span>
+                                <span class="col">
+                                    <span class="info-text">Portion</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.portion : ''}}</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-6 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">Document Type</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.documentType : ''}}</span>
+                                </span>
+                                <span class="col">
+                                    <span class="info-text">Document Sub Type</span>
+                                    <br>
+                                    <span class="desc-text">{{searchDetails ? searchDetails.documentSubType :
+                                        ''}}</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-6 gray-box" *ngIf="searchNumber">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">{{filterName}}</span>
+                                    <br>
+                                    <span class="desc-text">{{searchNumber}}</span>
+                                </span>
+                                <span class="col">
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 5%;">
+                        <div class="col">
+                            <p class="sub-heading">Information Type</p>
+                            <div class="row">
+                                <span *ngFor="let x of infoData; let i = index;" class="col-12 col-md-6 col-lg-3">
+                                    <mat-checkbox (change)="changeInfoData(x)" [checked]="x.isChecked"
+                                        id="{{x.dataType}}">
+                                        {{x.dataType}}</mat-checkbox>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="diagrams">
+                        <div class="row" style="margin-top: 32px;">
+                            <div class="col">
+                                <p class="text">{{diagramsLabel}}</p>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let x of diagramsData; let i = index;">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Format</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.format != null?x.format.itemId:x.format">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'format',126)"
+                                            *ngFor="let y of formatType" [value]="y != null?y.itemId:y">
+                                            {{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3" *ngIf="x.format">
+                                <mat-form-field appearance="outline" *ngIf="x.format.caption !== 'SOFT/ ELECTRONIC'">
+                                    <mat-label>Paper Size</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',126)"
+                                            *ngFor="let y of paperSize" [value]="y!= null?y.itemId:y">
+                                            {{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" *ngIf="x.format.caption === 'SOFT/ ELECTRONIC'">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',126)"
+                                            *ngFor="let y of documentFormat" [value]="y!= null?y.itemId:y">
+                                            {{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-1">
+                                <span *ngIf="i!==0" (click)="remove(126, i)">
+                                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="diagramsData.length<5">
+                            <div class="col">
+                                <span style="cursor: pointer;">
+                                    <mat-icon>add</mat-icon>
+                                    <span (click)="add(126)" class="text">Add New</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="general">
+                        <div class="row" style="margin-top: 32px;">
+                            <div class="col">
+                                <p class="text">{{generalLabel}}</p>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let x of generalData; let i = index;">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Format</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.format != null?x.format.itemId:x.format">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'format',125)"
+                                            *ngFor="let y of formatType" [value]="y != null?y.itemId:y">{{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3" *ngIf="x.format">
+                                <mat-form-field appearance="outline" *ngIf="x.format.caption !== 'SOFT/ ELECTRONIC'">
+                                    <mat-label>Paper Size</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',125)"
+                                            *ngFor="let y of paperSize" [value]="y != null?y.itemId:y">{{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" *ngIf="x.format.caption === 'SOFT/ ELECTRONIC'">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',125)"
+                                            *ngFor="let y of documentFormat" [value]="y != null?y.itemId:y">
+                                            {{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-1">
+                                <span *ngIf="i!==0" (click)="remove(125,i)">
+                                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="generalData.length<5">
+                            <div class="col">
+                                <span style="cursor: pointer;">
+                                    <mat-icon>add</mat-icon>
+                                    <span (click)="add(125)" class="text">Add New</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="certificates">
+                        <div class="row" style="margin-top: 32px;">
+                            <div class="col">
+                                <p class="text">{{certificatesLabel}}</p>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let x of certificatesData; let i = index;">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{certificatesLabel}} Type</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.certType != null?x.certType.itemId:x.certType">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'certType',129)"
+                                            *ngFor="let y of certificateType" [value]="y != null?y.itemId:y">
+                                            {{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Format</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.format != null?x.format.itemId:x.format">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'format',129)"
+                                            *ngFor="let y of formatType" [value]="y != null?y.itemId:y">{{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3" *ngIf="x.format">
+                                <mat-form-field appearance="outline" *ngIf="x.format.caption !== 'SOFT/ ELECTRONIC'">
+                                    <mat-label>Paper Size</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',129)"
+                                            *ngFor="let y of paperSize" [value]="y != null?y.itemId:y">{{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" *ngIf="x.format.caption === 'SOFT/ ELECTRONIC'">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',129)"
+                                            *ngFor="let y of documentFormat" [value]="y != null?y.itemId:y">
+                                            {{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-1">
+                                <span *ngIf="i!==0" (click)="remove(129, i)">
+                                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="certificatesData.length<5">
+                            <div class="col">
+                                <span style="cursor: pointer;">
+                                    <mat-icon>add</mat-icon>
+                                    <span (click)="add(129)" class="text">Add New</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="spatial">
+                        <div class="row" style="margin-top: 32px;">
+                            <div class="col">
+                                <p class="text">{{spatialLabel}}</p>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let x of spatialData; let i = index;">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{spatialLabel}} Data Type</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',127)"
+                                            *ngFor="let y of spatialType" [value]="y != null?y.itemId:y">{{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-1">
+                                <span *ngIf="i!==0" (click)="remove(127, i)">
+                                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="spatialData.length<5">
+                            <div class="col">
+                                <span style="cursor: pointer;">
+                                    <mat-icon>add</mat-icon>
+                                    <span (click)="add(127)" class="text">Add New</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="coordinates">
+                        <div class="row" style="margin-top: 32px;">
+                            <div class="col">
+                                <p class="text">{{coordinatesLabel}} Data</p>
+                            </div>
+                        </div>
+                        <div *ngFor="let x of coordinateData; let i = index;" class="row">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{coordinatesLabel}} Data Type</mat-label>
+                                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',128)"
+                                            *ngFor="let y of coordinateType" [value]="y != null?y.itemId:y">{{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-1">
+                                <span (click)="remove(128, i)" *ngIf="i!==0">
+                                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div *ngIf="coordinateData.length<3" class="row">
+                            <div class="col">
+                                <span style="cursor: pointer;">
+                                    <mat-icon>add</mat-icon>
+                                    <span (click)="add(128)" class="text">Add New</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="alphaNumerics">
+                        <div class="row" style="margin-top: 32px;">
+                            <div class="col">
+                                <p class="text">{{alphaNumericsLabel}} Data</p>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let x of alphaNumericsData; let i = index;">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{alphaNumericsLabel}} Data Type</mat-label>
+                                    <mat-select matInput [(ngModel)]="x.type != null?x.type.itemId:x.type">
+                                        <mat-option (onSelectionChange)="onchange(y,i,'type',130)"
+                                            *ngFor="let y of alphaType" [value]="y != null?y.itemId:y">{{y.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-1">
+                                <span *ngIf="i!==0" (click)="remove(130, i)">
+                                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="alphaNumericsData.length<5">
+                            <div class="col">
+                                <span style="cursor: pointer;">
+                                    <mat-icon>add</mat-icon>
+                                    <span (click)="add(130)" class="text">Add New</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-0" style="margin-top: 5% !important;">
+                        <mat-form-field class="example-full-width" *ngIf="advisory">
+                            <mat-label>{{advisoryLabel}}</mat-label>
+                            <textarea matInput [(ngModel)]="advisoryData"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" *ngIf="misc">
+                            <mat-label>{{miscLabel}}</mat-label>
+                            <textarea matInput [(ngModel)]="miscData"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+
+<!-- Desktop Menu -->
+<div class="bottom-menu desktop-menu">
+    <div class="row">
+        <div class="col" style="margin-top: 16px; margin-bottom: 16px;">
+            <button mat-stroked-button class="yellow-button" style="margin-left: 48px; margin-right: 16px;"
+                (click)="openShareDialog()">Share</button>
+                <button mat-stroked-button (click)="downloadZip()" class="yellow-button"
+                style="margin-right: 16px;" style="cursor: pointer !important;"  [disabled]="downloadStat">Download
+            </button>
+            <button mat-stroked-button class="yellow-button" (click)="openViewMapDialog()"
+                style="margin-left: 48px; margin-right: 16px;">View Map</button>
+        </div>
+        <div class="col" style="margin-top: 16px; margin-bottom: 16px">
+            <button mat-stroked-button (click)="checkout()" class="yellow-button pull-right"
+                style="margin-right: 48px; margin-left: 16px; background-color: #f48222; color: #ffffff;">Checkout
+            </button>
+            <button mat-stroked-button (click)="addToCart()" *ngIf="method === 'add'" class="yellow-button pull-right">Add To
+                Cart
+            </button>
+            <button mat-stroked-button (click)="updateCart()" *ngIf="method === 'update'" class="yellow-button pull-right">Update
+                Cart
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Mobile Menu -->
+<div class="bottom-menu mobile-menu">
+    <div class="row">
+        <div class="col">
+            <span class="row justify-content-between">
+                <span class="col-12" style="margin-top: 8px; margin-bottom: 4px;">
+                    <a [href]="image1Source" class="yellow-link-button" download>Download</a>
+                </span>
+                <span class="col-12" style="margin-top: 4px; margin-bottom: 8px;">
+                    <button class="yellow-button" (click)="openShareDialog()">Share</button>
+                </span>
+            </span>
+        </div>
+        <div class="col">
+            <span class="row justify-content-between">
+                <span class="col-12" style="margin-top: 8px; margin-bottom: 4px;">
+                    <button class="yellow-button pull-right" (click)="addToCart()">Add To
+                        Cart</button>
+                </span>
+                <span class="col-12" style="margin-top: 4px; margin-bottom: 8px;">
+                    <button (click)="checkout()" class="yellow-button pull-right"
+                        style="background-color: #f48222; color: #ffffff;">Checkout</button>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>

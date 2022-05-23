@@ -1,0 +1,69 @@
+<div class="row mx-0">
+    <div class="col-md-10 mb-2 mt-2">
+        <!-- <span class="mb-4 mt-4" style="display: inline-flex;"> -->
+        <p class="sub-heading">Conditions</p>
+    </div>
+    <!-- <div class="col-md-2 mb-2 mt-2" *ngIf="">
+        <button mat-raised-button class="submit-button submit bhover float-right" style="width: 170px;"
+            (click)="addAcknowledgement()">Add
+            new condition
+        </button>
+    </div> -->
+    <!-- </span> -->
+    <!-- </div> -->
+</div>
+<div class="row mx-0">
+    <div class="col-md-12">
+        <span class="float-right">
+            <a style="color: blue; cursor: pointer;" (click)="downloadAckLetter()">
+                <mat-icon class="float-left" style="cursor: pointer;color:black">get_app</mat-icon>
+                Preview Draft Acknowledgement Letter
+            </a>
+        </span>
+    </div>
+</div>
+<div class="row mx-0" *ngIf="resCondition.length > 0">
+    <div class="col">
+        <div class="card">
+            <table [dataSource]="dataSource" class="table-margin" mat-table>
+                <ng-container matColumnDef="Reason">
+                    <th *matHeaderCellDef mat-header-cell>Reason</th>
+                    <td *matCellDef="let element" class="t-b" mat-cell>
+                        Step {{element?.stepNo}} - {{ element.reason }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Reference">
+                    <th *matHeaderCellDef mat-header-cell style="border-top-left-radius: 0px !important;
+                                                border-bottom-left-radius: 0px !important;">Reference</th>
+                    <td *matCellDef="let element" mat-cell>
+                        {{element.conditionAlphabet}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Condition">
+                    <th *matHeaderCellDef mat-header-cell>Condition</th>
+                    <td *matCellDef="let element" mat-cell>
+                        {{element.condition}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Action">
+                    <th *matHeaderCellDef mat-header-cell>Action</th>
+                    <td *matCellDef="let element" mat-cell>
+                        <span class="details" style="cursor: pointer;margin-left: 15px;"
+                            (click)="editAcknowledgement(element)">
+                            <mat-icon>edit</mat-icon>
+                        </span>
+                        <span class="details" style="cursor: pointer;margin-left: 15px;"
+                            (click)="deleteAcknowledgement(element)">
+                            <mat-icon>delete</mat-icon>
+                        </span>
+                    </td>
+                </ng-container>
+                <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="mx-auto p-10" fxLayoutAlign="center center" *ngIf="resCondition.length === 0">
+    No condition added
+</div>

@@ -1,0 +1,225 @@
+.main {
+    width: 99%;
+}
+
+.mat-row:nth-child(even) {
+    background-color: #fbfbfb;
+}
+
+.mat-row:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.mat-column-refNo {
+    width: 12%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    border-radius: 8px;
+    border: solid 1px green !important;
+    background-color: green !important;
+}
+
+.refNo {
+    color: #3e66fb !important;
+}
+
+.mat-column-desc {
+    width: 21% !important;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.desc {
+    font-size: 12px !important;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #6c757d;
+}
+
+.mat-column-subDate {
+    width: 11%;
+}
+
+.mat-column-type {
+    width: 11%;
+}
+
+.mat-column-location {
+    width: 9%;
+}
+
+.mat-column-freq {
+    width: 8%;
+}
+
+.mat-column-lastExec {
+    width: 9%;
+}
+
+.mat-column-lastStatus {
+    width: 8%;
+}
+
+.g-css {
+    width: 37px;
+    height: 24px;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #3cc13b !important;
+    border-radius: 4px;
+    border: solid 1px rgba(255, 255, 255, 0.75) !important;
+}
+
+.r-css {
+    width: 37px;
+    height: 24px;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f03738 !important;
+    border-radius: 4px;
+    border: solid 1px rgba(255, 255, 255, 0.75);
+}
+
+.o-css {
+    width: 37px;
+    height: 24px;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #f3bb1c !important;
+    border-radius: 4px;
+    border: solid 1px rgba(255, 255, 255, 0.75);
+}
+
+.mat-column-nextExec {
+    width: 13%;
+}
+
+.mat-column-nextStatus {
+    width: 6%;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.heading-card {
+    padding: 32px;
+}
+
+.info-btn-link {
+    width: 147px;
+    height: 29px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sub-heading {
+    font-size: 16px;
+    color: #6c757d;
+    padding-bottom: 32px;
+}
+
+.pp-card {
+    /* padding: 10px !important; */
+}
+
+.pp-card .title {
+    font-size: 20px;
+    color: #333333;
+}
+
+.pp-card .description {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.feature-info label {
+    font-size: 16px;
+    color: #212529;
+}
+
+.feature-info label span {
+    color: #6c757d;
+}
+
+.feature-opt p {
+    font-size: 16px;
+}
+
+.feature-opt .mat-radio-button {
+    margin-left: 10px;
+}
+
+.feature-opt .mat-radio-button:first-of-type {
+    margin-left: 0;
+}
+
+.feature-opt .mat-flat-button {
+    background-color: #f48222;
+    color: #ffffff;
+    width: 100%;
+}
+
+.submit-button {
+    margin-right: 10px;
+    line-height: 2;
+    background-color: #298f5c;
+    width: 140px;
+    height: 44px;
+    color: #fafafa;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+.bover:hover {
+    background-color: #c58b10;
+    ;
+}
+
+.cancel:hover {
+    background-color: lightgray;
+}
+
+.cancel-button {
+    margin-right: 10px;
+    line-height: 2;
+    background-color: #fff;
+    width: 140px;
+    height: 44px;
+    color: #000;
+    letter-spacing: normal;
+    text-align: center;
+}

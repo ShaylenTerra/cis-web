@@ -1,0 +1,523 @@
+<div class="padd-right">
+    <span class="row mx-0 mt-3">
+        <span class="col-12">
+            <div>
+                <mat-card>
+                    <form [formGroup]="formApplicant">
+                        <div class="row mx-0" *ngIf="!preview">
+
+                            <div class="col-12 col-md-6 col-lg-4 m-t-20">
+                                <p>Are you the applicant for lodgement?</p>
+                            </div>
+                            <div class="col-12 col-md-2 col-lg-2 m-t-20">
+                                <mat-radio-group [(ngModel)]="isApplicant" formControlName="isApplicant"
+                                    (change)="changeApplicant($event.value)" required>
+                                    <mat-radio-button class="m-r-10" [value]="true">Yes</mat-radio-button>
+                                    <mat-radio-button [value]="false">No</mat-radio-button>
+                                </mat-radio-group>
+                                <mat-error *ngIf="errorMsg != ''">
+                                    <p class="text-small">{{errorMsg}}</p>
+                                </mat-error>
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-4 m-t-10" *ngIf="isApplicant === false">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Find by email</mat-label>
+                                    <mat-select [(ngModel)]="findByEmail" formControlName="applicantId"
+                                        (selectionChange)="setEmailData()" #emailSelect required>
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="emailFilterCtrl"
+                                                (ngModelChange)="changeApplicant($event)"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredEmail | async" [value]="x">
+                                            {{ x.email }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                        <div class="row mx-0" *ngIf="preview">
+
+                            <div class="col-12 col-md-6 col-lg-4 m-t-20">
+                                <p>Are you the applicant for lodgement?</p>
+                            </div>
+                            <div class="col-12 col-md-2 col-lg-2 m-t-20">
+                                <label *ngIf="isApplicant == true">Yes</label>
+                                <label *ngIf="isApplicant == false">No</label>
+
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-4" *ngIf="isApplicant === false">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Find by email</mat-label>
+                                    <mat-select [(ngModel)]="findByEmail" readonly disabled
+                                        formControlName="applicantId" (selectionChange)="setEmailData()" #emailSelect
+                                        required>
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="emailFilterCtrl"
+                                                (ngModelChange)="changeApplicant($event)"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredEmail | async" [value]="x">
+                                            {{ x.email }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-5" *ngIf="findByEmail !== undefined && !preview">
+                            <div class="row mx-0 mt-4" *ngIf="(isApplicant === true || isApplicant === false )">
+                                <span class="col">
+                                    <h3>Applicant Details</h3>
+                                </span>
+                            </div>
+                            <div class="row mx-0"
+                                *ngIf="(isApplicant === true || isApplicant === false ) && findByEmail !== undefined">
+                                <div class="col-12">
+                                    <!-- <form> -->
+                                    <div class="row mx-0 mt-4">
+                                        <span class="col-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>First Name</mat-label>
+                                                <input [(ngModel)]="firstName" disabled matInput type="text"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </mat-form-field>
+                                        </span>
+                                        <span class="col-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Last Name</mat-label>
+                                                <input [(ngModel)]="lastName" disabled matInput type="text"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </mat-form-field>
+                                        </span>
+                                    </div>
+                                    <div class="row mx-0">
+                                        <span class="col-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Email</mat-label>
+                                                <input [(ngModel)]="email" [ngModelOptions]="{standalone: true}"
+                                                    matInput type="email" disabled>
+                                            </mat-form-field>
+                                        </span>
+                                        <span class="col-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Mobile</mat-label>
+                                                <input [(ngModel)]="mobileNo" disabled matInput type="tel"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </mat-form-field>
+                                        </span>
+
+                                    </div>
+                                    <!-- </form> -->
+                                </div>
+                                <div class="col-4">
+                                    <div class="row mx-0 mt-4">
+                                        <div class="outer">
+                                            <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                                                style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                                                (mouseover)="'assets/images/users/user.webp'" (mouseout)="url">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="findByEmail !== undefined && preview">
+                            <div class="row mx-0 mt-4" *ngIf="(isApplicant === true || isApplicant === false )">
+                                <span class="col">
+                                    <h3>Applicant Details</h3>
+                                </span>
+                            </div>
+                            <div class="row mx-0" *ngIf="isApplicant === true || isApplicant === false">
+                                <div class="col-8">
+                                    <div class="row mx-0 mt-4">
+                                        <span class="col-12 ml-3">
+                                            <label><b>Name</b>: {{firstName}} {{lastName}}</label>
+
+                                        </span>
+
+                                    </div>
+                                    <div class="row mx-0 ml-3">
+                                        <span class="col-12">
+                                            <label><b>Email</b>: {{email}}</label>
+                                        </span>
+                                    </div>
+                                    <div class="row mx-0 ml-3">
+                                        <span class="col-12">
+                                            <label><b>Mobile</b>: {{mobileNo}}</label>
+
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="row mx-0 mt-4">
+                                        <div class="outer">
+                                            <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                                                style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                                                (mouseover)="'assets/images/users/user.webp'" (mouseout)="url">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div [ngClass]="!preview ? 'col-12 col-lg-7 mt-3' : 'col-12 col-lg-12 mt-3'"
+                            *ngIf='findByEmail?.userType === "INTERNAL"'>
+                            <div class="row mx-0 mt-4"
+                                *ngIf='findByEmail?.userType === "INTERNAL" || findByEmail?.userType === "EXTERNAL"'>
+                                <span class="col">
+                                    <h3>Role Details</h3>
+                                </span>
+                            </div>
+                            <div class="row mx-0" *ngIf='findByEmail?.userType === "INTERNAL"'>
+                                <div class="col">
+                                    <div class="card mt-4" *ngIf="rolesInfo.length > 0 && rolesInfo !== undefined">
+                                        <table [dataSource]="dataSourceUserRole" class="table-margin" mat-table matSort>
+                                            <ng-container matColumnDef="roleName">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-left-radius: 8px;
+                                                                                    border-bottom-left-radius: 8px;">
+                                                    Role Name</th>
+                                                <td *matCellDef="let element" class="t-b" mat-cell>{{element.roleName}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="sectionName">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Section Name</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.sectionName}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="provinceName">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Province Name</th>
+                                                <td *matCellDef="let element" mat-cell>{{element.provinceName}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="isPrimary">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-right-radius: 8px;
+                                                            border-bottom-right-radius: 8px;">Is
+                                                    Primary</th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    <span *ngIf="element.isPrimary === 1" class="bg-fl">
+                                                        YES
+                                                    </span>
+                                                    <span *ngIf="element.isPrimary === 0" class="bg-ss">
+                                                        NO
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+
+                                        </table>
+                                    </div>
+                                    <div fxLayoutAlign="center center" class="mt-4"
+                                        *ngIf="rolesInfo.length === 0 || rolesInfo === undefined">
+                                        <p>No data available</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-7 mt-3">
+                            <div class="row mx-0" *ngIf="roleId === 16 || roleId === 21">
+                                <span class="col-12">
+                                    <h3>Professional Details</h3>
+                                </span>
+                            </div>
+                            <div class="row mx-0">
+                                <form [formGroup]="basicInfoPLSForm" *ngIf="roleId === 16 || roleId === 21">
+                                    <div class="container-fluid my-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>PPN Number</mat-label>
+                                                    <input formControlName="ppnNo" [(ngModel)]="ppnNo" matInput
+                                                        disabled>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Courier Service</mat-label>
+                                                    <input formControlName="courierService" matInput type="text"
+                                                        disabled>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Business Name</mat-label>
+                                                    <input formControlName="businessName" matInput type="text" disabled>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Description</mat-label>
+                                                    <textarea formControlName="description" rows=3 matInput
+                                                        disabled></textarea>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>General Notes</mat-label>
+                                                    <textarea formControlName="generalNotes" rows=3 matInput
+                                                        disabled></textarea>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Status</mat-label>
+                                                    <input [value]="status"
+                                                        [ngClass]="status === 'ACTIVE' || status === 'APPROVED' ?'make-green':'make-red'"
+                                                        matInput type="text" readonly>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0" *ngIf="findByEmail?.userType=='EXTERNAL'">
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Role</mat-label>
+                                <mat-select matInput disabled [(ngModel)]="roleId">
+                                    <mat-option *ngFor="let x of roles" [value]="x.roleId">
+                                        {{ x.roleName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-9" style="display: inline-flex;">
+                            <section *ngFor="let x of provinces">
+                                <mat-checkbox style="margin:5px" [(ngModel)]="x.isSelected" [value]="x.provinceId"
+                                    disabled>
+                                    {{x.provinceName}}
+                                </mat-checkbox>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="row my-3"
+                        *ngIf="(isApplicant === true || isApplicant === false) && findByEmail !== undefined && !readonly && !preview">
+                        <div class="col mb-3">
+                            <span class="float-right">
+                                <button mat-raised-button class="submit-button bover" (click)="updateDraft('Applicant')"
+                                    style="height: 44px; margin-right: 5px;">Update</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mx-0 my-3"
+                        *ngIf="(isApplicant === true || isApplicant === false) && readonly && processName !== undefined">
+                        <div class="col mb-3">
+                            <span>
+                                <a style="color: blue;cursor: pointer;" (click)="feedBack()">
+                                    Feedback to Applicant
+                                </a>
+                                <!-- <button mat-raised-button class="submit-button bover" (click)="feedBack()"
+                                                                style="height: 44px; margin-right: 5px;">Feedback</button> -->
+                            </span>
+                        </div>
+                    </div>
+                </mat-card>
+
+
+
+                <!-- <mat-card [hidden]="!preview">
+                    <form [formGroup]="formApplicant" class="m-3 p-3">
+
+                        <div class="row mx-0">
+
+                            <div class="col-12 col-md-6 col-lg-4 m-t-20">
+                                <p>Are you the applicant for lodgement?</p>
+                            </div>
+                            <div class="col-12 col-md-2 col-lg-2 m-t-20">
+                                <label *ngIf="isApplicant == true">Yes</label>
+                                <label *ngIf="isApplicant == false">No</label>
+
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-4" *ngIf="isApplicant === false">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Find by email</mat-label>
+                                    <mat-select [(ngModel)]="findByEmail" readonly disabled
+                                        formControlName="applicantId" (selectionChange)="setEmailData()" #emailSelect
+                                        required>
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="emailFilterCtrl"
+                                                (ngModelChange)="changeApplicant($event)"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredEmail | async" [value]="x">
+                                            {{ x.email }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row mx-0" *ngIf="isApplicant === true || isApplicant === false">
+                        <div class="col-8">
+                            <div class="row mx-0 mt-4">
+                                <span class="col-12 ml-3">
+                                    <label><b>Name</b>: {{firstName}} {{lastName}}</label>
+
+                                </span>
+
+                            </div>
+                            <div class="row mx-0 ml-3">
+                                <span class="col-12">
+                                    <label><b>Email</b>: {{email}}</label>
+                                </span>
+                            </div>
+                            <div class="row mx-0 ml-3">
+                                <span class="col-12">
+                                    <label><b>Mobile</b>: {{mobileNo}}</label>
+
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row mx-0 mt-4">
+                                <div class="outer">
+                                    <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                                        style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                                        (mouseover)="'assets/images/users/user.webp'" (mouseout)="url">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mx-0 mt-4"
+                        *ngIf='findByEmail?.userType === "INTERNAL" || findByEmail?.userType === "EXTERNAL"'>
+                        <span class="col ml-4">
+                            <h3>Role Details</h3>
+                        </span>
+                    </div>
+                    <div class="row mx-0" *ngIf='findByEmail?.userType === "INTERNAL"'>
+                        <div class="col">
+                            <div class="card mt-4">
+                                <table [dataSource]="dataSourceUserRole" class="table-margin" mat-table matSort>
+                                    <ng-container matColumnDef="roleName">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-left-radius: 8px;
+                                                                                    border-bottom-left-radius: 8px;">
+                                            Role Name</th>
+                                        <td *matCellDef="let element" class="t-b" mat-cell>{{element.roleName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="sectionName">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Section Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.sectionName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="provinceName">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Province Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.provinceName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="isPrimary">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-right-radius: 8px;
+                                                                                    border-bottom-right-radius: 8px;">
+                                            Is
+                                            Primary</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <span *ngIf="element.isPrimary === 1" class="bg-fl">
+                                                YES
+                                            </span>
+                                            <span *ngIf="element.isPrimary === 0" class="bg-ss">
+                                                NO
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                                    <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0" *ngIf="findByEmail?.userType=='EXTERNAL'">
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Role</mat-label>
+                                <mat-select matInput disabled [(ngModel)]="roleId">
+                                    <mat-option *ngFor="let x of roles" [value]="x.roleId">
+                                        {{ x.roleName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-9" style="display: inline-flex;">
+                            <section *ngFor="let x of provinces">
+                                <mat-checkbox style="margin:5px" [(ngModel)]="x.isSelected" [value]="x.provinceId"
+                                    disabled>
+                                    {{x.provinceName}}
+                                </mat-checkbox>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0" *ngIf="roleId === 16 || roleId === 21">
+                        <span class="col-12">
+                            <h3>Professional Details</h3>
+                        </span>
+                    </div>
+                    <form [formGroup]="basicInfoPLSForm" *ngIf="roleId === 16 || roleId === 21">
+                        <div class="container-fluid my-3">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>PPN Number</mat-label>
+                                        <input formControlName="ppnNo" [(ngModel)]="ppnNo"
+                                            [ngModelOptions]="{standalone: true}" matInput disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Courier Service</mat-label>
+                                        <input formControlName="courierService" matInput type="text" disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Business Name</mat-label>
+                                        <input formControlName="businessName" matInput type="text" disabled>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Description</mat-label>
+                                        <textarea formControlName="description" rows=3 matInput disabled></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>General Notes</mat-label>
+                                        <textarea formControlName="generalNotes" rows=3 matInput disabled></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Status</mat-label>
+                                        <input [value]="status"
+                                            [ngClass]="status === 'ACTIVE' || status === 'APPROVED' ?'make-green':'make-red'"
+                                            matInput type="text" readonly>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card> -->
+            </div>
+        </span>
+    </span>
+</div>

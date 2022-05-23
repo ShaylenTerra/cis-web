@@ -1,0 +1,49 @@
+.icon-format {
+  color: #066636;
+  cursor: pointer;
+}
+
+.card-format {
+  border: solid 1px #f9f9f9;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+::ng-deep .mat-card .mat-card-content {
+  font-weight: 14px !important;
+  font-weight: 500px !important;
+}
+
+.head-css {
+  font-size: 16px;
+  font-weight: 500;
+  color: #c58b10;
+}
+
+.h-css {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
+  color: #c58b10;
+}
+
+.timings p {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.timings-card {
+  background-color: #EEF5F9;
+}
+
+.timings-card p:first-of-type {
+  margin-bottom: 0;
+}
+
+.timings div {
+  width: 100%;
+}
+
+.timepicker {
+  z-index: 99999;
+}

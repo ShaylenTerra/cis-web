@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <div *ngIf="isSpinnerVisible" class="overlay">
+        <div class="overlay__wrapper">
+            <div class="overlay__spinner">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <mat-card-content>
+                    <form [formGroup]="form">
+                        <div class="row">
+                            <div class="col heading">Reassign</div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <mat-form-field appearance="outline" class="input-margin">
+                                    <mat-label>Select a user</mat-label>
+                                    <mat-select (selectionChange)="assignedUserSelected($event.value)" formControlName="fromUser"
+                                    [(ngModel)]="selectuser" #searchUserSelect required>
+                                        <mat-option>
+                                        <ngx-mat-select-search [formControl]="searchUserFilterCtrl"
+                                         [ngModelOptions]="{ standalone: true }"
+                                            placeholderLabel="Search..." noEntriesFoundLabel="'No result found'">
+                                        </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of fromFilteredUsers | async" [value]="x.userId">
+                                            {{x.firstName + ' ' + x.surname}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <table [dataSource]="dataSource" class="table-margin w-100" mat-table>
+                                    <ng-container matColumnDef="taskType">
+                                        <th *matHeaderCellDef mat-header-cell>Task Type</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.processName}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="refCode">
+                                        <th *matHeaderCellDef mat-header-cell>Ref Code</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.referenceNo}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="dateCreated">
+                                        <th *matHeaderCellDef mat-header-cell> Date Created</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.triggeredOn |
+                                            date:"d/M/y H:M"}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="initiatedUser">
+                                        <th *matHeaderCellDef mat-header-cell> User</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.assignedToUser}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Stage">
+                                        <th *matHeaderCellDef mat-header-cell> Stage</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            {{element.actionRequiredDescription}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="priority">
+                                        <th *matHeaderCellDef mat-header-cell> Priority</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <span [className]="element.priorityName === 'High' ? 'high-priority' : element.priorityName === 'Medium' ? 'medium-priority' : 'other-priority'">
+                                                {{element.priorityName}}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="status">
+                                        <th *matHeaderCellDef mat-header-cell> Status</th>
+                                        <td *matCellDef="let element" mat-cell>
+                      <span
+                              [className]="element.internalStatusCaption === 'Open' ? 's-open' : element.internalStatusCaption === 'In Progress' ? 's-pending' : 's-completed'">{{element.internalStatusCaption}}
+                      </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="sla">
+                                        <th *matHeaderCellDef mat-header-cell> Duration</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.triggeredOn|dateDifference}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action">
+                                        <th *matHeaderCellDef mat-header-cell>Action</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <mat-checkbox (change)="actionSelected($event,element)"></mat-checkbox>
+                                        </td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                                    <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
+                                </table>
+                                <div fxLayoutAlign="center center" *ngIf="dataLength === 0">No result found</div>
+                                <mat-paginator [length]="dataLength" [pageSizeOptions]="[10, 25, 50, 100]"
+                                               [pageSize]="10">
+                                </mat-paginator>
+                            </div>
+                        </div>
+
+                        <div *ngIf="actionIds.length!==0">
+                            <div class="row mt-3">
+                                <div class="col sub-heading">
+                                    Reassign To
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <!-- <mat-form-field appearance="outline">
+                                        <mat-label>Assign to User</mat-label>
+                                        <input [matAutocomplete]="auto2" formControlName="toUser" matInput>
+                                        <mat-autocomplete #auto2="matAutocomplete"
+                                                          (optionSelected)="toUserSelected($event)"
+                                                          [displayWith]="displayFn">
+                                            <mat-option *ngFor="let x of toFilteredUsers" [value]="x">
+                                                {{x.firstName + ' ' + x.surname}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field> -->
+                                    <mat-form-field appearance="outline" class="input-margin">
+                                        <mat-label>Assigned to user</mat-label>
+                                        <mat-select (selectionChange)="assignedToUserSelected($event.value)" formControlName="toUser"
+                                        [(ngModel)]="selectTouser" #searchToUserSelect required>
+                                            <mat-option>
+                                            <ngx-mat-select-search [formControl]="searchToUserFilterCtrl"
+                                             [ngModelOptions]="{ standalone: true }"
+                                                placeholderLabel="Search..." noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                            </mat-option>
+                                            <mat-option *ngFor="let x of toFilteredUsers | async" [value]="x.userId">
+                                                {{x.firstName + ' ' + x.surname}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Notes</mat-label>
+                                        <textarea [(ngModel)]="notes" formControlName="notes" matInput style="color: black;"></textarea>
+                                        <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.length }} characters left</em></span>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <button mat-raised-button (click)="submit()" [disabled]="(!form.valid) && (this.actionIds.length > 0)"
+                                        class="submit-button bhover float-left mr-4" style="width: 140px !important;">Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,185 @@
+<div class="padd-right">
+    <span class="row mx-0 mt-3">
+        <span class="col-12">
+            <div>
+                <mat-card>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="dropdown menu float-right" [hidden]="draftData.processId === 239?true:false">
+                                <span [matMenuTriggerFor]="dropdown" style="cursor: pointer;" matTooltip="Action">
+                                    <img alt="" src="assets/images/Three dots.png">
+                                </span>
+                                <mat-menu #dropdown="matMenu">
+                                    <a (click)="MarkAsPending()" mat-menu-item>
+                                        <mat-icon>pending_actions</mat-icon>
+                                        Mark as Pending
+                                    </a>
+                                    <a (click)="userdailogReassign()" mat-menu-item>
+                                        <mat-icon>assignment</mat-icon>
+                                        <span>ReAssign</span>
+                                    </a>
+                                    <a (click)="changeProvince()" mat-menu-item>
+                                        <mat-icon>edit_location</mat-icon>
+                                        <span>Change Province</span>
+                                    </a>
+                                    <a (click)="userdailogReferralinfo()" mat-menu-item>
+                                        <mat-icon>supervisor_account</mat-icon>
+                                        <span>Referral Information</span>
+                                    </a>
+                                    <a (click)="cancelTask()" mat-menu-item>
+                                        <mat-icon>cancel</mat-icon>
+                                        <span>Cancel Request</span>
+                                    </a>
+                                    <a (click)="addToDiary()" mat-menu-item>
+                                        <mat-icon>date_range</mat-icon>
+                                        <span>Add to Diary</span>
+                                    </a>
+                                    <a (click)="expediteTask()" mat-menu-item>
+                                        <mat-icon>explore</mat-icon>
+                                        <span>Expedite Task </span>
+                                    </a>
+                                    <a *ngIf="this.taskDetail.internalStatusCaption === 'In Progress'"
+                                        (click)="closeTask()" mat-menu-item>
+                                        <mat-icon>lock</mat-icon>
+                                        <span>Close Task </span>
+                                    </a>
+                                    <a *ngIf="this.taskDetail.internalStatusCaption === 'Close'" (click)="reopenTask()"
+                                        mat-menu-item>
+                                        <mat-icon>lock_open</mat-icon>
+                                        <span>Reopen Task </span>
+                                    </a>
+                                    <a (click)="sendtosection()" mat-menu-item>
+                                        <mat-icon>explore</mat-icon>
+                                        <span>Send To Section </span>
+                                    </a>
+                                </mat-menu>
+                            </div>
+                        </div>
+                        <form [formGroup]="decisionform" class="col-md-9">
+                            <div class="row mx-0">
+                                <div class="col-4">
+                                    <mat-label class="text-muted">{{nodeDetails?.Question }}</mat-label>
+                                    <mat-radio-group aria-label="Select an option" class="radio-group">
+                                        <mat-radio-button (change)="onProcessChange($event)"
+                                            *ngFor="let outLink of outLinks" [checked]="outLink.checked"
+                                            [value]="outLink" class="radio-button">{{outLink.actionCaption}}
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <div class="row" [hidden]="draftData.processId === 239?true:false">
+                                        <div class="col-md-10">
+                                            <mat-form-field appearance="outline" class="input-margin">
+                                                <mat-label>Assigned to user</mat-label>
+                                                <mat-select [disabled]="decisionSelected"
+                                                    (selectionChange)="assignedUserSelected($event.value)"
+                                                    formControlName="assignedToUserId" [(ngModel)]="assignDecisionUser"
+                                                    #searchUserSelect required>
+                                                    <mat-option>
+                                                        <ngx-mat-select-search [formControl]="searchUserFilterCtrl"
+                                                            [ngModelOptions]="{ standalone: true }"
+                                                            placeholderLabel="Search..."
+                                                            noEntriesFoundLabel="'No result found'">
+                                                        </ngx-mat-select-search>
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let x of assignedFilteredUsers | async"
+                                                        [value]="x.userId">
+                                                        {{x.firstName + ' ' + x.surname}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-1 icon">
+                                            <mat-icon aria-label="Button that shows a red tooltip"
+                                                class="multiline-tooltip t-button" matTooltip="{{tooltipText}}"
+                                                style="cursor: pointer;" (click)="employeedetails()">
+                                                error_outline
+                                            </mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row  mx-0">
+                                <div class="col-9">
+                                    <mat-form-field appearance="outline" class="input-margin">
+                                        <mat-label class="text-muted">Note</mat-label>
+                                        <textarea [readonly]="decisionSelected" maxLength="1000" formControlName="notes"
+                                            matInput required style="color: black;" #decisionNote></textarea>
+                                        <span class="pull-right char" style="color: black;"><em>{{ 1000 -
+                                                decisionNote?.value?.length }} characters left</em></span>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div *ngIf="nodedetailsnext != null" class="row  mx-0">
+                                <div class="col-md-4">
+                                    <div style="border: 1px solid #cccccc;  height: 250px;border-radius: 7px;">
+                                        <div class="cell">
+                                            <p style="margin-top: 15px; margin-left: 15px; color: white;">
+                                                {{nodeDetails?.formName}}
+                                            </p>
+                                        </div>
+                                        <p style="margin-top: 15px; margin-left: 15px;">
+                                            {{nodeDetails?.Description}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <mat-icon style="margin-top: 125px; font-size: 50px;">arrow_right_alt</mat-icon>
+                                </div>
+
+                                <div *ngIf="nodedetailsnext.FormID == '0'" class="col-md-4">
+                                    <div class="circle" style="margin-top: 17%;">
+                                        <p style="margin-top: 27%; margin-left: 15px;" fxLayoutAlign="center center">
+                                            Task completed, notification will go to user.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div *ngIf="nodedetailsnext.FormID != '0'" class="col-md-4">
+                                    <div style="border: 1px solid #cccccc; height: 250px;border-radius: 7px;">
+                                        <div class="cell1">
+                                            <p style="margin-top: 15px; margin-left: 15px;">
+                                                {{formHeading}}
+                                            </p>
+                                        </div>
+                                        <p style="margin-top: 15px; margin-left: 15px;">
+                                            {{formDescription}}
+                                        </p>
+                                        <hr>
+                                        <p style="margin-top: 15px; margin-left: 15px;">Process</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="col-md-3 box" style="width: 100%;">
+                            <div>
+                                <p class="desc-text" style="margin-bottom: 0;">Request Code:</p>
+                                <p class="text" style="margin-top: 0;">{{taskDetail?.referenceNo}}</p>
+                            </div>
+                            <div>
+                                <p class="desc-text" style="margin-bottom: 0;">Task Type:</p>
+                                <p class="text" style="margin-top: 0;">{{taskDetail?.processName}}</p>
+                            </div>
+                            <div>
+                                <p class="desc-text" style="margin-bottom: 0;">Task Situation:</p>
+                                <p class="text" style="margin-top: 0;">{{taskDetail?.priorityName}}</p>
+                            </div>
+                            <div>
+                                <p class="desc-text" style="margin-bottom: 0;">Task Status:</p>
+                                <p class="text" style="margin-top: 0;">{{taskDetail?.internalStatusCaption}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button mat-raised-button (click)="submitDecision()"
+                                class="submit-button submit bhover float-right mb-4 mt-4">Submit
+                            </button>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </span>
+    </span>
+</div>

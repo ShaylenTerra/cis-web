@@ -1,0 +1,120 @@
+<div *ngIf="isSpinnerVisible" class="overlay">
+    <div class="overlay__wrapper">
+        <div class="overlay__spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</div>
+<div class="heading" mat-dialog-title>Search Request Details</div>
+<div>
+    <div *ngIf="!refNo" class="container-fluid">
+        <div class="row my-2">
+            <table [dataSource]="datasource" class="table-margin w-100 search-req-detail-table" mat-table>
+                <ng-container matColumnDef="province">
+                    <th *matHeaderCellDef mat-header-cell>Province</th>
+                    <td *matCellDef="let element" mat-cell>{{element.province}}</td>
+                </ng-container>
+                <ng-container matColumnDef="searchType">
+                    <th *matHeaderCellDef mat-header-cell>Search By</th>
+                    <td *matCellDef="let element" mat-cell>{{element.searchType}}</td>
+                </ng-container>
+                <ng-container matColumnDef="searchFilter">
+                    <th *matHeaderCellDef mat-header-cell>Search Filter</th>
+                    <td *matCellDef="let element" mat-cell>{{element.searchFilter}}</td>
+                </ng-container>
+                <ng-container matColumnDef="searchNo">
+                    <th *matHeaderCellDef mat-header-cell>Search Number #</th>
+                    <td *matCellDef="let element" mat-cell>{{element.searchNo}}</td>
+                </ng-container>
+                <tr *matHeaderRowDef="searchColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: searchColumns;" mat-row></tr>
+            </table>
+        </div>
+        <div *ngIf="!proceed" class="row">
+            <div class="col sub-heading text-center">
+                The data cannot be found, Are you sure the input is correct?
+            </div>
+        </div>
+        <div *ngIf="proceed" class="row">
+            <div class="col sub-heading text-center">
+                Do you want to Notify the Manager?
+            </div>
+        </div>
+        <div *ngIf="!proceed" class="row">
+            <div class="col text-center mt-1">
+                <button mat-raised-button (click)="proceed=true" class="submit-button bover mr-1">Yes</button>
+                <button mat-raised-button class="back-button back" mat-dialog-close>No</button>
+            </div>
+        </div>
+        <div *ngIf="proceed" class="row" style="margin-top: 10px;">
+
+
+            <!-- <div class="col-6">
+                <mat-form-field class="input-margin" appearance="outline">
+                    <mat-label>Other Documents</mat-label>
+                    <mat-select matInput [(ngModel)]="selectedDocument">
+                        <mat-option *ngFor="let doc of documentsArr" [value]="doc.itemId">
+                            {{doc.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose File</mat-label>
+                    <input [value]="uploadedFileName" disabled matInput>
+                    <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                        <mat-icon class="attach">attach_file</mat-icon>
+                    </button>
+                    <input #fileInput (change)="selectFile($event)" hidden id="newFile" type="file">
+                </mat-form-field>
+            </div>
+            <div class="col-12">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Comments</mat-label>
+                    <textarea [(ngModel)]="comments" matInput rows="4" style="color: black;"></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - comments?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+            <div class="col-12 float-right">
+                <button mat-raised-button (click)="submit()" class="submit-button bover ml-1 float-right">Submit</button>
+                <button mat-raised-button class="back-button back float-right" mat-dialog-close>Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div *ngIf="refNo" class="container-fluid">
+        <div class="text-center">
+            <div class="row mb-2">
+                <div class="col">
+                    <img alt="" src="assets/images/logos/circle.png">
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col heading">
+                    Manager Notified Successfully
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col desc-text">
+                    Thank you for using our services
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col text">
+                    Reference Number
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col heading" style="color: #c58b10;">
+                    {{refNo}}
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button mat-raised-button class="btn-css mx-auto" mat-dialog-close>Close</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

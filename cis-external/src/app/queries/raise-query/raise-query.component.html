@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <!-- <div class="overlay" *ngIf="isSpinnerVisible">
+    <div class="overlay__wrapper">
+      <div class="overlay__spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="container">
+    <div class="row" style="margin-top: 5%;">
+      <div class="col">
+        <mat-card>
+          <mat-card-content>
+            <div class="row">
+              <div class="col heading">
+                Raise Query
+              </div>
+            </div>
+            <form [formGroup]="form">
+              <div class="row mt-5">
+                <div class="col-12 col-md-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="name" [(ngModel)]="name">
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Surname</mat-label>
+                    <input matInput formControlName="surname" [(ngModel)]="surname">
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" [(ngModel)]="email">
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Issue Type</mat-label>
+                    <mat-select formControlName="issue" [(ngModel)]="issue">
+                      <mat-option *ngFor="let x of issueTypes" [value]="x">{{x.caption}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" [(ngModel)]="description"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col text-center">
+                  <button class="submit-button" [disabled]="!form.valid" (click)="submit()">Submit Query</button>
+                </div>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,206 @@
+<div mat-dialog-title>
+    <span class="Headings">{{processName}}<i class="fa fa-window-close" matTooltip="Close" aria-hidden="true"
+            (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span>
+    <span>
+        <button class="submit-button bover"
+            style="right: 24px;size: 30px;margin-left: 10px; float: right;cursor: pointer;" mat-raised-button
+            [useExistingCss]="true" printSectionId="print-section" ngxPrint>Print</button>
+    </span>
+</div>
+<div mat-dialog-content class="mat-dialog-content1">
+    <div class="container-fluid pr-0" id="print-section">
+        <div class="row mx-0 tab-grid-remove">
+            <div class="col-lg-12">
+
+                <mat-accordion [multi]="true">
+                    <mat-expansion-panel [expanded]="applicantReservation == true" class="mt-3"
+                        (opened)="applicantReservation = true" (closed)="applicantReservation = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Applicant Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-applicant-reservation *ngIf="resDraftData !== undefined"
+                            (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData"
+                            [readonly]="readonly">
+                        </app-applicant-reservation>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="applicationReservation == true" class="mt-3"
+                        (opened)="applicationReservation = true" (closed)="applicationReservation = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Application Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-application-reservation *ngIf="resDraftData !== undefined"
+                            (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData"
+                            [readonly]="readonly">
+                        </app-application-reservation>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="LandParcelReservation == true"
+                        *ngIf="processName === 'Reservation Request'" class="mt-3"
+                        (opened)="LandParcelReservation = true" (closed)="LandParcelReservation = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Land Parcel
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-land-parcel *ngIf="resDraftData !== undefined && draftId !== undefined" [draftId]="draftId"
+                            [provinceId]="provinceId" [readonly]="readonly" [showOutcome]="false"></app-land-parcel>
+                    </mat-expansion-panel>
+
+
+                    <mat-expansion-panel [expanded]="TransfereeDetailsReservation == true"
+                        *ngIf="processName === 'Reservation Transfer'" class="mt-3"
+                        (opened)="TransfereeDetailsReservation = true" (closed)="TransfereeDetailsReservation = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Transferee Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-transferee-details *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                            (outputFromChild)="receiveChildData($event)" [readonly]="readonly">
+                        </app-transferee-details>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="TransferRequestDetailsReservation == true"
+                        *ngIf="processName === 'Reservation Transfer'" class="mt-3"
+                        (opened)="TransferRequestDetailsReservation = true"
+                        (closed)="TransferRequestDetailsReservation = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Transfer Request Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-transfer-details *ngIf="resDraftData !== undefined" [draftId]="draftId"
+                            [provinceId]="provinceId" [readonly]="readonly" [showOutcome]="false">
+                        </app-transfer-details>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="AnnexureReservation == true"
+                        *ngIf="processName === 'Reservation Request'" class="mt-3 mb-3"
+                        (opened)="AnnexureReservation = true" (closed)="AnnexureReservation = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Annexure
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-annexure-reservation *ngIf="resDraftData !== undefined && draftId !== undefined"
+                            [draftData]="resDraftData" [draftId]="draftId" [readonly]="readonly"
+                            [supportingDoc]="supportingDoc" [workflowId]="workflowId" [resubmitData]="resubmitData">
+                        </app-annexure-reservation>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="AnnexureLodgement == true"
+                        *ngIf="processName === 'Reservation Transfer'" class="mt-3 mb-3"
+                        (opened)="AnnexureLodgement = true" (closed)="AnnexureLodgement = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Annexure
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-annexure-transfer *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                            [draftId]="draftId" [readonly]="readonly" [workflowId]="workflowId"
+                            [resubmitData]="resubmitData" [processId]="processId" [supportingDoc]="supportingDoc">
+                        </app-annexure-transfer>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+                <!-- <mat-card>
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Applicant Details</p>
+                        </span>
+                    </span>
+                    <app-applicant-reservation *ngIf="resDraftData !== undefined"
+                        (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData" [readonly]="readonly">
+                    </app-applicant-reservation>
+                </mat-card>
+                <mat-card>
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Application Details</p>
+                        </span>
+                    </span>
+                    <app-application-reservation *ngIf="resDraftData !== undefined"
+                        (outputFromChild)="receiveChildData($event)" [draftData]="resDraftData" [readonly]="readonly">
+                    </app-application-reservation>
+                </mat-card>
+                <mat-card *ngIf="processName === 'Reservation Request'">
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Land Parcel</p>
+                        </span>
+                    </span>
+                    <app-land-parcel *ngIf="resDraftData !== undefined && draftId !== undefined" [draftId]="draftId"
+                        [provinceId]="provinceId" [readonly]="readonly" [showOutcome]="false"></app-land-parcel>
+                </mat-card>
+                <mat-card *ngIf="processName === 'Reservation Transfer'">
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Transferee Details</p>
+                        </span>
+                    </span>
+                    <app-transferee-details *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                        (outputFromChild)="receiveChildData($event)" [readonly]="readonly">
+                    </app-transferee-details>
+
+                </mat-card>
+                <mat-card *ngIf="processName === 'Reservation Transfer'">
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Transfer Request Details</p>
+                        </span>
+                    </span>
+                    <app-transfer-details *ngIf="resDraftData !== undefined" [draftId]="draftId"
+                        [provinceId]="provinceId" [readonly]="readonly" [showOutcome]="false">
+                    </app-transfer-details>
+
+                </mat-card>
+                <mat-card *ngIf="processName === 'Reservation Request'">
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Annexure</p>
+                        </span>
+                    </span>
+                    <app-annexure-reservation *ngIf="resDraftData !== undefined && draftId !== undefined"
+                        [draftData]="resDraftData" [draftId]="draftId" [readonly]="readonly"
+                        [supportingDoc]="supportingDoc" [workflowId]="workflowId" [resubmitData]="resubmitData">
+                    </app-annexure-reservation>
+
+                </mat-card>
+                <mat-card *ngIf="processName === 'Reservation Transfer'">
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Annexure</p>
+                        </span>
+                    </span>
+                    <app-annexure-transfer *ngIf="resDraftData !== undefined" [draftData]="resDraftData"
+                        [draftId]="draftId" [readonly]="readonly" [workflowId]="workflowId"
+                        [resubmitData]="resubmitData" [processId]="processId" [supportingDoc]="supportingDoc">
+                    </app-annexure-transfer>
+
+                </mat-card> -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- <div mat-dialog-footer class="mat-dialog-footer1"> -->
+<!-- <div style="float: left; color: red" *ngIf="disableProcess === true">
+        <ul>
+            <li *ngIf="err1 === true">Applicant Detail - Applicant is required</li>
+            <li *ngIf="err4 === true">Transferee Details- Transferee is required</li>
+            <li *ngIf="err3 === true">Transfer Details- at least one transfer details should be selected</li>
+            <li *ngIf="err2 === true">Application Detail - Delivery method should be selected</li>
+        </ul>
+    </div> -->
+<!-- <div style="float: right;">
+        <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    </div>
+</div> -->

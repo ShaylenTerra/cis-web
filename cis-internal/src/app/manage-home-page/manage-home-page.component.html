@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-content>
+            <p class="heading">Manage My Home Page</p>
+            <mat-spinner *ngIf="isSpinnerVisible" class="center">
+            </mat-spinner>
+            <div *ngIf="!isSpinnerVisible" class="row mx-0 m-t-30">
+                <form id="manage-home-page-form" role="form">
+                    <div class="row m-0" class="default-pg-opt">
+                        <p>Set My Default Page</p>
+                        <mat-radio-group [(ngModel)]="homepage" name="radio">
+                            <mat-radio-button value="tasks/task-list">Active Task</mat-radio-button>
+                            <mat-radio-button value="home">Dashboard</mat-radio-button>
+                            <mat-radio-button value="general/map-viewer">Map</mat-radio-button>
+                            <mat-radio-button value="search/search-page">Search</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="row m-0 toggle-opt">
+                        <p class="w-100">Show/Hide from My Home page </p>
+                        <mat-checkbox [(ngModel)]="bind.ActiveTask" name="a">
+                            Active Task
+                        </mat-checkbox>
+                        <mat-checkbox [(ngModel)]="bind.Notifications" name="a1">
+                            Notifications
+                        </mat-checkbox>
+                        <mat-checkbox [(ngModel)]="bind.MyRequests" name="a2">
+                            My Requests
+                        </mat-checkbox>
+                        <mat-checkbox [(ngModel)]="bind.RequestStatus" name="a3">
+                            Request Status
+                        </mat-checkbox>
+                    </div>
+                    <div class="row m-t-30">
+                        <button (click)="subscribeChanges()" mat-raised-button class="submit-button bover"
+                                type="button">Subscribe
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

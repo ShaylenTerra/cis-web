@@ -1,0 +1,147 @@
+<div class="f-container">
+    <div class="overlay" *ngIf="isSpinnerVisible">
+        <div class="overlay__wrapper">
+            <div class="overlay__spinner">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <mat-card>
+        <mat-card-content>
+            <div class="row">
+                <p class="heading">Delivery Method</p>
+            </div>
+            <div class="row">
+                <p>Select the delivery method you would want to use for the requesting items and enter the necessary
+                    details.
+                </p>
+            </div>
+            <div class="row">
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedMode">
+                    <mat-radio-button *ngFor="let x of selectedModes" [value]="x" (change)="deliveryMediaChange(x)" class="r-margin">{{x.caption}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="row">
+                <mat-card class="gray-card">
+                    <mat-card-content>
+
+                        <div *ngIf="selectedMode?.caption === 'COURIER' || selectedMode?.caption === 'POST'">
+                            <div class="row">
+                                <p class="heading">Confirm your Address</p>
+                            </div>
+                            <div class="row">
+                                <p class="add-text">Confirm the address or add a new address by editing the current
+                                    address.
+                                </p>
+                            </div>
+                            <form [formGroup]="form">
+                                <div class="row f-css">
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Receiver's Name</mat-label>
+                                            <input matInput formControlName="name" [(ngModel)]="name" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Email Address</mat-label>
+                                            <input matInput formControlName="email" [(ngModel)]="email" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Address Line 1</mat-label>
+                                            <input matInput formControlName="add1" [(ngModel)]="add1" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label> Address Line 2 </mat-label>
+                                            <input matInput formControlName="add2" [(ngModel)]="add2">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label> Address Line 3 </mat-label>
+                                            <input matInput formControlName="add3" [(ngModel)]="add3">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Phone No.</mat-label>
+                                            <input matInput formControlName="phone" [(ngModel)]="phone" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Postal Code</mat-label>
+                                            <input matInput formControlName="postalCode" [(ngModel)]="postalCode" required>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div *ngIf="selectedMode?.caption === 'COLLECTION'">
+                            <div class="row">
+                                <p>Your Items Should be collected in the below location once after we schedule date and
+                                    time.
+                                </p>
+                            </div>
+                            <div class="row f-css">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Collect From:</mat-label>
+                                    <textarea matInput [value]="collectionAddress" disabled></textarea>
+                                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - collectionAddress?.length }} characters left</em></span>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row">
+                                <p class="heading">Data Delivery Media</p>
+                            </div>
+                            <div class="row">
+                                <mat-radio-group aria-label="Select an option" [(ngModel)]="deliveryMedia">
+                                    <mat-radio-button *ngFor="let x of deliveryMediasdata" [value]="x" class="r-margin">
+                                        {{x.caption}}</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <mat-checkbox value="auto" [(ngModel)]="ownMedia">I will give my own media to department
+                                </mat-checkbox>
+                            </div>
+                            <div class="row">
+                                <p style="opacity: 0.4;">Note: Quantity will be notified later stage.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Choose File</mat-label>
+                                    <input matInput disabled [value]="uploadedFileName">
+                                    <button mat-icon-button matSuffix (click)="fileInput.click()">
+                                        <mat-icon class="attach">attach_file</mat-icon>
+                                    </button>
+                                    <input hidden (change)="selectFile($event)" #fileInput type="file" id="newFile">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12">
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>Comments</mat-label>
+                                    <textarea matInput rows="4" [(ngModel)]="comment" style="color: black;"></textarea>
+                                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - comment?.length }} characters left</em></span>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <button class="finsih-css" (click)="checkout()">Finish Checkout</button>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

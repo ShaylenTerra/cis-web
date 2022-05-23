@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <p class="heading">Permissions</p>
+                    <p class="text-css">Select Role to Access/Revert Permissions</p>
+                </div>
+            </div>
+            <div *ngIf="isSpinnerVisible">
+                <mat-spinner></mat-spinner>
+            </div>
+            <mat-tab-group (selectedTabChange)="userTypeSelected($event)" *ngIf="!isSpinnerVisible">
+                <mat-tab label="Internal Roles Permissions">
+                    <div class="container-fluid">
+                        <div class="row mt-3">
+                            <span class="col-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select Role</mat-label>
+                                    <mat-select (selectionChange)="roleChange('3')" [(value)]="selectedInternalRole">
+                                        <mat-option *ngFor="let role of internalRoles" [value]="role.roleName">
+                                            {{role.roleName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="selectedInternalRole!=''" class="col-4">
+                                <section *ngFor="let prev of bindPrivileges">
+                                    <mat-checkbox (change)="SetPrivilege($event)"
+                                                  [checked]="isAssigned(prev.id,selectedInternalRole)"
+                                                  [value]="prev">{{prev.name}}</mat-checkbox>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col">
+                                <button mat-raised-button (click)="updateRoles()" class="submit-button" mat-button>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="External Roles Permissions">
+                    <div class="container-fluid">
+                        <div class="row mt-3">
+                            <span class="col-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select Role</mat-label>
+                                    <mat-select (selectionChange)="roleChange('4')" [(value)]="selectedExternalRole">
+                                        <mat-option *ngFor="let role of externalRoles" [value]="role.roleName">
+                                            {{role.roleName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div *ngIf="selectedExternalRole!=''" class="col-4">
+                                <section *ngFor="let prev of bindPrivileges">
+                                    <mat-checkbox (change)="SetPrivilege($event)"
+                                                  [checked]="isAssigned(prev.id,selectedExternalRole)"
+                                                  [value]="prev">{{prev.name}}</mat-checkbox>
+                                </section>
+                            </div>
+
+                        </div>
+                        <div class="row my-3">
+                            <div class="col">
+                                <button mat-raised-button (click)="updateRoles()" class="submit-button" mat-button>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</div>

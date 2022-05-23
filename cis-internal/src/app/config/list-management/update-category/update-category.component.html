@@ -1,0 +1,40 @@
+<h4 mat-dialog-title><span>Edit {{data?.header}}</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+    
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Item Code</mat-label>
+                        <input matInput [(ngModel)]="data.data.itemCode" [ngModelOptions]="{standalone: true}" disabled>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Caption</mat-label>
+                        <input matInput formControlName="caption" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Description</mat-label>
+                        <input matInput formControlName="description" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-slide-toggle formControlName="isActive" ngDefaultControl>Is Active
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="back-button back" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover" mat-raised-button>Submit</button>
+</div>

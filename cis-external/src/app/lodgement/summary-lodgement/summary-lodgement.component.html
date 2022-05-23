@@ -1,0 +1,422 @@
+<div class="padd-right">
+    <span class="row mx-0 mt-3">
+
+        <span class="col-12">
+            <mat-card>
+
+                <button class="submit-button bover" style="size: 30px;margin-top: 10px; float: right;cursor: pointer;"
+                    [hidden]="readonly" mat-raised-button [useExistingCss]="true" printSectionId="print-section"
+                    ngxPrint>Print</button>
+                <div id="print-section">
+                    <div class="row mx-0 mt-3" style="margin-top:50px;">
+                        <div class="col-8 mt-5">
+                            <div class="row mx-0 ">
+                                <span class="col-12 ">
+                                    <label><b style="font-weight: bold;">Name</b> : {{draftData?.name}}</label>
+                                </span>
+                            </div>
+                            <div class="row mx-0  mt-2">
+                                <span class="col-12">
+                                    <label><b style="font-weight: bold;">Applicant Name</b> :
+                                        {{draftData?.userName}}</label>
+                                </span>
+                            </div>
+                            <div class="row mx-0  mt-2">
+                                <span class="col-6">
+                                    <label><b style="font-weight: bold;">Deliver Method</b> :
+                                        {{draftData?.deliveryMethod}}</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <!-- <div class="row mx-0 mt-4">
+                                <div class="outer">
+                                    <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                                        style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                                        (mouseover)="'assets/images/users/user.webp'" (mouseout)="url">
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="mt-4 ml-3">
+                        <span class="row mx-0">
+                            <span class="col-12">
+                                <h3>Parcel / Reservation Details</h3>
+                            </span>
+                        </span>
+                        <div>
+                            <div *ngFor="let data of lodgeDraftData">
+                                <span class="row mx-0 mt-3" *ngIf="data?.lodgementDraftRequests.length > 0">
+                                    <span class="col-12">
+                                        <mat-card class="card-table-tasks card filter-card">
+                                            <mat-card-title style="background-color: #f1f1f1;">
+                                                <span class="row p-l-0" style="padding: 10px;">
+                                                    <span [ngClass]="!readonly ? 'col-md-3' : 'col-md-12 mt-1 p-1'">
+                                                        <h6 [ngClass]="!readonly ? 'mt-0' : 'mt-1'">
+                                                            {{data.documentType}} -
+                                                            {{data.requestReason}}</h6>
+                                                    </span>
+                                                    <span class="col-md-7" [hidden]="readonly">
+
+                                                    </span>
+                                                    <span class="col-md-2" [hidden]="readonly">
+
+                                                    </span>
+                                                </span>
+                                            </mat-card-title>
+                                            <mat-card-content class="table-tasks" style="overflow-x: hidden;margin-top: -5px;
+                                            display: flex;">
+                                                <span class="col-11 mt-3 p-l-0" style="margin-top:-20px !important">
+                                                    <!-- <div>
+                                                        <p>No parcel found, please search and add parcel</p>
+                                                    </div> -->
+                                                    <div class="row mx-0 mt-2" mat-line>
+                                                        <div class="node" fxFlex="1 0 100%" fxLayout="row wrap"
+                                                            fxLayoutAlign="start center">
+                                                            <span class="col-5 p-r-0">
+                                                                <p style="font-weight: bold;">
+                                                                    Parcel Details</p>
+                                                            </span>
+
+                                                            <span class="col-7 p-r-0">
+                                                                <p style="font-weight: bold;text-align: left;">
+                                                                    Reservation Details</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let y of data?.lodgementDraftRequests; let i= index">
+                                                        <div *ngIf="y?.lodgementDraftDocuments.length > 0"
+                                                            class="row mx-0 mt-2" mat-line>
+                                                            <div fxFlex="1 0 100%" fxLayout="row wrap"
+                                                                fxLayoutAlign="start center">
+                                                                <span class="col-4 p-r-0" style="display: inline-flex;">
+
+                                                                    <!-- <mat-icon *ngIf="data.requestReason === 'Consolidation' && i == 1"
+                                                                    style="cursor: pointer; font-size: 25px; margin: 2px;color:'#FFCC00'">
+                                                                    warning
+                                                                </mat-icon> -->
+                                                                    <mat-icon
+                                                                        *ngIf="data.requestReason === '   ' && i !== 1"
+                                                                        style="cursor: pointer; font-size: 25px; margin: 2px;color:'#FFCC00'">
+
+                                                                    </mat-icon>
+                                                                    &nbsp;&nbsp;
+                                                                    <p class="truncate" style="cursor: pointer;"
+                                                                        matTooltip="{{y?.parentParcels?.designation}}">
+
+                                                                        {{y?.parentParcels?.designation}}
+                                                                    </p>
+
+                                                                </span>
+                                                                <span class="col-1">
+
+                                                                </span>
+
+                                                                <span class="col-4 p-r-0">
+                                                                    <p class="truncate" matTooltip="{{y?.designation}}}"
+                                                                        [style.color]="y?.Status === 'Lodged' || y?.Status === 'Lodged-InProgress' ? '#dddddd' : ''">
+                                                                        {{y?.designation}}}</p>
+
+                                                                </span>
+                                                                <!-- <span class="col-2  p-r-0">
+                                                                <p class="truncate"
+                                                                    [style.color]="y.Status === 'Lodged' || y.Status === 'Lodged-InProgress' ? '#dddddd' : ''">
+                                                                    {{y.Status}}</p>
+                        
+                                                            </span> -->
+                                                                <span class="col-2  p-r-0">
+                                                                    <p class="truncate">
+                                                                        {{y?.lodgementDraftDocuments.length}} Documents
+                                                                    </p>
+
+                                                                </span>
+                                                                <span class="col-1">
+                                                                    <div class="dropdown menu" style="float: right"
+                                                                        [hidden]="preview">
+                                                                        <span matTooltip="More Options"
+                                                                            [matMenuTriggerFor]="optionsMenu2"
+                                                                            #menuTrigger="matMenuTrigger"
+                                                                            class="hover-display"
+                                                                            [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                                            <img alt=""
+                                                                                src="assets/images/Three dots.png"
+                                                                                class="mb-3">
+                                                                        </span>
+                                                                        <mat-menu style="display: flex-end;"
+                                                                            #optionsMenu2="matMenu"
+                                                                            [overlapTrigger]="true">
+                                                                            <button mat-menu-item
+                                                                                (click)="UploadLodgeDoc(data.stepId,y.requestId, data, y?.designation)"
+                                                                                style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                                                <mat-icon matTooltip="Info"
+                                                                                    style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                                                    upload_file
+                                                                                </mat-icon> Document upload
+                                                                            </button>
+                                                                            <button mat-menu-item
+                                                                                (click)="navigateTaskProfile(y?.reservationWorkflowId)"
+                                                                                style="cursor: pointer; margin: 2px;border:none;background-color: transparent;">
+                                                                                <mat-icon matTooltip="View Property"
+                                                                                    color="primary"
+                                                                                    style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                                                    visibility
+                                                                                </mat-icon> View
+                                                                                {{y?.reservationReferenceNumber}}
+                                                                            </button>
+                                                                        </mat-menu>
+                                                                    </div>
+
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </mat-card-content>
+                                            <mat-card-footer style="background-color: #f1f1f1;">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <span class="col">
+                                                            <button class="download-css float-left"
+                                                                [hidden]="preview || readonly"
+                                                                style="border:none;text-align: right;float:right;cursor: pointer;background-color: transparent;margin-left:10px">
+                                                                <mat-icon matTooltip="Upload" [disabled]="preview"
+                                                                    style="cursor: pointer; font-size: 32px;float: right;">
+                                                                    upload_file
+                                                                </mat-icon>
+                                                            </button>
+
+                                                            <button class="map-css float-left"
+                                                                style="border:none;text-align: right;float:right;cursor: pointer;background-color: transparent;margin-left:10px">
+                                                                <mat-icon matTooltip="View on map"
+                                                                    (click)="viewOnMap(steps?.stepId, steps?.draftId)"
+                                                                    style="cursor: pointer; font-size: 32px;float: right;">
+                                                                    map
+                                                                </mat-icon>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <span style="float:right; margin: 10px;">
+                                                            <span>
+                                                                <a style="color: blue;cursor: pointer;"
+                                                                    (click)="viewDetails(data?.stepId)">No. of document
+                                                                </a> : {{data.totalDocuments}}
+                                                            </span>
+                                                            <!-- &nbsp;&nbsp;
+                                                                    <span>
+                                                                        <a style="color: blue;cursor: pointer;" (click)="viewDetails()">No. of pages
+                                                                        </a> : {{data.page}}
+                                                                    </span> -->
+                                                            <!-- &nbsp;&nbsp;
+                                                            <span>
+                                                                <a style="color: blue;cursor: pointer;"
+                                                                    (click)="viewDetails(data?.stepId)">Estimated Cost
+                                                                    (R) </a> : {{data.Cost}}
+                                                            </span> -->
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </mat-card-footer>
+                                        </mat-card>
+                                    </span>
+
+
+                                </span>
+
+                                <div class="mt-4" *ngIf="data?.lodgementDraftRequests.length === 0">
+                                    <center>No Data available</center>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="mt-3 ml-3">
+                        <span class="row mx-0">
+                            <span class="col-12">
+                                <h3>Document and estimated cost</h3>
+                            </span>
+                        </span>
+                        <span class="row mx-0 mt-2">
+                            <span class="col-12">
+                                <mat-card class="card-table-tasks"
+                                    style="cursor: pointer; width: -webkit-fill-available">
+                                    <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                        <!-- <div class="row"> -->
+                                        <table [dataSource]="dataSource" class="table-margin w-100 m-0 inline-table"
+                                            mat-table matSort
+                                            *ngIf="paymentDetailsData.length > 0 && paymentDetailsData !== undefined">
+
+                                            <ng-container matColumnDef="documentType">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-left-radius: 8px;
+                                                border-bottom-left-radius: 8px;width: 20%;">Document Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element?.documentType}}</td>
+                                                <td mat-footer-cell *matFooterCellDef>Total</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="purposeType">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Purpose Type</th>
+                                                <td *matCellDef="let element" mat-cell>{{element?.purposeType}}</td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="count">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>No Of Document
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    <div style="text-align: right;padding-right:25px;">
+                                                        {{element?.count}}
+                                                    </div>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+                                                    <div style="text-align: right;padding-right:25px;">
+                                                        {{totalDoc}}
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                            <!-- <ng-container matColumnDef="noOfPages">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>No Of Pages</th>
+                                                    <td *matCellDef="let element" mat-cell>{{element.noOfPages}}</td>
+                                                    <td mat-footer-cell *matFooterCellDef>11</td>
+                                                </ng-container> -->
+                                            <ng-container matColumnDef="totalCost">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-right-radius: 8px;
+                                                border-bottom-right-radius: 8px;width: 20%;">Estimated Cost(R)
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    <div style="text-align: right;padding-right:3px;">
+                                                        {{element?.totalCost | number : '1.2-2'}}
+                                                    </div>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef>
+                                                    <div style="text-align: right;padding-right:3px;">{{totalAmount |
+                                                        number : '1.2-2'}}
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                                            <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
+                                            <tr mat-footer-row *matFooterRowDef="columns; sticky: true"></tr>
+                                        </table>
+                                        <div fxLayoutAlign="center center" class="mt-4"
+                                            *ngIf="paymentDetailsData?.length === 0 || paymentDetailsData === undefined">
+                                            <p>No data available</p>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                                <!-- </div> -->
+                            </span>
+                        </span>
+                    </div>
+
+
+                    <div class="mt-3 ml-3">
+                        <span class="row mx-0">
+                            <span class="col-12">
+                                <h3>Lodgement Document</h3>
+                            </span>
+                        </span>
+                        <span class="row mx-0 mt-2">
+                            <span class="col-12">
+                                <mat-card class="card-table-tasks"
+                                    style="cursor: pointer; width: -webkit-fill-available">
+                                    <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                        <table [dataSource]="lodgeDocumentDataSource"
+                                            *ngIf="(lodgementDocumentData !== undefined && lodgementDocumentData !== null) || lodgementDocumentData.length > 0"
+                                            class="table-margin w-100 m-0 inline-table" mat-table matSort>
+                                            <ng-container matColumnDef="documentName">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="padding-left: 10px;border-top-left-radius: 8px;
+                                                border-bottom-left-radius: 8px;width: 20%;">Name
+                                                </th>
+                                                <td *matCellDef="let element, let i = index;" mat-cell>
+                                                    {{element?.documentName}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="documentType">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
+                                                <td *matCellDef="let element" mat-cell style="padding-left:3px; ">
+                                                    {{element?.documentType}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="purposeType">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Purpose Type</th>
+                                                <td *matCellDef="let element" mat-cell style="padding-left:3px; ">
+                                                    {{element?.purposeType}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="dated">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element?.dated | date:'dd-MMM-yyyy'}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="notes">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Notes</th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element?.notes}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Action" [hidden]="!preview">
+                                                <th *matHeaderCellDef mat-header-cell style="border-top-right-radius: 8px;
+                                                border-bottom-right-radius: 8px;width: 10%;">Action</th>
+                                                <td *matCellDef=" let element" mat-cell style="cursor: pointer;">
+                                                    <div class="dropdown menu" style="text-align: center;">
+                                                        <span matTooltip="More Options"
+                                                            [matMenuTriggerFor]="optionsMenu"
+                                                            #menuTrigger="matMenuTrigger" class="hover-display"
+                                                            [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                            <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                                        </span>
+                                                        <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
+                                                            [overlapTrigger]="true">
+                                                            <button mat-menu-item
+                                                                style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                                (click)="downloadDoc(element)">
+                                                                <mat-icon matTooltip="View Document" color="primary"
+                                                                    style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                                    visibility
+                                                                </mat-icon> View
+                                                            </button>
+                                                            <!-- <button mat-menu-item
+                                                                style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                                (click)="deleteDoc(element)">
+                                                                <mat-icon matTooltip="Delete Document"
+                                                                    style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                                    delete
+                                                                </mat-icon> Remove
+                                                            </button> -->
+                                                        </mat-menu>
+                                                    </div>
+
+                                                </td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="lodgeDocumentcolumns" mat-header-row></tr>
+                                            <tr *matRowDef="let element; columns: lodgeDocumentcolumns" mat-row></tr>
+                                        </table>
+
+                                        <div fxLayoutAlign="center center" class="mt-4" style="width: 100%;"
+                                            *ngIf="lodgementDocumentData?.length === 0 || lodgementDocumentData === undefined">
+                                            <p>No data available</p>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="row my-3" [hidden]="readonly">
+                    <div class="col mb-3">
+                        <span class="float-right">
+                            <button mat-raised-button class="submit-button bover"
+                                style="height: 44px; margin-right: 5px;width: 150px;"
+                                (click)="previewDraft()">Preview</button>
+                        </span>
+                    </div>
+                </div>
+            </mat-card>
+
+        </span>
+    </span>
+</div>

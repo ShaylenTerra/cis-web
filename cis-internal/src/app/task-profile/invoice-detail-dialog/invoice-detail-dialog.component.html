@@ -1,0 +1,544 @@
+<h4 mat-dialog-title><span>Invoice Details</span></h4>
+<div style="margin-left: 1.7%; margin-right: 1.7%;">
+    <!-- <div *ngIf="nodeDetails.FormID == 3"> -->
+        <p class="sub-heading" style="color:green" *ngIf="paymentInfo !== null">Invoice Generated</p>
+        <hr>
+        <div *ngFor="let item of ItemData;let j = index" class="row" style="display: flex;margin-top:20px">
+            <!-- <div class="col-3 pr-1">
+                <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                border-color: rgba(0,0,0,.2);">
+                <ngx-skeleton-loader *ngIf="showImageLoader" count="5" appearance="circle" [theme]="{
+                    width: '70px',
+                    height: '70px',
+                    'border-radius': '10px'
+                  }">
+                </ngx-skeleton-loader>
+                    <ngx-gallery *ngIf="!showImageLoader" #gallery [options]="galleryOptions" [images]="item.searchDetails.imageArray" class="ngx-gallery"></ngx-gallery>
+                </div>
+                <span class="row justify-content-center mt-3">
+                </span>
+            </div>
+            <div class="col-9">
+                <div class="row">
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Region</p>
+                                <p class="desc-text mt-0">{{item.searchDetails ? item.searchDetails.region !== undefined ? item.searchDetails.region : item.searchDetails.minorRegion : ''}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Parcel Type</p>
+                                <p class="desc-text mt-0">{{item.searchDetails ? item.searchDetails.parcelType : ''}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Parcel</p>
+                                <p class="desc-text mt-0">{{(item.searchDetails.parcel != null && item.searchDetails.parcel != undefined) ? item.searchDetails.parcel :
+                                    (item.searchDetails.erfNumber != null && item.searchDetails.erfNumber != undefined ? item.searchDetails.erfNumber : (item.searchDetails.farmNumber != null && item.searchDetails.farmNumber != undefined ? item.searchDetails.farmNumber : item.searchDetails.holdingNumber))}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Province</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.province}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">SG Number</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.sgNo}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">File Size (KB)</p>
+                                <p class="desc-text mt-0">
+                                    {{item.searchDetails.totalFileSize}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Total Pages</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.totalPages}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">LPI</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.lpi}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Municipality</p>
+                                <p class="desc-text mt-0">{{item.searchDetails?.localMunicipalityName}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Portion</p>
+                                <p class="desc-text mt-0">{{item.searchDetails?.portion}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Document Type</p>
+                                <p class="desc-text mt-0">{{item.searchDetails?.documentType}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Document Sub Type</p>
+                                <p class="desc-text mt-0">{{item.searchDetails?.documentSubType}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box" *ngIf="item.searchDetails.filterName != undefined">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">{{item.searchDetails?.filterName}}</p>
+                                <p class="desc-text mt-0">{{item.searchDetails?.searchNumber}}
+                                </p>
+                            </span>
+                            <span class="col">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 43px;">
+                    <div class="col">
+                        <table [dataSource]="item.cartInvoiceItems" class="w-100" mat-table>
+                            <ng-container matColumnDef="sno">
+                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                <td *matCellDef="let element" mat-cell>{{element.sno}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="Item">
+                                <th *matHeaderCellDef mat-header-cell>Item</th>
+                                <td *matCellDef="let element" mat-cell>
+                                    {{element.item}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="type">
+                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                <td *matCellDef="let element" mat-cell>
+                                    {{
+                                    element?.item == 130 || element?.item == 127 ?
+                                        '' :
+                                        (element?.item == 126 || element?.item == 129 || element?.item == 125)
+                                            ? element.type : element.type
+
+                                    }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="details">
+                                <th *matHeaderCellDef mat-header-cell>Details</th>
+                                <td *matCellDef="let element" mat-cell>
+                                    {{
+                                        element?.details
+                                    }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="estimate">
+                                <th *matHeaderCellDef mat-header-cell>System Estimate (R)</th>
+                                <td *matCellDef="let element"
+                                    mat-cell>{{element.systemEstimate}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="time">
+                                <th *matHeaderCellDef mat-header-cell>Time Required</th>
+                                <td *matCellDef="let element; let index = index" mat-cell>
+                                    <input readonly
+                                           [(ngModel)]="element.timeRequired"
+                                           style="height: 80%; width: 70%; border-radius: 4px;"
+                                           type="text"
+                                           value="element.timeRequired">
+                                         
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="comment">
+                                <th *matHeaderCellDef mat-header-cell>Comments</th>
+                                <td *matCellDef="let element; let index = index" mat-cell>
+                                    <textarea
+                                    readonly
+                                            [(ngModel)]="element.comments"
+                                            rows="1"
+                                            style="width: 70%; border-radius: 4px;color: black;"
+                                            value="element.comments"></textarea>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="finalCost">
+                                <th *matHeaderCellDef mat-header-cell>Final Cost (R)</th>
+                                <td *matCellDef="let element; let index = index" mat-cell>
+                                    <input readonly
+                                           [(ngModel)]="element.finalCost"
+                                           style="height: 80%; width: 90%; border-radius: 4px;"
+                                           type="number"
+                                           value="element.finalCost">
+                                </td>
+                            </ng-container>
+                            <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                            <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+                        </table>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-3 pr-1" *ngIf="item.searchDetails != undefined && item.templateListItemId !== 567">
+                <div class="gallery-wrapper" style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+            -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+            border-color: rgba(0,0,0,.2);">
+                    <ngx-skeleton-loader *ngIf="showImageLoader" count="5"
+                        appearance="circle" [theme]="{
+                width: '70px',
+                height: '70px',
+                'border-radius': '10px'
+              }"></ngx-skeleton-loader>
+                    <ngx-gallery *ngIf="!showImageLoader" #gallery1
+                        [options]="galleryOptions" [images]="item.searchDetails.imageArray"
+                        class="ngx-gallery">
+                    </ngx-gallery>
+                </div>
+                <span class="row justify-content-center mt-3">
+                    <button mat-raised-button class="yellow-button bmapover"
+                        (click)="openViewMapDialog(item.searchDetails)">View Map</button>
+                    <button mat-raised-button (click)="navigate(item)"
+                        class="yellow-button bmapover">View
+                        Profile</button>
+                </span>
+            </div>
+            <div class="col-3 pr-1" *ngIf="item.searchDetails != undefined && item.templateListItemId === 567">
+                <div class="gallery-wrapper"
+                        style="box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                    -webkit-box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+                                    border-color: rgba(0,0,0,.2);height: 380px;width: 230px;">
+                        <span fxLayoutAlign="center center">No Preview available</span>
+
+                    </div>
+            </div>
+            <div class="col-9" *ngIf="item.searchDetails != undefined">
+                <div class="row" *ngIf="item.templateListItemId !== 567">
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Region</p>
+                                <p class="desc-text mt-0">{{item.searchDetails ?
+                                    item.searchDetails.region !== undefined ?
+                                    item.searchDetails.region :
+                                    item.searchDetails.minorRegion :
+                                    ''}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Parcel Type</p>
+                                <p class="desc-text mt-0">{{item.searchDetails ?
+                                    item.searchDetails.parcelType : ''}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Parcel</p>
+                                <p class="desc-text mt-0">{{(item.searchDetails.parcel !=
+                                    null
+                                    &&
+                                    item.searchDetails.parcel != undefined) ?
+                                    item.searchDetails.parcel :
+                                    (item.searchDetails.erfNumber != null &&
+                                    item.searchDetails.erfNumber != undefined ?
+                                    item.searchDetails.erfNumber :
+                                    (item.searchDetails.farmNumber !=
+                                    null && item.searchDetails.farmNumber != undefined ?
+                                    item.searchDetails.farmNumber :
+                                    item.searchDetails.holdingNumber))}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Province</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.province}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">SG Number</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.sgNo}}</p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">File Size (KB)</p>
+                                <p class="desc-text mt-0">
+                                    {{item.searchDetails.totalFileSize}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Total Pages</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.totalPages}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">LPI</p>
+                                <p class="desc-text mt-0">{{item.searchDetails.lpi}}</p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Municipality</p>
+                                <p class="desc-text mt-0">
+                                    {{item.searchDetails?.localMunicipalityName}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Portion</p>
+                                <p class="desc-text mt-0">{{item.searchDetails?.portion}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">Document Type</p>
+                                <p class="desc-text mt-0">
+                                    {{item.searchDetails?.documentType}}
+                                </p>
+                            </span>
+                            <span class="col">
+                                <p class="info-text mb-0">Document Sub Type</p>
+                                <p class="desc-text mt-0">
+                                    {{item.searchDetails?.documentSubType}}
+                                </p>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 gray-box"
+                        *ngIf="item.searchDetails.filterName != undefined">
+                        <span class="row">
+                            <span class="col">
+                                <p class="info-text mb-0">{{item.searchDetails?.filterName}}
+                                </p>
+                                <p class="desc-text mt-0">
+                                    {{item.searchDetails?.searchNumber}}
+                                </p>
+                            </span>
+                            <span class="col">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="row" *ngIf="item.templateListItemId === 567">
+                    <div class="row">
+                        <div class="col-12 col-md-12 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="info-text">Category</span>
+                                    <br>
+                                    <span
+                                        class="desc-text">{{item.searchDetails?.categoryName}}</span>
+                                </span>
+                                <span class="col">
+                                    <span class="info-text">Subcategory</span>
+                                    <br>
+                                    <span class="desc-text">{{item.searchDetails?.name}}</span>
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="col-12 col-md-12 gray-box">
+                            <span class="row">
+                                <span class="col">
+                                    <span class="desc-text"><b>Description</b></span>
+                                    <br>
+                                    <span
+                                        class="info-text">{{item.searchDetails?.description}}</span>
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="col-12 col-md-12 gray-box">
+                            <span class="desc-text"><b>Information Type</b></span>
+
+                            <span class="row info-text">
+                                <div class="col-12 col-md-6">
+                                    <!-- <mat-checkbox [checked]='true' [disableRipple]="true"
+                                        (click)="$event.preventDefault()"> -->
+                                        <span>{{item.searchDetails?.categoryName}}<b>{{searchDetails?.name}}</b></span>
+                                    <!-- </mat-checkbox> -->
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 43px;">
+                    <div class="col">
+                        <table [dataSource]="item.cartInvoiceItems" class="w-100" mat-table>
+                            <ng-container matColumnDef="sno">
+                                <th *matHeaderCellDef mat-header-cell>Sno.</th>
+                                <td *matCellDef="let element" mat-cell>{{element.sno}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="Item">
+                                <th *matHeaderCellDef mat-header-cell>Item</th>
+                                <td *matCellDef="let element" mat-cell>
+                                    {{element.item}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="type">
+                                <th *matHeaderCellDef mat-header-cell>Type</th>
+                                <td *matCellDef="let element" mat-cell>
+                                    {{
+                                    element?.item == 130 || element?.item ==
+                                    127 ?
+                                    '' :
+                                    (element?.item == 126 || element?.item ==
+                                    129
+                                    || element?.item == 125)
+                                    ? element.type : element.type
+
+                                    }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="details">
+                                <th *matHeaderCellDef mat-header-cell>Details</th>
+                                <td *matCellDef="let element" mat-cell>
+                                    {{
+                                    element?.details
+                                    }}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="estimate">
+                                <th *matHeaderCellDef mat-header-cell>System Estimate (R)
+                                </th>
+                                <td *matCellDef="let element" mat-cell>
+                                    {{element.systemEstimate}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="time">
+                                <th *matHeaderCellDef mat-header-cell>Time Required</th>
+                                <td *matCellDef="let element; let index = index" mat-cell>
+                                    <input readonly
+                                        (change)="UpdatedItem(element.timeRequired,'time',index,j)"
+                                        [(ngModel)]="element.timeRequired"
+                                        style="height: 80%; width: 70%; border-radius: 4px;"
+                                        type="text" value="element.timeRequired">
+
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="comment">
+                                <th *matHeaderCellDef mat-header-cell>Comments</th>
+                                <td *matCellDef="let element; let index = index" mat-cell>
+                                    <textarea readonly
+                                        (change)="UpdatedItem(element.comments,'comments',index,j)"
+                                        [(ngModel)]="element.comments" rows="1"
+                                        class="autogrow"
+                                        style="width: 70%; border-radius: 4px;color: black;"
+                                        value="element.comments"></textarea>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="finalCost">
+                                <th *matHeaderCellDef mat-header-cell>Final Cost (R)</th>
+                                <td *matCellDef="let element; let index = index" mat-cell>
+                                    <input readonly
+                                        (change)="UpdatedItem(element.finalCost,'finalCost',index,j)"
+                                        [(ngModel)]="element.finalCost"
+                                        style="height: 80%; width: 90%; border-radius: 4px;"
+                                        type="number" value="element.finalCost">
+                                </td>
+                            </ng-container>
+                            <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                            <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" *ngIf="item.templateListItemId === 567">
+                    <div class="col">
+                        <span class="desc-text"><b>Notes</b>
+                        </span>
+                        <br>
+                        <div class="row f-css">
+                            <mat-form-field appearance="outline">
+                            <!-- <mat-label>Notes</mat-label> -->
+                            <textarea [(ngModel)]="item.cartInvoiceItems[0].notes"
+                                matInput style="color: black;" disabled></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Delivery Method</mat-label>
+                    <mat-select disabled
+                                [(ngModel)]="selectedMode">
+                        <mat-option *ngFor="let x of selectedModes"
+                                    [value]="x">{{x.caption}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <input readonly [(ngModel)]="deliveryMethodPrice"
+                       class="float-right" placeholder="0 ZAR"
+                       style="border-radius: 4px;" type="number" value="0">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Delivery Medium</mat-label>
+                    <mat-select disabled
+                                [(ngModel)]="deliveryMedia">
+                        <mat-option *ngFor="let x of deliveryMediasdata" [value]="x"
+                                    class="r-margin">{{x.caption}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-2" *ngIf="selectedMode?.caption !== 'ELECTRONIC'">
+                <mat-form-field appearance="outline">
+                    <mat-label>No of DVDs</mat-label>
+                    <input readonly [(ngModel)]="noOfCD" matInput type="number"/>
+                </mat-form-field>
+            </div>
+            <div class="col-3" *ngIf="selectedMode?.caption !== 'ELECTRONIC'">
+                <mat-form-field appearance="outline">
+                    <mat-label>Notes to Add:</mat-label>
+                    <textarea [(ngModel)]="notes" matInput readonly
+                              placeholder="Please pay before 1st Jan." style="color: black;"></textarea>
+                              <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <input readonly [(ngModel)]="deliveryModePrice"
+                       class="float-right" placeholder="0 ZAR"
+                       style="border-radius: 4px;" type="number" value="0">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col gray-box" style="height: 50px;">
+                <div class="float-left">
+                    <!-- <span (click)="previewEmail()"
+                          class="desc-text"
+                          style="text-decoration: underline; color: #016533; cursor: pointer;">Preview
+                        Email</span> -->
+                </div>
+                <div class="float-right py-3">
+                    Total Cost:<strong> {{total}} ZAR </strong>
+                    <!-- <a (click)="saveInvoiceData(true,'view')"  [disabled]="paymentInfo !== null"
+                       class="desc-text"
+                       style="text-decoration: underline; color: #016533; cursor: pointer;">View
+                        Invoice</a> -->
+                </div>
+            </div>
+        </div>
+
+
+    <div mat-dialog-actions style="float: right;">
+        <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    </div>

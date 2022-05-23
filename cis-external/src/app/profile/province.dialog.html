@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Select Province</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Select</mat-label>
+        <mat-select [(value)]="selectedProvinceCode">
+            <mat-option *ngFor="let x of data.provinces" [value]="x.provinceCode">
+                {{ x.provinceName }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<br>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+</div>

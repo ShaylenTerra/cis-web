@@ -1,0 +1,296 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div>
+            <!-- <div class="row">
+                <span class="col-xs-12 col-md-12 col-sm-12 col-lg-4">
+                    <p class="heading"></p>
+                </span>
+                <span class="col-xs-12 col-md-12 col-sm-12 col-lg-5"></span>
+
+                <div id="custom-search-input" class="col-xs-12 col-md-12 col-sm-12 col-lg-3">
+                    <div class="input-group">
+                        <input (keyup)="applyFilter($event)" class="search-query form-control" placeholder="Search" />
+                        <span class="input-group-btn">
+                            <button type="button">
+                                <span><i class="fa fa-search" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div> -->
+            <div class="row mx-0 tab-grid-remove">
+                <div *ngIf="!isSpinnerVisible" class="col-xs-12 col-sm-12 col-md-12 col-lg-3 card filter-card">
+                    <span class="col">
+                        <div class="left-col-button mx-auto">
+                            <span class="mx-0 w-100 pt-2">
+                                <span class="">
+                                    <form [formGroup]="requestTypeForm">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Request Type</mat-label>
+                                            <mat-select formControlName="reqType"
+                                                (selectionChange)="onRequestTypeChange($event.value)" multiple>
+                                                <mat-option *ngFor="let requestType of requestTypes"
+                                                    [value]="requestType.key">
+                                                    {{ requestType.key }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </form>
+                                    <span class="mt-2">
+                                        <mat-radio-group [value]="radioTypeSelected" aria-label="Select an option"
+                                            class="r-css">
+                                            <mat-radio-button (change)="ondateFilter(0)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '0' ? true : false"
+                                                matTooltip="Today Requests" value="0">
+                                                <span [matBadge]="dateBadges[0]" matBadgeOverlap="false">All</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(1)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '1' ? true : false"
+                                                matTooltip="Today Requests" value="1">
+                                                <span [matBadge]="dateBadges[1]" matBadgeOverlap="false">Today</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(7)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '7' ? true : false"
+                                                matTooltip="Last 7 Days Requests" value="7">
+                                                <span [matBadge]="dateBadges[7]" matBadgeOverlap="false">Last 7
+                                                    Days</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(30)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '30' ? true : false"
+                                                matTooltip="Last 30 Days Requests" value="30">
+                                                <span [matBadge]="dateBadges[30]" matBadgeOverlap="false">Last 30
+                                                    Days</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button #custom (change)="ondateFilter(5)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '5' ? true : false" matTooltip="Custom"
+                                                value="5">Custom</mat-radio-button>
+                                        </mat-radio-group>
+                                    </span>
+                                </span>
+                            </span>
+                            <span *ngIf="custom.checked" class="row mx-0 w-100">
+                                <form [formGroup]="dateRangeForm">
+                                    <span class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>From Date</mat-label>
+                                            <input (dateChange)="datechangeEvent()" [matDatepicker]="picker1"
+                                                formControlName="startDate" matInput
+                                                style="font-size: 11px !important;">
+                                            <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </span>
+                                    <span class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>To Date</mat-label>
+                                            <input (dateChange)="datechangeEvent()" [matDatepicker]="picker2"
+                                                [min]="startDate" formControlName="endDate" matInput
+                                                style="font-size: 11px !important;">
+                                            <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </span>
+                                </form>
+                            </span>
+                        </div>
+                        <form [formGroup]="requestTypeForm">
+                            <div class="left-col-button mx-auto">
+                                <span class="row mx-0 w-100 py-2 r-css"> Priority </span>
+                                <span aria-label="Select an option" class="r-css" style="display: inline-grid;">
+
+                                    <mat-checkbox formControlName="reqPriority" (change)="onRequestPriority($event)"
+                                        *ngFor="let p of priorityList" [value]="p.key" class="checkbox-margin"
+                                        [checked]="p.checked">
+                                        <span [matBadge]="p.count" matBadgeOverlap="false">{{p.key}}</span>
+                                    </mat-checkbox>
+                                </span>
+                            </div>
+                            <div class="left-col-button mx-auto">
+                                <span class="row mx-0 w-100 py-2 r-css"> Distribution By Action </span>
+                                <span aria-label="Select an option" class="r-css" style="display: inline-grid;">
+                                    <mat-checkbox formControlName="reqAction" (change)="onRequestAction($event)"
+                                        *ngFor="let a of Action" [value]="a.key" class="checkbox-margin"
+                                        matBadgeOverlap="false" [checked]="a.checked">
+                                        <span [matBadge]="a.count" matBadgeOverlap="false">{{a.key}}</span>
+                                    </mat-checkbox>
+                                </span>
+                            </div>
+                        </form>
+                        <div class="left-col-button mx-auto">
+                            <span class="row mx-0 w-100 py-2">
+                                <section aria-label="Select an option" class="r-css">
+                                    <mat-checkbox value="3" [(ngModel)]="showDelegate"
+                                        (change)="onDelegateAction($event)">
+                                        <span [matBadge]="delegateBadgeCount" matBadgeOverlap="false">Show Delegated
+                                            Tasks</span>
+                                    </mat-checkbox>
+                                </section>
+                            </span>
+                        </div>
+                    </span>
+                </div>
+                <div class="col-lg-9">
+                    <mat-tab-group>
+                        <mat-tab label="Inbox">
+                            <div [hidden]="isSpinnerVisible" class="padd-right">
+                                <span class="row mx-0">
+                                    <span class="col padd-right">
+                                        <div class="row mx-0 my-3">
+                                            <span class="col p-0">
+                                                <h2 style="display: inline-block;">My Tasks</h2>
+                                            </span>
+                                            <span class="col p-0">
+                                                <a (click)="download()" class="download-css float-right">
+                                                    <mat-icon matTooltip="Download">file_download</mat-icon>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <mat-card class="card-table-tasks">
+
+                                            <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                                <table [dataSource]="dataSource"
+                                                    class="table-margin w-100 m-0 inline-table" mat-table matSort>
+                                                    <ng-container matColumnDef="processName">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-left-radius: 8px;
+                                                        border-bottom-left-radius: 8px;">Task Type</th>
+                                                        <td *matCellDef="let element" mat-cell
+                                                            style="padding-left: 10px;">{{element.processName}}
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="referenceNo">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Ref Code
+                                                        </th>
+                                                        <td *matCellDef="let element" mat-cell>{{element.referenceNo}}
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="triggeredOn">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header> Date
+                                                            Created</th>
+                                                        <td *matCellDef="let element" mat-cell>{{element.triggeredOn |
+                                                            date:"dd/MMM/yyyy"}}</td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="assignedToUser">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                                                            User</th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{element.assignedToUser}}
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="actionRequiredDescription">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header> Stage
+                                                        </th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            {{element.actionRequiredDescription}}
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="priorityName">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header> Priority
+                                                        </th>
+                                                        <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                            <span
+                                                                [className]="element.priorityName === 'High' ? 'high-priority' : element.priorityName === 'Medium' ? 'medium-priority' : 'other-priority'">
+                                                                {{element.priorityName}}
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="internalStatusCaption">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header> Status
+                                                        </th>
+                                                        <td *matCellDef="let element" mat-cell>
+                                                            <span [className]="element.internalStatusCaption === 'Approved' ? 's-Approved' : 
+                                                                    (element.internalStatusCaption === 'In Progress' ? 's-InProgress' : 
+                                                                    (element.internalStatusCaption === 'Pending' ? 's-pending' : 
+                                                                    (element.internalStatusCaption === 'Reserved' ? 's-Reserved' : 
+                                                                    's-completed')))">{{element.internalStatusCaption}}
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="sla">
+                                                        <th *matHeaderCellDef mat-header-cell mat-sort-header> Duration
+                                                        </th>
+                                                        <td *matCellDef="let element" mat-cell>{{element.triggeredOn |
+                                                            dateDifference:serverDate}}
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="action">
+                                                        <th *matHeaderCellDef mat-header-cell style="border-top-right-radius: 8px;
+                                                        border-bottom-right-radius: 8px;">Action</th>
+                                                        <td (click)="gotoTaskDetails(element)" *matCellDef="let element"
+                                                            class="table-details" mat-cell>Open Task
+                                                        </td>
+                                                    </ng-container>
+                                                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                                                </table>
+                                                <!-- <div class="row" style="float: right;">
+                                                    {{activePageFrom}} - {{activePageTo}} of {{totalInboxTasks}}
+                                                    <mat-icon style="cursor: pointer;" (click)="activeprevious()">
+                                                        keyboard_arrow_left
+                                                    </mat-icon>
+                                                    &nbsp; &nbsp;<label></label>&nbsp;
+                                                    <mat-icon style="cursor: pointer;" (click)="activenext()">
+                                                        keyboard_arrow_right
+                                                    </mat-icon>
+                                                </div> -->
+                                                <div>
+                                                    <mat-paginator #paginator [length]="dataLength"
+                                                        [pageSizeOptions]="[10,15,20]" [pageSize]="10"
+                                                        showFirstLastButtons>
+                                                    </mat-paginator>
+                                                </div>
+                                            </mat-card-content>
+                                        </mat-card>
+
+                                    </span>
+                                </span>
+                            </div>
+                        </mat-tab>
+                        <mat-tab *ngIf="!isSpinnerVisible" label="My Diary">
+                            <div class="row my-3 mx-0">
+                                <span class="col p-0">
+                                    <h2>My Diary</h2>
+                                </span>
+                            </div>
+                            <div>
+                                <mat-card>
+                                    <div *ngIf="calendarVisible" class='app-calendar'>
+                                        <full-calendar #calendar (eventClick)="eventClick($event)"
+                                            [events]="calendarEvents" [header]="{
+                                            left: 'prev,next today',
+                                            center: 'title',
+                                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                                          }" [plugins]="calendarPlugins" [weekends]="calendarWeekends"
+                                            contentHeight="auto" deepChangeDetection="true" defaultView="dayGridMonth">
+                                        </full-calendar>
+                                    </div>
+                                </mat-card>
+                            </div>
+                        </mat-tab>
+                        <mat-tab *ngIf="!isSpinnerVisible" label="Task Distribution Map">
+                            <div class="row my-3 mx-0">
+                                <span class="col p-0">
+                                    <h2>My Tasks Map</h2>
+                                </span>
+                            </div>
+                            <div>
+                                <mat-card>
+                                    <div>
+                                        <iframe allowfullscreen="true" frameborder="0" height="450px" id="iFrameURL"
+                                            [src]="mapsrc" width="100%"></iframe>
+                                    </div>
+                                </mat-card>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,775 @@
+<div mat-dialog-title>
+    <span class="Headings">Reservation Transfer - {{resDraftData?.name}} of
+        {{resDraftData?.provinceName}}<i class="fa fa-window-close" aria-hidden="true" (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span>
+    <span>
+        <button class="submit-button bover"
+            style="right: 20px;size: 30px;margin-left: 10px; float: right;cursor: pointer;" mat-raised-button
+            [useExistingCss]="true" printSectionId="print-section" ngxPrint>Print</button>
+    </span>
+</div>
+<div mat-dialog-content class="mat-dialog-content1">
+    <!-- <div class="w-100"> -->
+    <div class="container-fluid pr-0" id="print-section">
+        <div class="row mx-0 tab-grid-remove">
+            <div class="col-lg-12">
+                <mat-card>
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Application Details</p>
+                        </span>
+                    </span>
+                    <form [formGroup]="formApplication" class="m-3 p-3">
+
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Name:</label>
+                            </div>
+                            <div class="col-6">
+                                <!-- <mat-form-field appearance="outline">
+                                    <mat-label>Name</mat-label>
+                                    <input formControlName="name"
+                                    matInput disabled readonly [ngModelOptions]="{ standalone: true }">
+                                </mat-form-field> -->
+                                <label>{{formApplication.get('name').value}}</label>
+                            </div>
+                        </div>
+
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Purpose:</label>
+                            </div>
+                            <div class="col-6">
+                                <!-- <quill-editor #quill [styles]="{height: '200px'}" formControlName="purpose"
+                                [ngModelOptions]="{ standalone: true }" disabled readonly>
+                                </quill-editor> -->
+                                <span [innerHTML]="formApplication.get('purpose').value | safeHtml"></span>
+                            </div>
+                        </div>
+                        <div class="row mx-0 mt-2">
+                            <div class="col-md-2">
+                                <label style="font-weight: bold;">Survey Date(if any):</label>
+                            </div>
+                            <div class="col-6">
+                                <!-- <mat-form-field appearance="outline">
+                                    <mat-label>Survey Date</mat-label>
+                                    <input formControlName="surveyDate" [matDatepicker]="picker1" [min]="minDate"
+                                    matInput [ngModelOptions]="{ standalone: true }"
+                                    disabled readonly autocomplete="off">
+                                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field> -->
+                                <label>{{formApplication.get('surveyDate').value | date:"d-MMM-y"}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <mat-card class="gray-card">
+                                <mat-card-content>
+                                    <div class="row">
+                                        <p class="heading">Delivery Method</p>
+                                    </div>
+                                    <div class="row">
+                                        <p>Select the delivery method you would want to use for the requesting items
+                                            and enter the necessary
+                                            details.
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <label class="mt-4">{{resDraftData?.deliveryMethod}}</label>
+                                        <!-- <mat-radio-group disabled readonly [(ngModel)]="selectedMode" aria-label="Select an option" formControlName="deliveryMethodItemId">
+                                        <mat-radio-button disabled readonly *ngFor="let x of selectedModes" [value]="x.itemId" class="r-margin">{{x.caption}}
+                                        </mat-radio-button>
+                                    </mat-radio-group> -->
+                                    </div>
+                                    <div
+                                        *ngIf="formApplication.get('deliveryMethodItemId').value === 79 || formApplication.get('deliveryMethodItemId').value === 168">
+                                        <div class="row">
+                                            <p class="heading">Confirm your Address</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="add-text">Confirm the address or add a new address by editing
+                                                the current
+                                                address.
+                                            </p>
+                                        </div>
+                                        <!-- <form [formGroup]="form"> -->
+                                        <div class="row f-css">
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Receiver's Name</mat-label>
+                                                    <input [(ngModel)]="name" disabled
+                                                        [ngModelOptions]="{standalone: true}" matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Email Address</mat-label>
+                                                    <input [(ngModel)]="emailDelivery" disabled
+                                                        [ngModelOptions]="{standalone: true}" matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Address Line 1</mat-label>
+                                                    <input [(ngModel)]="add1" disabled
+                                                        [ngModelOptions]="{standalone: true}" matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label> Address Line 2</mat-label>
+                                                    <input [(ngModel)]="add2" disabled
+                                                        [ngModelOptions]="{standalone: true}" matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label> Address Line 3</mat-label>
+                                                    <input [(ngModel)]="add3" disabled
+                                                        [ngModelOptions]="{standalone: true}" matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Phone No.</mat-label>
+                                                    <input [(ngModel)]="phone" disabled
+                                                        [ngModelOptions]="{standalone: true}" matInput>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Postal Code</mat-label>
+                                                    <input [(ngModel)]="postalCode" disabled
+                                                        [ngModelOptions]="{standalone: true}" matInput>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <!-- </form> -->
+                                    </div>
+
+                                    <div *ngIf="formApplication.get('deliveryMethodItemId').value === 80">
+                                        <div class="row">
+                                            <p>Your Items Should be collected in the below location once after we
+                                                schedule date and
+                                                time.
+                                            </p>
+                                        </div>
+                                        <div class="row f-css">
+                                            <label class="mt-4">{{collectionAddress}}</label>
+                                            <!-- <mat-form-field appearance="outline">
+                                            <mat-label>Collect From:</mat-label>
+                                            <textarea [value]="collectionAddress" disabled matInput style="color: black;"></textarea>
+                                            <span class="pull-right char" style="color: black;"><em>{{ 1000 - collectionAddress?.length }} characters left</em></span>
+                                        </mat-form-field> -->
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="formApplication.get('deliveryMethodItemId').value === 206">
+                                        <div class="col-6 col-md-6">
+                                            <label class="mt-4"
+                                                *ngIf="formApplication.get('isPrimaryEmail').value == 1 || formApplication.get('isPrimaryEmail').value == null">Primary
+                                                Email</label>
+                                            <label class="mt-4"
+                                                *ngIf="formApplication.get('isPrimaryEmail').value == 0">Secondary
+                                                Email</label>
+                                            <!-- <mat-form-field appearance="outline">
+                                            <mat-label>IsPrimary</mat-label>
+                                            <mat-select matInput [(ngModel)]="isPrimary" formControlName="isPrimaryEmail" disabled readonly>
+                                                <mat-option [value]="1" disabled> Primary</mat-option>
+                                                <mat-option [value]="0" disabled> Secondary</mat-option>
+                                            </mat-select>
+                                        </mat-form-field> -->
+                                        </div>
+                                        <div class="col-6 col-md-6">
+                                            <label class="mt-4">{{electronicEmail}}</label>
+                                            <!-- <mat-form-field appearance="outline">
+                                            <mat-label>Email Address</mat-label>
+                                            <input [(ngModel)]="electronicEmail" [ngModelOptions]="{standalone: true}" disabled readonly matInput>
+                                        </mat-form-field> -->
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </form>
+                </mat-card>
+                <mat-card>
+                    <span class="row mx-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Transferee Details</p>
+                        </span>
+                    </span>
+                    <form [formGroup]="formTransferee" class="m-3 p-3">
+
+                        <div class="row mx-0">
+
+
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Find by email</mat-label>
+                                    <mat-select [(ngModel)]="findByEmailTransferee" readonly disabled
+                                        formControlName="applicantId" (selectionChange)="setEmailDataTransferee()"
+                                        #emailSelectTransferee required>
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="emailFilterCtrlTransferee"
+                                                (ngModelChange)="changeApplicantTransferee($event)"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredEmailTransferee | async" [value]="x">
+                                            {{ x.email }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row mx-0">
+                        <div class="col-8">
+                            <div class="row mx-0 mt-4">
+                                <span class="col-12 ml-3">
+                                    <label><b>Name</b>: {{firstNameTransferee}} {{lastNameTransferee}}</label>
+                                    <!-- <mat-form-field appearance="outline">
+                                                            <mat-label>First Name</mat-label>
+                                                            <input [(ngModel)]="firstName" readonly matInput type="text"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </mat-form-field> -->
+                                </span>
+                                <!-- <span class="col-6">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-label>Last Name</mat-label>
+                                                            <input [(ngModel)]="lastName" readonly matInput type="text"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </mat-form-field>
+                                                    </span> -->
+                            </div>
+                            <div class="row mx-0 ml-3">
+                                <span class="col-6">
+                                    <label><b>Email</b>: {{emailTransferee}}</label>
+                                    <!-- <mat-form-field appearance="outline">
+                                                            <mat-label>Email</mat-label>
+                                                            <input [(ngModel)]="email"
+                                                                [ngModelOptions]="{standalone: true}" matInput
+                                                                type="email" readonly>
+                                                        </mat-form-field> -->
+                                </span>
+                                <span class="col-6">
+                                    <label><b>Mobile</b>: {{mobileNoTransferee}}</label>
+                                    <!-- <mat-form-field appearance="outline">
+                                                            <mat-label>Mobile</mat-label>
+                                                            <input [(ngModel)]="mobileNo" readonly matInput type="tel"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </mat-form-field> -->
+                                </span>
+
+                            </div>
+                            <!-- </form> -->
+                        </div>
+                        <div class="col-4">
+                            <div class="row mx-0 mt-4">
+                                <div class="outer">
+                                    <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                                        style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                                        (mouseover)="'assets/images/users/user.webp'" (mouseout)="urlTransferee">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mx-0 mt-4"
+                        *ngIf='findByEmailTransferee?.userType === "INTERNAL" || findByEmailTransferee?.userType === "EXTERNAL"'>
+                        <span class="col">
+                            <h3>Role Details</h3>
+                        </span>
+                    </div>
+                    <div class="row mx-0" *ngIf='findByEmailTransferee?.userType === "INTERNAL"'>
+                        <div class="col">
+                            <div class="card mt-4">
+                                <table [dataSource]="dataSourceUserRoleTransferee" class="table-margin" mat-table>
+                                    <ng-container matColumnDef="roleName">
+                                        <th *matHeaderCellDef mat-header-cell>Role Name</th>
+                                        <td *matCellDef="let element" class="t-b" mat-cell>{{element.roleName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="sectionName">
+                                        <th *matHeaderCellDef mat-header-cell>Section Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.sectionName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="provinceName">
+                                        <th *matHeaderCellDef mat-header-cell>Province Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.provinceName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="isPrimary">
+                                        <th *matHeaderCellDef mat-header-cell style="border-top-right-radius: 8px;
+                                                                            border-bottom-right-radius: 8px;">Is
+                                            Primary</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <span *ngIf="element.isPrimary === 1" class="bg-fl">
+                                                YES
+                                            </span>
+                                            <span *ngIf="element.isPrimary === 0" class="bg-ss">
+                                                NO
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="tableColumnsTransferee" mat-header-row></tr>
+                                    <tr *matRowDef="let row; columns: tableColumnsTransferee;" mat-row></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0" *ngIf="findByEmailTransferee?.userType=='EXTERNAL'">
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Role</mat-label>
+                                <mat-select matInput disabled [(ngModel)]="roleIdTransferee">
+                                    <mat-option *ngFor="let x of rolesTransferee" [value]="x.roleId">
+                                        {{ x.roleName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-9" style="display: inline-flex;">
+                            <section *ngFor="let x of provincesTransferee">
+                                <mat-checkbox style="margin:5px" [(ngModel)]="x.isSelected" [value]="x.provinceId"
+                                    disabled>
+                                    {{x.provinceName}}
+                                </mat-checkbox>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0" *ngIf="roleIdTransferee === 16 || roleIdTransferee === 21">
+                        <span class="col-12">
+                            <h3>Professional Details</h3>
+                        </span>
+                    </div>
+                    <form [formGroup]="basicInfoPLSFormTransferee"
+                        *ngIf="roleIdTransferee === 16 || roleIdTransferee === 21">
+                        <div class="container-fluid my-3">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>PPN Number</mat-label>
+                                        <input formControlName="ppnNo" [(ngModel)]="ppnNoTransferee"
+                                            [ngModelOptions]="{standalone: true}" matInput disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Courier Service</mat-label>
+                                        <input formControlName="courierService" matInput type="text" disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Business Name</mat-label>
+                                        <input formControlName="businessName" matInput type="text" disabled>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Description</mat-label>
+                                        <textarea formControlName="description" rows=3 matInput disabled></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>General Notes</mat-label>
+                                        <textarea formControlName="generalNotes" rows=3 matInput disabled></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Status</mat-label>
+                                        <input [value]="statusTransferee"
+                                            [ngClass]="statusTransferee === 'ACTIVE' || statusTransferee === 'APPROVED' ?'make-green':'make-red'"
+                                            matInput type="text" readonly>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card>
+                <mat-card>
+                    <span class="row mx-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Applicant Details</p>
+                        </span>
+                    </span>
+                    <form [formGroup]="formApplicant" class="m-3 p-3">
+
+                        <div class="row mx-0">
+
+                            <div class="col-12 col-md-6 col-lg-4 m-t-20">
+                                <p>Are you the applicant for reservation?</p>
+                            </div>
+                            <div class="col-12 col-md-2 col-lg-2 m-t-20">
+                                <label *ngIf="isApplicant == true">Yes</label>
+                                <label *ngIf="isApplicant == false">No</label>
+                                <!-- <mat-radio-group [(ngModel)]="isApplicant" formControlName="isApplicant" (change)="changeApplicant($event)"
+                            required disabled>
+                                <mat-radio-button class="m-r-10" [value]="true" disabled>Yes</mat-radio-button>
+                                <mat-radio-button [value]="false" disabled>No</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="errorMsg != ''">
+                                <p class="text-small">{{errorMsg}}</p>
+                            </mat-error> -->
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-4" *ngIf="isApplicant === false">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Find by email</mat-label>
+                                    <mat-select [(ngModel)]="findByEmail" readonly disabled
+                                        formControlName="applicantId" (selectionChange)="setEmailData()" #emailSelect
+                                        required>
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="emailFilterCtrl"
+                                                (ngModelChange)="changeApplicant($event)"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredEmail | async" [value]="x">
+                                            {{ x.email }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="row mx-0" *ngIf="isApplicant === true || isApplicant === false">
+                        <div class="col-8">
+                            <div class="row mx-0 mt-4">
+                                <span class="col-12 ml-3">
+                                    <label><b>Name</b>: {{firstName}} {{lastName}}</label>
+                                    <!-- <mat-form-field appearance="outline">
+                                            <mat-label>First Name</mat-label>
+                                            <input [(ngModel)]="firstName" readonly matInput type="text"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </mat-form-field> -->
+                                </span>
+                                <!-- <span class="col-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Last Name</mat-label>
+                                            <input [(ngModel)]="lastName" readonly matInput type="text"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </mat-form-field>
+                                    </span> -->
+                            </div>
+                            <div class="row mx-0 ml-3">
+                                <span class="col-6">
+                                    <label><b>Email</b>: {{email}}</label>
+                                    <!-- <mat-form-field appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input [(ngModel)]="email"
+                                                [ngModelOptions]="{standalone: true}" matInput
+                                                type="email" readonly>
+                                        </mat-form-field> -->
+                                </span>
+                                <span class="col-6">
+                                    <label><b>Mobile</b>: {{mobileNo}}</label>
+                                    <!-- <mat-form-field appearance="outline">
+                                            <mat-label>Mobile</mat-label>
+                                            <input [(ngModel)]="mobileNo" readonly matInput type="tel"
+                                                [ngModelOptions]="{standalone: true}">
+                                        </mat-form-field> -->
+                                </span>
+
+                            </div>
+                            <!-- </form> -->
+                        </div>
+                        <div class="col-4">
+                            <div class="row mx-0 mt-4">
+                                <div class="outer">
+                                    <img [src]="url ? url : 'assets/images/users/dp.jpg'" alt=""
+                                        style="width: 128px;height: 128px;border-radius: 50%; cursor: pointer;"
+                                        (mouseover)="'assets/images/users/user.webp'" (mouseout)="url">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mx-0 mt-4"
+                        *ngIf='findByEmail?.userType === "INTERNAL" || findByEmail?.userType === "EXTERNAL"'>
+                        <span class="col ml-4">
+                            <h3>Role Details</h3>
+                        </span>
+                    </div>
+                    <div class="row mx-0" *ngIf='findByEmail?.userType === "INTERNAL"'>
+                        <div class="col">
+                            <div class="card mt-4">
+                                <table [dataSource]="dataSourceUserRole" class="table-margin" mat-table matSort>
+                                    <ng-container matColumnDef="roleName">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Role Name</th>
+                                        <td *matCellDef="let element" class="t-b" mat-cell>{{element.roleName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="sectionName">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Section Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.sectionName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="provinceName">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Province Name</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.provinceName}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="isPrimary">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-right-radius: 8px;
+                                                            border-bottom-right-radius: 8px;">Is
+                                            Primary</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <span *ngIf="element.isPrimary === 1" class="bg-fl">
+                                                YES
+                                            </span>
+                                            <span *ngIf="element.isPrimary === 0" class="bg-ss">
+                                                NO
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                                    <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0" *ngIf="findByEmail?.userType=='EXTERNAL'">
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Role</mat-label>
+                                <mat-select matInput disabled [(ngModel)]="roleId">
+                                    <mat-option *ngFor="let x of roles" [value]="x.roleId">
+                                        {{ x.roleName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-9" style="display: inline-flex;">
+                            <section *ngFor="let x of provinces">
+                                <mat-checkbox style="margin:5px" [(ngModel)]="x.isSelected" [value]="x.provinceId"
+                                    disabled>{{x.provinceName}}
+                                </mat-checkbox>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0" *ngIf="roleId === 16 || roleId === 21">
+                        <span class="col-12">
+                            <h3>Professional Details</h3>
+                        </span>
+                    </div>
+                    <form [formGroup]="basicInfoPLSForm" *ngIf="roleId === 16 || roleId === 21">
+                        <div class="container-fluid my-3">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>PPN Number</mat-label>
+                                        <input formControlName="ppnNo" [(ngModel)]="ppnNo"
+                                            [ngModelOptions]="{standalone: true}" matInput disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Courier Service</mat-label>
+                                        <input formControlName="courierService" matInput type="text" disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Business Name</mat-label>
+                                        <input formControlName="businessName" matInput type="text" disabled>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Description</mat-label>
+                                        <textarea formControlName="description" rows=3 matInput disabled></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>General Notes</mat-label>
+                                        <textarea formControlName="generalNotes" rows=3 matInput disabled></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Status</mat-label>
+                                        <input [value]="status"
+                                            [ngClass]="status === 'ACTIVE' || status === 'APPROVED' ?'make-green':'make-red'"
+                                            matInput type="text" readonly>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card>
+                <mat-card>
+                    <span class="row mx-0" style="background-color: #F1F1F1;">
+                        <span class="col">
+                            <p class="sub-heading">Transfer Request Details</p>
+                        </span>
+                    </span>
+                    <div>
+
+                        <div [hidden]="isSpinnerVisible" class="padd-right mt-3">
+                            <span class="row mx-0 mt-1">
+                                <span class="col padd-right">
+                                    <mat-card class="card-table-tasks">
+                                        <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                            <table [dataSource]="dataSourceTransfer"
+                                                class="table-margin w-100 m-0 inline-table" mat-table matSort>
+                                                <ng-container matColumnDef="designation">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                        style="padding-left: 10px; border-top-left-radius: 8px;
+                                                                                                                        border-bottom-left-radius: 8px;">
+                                                        Designation</th>
+                                                    <td *matCellDef="let element" mat-cell style="padding-left: 10px;">
+                                                        {{element.designation}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="lpi" style="padding-left: 10px;">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>LPI
+                                                    </th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.lpi}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="status">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Status
+                                                    </th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.status}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="reason">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Reservation
+                                                        Reason
+                                                    </th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.reason}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="issueDate">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Issue Date
+                                                    </th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.issueDate | date:"d-MMM-y"}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="expiryDate">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                                                        Expiry Date</th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.expiryDate | date:"d-MMM-y"}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="expiryInDays">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Expiry In
+                                                        Days</th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.expiryInDays}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="referenceNumber">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Reference
+                                                    </th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.referenceNumber}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="name">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Name
+                                                    </th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.name}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="provinceName">
+                                                    <th *matHeaderCellDef mat-header-cell mat-sort-header> Province
+                                                    </th>
+                                                    <td *matCellDef="let element" mat-cell>
+                                                        {{element.provinceName}}
+                                                    </td>
+                                                </ng-container>
+                                                <tr *matHeaderRowDef="displayedColumnsTransfer" mat-header-row></tr>
+                                                <tr *matRowDef="let row; columns: displayedColumnsTransfer;" mat-row>
+                                                </tr>
+                                            </table>
+                                            <div>
+                                                <mat-paginator #paginator [length]="dataLengthTransfer"
+                                                    [pageSizeOptions]="[10,15,20]" [pageSize]="10" showFirstLastButtons>
+                                                </mat-paginator>
+                                            </div>
+                                            <div fxLayoutAlign="center center" class="mt-4"
+                                                *ngIf="reservationData.length === 0 || reservationData.length === null">
+                                                <p>No data available</p>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </span>
+                            </span>
+
+                        </div>
+                    </div>
+                </mat-card>
+                <mat-card>
+                    <span class="row mx-0" style="background-color: #F1F1F1;">
+                        <span class="col">
+                            <p class="sub-heading">Annexure</p>
+                        </span>
+                    </span>
+                    <div class="m-3 p-3">
+
+                        <div class="row mx-0 mt-4">
+                            <div class="col-md-4">
+                                <label style="font-weight: bold;">Additional
+                                    Documentation(if
+                                    available):</label>
+                            </div>
+                            <div class="col-4">
+                                <div *ngIf='additionalDoc.length > 0'>
+                                    <div *ngFor="let x of additionalDoc">
+                                        <span class="row" style="display: contents;">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <h5 style="color: blue;cursor: pointer; margin-top:5px; margin-left: -40px;"
+                                                        (click)="downloaddoc(x)">{{x.documentName}}</h5>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>
+
+<div mat-dialog-footer class="mat-dialog-footer1">
+    <div style="float: left; color: red" *ngIf="disableProcess === true">
+        <ul>
+            <li *ngIf="err1 === true">Applicant Detail - Applicant is required</li>
+            <li *ngIf="err4 === true">Transferee Details- Transferee is required</li>
+            <li *ngIf="err3 === true">Transfer Details- at least one transfer details should be selected</li>
+            <li *ngIf="err2 === true">Application Detail - Delivery method should be selected</li>
+        </ul>
+    </div>
+    <div style="float: right;">
+        <!-- <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+        &nbsp;&nbsp; -->
+        <button (click)="postRequest()" [disabled]="disableProcess" class="submit-button bover"
+            mat-raised-button>Process</button>
+    </div>
+</div>

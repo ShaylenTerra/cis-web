@@ -1,0 +1,190 @@
+<div class="main-page">
+    <div class="container-fluid">
+        <mat-spinner *ngIf="isSpinnerVisible" class="center">
+        </mat-spinner>
+        <div class="row" *ngIf="!isSpinnerVisible">
+            <div class="col-12 col-md-10 col-lg-8 mx-auto">
+                <mat-card>
+                    <mat-card-content>
+                        <div class="text-center">
+                            <img class="logo" src="assets/images/logo-new.png" alt="">
+                        </div>
+                        <h2 class="login-heading welcome text-center">Forgot Password</h2>
+
+                        <div class="row" *ngIf="step1">
+                            <div class="col">
+                                <form [formGroup]="firstForm">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Email</mat-label>
+                                                <input matInput formControlName="email" [(ngModel)]="email">
+                                            </mat-form-field>
+                                            <small
+                                                *ngIf="firstForm.controls['email'].hasError('required') && firstForm.controls['email'].touched"
+                                                class="text-danger support-text">Email Required.</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <a class="forgot" [routerLink]="['/authentication/login']">I prefer to Sign
+                                                In</a>
+                                            <button class="submit-button" [disabled]="!firstForm.valid"
+                                                (click)="submitStep1()">Next</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="step2">
+                            <div class="col">
+                                <form [formGroup]="secondForm">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Security Question 1</mat-label>
+                                                <mat-select matInput formControlName="secQ1"  >
+                                                    <mat-option *ngFor="let x of securityQuestions" [matTooltip]="x.caption" [value]="x">
+                                                        {{ x.caption }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <small
+                                                    *ngIf="secondForm.controls['secQ1'].hasError('required') && secondForm.controls['secQ1'].touched"
+                                                    class="text-danger support-text">Security Question Required.</small>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Answer 1</mat-label>
+                                                <input matInput formControlName="ans1" [(ngModel)]="ans1">
+                                            </mat-form-field>
+                                            <small
+                                                *ngIf="secondForm.controls['ans1'].hasError('required') && secondForm.controls['ans1'].touched"
+                                                class="text-danger support-text">Answer Required.</small>
+                                        </div>
+                                    </div>
+<!--                                    <div class="row">-->
+<!--                                        <div class="col">-->
+<!--                                            <mat-form-field appearance="outline">-->
+<!--                                                <mat-label>Security Question 2</mat-label>-->
+<!--                                                <mat-select matInput formControlName="secQ2"  >-->
+<!--                                                    <mat-option *ngFor="let x of securityQuestions" [matTooltip]="x.caption" [value]="x">-->
+<!--                                                        {{ x.caption }}-->
+<!--                                                    </mat-option>-->
+<!--                                                </mat-select>-->
+<!--                                            </mat-form-field>-->
+<!--                                            <small-->
+<!--                                                    *ngIf="secondForm.controls['secQ2'].hasError('required') && secondForm.controls['secQ2'].touched"-->
+<!--                                                    class="text-danger support-text">Security Question 2 Required.</small>-->
+<!--                                        </div>-->
+<!--                                        <div class="col">-->
+<!--                                            <mat-form-field appearance="outline">-->
+<!--                                                <mat-label>Answer 2</mat-label>-->
+<!--                                                <input matInput formControlName="ans2" [(ngModel)]="ans2">-->
+<!--                                            </mat-form-field>-->
+<!--                                            <small-->
+<!--                                                *ngIf="secondForm.controls['ans2'].hasError('required') && secondForm.controls['ans2'].touched"-->
+<!--                                                class="text-danger support-text">Answer 2 Required.</small>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col">-->
+<!--                                            <mat-form-field appearance="outline">-->
+<!--                                                <mat-label>Security Question 3</mat-label>-->
+<!--                                                <mat-select matInput formControlName="secQ3"  >-->
+<!--                                                    <mat-option *ngFor="let x of securityQuestions" [matTooltip]="x.caption" [value]="x">-->
+<!--                                                        {{ x.caption }}-->
+<!--                                                    </mat-option>-->
+<!--                                                </mat-select>-->
+<!--                                            </mat-form-field>-->
+<!--                                            <small-->
+<!--                                                    *ngIf="secondForm.controls['secQ3'].hasError('required') && secondForm.controls['secQ3'].touched"-->
+<!--                                                    class="text-danger support-text">Security Question 3 Required.</small>-->
+<!--                                        </div>-->
+<!--                                        <div class="col">-->
+<!--                                            <mat-form-field appearance="outline">-->
+<!--                                                <mat-label>Answer 3</mat-label>-->
+<!--                                                <input matInput formControlName="ans3" [(ngModel)]="ans3">-->
+<!--                                            </mat-form-field>-->
+<!--                                            <small-->
+<!--                                                *ngIf="secondForm.controls['ans3'].hasError('required') && secondForm.controls['ans3'].touched"-->
+<!--                                                class="text-danger support-text">Answer 3 Required.</small>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class="row">
+                                        <div class="col" style="text-align: right">
+                                            <button class="submit-button" [disabled]="!secondForm.valid"
+                                                (click)="submitStep2()">Verify</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+<!--                        <div class="row" *ngIf="step3">-->
+<!--                            <div class="col">-->
+<!--                                <form [formGroup]="thirdForm">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col">-->
+<!--                                            <mat-form-field appearance="outline">-->
+<!--                                                <mat-label>New Password</mat-label>-->
+<!--                                                <input matInput [type]="hide1 ? 'password' : 'text'"-->
+<!--                                                    [(ngModel)]="newPassword" formControlName="newPassword">-->
+<!--                                                <button type="button" mat-icon-button matSuffix-->
+<!--                                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">-->
+<!--                                                    <mat-icon (click)="hide1=!hide1">-->
+<!--                                                        {{hide1 ? 'visibility_off' : 'visibility'}}-->
+<!--                                                    </mat-icon>-->
+<!--                                                </button>-->
+<!--                                            </mat-form-field>-->
+<!--                                            <small-->
+<!--                                                *ngIf="thirdForm.controls['newPassword'].hasError('required') && thirdForm.controls['newPassword'].touched"-->
+<!--                                                class="text-danger support-text">New Password Required.</small>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col">-->
+<!--                                            <mat-form-field appearance="outline">-->
+<!--                                                <mat-label>Confirm Password</mat-label>-->
+<!--                                                <input matInput [type]="hide2 ? 'password' : 'text'"-->
+<!--                                                    [(ngModel)]="confirmPassword" formControlName="confirmPassword">-->
+<!--                                                <button type="button" mat-icon-button matSuffix-->
+<!--                                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">-->
+<!--                                                    <mat-icon (click)="hide2=!hide2">-->
+<!--                                                        {{hide2 ? 'visibility_off' : 'visibility'}}-->
+<!--                                                    </mat-icon>-->
+<!--                                                </button>-->
+<!--                                            </mat-form-field>-->
+<!--                                            <small-->
+<!--                                                *ngIf="thirdForm.controls['confirmPassword'].hasError('required') && thirdForm.controls['confirmPassword'].touched"-->
+<!--                                                class="text-danger support-text">Confirm Password Required.</small>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col">-->
+<!--                                            <button class="submit-button" [disabled]="!thirdForm.valid"-->
+<!--                                                (click)="submitStep3()">Next</button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="row" *ngIf="step4">
+                            <div class="col">
+                                <p class="text">A password has been sent to {{email}}</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <button class="back-button" (click)="submitStep4()">Sign in</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

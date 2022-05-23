@@ -1,0 +1,452 @@
+<div class="main-page row">
+  <div class="overlay" *ngIf="isSpinnerVisible">
+    <div class="overlay__wrapper">
+      <div class="overlay__spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 p-0">
+    <div class="left-column-textbox mx-auto">
+      <p class="left-column-textbox-heading">
+        Welcome to The Department of Agriculture, Land Reform and Rural Development (DALRRD) Cadastral Information System website.
+      </p>
+      <p class="left-column-textbox-text">
+        The National Geomatics Management Service (NGMS) is a branch in The Department of Agriculture, Land Reform and Rural Development (DALRRD), whose primary objective is to provide efficient cadastral survey management services and to provide cadastral information services in support of land delivery and orderly development. The Branch is mandated to perform its functions through the Land Survey Act, 1997 (Act No. 8 of 199).
+      </p>
+      <p class="left-column-textbox-sub-heading">
+        This programme is responsible for the following:
+      </p>
+      <ul class="left-column-textbox-list">
+        <li>Regulation of Surveyor-General’s offices</li>
+        <li>Examining and approving all surveys for the registration of land and real rights</li>
+        <li>Maintaining cadastral documents</li>
+        <li>Archiving all cadastral surveys</li>
+        <li>Providing cadastral advisory and information services</li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="login-form">
+      <div class="text-center">
+        <img class="logo" src="assets/images/logo-new.png" alt="">
+      </div>
+      <h2 class="login-heading welcome text-center">Registration</h2>
+      <mat-horizontal-stepper linear labelPosition="bottom" #stepper>
+        <ng-template matStepperIcon="edit">
+          <mat-icon>check</mat-icon>
+        </ng-template>
+        <mat-step completed="false">
+          <form [formGroup]="roleInformationForm">
+            <ng-template matStepLabel>Role Information</ng-template>
+            <div class="row mx-0 mt-2">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter Email Address</mat-label>
+                  <input matInput placeholder="john.doe@example.com" [(ngModel)]="user.email" formControlName="email"
+                    required />
+                </mat-form-field>
+                <small
+                  *ngIf="roleInformationForm.controls['email'].hasError('required') && roleInformationForm.controls['email'].touched"
+                  class="text-danger support-text">Email Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm Email Address</mat-label>
+                  <input matInput placeholder="john.doe@example.com" formControlName="confirmEmail" required />
+                </mat-form-field>
+                <small
+                  *ngIf="roleInformationForm.controls['confirmEmail'].hasError('required') && roleInformationForm.controls['confirmEmail'].touched"
+                  class="text-danger support-text">Email Required.</small>
+                <br>
+                <small
+                  *ngIf="roleInformationForm.controls['confirmEmail'].hasError('equalTo') && roleInformationForm.controls['confirmEmail'].touched"
+                  class="text-danger support-text">Confirm Email should be same as above Email!</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Select Primary Province</mat-label>
+                  <mat-select matInput required formControlName="province" [(ngModel)]="province">
+                    <mat-option *ngFor="let x of provinces" [value]="x">
+                      {{ x.provinceName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="roleInformationForm.controls['province'].hasError('required') && roleInformationForm.controls['province'].touched"
+                  class="text-danger support-text">Province Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Select Role</mat-label>
+                  <mat-select matInput required formControlName="role" (selectionChange)="onRoleChange($event)"
+                    [(ngModel)]="role">
+                    <mat-option *ngFor="let role of roles" [value]="role">
+                      {{ role.roleName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="roleInformationForm.controls['role'].hasError('required') && roleInformationForm.controls['role'].touched"
+                  class="text-danger support-text">Role Required.</small>
+              </span>
+            </div>
+            <div *ngIf="showProfDetail">
+              <div formArrayName="roleInfo" *ngFor="let item of roleInformationForm.get('roleInfo').controls; 
+                              let i = index;">
+                <div [formGroupName]="i">
+                  <div class="row mx-0">
+                    <span class="col">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Enter Practioner Number</mat-label>
+                        <input matInput formControlName="ppn" [(ngModel)]="ppno" placeholder="XXXXXXX" required
+                          (change)="validateppno()">
+                      </mat-form-field>
+                    </span>
+                  </div>
+                  <div class="row mx-0">
+                    <span class="col">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Enter Practice</mat-label>
+                        <input matInput formControlName="nameofpractise" [(ngModel)]="practicename" required
+                          type="text">
+                      </mat-form-field>
+                    </span>
+                  </div>
+                  <div class="row mx-0">
+                    <span class="col">
+                      <mat-form-field appearance="outline">
+                        <mat-label *ngIf="fileData; else newFile">{{fileData.name}}</mat-label>
+                        <ng-template #newFile>
+                          <mat-label>Upload Registration Documents</mat-label>
+                        </ng-template>
+                        <input matInput disabled>
+                        <button mat-icon-button matSuffix (click)="fileInput.click()">
+                          <mat-icon>attach_file</mat-icon>
+                        </button>
+                        <input hidden (change)="onFileChange($event)" formControlName="companydoc" #fileInput
+                          type="file" id="file">
+                      </mat-form-field>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="isLSA">
+              <div formArrayName="roleInfo" *ngFor="let item of roleInformationForm.get('roleInfo').controls; 
+                let i = index;">
+                <div [formGroupName]="i">
+                  <div class="row mx-0">
+                    <span class="col">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Enter Practioner Number</mat-label>
+                        <input matInput formControlName="ppn" [(ngModel)]="ppno" placeholder="XXXXXXX" required
+                          (change)="validateppno()">
+                      </mat-form-field>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mx-0 mt-1 mb-2">
+              <span class="col my-2" style="font-size: 14px;color: red">{{errormsg}}</span>
+            </div>
+            <div class="row mx-0 mt-2 mb-4">
+              <span class="col my-2" style="font-size: 14px;">
+                I already have an account, <a [routerLink]="['/authentication/login']" style="color:#7856ff;"><u>
+                    Sign In</u></a>
+              </span>
+              <span class="col">
+                <button type="button" class="submit-button float-right" (click)="roleinfo()">Confirm and Next</button>
+              </span>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <form [formGroup]="personalInformationForm">
+            <ng-template matStepLabel>Personal Information</ng-template>
+            <div class="row mx-0 mt-2">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Title</mat-label>
+                  <mat-select matInput formControlName="salutation" [(ngModel)]="user.titleItemId">
+                    <mat-option *ngFor="let x of titles" [value]="x.itemId">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['salutation'].hasError('required') && personalInformationForm.controls['salutation'].touched"
+                  class="text-danger support-text">Title Required.</small>
+              </span>
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input matInput placeholder="John" formControlName="firstname" [(ngModel)]="user.firstName"
+                    required />
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['firstname'].hasError('required') && personalInformationForm.controls['firstname'].touched"
+                  class="text-danger support-text">First Name Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput placeholder="Doe" formControlName="lastname" [(ngModel)]="user.surname" required />
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['lastname'].hasError('required') && personalInformationForm.controls['lastname'].touched"
+                  class="text-danger support-text">Last Name Required.</small>
+              </span>
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Telephone</mat-label>
+                  <input matInput placeholder="814XXXXXXX" formControlName="telephone" [(ngModel)]="user.telephoneNo">
+                </mat-form-field>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Country Code</mat-label>
+                  <input matInput formControlName="countryCode" [(ngModel)]="countryCode">
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['countryCode'].hasError('required') && personalInformationForm.controls['countryCode'].touched"
+                  class="text-danger support-text">Country Code Required.</small>
+              </span>
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Mobile</mat-label>
+                  <input matInput placeholder="814XXXXXXX" formControlName="mobile" [(ngModel)]="user.mobileNo">
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['mobile'].hasError('required') && personalInformationForm.controls['mobile'].touched"
+                  class="text-danger support-text">Mobile Number Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Organisation</mat-label>
+                  <mat-select matInput formControlName="orgtype" [(ngModel)]="orgtype">
+                    <mat-option *ngFor="let x of organizationTypes" [value]="x">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['orgtype'].hasError('required') && personalInformationForm.controls['orgtype'].touched"
+                  class="text-danger support-text">Organisation Required.</small>
+              </span>
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Sector</mat-label>
+                  <mat-select matInput formControlName="sector" [(ngModel)]="sector">
+                    <mat-option *ngFor="let x of sectors" [value]="x">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['sector'].hasError('required') && personalInformationForm.controls['sector'].touched"
+                  class="text-danger support-text">Sector Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address Line 1</mat-label>
+                  <input matInput placeholder="Address Line 1" formControlName="addressline1"
+                    [(ngModel)]="user.postalAddrLine1">
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['addressline1'].hasError('required') && personalInformationForm.controls['addressline1'].touched"
+                  class="text-danger support-text">Address Line 1 Required.</small>
+              </span>
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address Line 2</mat-label>
+                  <input matInput placeholder="Address Line 2" formControlName="addressline2"
+                    [(ngModel)]="user.postalAddrLine2">
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['addressline2'].hasError('required') && personalInformationForm.controls['addressline2'].touched"
+                  class="text-danger support-text">Address Line 2 Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Address Line 3</mat-label>
+                  <input matInput placeholder="Address Line 3" formControlName="addressline3"
+                    [(ngModel)]="user.postalAddrLine3">
+                </mat-form-field>
+              </span>
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Postal Code</mat-label>
+                  <input matInput placeholder="XXXX" formControlName="zipcode" [(ngModel)]="user.postalCode">
+                </mat-form-field>
+                <small
+                  *ngIf="personalInformationForm.controls['zipcode'].hasError('required') && personalInformationForm.controls['zipcode'].touched"
+                  class="text-danger support-text">Postal Code Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0 mt-2 mb-4">
+              <span class="col mt-2">
+                <button type="button" class="back-button" matStepperPrevious>Back</button>
+              </span>
+              <span class="col mt-2">
+                <button type="button" class="submit-button" style="width: 210px;" (click)="personelinfo()">Confirm and
+                  Next</button>
+              </span>
+            </div>
+
+          </form>
+        </mat-step>
+        <mat-step>
+          <form [formGroup]="moreInformationForm">
+            <ng-template matStepLabel>More Details</ng-template>
+            <div class="row mx-0 mt-2">
+              <span class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Preferred Mode of Communication</mat-label>
+                  <mat-select matInput formControlName="communication" [(ngModel)]="comType">
+                    <mat-option *ngFor="let x of communcationTypes" [value]="x">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="moreInformationForm.controls['communication'].hasError('required') && moreInformationForm.controls['communication'].touched"
+                  class="text-danger support-text">Communication Mode Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Security Question 1</mat-label>
+                  <mat-select matInput formControlName="secq1" (selectionChange)="onSecqChange()" [(ngModel)]="secq1">
+                    <mat-option *ngFor="let x of securityQuestions" [matTooltip]="x.caption" [value]="x">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="moreInformationForm.controls['secq1'].hasError('required') && moreInformationForm.controls['secq1'].touched"
+                  class="text-danger support-text">Security Question 1 Required.</small>
+              </span>
+              <span class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Answer</mat-label>
+                  <input matInput placeholder="answer" formControlName="ans1" [(ngModel)]="seca1">
+                </mat-form-field>
+                <small
+                  *ngIf="moreInformationForm.controls['ans1'].hasError('required') && moreInformationForm.controls['ans1'].touched"
+                  class="text-danger support-text">Answer 1 Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Security Question 2</mat-label>
+                  <mat-select matInput formControlName="secq2" (selectionChange)="onSecqChange()" [(ngModel)]="secq2">
+                    <mat-option *ngFor="let x of securityQuestions" [matTooltip]="x.caption" [value]="x">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="moreInformationForm.controls['secq2'].hasError('required') && moreInformationForm.controls['secq2'].touched"
+                  class="text-danger support-text">Security Question 2 Required.</small>
+              </span>
+              <span class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Answer</mat-label>
+                  <input matInput placeholder="answer" formControlName="ans2" [(ngModel)]="seca2">
+                </mat-form-field>
+                <small
+                  *ngIf="moreInformationForm.controls['ans2'].hasError('required') && moreInformationForm.controls['ans2'].touched"
+                  class="text-danger support-text">Answer 2 Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Security Question 3</mat-label>
+                  <mat-select matInput formControlName="secq3" (selectionChange)="onSecqChange()" [(ngModel)]="secq3">
+                    <mat-option *ngFor="let x of securityQuestions" [matTooltip]="x.caption" [value]="x">
+                      {{ x.caption }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small
+                  *ngIf="moreInformationForm.controls['secq3'].hasError('required') && moreInformationForm.controls['secq3'].touched"
+                  class="text-danger support-text">Security Question 3 Required.</small>
+              </span>
+              <span class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Answer</mat-label>
+                  <input matInput placeholder="answer" formControlName="ans3" [(ngModel)]="seca3">
+                </mat-form-field>
+                <small
+                  *ngIf="moreInformationForm.controls['ans3'].hasError('required') && moreInformationForm.controls['ans3'].touched"
+                  class="text-danger support-text">Answer 3 Required.</small>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-checkbox class="Enable-Information-Notification" matInput formControlName="information"
+                  [(ngModel)]="user.subscribeNotifications">
+                  Enable Information Notifications</mat-checkbox>
+              </span>
+              <span class="col">
+                <mat-checkbox class="Enable-News-Notification" matInput formControlName="news"
+                  [(ngModel)]="user.subscribeEvents">
+                  Enable News Notifications</mat-checkbox>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-checkbox class="Enable-Events-Notification" matInput formControlName="events"
+                  [(ngModel)]="user.subscribeNews">
+                  Enable Events Notifications</mat-checkbox>
+              </span>
+            </div>
+            <div class="row mx-0">
+              <span class="col">
+                <mat-checkbox class="I-Agree-with-all-the-Terms-and-Conditions" matInput required formControlName="tc">
+                  <b>I agree with
+                    <span class="text-style-1 common-style" (click)="openTAndC()">Terms and Conditions</span></b>
+                </mat-checkbox>
+                <small
+                  *ngIf="moreInformationForm.controls['tc'].hasError('required') && moreInformationForm.controls['tc'].touched"
+                  class="text-danger support-text">Please agree T&C</small>
+              </span>
+            </div>
+            <div class="row mx-0 mt-2 mb-4">
+              <span class="col">
+                <button class="back-button" type="button" matStepperPrevious>Back</button>
+              </span>
+              <span class="col">
+                <button class="submit-button float-right" s (click)="confirm()" type="button"
+                  style="width: 120px;">Submit</button>
+              </span>
+            </div>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+
+    </div>
+  </div>
+</div>

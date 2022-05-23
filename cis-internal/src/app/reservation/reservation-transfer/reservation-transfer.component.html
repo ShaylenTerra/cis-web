@@ -1,0 +1,232 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div class="container-fluid pr-0">
+            <span class="row mx-0">
+                <span class="col p-l-0" style="display: inline-flex;">
+                    <p class="Headings">Reservation Register</p>
+                </span>
+            </span>
+            <div class="row mx-0 tab-grid-remove">
+                <div *ngIf="!isSpinnerVisible" class="col-xs-12 col-sm-12 col-md-12 col-lg-3 card filter-card">
+                    <span class="col">
+                        <div class="left-col-button mx-auto">
+                            <span class="mx-0 w-100 pt-2">
+                                <span class="">
+                                    <form [formGroup]="requestTypeForm">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Owner</mat-label>
+                                            <mat-select formControlName="reqType"
+                                                (selectionChange)="onRequestTypeChange($event.value)" multiple>
+                                                <mat-option *ngFor="let requestType of requestTypes"
+                                                    [value]="requestType.key">
+                                                    {{ requestType.key }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </form>
+                                    <form [formGroup]="requestTypeForm">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Province</mat-label>
+                                            <mat-select multiple formControlName="reqPriority"
+                                                (selectionChange)="onRequestPriority($event.value)">
+                                                <mat-option *ngFor="let data of priorityList" [value]="data.key">
+                                                    {{ data.key }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </form>
+                                    <form [formGroup]="requestTypeForm">
+                                        <!-- <div class="left-col-button mx-auto">
+                                            <span class="row mx-0 w-100 py-2 r-css"> Priority </span>
+                                            <span aria-label="Select an option" class="r-css" style="display: inline-grid;">
+                
+                                                <mat-checkbox formControlName="reqPriority" (change)="onRequestPriority($event)" *ngFor="let p of priorityList"
+                                                              [value]="p.key" class="checkbox-margin" [checked]="p.checked">
+                                                    <span [matBadge]="p.count" matBadgeOverlap="false">{{p.key}}</span>
+                                                </mat-checkbox>
+                                            </span>
+                                        </div> -->
+                                        <div class="left-col-button mx-auto">
+                                            <span class="row mx-0 w-100 py-2 r-css"> Distribution By Reason </span>
+                                            <span aria-label="Select an option" class="r-css"
+                                                style="display: inline-grid;">
+                                                <mat-checkbox formControlName="reqAction"
+                                                    (change)="onRequestAction($event)" *ngFor="let a of Action"
+                                                    [value]="a.key" class="checkbox-margin" matBadgeOverlap="false"
+                                                    [checked]="a.checked">
+                                                    <span [matBadge]="a.count" matBadgeOverlap="false">{{a.key}}</span>
+                                                </mat-checkbox>
+                                            </span>
+                                        </div>
+                                    </form>
+                                    <span class="mt-2">
+                                        <span class="row mx-0 w-100 py-2 r-css"> Expired</span>
+                                        <mat-radio-group [value]="radioTypeSelected" aria-label="Select an option"
+                                            class="r-css">
+                                            <mat-radio-button (change)="ondateFilter(0)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '0' ? true : false"
+                                                matTooltip="Today Requests" value="0">
+                                                <span [matBadge]="dateBadges[0]" matBadgeOverlap="false">All</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(1)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '1' ? true : false"
+                                                matTooltip="Today Requests" value="1">
+                                                <span [matBadge]="dateBadges[1]" matBadgeOverlap="false">Today</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(7)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '2' ? true : false"
+                                                matTooltip="Next 1 Days Requests" value="2">
+                                                <span [matBadge]="dateBadges[7]" matBadgeOverlap="false">Next 1
+                                                    Day</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(10)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '10' ? true : false"
+                                                matTooltip="Next 10 Days Requests" value="10">
+                                                <span [matBadge]="dateBadges[10]" matBadgeOverlap="false">Next 10
+                                                    Days</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button #custom (change)="ondateFilter(5)" matBadgeOverlap="false"
+                                                [checked]="radioTypeSelected == '5' ? true : false" matTooltip="Custom"
+                                                value="5">Custom</mat-radio-button>
+                                        </mat-radio-group>
+                                    </span>
+                                </span>
+                            </span>
+                            <span *ngIf="custom.checked" class="row mx-0 w-100">
+                                <form [formGroup]="dateRangeForm">
+                                    <span class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>In Days</mat-label>
+                                            <input formControlName="startDate" matInput
+                                                style="font-size: 11px !important;">
+                                        </mat-form-field>
+                                    </span>
+                                </form>
+                            </span>
+                        </div>
+
+                        <div class="left-col-button mx-auto">
+                            <span class="row mx-0 w-100 py-2">
+                                <section aria-label="Select an option" class="r-css">
+                                    <mat-form-field>
+                                        <mat-label>Referance Number</mat-label>
+                                        <input matInput placeholder="reference number" (keyup)="refNumberFilter($event)"
+                                            autocomplete="off">
+                                    </mat-form-field>
+                                </section>
+                            </span>
+                        </div>
+                        <div class="left-col-button mx-auto">
+                            <span class="row mx-0 w-100 py-2">
+                                <section aria-label="Select an option" class="r-css">
+                                    <mat-form-field>
+                                        <mat-label>Project Name</mat-label>
+                                        <input matInput placeholder="Project Name" (keyup)="projectNameFilter($event)"
+                                            autocomplete="off">
+                                    </mat-form-field>
+                                </section>
+                            </span>
+                        </div>
+                    </span>
+                </div>
+                <div class="col-lg-9">
+                    <div [hidden]="isSpinnerVisible" class="padd-right">
+                        <span class="row mx-0">
+                            <span class="col padd-right">
+                                <mat-card class="card-table-tasks">
+                                    <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                        <table [dataSource]="dataSource" class="table-margin w-100 m-0 inline-table"
+                                            mat-table>
+                                            <ng-container matColumnDef="referenceNumber">
+                                                <th *matHeaderCellDef mat-header-cell style="padding-left: 10px; border-top-left-radius: 8px;
+                                                border-bottom-left-radius: 8px;"> Reference
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell
+                                                    style="color: blue;cursor: pointer;" (click)="navigate(element)">
+                                                    {{element.referenceNumber}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="designation">
+                                                <th *matHeaderCellDef mat-header-cell>
+                                                    Designation</th>
+                                                <td *matCellDef="let element" mat-cell style="padding-left: 10px;">
+                                                    {{element.designation}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="lpi">
+                                                <th *matHeaderCellDef mat-header-cell>LPI
+                                                </th>
+                                                <td *matCellDef="let element" style="padding-left: 10px;" mat-cell>
+                                                    {{element.lpi}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status">
+                                                <th *matHeaderCellDef mat-header-cell>Status
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell style="padding-left: 10px;">
+                                                    {{element.status}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="reason">
+                                                <th *matHeaderCellDef mat-header-cell>Reservation Reason
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element.reason}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="issueDate">
+                                                <th *matHeaderCellDef mat-header-cell> Issue Date
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element.issueDate | date:"d-MMM-y"}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="expiryDate">
+                                                <th *matHeaderCellDef mat-header-cell>
+                                                    Expiry Date</th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element.expiryDate | date:"d-MMM-y"}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="expiryInDays">
+                                                <th *matHeaderCellDef mat-header-cell> Expiry In Days</th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element.expiryInDays}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="name">
+                                                <th *matHeaderCellDef mat-header-cell> Name
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element.name}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="provinceName">
+                                                <th *matHeaderCellDef mat-header-cell style="border-top-right-radius: 8px;
+                                                border-bottom-right-radius: 8px;"> Province
+                                                </th>
+                                                <td *matCellDef="let element" mat-cell>
+                                                    {{element.provinceName}}
+                                                </td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                                        </table>
+                                        <div>
+                                            <mat-paginator #paginator [length]="dataLength"
+                                                [pageSizeOptions]="[10,15,20]" [pageSize]="10" showFirstLastButtons>
+                                            </mat-paginator>
+                                        </div>
+                                        <div fxLayoutAlign="center center" class="mt-4"
+                                            *ngIf="reservationData.length === 0 || reservationData.length === null">
+                                            <p>No data available</p>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </span>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,84 @@
+<div mat-dialog-title>
+    <span class="Headings">Task detail duration<i class="fa fa-window-close" matTooltip="Close" aria-hidden="true"
+            (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span>
+</div>
+<div mat-dialog-content class="mat-dialog-content1">
+    <table [dataSource]="dataSource" class="table-margin w-100 m-0 inline-table" mat-table>
+
+
+        <ng-container matColumnDef="userName">
+            <th *matHeaderCellDef mat-header-cell style=" border-top-left-radius: 8px !important;
+            border-bottom-left-radius: 8px !important;">User Name
+            </th>
+            <td *matCellDef="let element" mat-cell>{{element.fullname}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th *matHeaderCellDef mat-header-cell style=" border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;">Action
+            </th>
+            <td *matCellDef="let element" mat-cell>{{element.actionRequiredText}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="postedDate">
+            <th *matHeaderCellDef mat-header-cell>Posted Date
+            </th>
+            <td *matCellDef="let element" mat-cell>{{element.postedon |
+                date:"dd/MMM/yyyy hh:mm:ss"}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actionDone">
+            <th *matHeaderCellDef mat-header-cell>Action Done
+            </th>
+            <td *matCellDef="let element" mat-cell>{{element.actedon |
+                date:"dd/MMM/yyyy hh:mm:ss"}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dated">
+            <th *matHeaderCellDef mat-header-cell>Dated
+            </th>
+            <td *matCellDef="let element" mat-cell>{{element.productivityDate |
+                date:"dd/MMM/yyyy"}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="context">
+            <th *matHeaderCellDef mat-header-cell>Context
+            </th>
+            <td *matCellDef="let element" mat-cell>{{element.context}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timeSpend">
+            <th *matHeaderCellDef mat-header-cell style=" border-top-right-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;">Time Spend (Minutes)
+            </th>
+            <td *matCellDef="let element" mat-cell>{{element.productivityMinutes}}
+            </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="dataColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: dataColumns;" mat-row></tr>
+    </table>
+    <!-- <div class="row" style="float: right;">
+    {{activePageFrom}} - {{activePageTo}} of {{totalInboxTasks}}
+    <mat-icon style="cursor: pointer;" (click)="activeprevious()">
+    keyboard_arrow_left
+    </mat-icon>
+    &nbsp; &nbsp;<label></label>&nbsp;
+    <mat-icon style="cursor: pointer;" (click)="activenext()">
+    keyboard_arrow_right
+    </mat-icon>
+    </div> -->
+    <div>
+        <mat-paginator #paginator [length]="dataLength" [pageSizeOptions]="[10,15,20]" [pageSize]="10"
+            showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</div>

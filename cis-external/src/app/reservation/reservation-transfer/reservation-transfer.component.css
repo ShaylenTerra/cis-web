@@ -1,0 +1,371 @@
+.mat-column-taskType {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #c58b10;
+    width: 16%;
+}
+
+::ng-deep .mat-tab-label-active {
+    font-weight: bold !important;
+}
+
+
+.download-css {
+    color: #066636;
+    padding-left: 4px;
+    padding-top: 3px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-button {
+    width: 160px;
+    height: 44px;
+}
+
+.mat-button-toggle-checked {
+    background-color: #066636;
+    color: white;
+}
+
+.radios-align {
+    margin-top: 5px;
+    margin-left: 25px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+
+.back-button {
+    width: 160px;
+    height: 44px;
+}
+
+table th
+    /*To remove the horizontal line after header*/
+
+{
+    border-bottom: 0 solid
+}
+
+.s-open {
+    width: 30px;
+    height: 14px;
+    border-radius: 2px;
+    color: #fafafa;
+    font-size: 10px;
+    background-color: #ddc269;
+    padding: 5px;
+}
+
+.s-pending {
+    width: 52px;
+    height: 14px;
+    border-radius: 2px;
+    color: #fafafa;
+    font-size: 10px;
+    background-color: #c58b10;
+    padding: 5px;
+}
+
+.s-completed {
+    width: 56px;
+    height: 14px;
+    border-radius: 2px;
+    color: #fafafa;
+    font-size: 10px;
+    background-color: #9c69dd;
+    padding: 5px;
+}
+
+.table-details {
+    color: #0880c3 !important;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.radio-css {
+    margin-right: 9px;
+}
+
+.left-col-button {
+    /* width: 93.8%; */
+    width: 100%;
+    /* height: 60px; */
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.link-active {
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08);
+    background-color: #fafafa;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #066636 !important;
+}
+
+.r-css {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+#input-group {
+    padding: 10px;
+}
+
+#custom-search-input {
+    position: relative;
+}
+
+.mat-calendar {
+    background-color: #f8c315;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    color: black;
+}
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: unset;
+}
+
+::ng-deep .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
+    background-color: #066636;
+}
+
+#custom-search-input .input-group {
+    position: relative;
+}
+
+#custom-search-input .input-group .search-query.form-control {
+    position: relative;
+    width: 100%;
+}
+
+#custom-search-input button {
+    border: 0;
+    background: none;
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: absolute;
+    /* left: -28px; */
+    top: 3px;
+    right: 3px;
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+    border-color: #066636;
+}
+
+agm-map {
+    height: 300px;
+}
+
+.search-query:focus + button {
+    z-index: 3;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.w-25-per {
+    width: 25%;
+}
+
+::ng-deep .mat-badge-medium.mat-badge-after .mat-badge-content {
+    background-color: #c58b10;
+}
+
+.padd-right {
+    padding-right: 0px;
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (max-width: 1024px) {
+    .tab-grid-remove {
+        display: block;
+    }
+
+    .tab-grid-remove .card.filter-card {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .tab-grid-remove .col-xs-12.col-sm-12.col-md-12.col-lg-9.padd-right {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+    }
+
+    .tab-grid-remove .col-xs-12.col-sm-12.col-md-12.col-lg-9.padd-right .row.mx-0 .col.padd-right {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .filter-card {
+        margin: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+}
+
+@media (max-width: 768px) {
+    .tab-grid-remove .card.filter-card {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .table-margin tr th, .table-margin tr td {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 576px) {
+}
+
+.app-top {
+    margin: 0 0 3em;
+}
+
+.fc-time {
+    display: none;
+}
+
+.fc-past {
+    background-color: black;
+}
+
+.inline-table {
+    display: inline-table;
+}
+
+.table-tasks span:nth-child(2) p:first-child {
+    font-size: 16px;
+    color: #333333;
+}
+
+.table-tasks span:nth-child(2) p:nth-child(2) {
+    font-size: 14px;
+    color: #666666;
+}
+
+.mat-row-cell {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #666666;
+}
+
+.card-table-tasks {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+.table-tasks tr.mat-row {
+    background-color: #F1F1F1;
+    border-bottom: 8px solid #fafafa;
+}
+
+.table-tasks tr.mat-footer-row {
+    background-color: #F1F1F1;
+    border-bottom: 8px solid #fafafa;
+    text-align: center;
+}
+
+.high-priority {
+    color: red;
+}
+
+.medium-priority {
+    color: orange;
+}
+
+.other-priority {
+    color: black;
+}
+
+/* .app-calendar {
+  margin: 0 auto;
+  max-width: 900px;
+} */
+
+.mat-column-reason {
+width: 13%;
+}
+.mat-column-designation {
+    width: 13%;
+}
+
+.mat-column-lpi {
+    width: 10%;
+}
+
+.mat-column-status {
+    width: 9%;
+}
+.mat-column-issueDate {
+    width: 9%;
+}
+
+.mat-column-expiryDate {
+    width: 9%;
+}
+
+.mat-column-expiryInDays {
+    width: 8%;
+}
+
+.mat-column-referenceNumber {
+    width: 10%;
+}
+
+.mat-column-name {
+    width: 11%;
+}
+
+.mat-column-provinceName {
+    width: 8%;
+}
+
+/* .mat-column-action {
+    width: 8%;
+} */
+
+.Headings {
+    height: 29px;
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+    /* margin-bottom: 12px; */
+    margin-bottom: 20px;
+}

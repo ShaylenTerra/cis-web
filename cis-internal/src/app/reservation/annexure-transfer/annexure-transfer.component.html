@@ -1,0 +1,134 @@
+<div class="padd-right">
+    <span class="row mx-0 mt-3">
+        <span class="col-12">
+            <div>
+                <mat-card>
+                    <div class="m-3 p-3">
+                        <div class="row mx-0 mt-4">
+                            <div class="col-md-3">
+                                <label style="font-weight: bold;">Additional
+                                    Documentation(if
+                                    available):</label>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field appearance="outline" [hidden]="readonly">
+                                    <mat-label>Choose a file </mat-label>
+                                    <input [value]="uploadedFileName1" disabled matInput>
+                                    <button (click)="fileInput3.click()" mat-icon-button matSuffix>
+                                        <mat-icon class="attach">attach_file</mat-icon>
+                                    </button>
+                                    <input #fileInput3 (change)="selectFile($event, 748)" hidden id="file" type="file">
+                                </mat-form-field>
+                                <div *ngIf='additionalDoc.length > 0'>
+                                    <div *ngFor="let x of additionalDoc">
+                                        <span class="row" style="display: contents;">
+                                            <div class="row">
+                                                <div class="col-md-2" [hidden]="readonly">
+                                                    <button style="margin-top: -8px;margin-left: -8px;"
+                                                        (click)="deleteDoc(x)" mat-icon-button matSuffix>
+                                                        <mat-icon class="delete">delete</mat-icon>
+                                                    </button>
+                                                    <!-- <button style="margin-top: -8px; float: right;" (click)="downloaddoc(x)" mat-icon-button matSuffix>
+                                                            <mat-icon class="delete">get_app</mat-icon>
+                                                        </button>                                                                     -->
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <h5 style="color: blue;cursor: pointer; margin-top:5px; margin-left: -40px;"
+                                                        (click)="downloaddoc(x)">{{x.documentName}}</h5>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <form [formGroup]="uploadDocForm" [hidden]="supportingDoc || workflowId === undefined">
+                            <div class="row mx-0 mt-4">
+                                <div class="col-md-3">
+                                    <label style="font-weight: bold;">Supporting Document:</label>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field appearance="outline" class="input-margin">
+                                        <mat-label>Other Documents</mat-label>
+                                        <mat-select formControlName="documentType" matInput>
+                                            <mat-option *ngFor="let listItem of listItems" [value]="listItem.itemId">
+                                                {{listItem.caption}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field appearance="outline" class="mt-2">
+                                        <mat-label>Choose File</mat-label>
+                                        <input [value]="uploadedFileName1" disabled matInput />
+                                        <button (click)="fileInput.click()" mat-icon-button matSuffix>
+                                            <mat-icon class="attach">attach_file</mat-icon>
+                                        </button>
+                                        <input #fileInput (change)="selectFile2($event.target.files)" hidden
+                                            id="newFile" type="file">
+                                        <!-- <p>{{docName}}</p> -->
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+                            <div class="row mx-0">
+                                <div class="col-3">
+
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field appearance="outline" class="input-margin mt-2">
+                                        <mat-label>Comment</mat-label>
+                                        <textarea formControlName="comment" matInput style="color: black;"
+                                            #supportingDocComment></textarea>
+                                        <span class="pull-right char" style="color: black;"><em>{{ 1000 -
+                                                supportingDocComment?.value?.length }} characters left</em></span>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-3">
+                                    <button mat-raised-button (click)="submitDoc()" style="width: 130px"
+                                        class="submit-button submit bhover float-right mb-4 mt-4">Add Document
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row mx-0" [hidden]="supportingDoc || workflowId === undefined">
+                            <div class="col-3"></div>
+                            <div class="col-9">
+                                <mat-form-field *ngFor="let document of supportingDocuments" appearance="outline">
+                                    <button (click)="downloaddoc2(document)" mat-icon-button matSuffix>
+                                        <mat-icon class="delete">get_app</mat-icon>
+                                    </button>
+                                    <button [hidden]="readonly" (click)="deleteDoc2(document)" mat-icon-button
+                                        matSuffix>
+                                        <mat-icon class="delete">delete</mat-icon>
+                                    </button>
+                                    <button mat-icon-button matSuffix
+                                        matTooltip="Document Type:{{document.documentType}}  Size:{{document.sizeKb}} (KB) notes:{{document.notes}} Uploaded By:{{document.uploadedBy}} Uploaded On:{{document.uploadedOn | date : 'dd/MMMM/y HH:mm:ss'}}">
+                                        <mat-icon aria-label="Button that shows a red tooltip" class="t-button"
+                                            style="cursor: pointer;">
+                                            error_outline
+                                        </mat-icon>
+                                    </button>
+                                    <mat-label style="color:blue">{{document.documentName}}</mat-label>
+                                    <input disabled matInput />
+                                    <input #fileInput (change)="selectFile2($event)" hidden id="file" type="file">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-3" [hidden]="readonly">
+                        <div class="col mb-3">
+                            <span class="float-right">
+                                <button mat-raised-button class="submit-button bover" (click)="previewDraft()"
+                                    style="height: 44px; margin-right: 5px;width: 150px;">Preview</button>
+                            </span>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </span>
+    </span>
+</div>

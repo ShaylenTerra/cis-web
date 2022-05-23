@@ -1,0 +1,19 @@
+<h4 mat-dialog-title><span>Share</span></h4>
+<div mat-dialog-content>
+    <form *ngIf="inputForm" [formGroup]="inputForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="emailId" matInput placeholder="Email address" type="email">
+        </mat-form-field>
+        <small
+            *ngIf="inputForm.controls['emailId'].hasError('required') && inputForm.controls['emailId'].touched"
+            class="text-danger support-text">Email Required.</small>
+        <small
+            *ngIf="inputForm.controls['emailId'].hasError('pattern') && inputForm.controls['emailId'].touched"
+            class="text-danger support-text">Invalid email.</small>
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover float-right" mat-raised-button>Share</button>
+</div>

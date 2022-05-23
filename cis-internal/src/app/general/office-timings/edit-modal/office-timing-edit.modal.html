@@ -1,0 +1,50 @@
+<h4 mat-dialog-title><span>Edit Office Timings for {{ data.province }}</span></h4>
+<div mat-dialog-content>
+    <form *ngIf="inputForm" [formGroup]="inputForm">
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>From date</mat-label>
+                    <input [matDatepicker]="picker1" matInput>
+                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>To date</mat-label>
+                    <input [matDatepicker]="picker2" matInput>
+                    <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <input [hidden]="true" matInput>
+                <div class="ngx-timepicker-field-example">
+                    <p class="sub-heading" style="display: inline-block;">From: </p>
+                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'10:00 am'"
+                                          style="display: inline-block;">
+                    </ngx-timepicker-field>
+                </div>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <input [hidden]="true" matInput>
+                <div class="ngx-timepicker-field-example">
+                    <p class="sub-heading" style="display: inline-block;">To: </p>
+                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'05:00 pm'"
+                                          style="display: inline-block;">
+                    </ngx-timepicker-field>
+                </div>
+            </mat-form-field>
+        </div>
+        <section>
+            <mat-checkbox (change)="chanageSelection()" [checked]="isHoliday" matInput>Make Holiday</mat-checkbox>
+        </section>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()" mat-button>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="1" class="submit-button" mat-button>Save</button>
+</div>

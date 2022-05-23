@@ -1,0 +1,16 @@
+.submit-button {
+    border-radius: 4px;
+    background-color: #f48222;
+    color: white;
+    margin: 0px auto;
+    margin-left: 10px;
+}
+
+.cancel-btn {
+    margin: 0px auto;
+    margin-right: 10px;
+}
+
+.mat-dialog-content {
+    max-height: 100%;
+}

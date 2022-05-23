@@ -1,0 +1,305 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div class="container-fluid pr-0">
+            <span class="row mx-0">
+                <span class="col-lg-11 p-l-0" style="display: inline-flex;">
+                    <p class="Headings">Reservation</p>
+                </span>
+                <span class="col-lg-1">
+                    <div class="dropdown menu" style="margin-top:12px">
+                        <span [matMenuTriggerFor]="dropdown">
+                            <img matTooltip="More Action" alt="" src="assets/images/Three dots.png">
+                        </span>
+                        <mat-menu #dropdown="matMenu">
+                            <a mat-menu-item (click)="gotReservationTransfer()">
+                                <mat-icon>view_agenda</mat-icon>
+                                Reservation Register
+                            </a>
+                        </mat-menu>
+                    </div>
+                </span>
+            </span>
+            <div class="row mx-0 tab-grid-remove">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 card filter-card">
+                    <!-- <span class="col"> -->
+                    <!-- <div class="mx-auto"> -->
+
+                    <div class="row" style="margin: 0px -15px !important;">
+                        <!--background-color: #ddc269;-->
+                        <span class="col-5 mt-1">
+                            <mat-form-field appearance="outline" style="width: 100%;margin-top:10px">
+                                <mat-label>Request Type</mat-label>
+                                <mat-select (selectionChange)="getAllReservationDraft()" [(ngModel)]="processId"
+                                    [ngModelOptions]="{ standalone: true }" required>
+                                    <mat-option [value]="229">
+                                        Reservation Request
+                                    </mat-option>
+                                    <mat-option [value]="239">
+                                        Reservation Transfer
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+                        <span class="col-7">
+                            <!-- <p class="sub-heading" style="margin-top: 15px">Draft Reservation</p> -->
+                            <mat-form-field appearance="outline" style="width: 80%;margin-top:10px">
+                                <mat-label>Search Draft Reservation</mat-label>
+                                <input matInput autocomplete="off" (keyup)="filterAll($event)">
+                                <button mat-icon-button matSuffix type="button">
+                                    <mat-icon type="submit">search
+                                    </mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <mat-icon class="float-right" (click)="createDraft()" [disabled]="processId == undefined"
+                                matTooltip="Create Draft"
+                                style="cursor: pointer;  font-size: 32px;margin:23px 8px 0px 0px"
+                                [ngStyle]="{color:processId == undefined ? '#dddddd':'green'}">
+                                add_circle
+                            </mat-icon>
+
+                        </span>
+                    </div>
+                    <mat-card class="card-table-tasks" style="margin: 0px -15px !important;">
+                        <mat-card-content class="table-tasks common-style">
+                            <div *ngIf="filteredDrafts.length > 0 && filteredDrafts !== undefined">
+                                <!-- <div *ngFor="let x of dataSource" class="row mx-0" mat-line>
+                                            <span class="col-6">
+                                                <p class="text-name truncate" matTooltip="{{x.name}}" style="color: #0880c3;cursor: pointer;" (click)="gotoTaskDetails(x)">{{ x.name }}</p>
+                                                <p class="text truncate">{{ x.provinceName }}</p>
+                                            </span>
+                                            <span class="col-3">
+                                                <p class="text-small">{{x.userName}}</p>
+                                            </span>
+                                            <span class="col-3">
+                                                <p class="text-small" style="margin-top: 10px;">{{x.updatedOn | date:"dd MMM yy"}}</p>
+                                            </span>
+                                        </div> -->
+                                <table [dataSource]="dataSourceList" class="table-margin w-100 m-0 inline-table"
+                                    mat-table>
+                                    <ng-container matColumnDef="draftName">
+                                        <!-- <th *matHeaderCellDef mat-header-cell
+                                                            style="padding-left: 10px;"></th> -->
+                                        <td *matCellDef="let element" mat-cell (click)="gotoTaskDetails(element)">
+                                            <div class="cell-task">
+                                                <a class="req-highlight truncate" matTooltip="{{element.name}}"
+                                                    style="color: blue;cursor: pointer;width:168px"
+                                                    (click)="gotoTaskDetails(element)">{{ element.name }}</a>
+                                                {{ element.provinceName }}
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="username">
+                                        <!-- <th *matHeaderCellDef mat-header-cell></th> -->
+                                        <td *matCellDef="let element" mat-cell>
+                                            <!-- <p class="text-name">{{element.userName}}</p> -->
+                                            <div class="cell-task" style="margin-right: 10px">
+                                                {{element.userName}}
+                                            </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="updated">
+                                        <!-- <th *matHeaderCellDef mat-header-cell></th> -->
+                                        <td *matCellDef="let element" mat-cell>
+                                            {{element.updatedOn | date:"d-MMM-y"}}
+                                        </td>
+                                    </ng-container>
+                                    <!-- <tr *matHeaderRowDef="reservationColumns" mat-header-row></tr> -->
+                                    <tr *matRowDef="let row; columns: reservationColumns;" mat-row></tr>
+                                </table>
+                                <div>
+                                    <mat-paginator #paginator [length]="dataLength" [pageSizeOptions]="[10]"
+                                        showFirstLastButtons>
+                                    </mat-paginator>
+                                </div>
+                                <!-- <div>
+                                                    <span *ngIf="dataSource.length > 0" class="float-right" style="
+                                                        float: right;
+                                                        margin-left: 2px;
+                                                        margin-top: 5px;
+                                                        margin-bottom: 5px;
+                                                      ">
+                                                         <mat-icon (click)="next2()" style="cursor: pointer;float: right;">
+                                                          keyboard_arrow_right
+                                                        </mat-icon>
+                                                      &nbsp;
+                                                      <mat-icon (click)="previous2()" style="cursor: pointer;float: right;">
+                                                        keyboard_arrow_left
+                                                      </mat-icon>
+                                                    </span>
+                                                </div> -->
+                            </div>
+                            <div fxLayoutAlign="center center" class="mt-4"
+                                *ngIf="filteredDrafts.length === 0 || filteredDrafts === undefined">
+                                <p>No data available</p>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+
+                    <!-- <span *ngIf="dataSource.length > 0" class="float-right" style="
+                                      float: right;
+                                      margin-left: 2px;
+                                      margin-top: 5px;
+                                      margin-bottom: 5px;
+                                    ">
+                                       <mat-icon (click)="next2()" style="cursor: pointer;float: right;">
+                                        keyboard_arrow_right
+                                      </mat-icon>
+                                    &nbsp;
+                                    <mat-icon (click)="previous2()" style="cursor: pointer;float: right;">
+                                      keyboard_arrow_left
+                                    </mat-icon>
+                                  </span> -->
+                </div>
+                <div class="col-lg-8">
+                    <!-- <mat-tab-group>
+                        <mat-tab label="Inbox"> -->
+                    <div class="padd-right">
+                        <span class="row mx-0">
+                            <span class="col padd-right">
+                                <!-- <div class="row mx-0 my-3">
+                                            <span class="col p-0">
+                                                <h2 style="display: inline-block;">My Tasks</h2>
+                                            </span>
+                                        </div> -->
+                                <mat-card class="card-table-tasks">
+
+                                    <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+
+                                        <div class="row p-0 m-0">
+                                            <div class="col-md-5 mt-2">
+                                                <div class="sub-heading">Submitted Reservation Requests</div>
+                                            </div>
+                                            <div class="col-md-3 mt-2">
+                                                <mat-form-field appearance="outline" style="width: 100%;">
+                                                    <mat-label>Request Type</mat-label>
+                                                    <mat-select (selectionChange)="getAllReservationWorkflow()"
+                                                        [(ngModel)]="processId2" [ngModelOptions]="{ standalone: true }"
+                                                        required>
+                                                        <mat-option [value]="229">
+                                                            Reservation Request
+                                                        </mat-option>
+                                                        <mat-option [value]="239">
+                                                            Reservation Transfer
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-3 mt-1 float-right">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Search By Reference Number</mat-label>
+                                                    <input matInput autocomplete="off"
+                                                        (keyup)="filterReservationRequests($event)">
+                                                    <button mat-icon-button matSuffix type="button">
+                                                        <mat-icon type="submit">search
+                                                        </mat-icon>
+                                                    </button>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-1 mt-3">
+                                                <!-- <span class="col"> -->
+                                                <a (click)="download()" class="download-css float-right">
+                                                    <mat-icon matTooltip="Download">file_download</mat-icon>
+                                                </a>
+                                                <!-- </span> -->
+                                            </div>
+                                        </div>
+
+                                        <table [dataSource]="dataSourceReservationList"
+                                            *ngIf="dataSourceReservation.length > 0 && dataSourceReservation !== undefined"
+                                            class="table-margin w-100 m-0 inline-table" mat-table matSort>
+                                            <ng-container matColumnDef="referenceNumber">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header
+                                                    style="padding-left: 10px; border-top-left-radius: 8px;border-bottom-left-radius: 8px;">
+                                                    Reference</th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell
+                                                    style="padding-left: 10px;color: blue;cursor: pointer;"
+                                                    (click)="gotoReservation(element)">{{element.referenceNumber}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="reservationName">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                    {{element.reservationName}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="provinceName">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Province</th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                    {{element.provinceName}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="processName">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Context
+                                                </th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                    {{element.processName}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="actionRequiredCaption">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Stage
+                                                </th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                    {{element?.actionRequiredCaption}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="internalStatusCaption">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header> Status
+                                                </th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                    <span [className]="element.internalStatusCaption === 'Approved' ? 's-Approved' : 
+                                                                    (element.internalStatusCaption === 'In Progress' ? 's-InProgress' : 
+                                                                    (element.internalStatusCaption === 'Pending' ? 's-pending' : 
+                                                                    (element.internalStatusCaption === 'Reserved' ? 's-Reserved' : 
+                                                                    's-completed')))">{{element.internalStatusCaption}}
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="triggeredOn">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header> Pending Since
+                                                </th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                    <span
+                                                        *ngIf="element.internalStatusCaption === 'Reserved' || 
+                                                    element.internalStatusCaption === 'Canceled' ||element.internalStatusCaption === 'Deleted'? false : true">
+                                                        {{element.triggeredOn |
+                                                        dateDifference:serverDate}}
+                                                    </span>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="lastStatusUpdate">
+                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style=" border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;"> Last Updated</th>
+                                                <td *matCellDef="let element" class="cell-task" mat-cell>
+                                                    {{element.lastStatusUpdate |
+                                                    date:"d-MMM-y"}}</td>
+                                            </ng-container>
+                                            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                                        </table>
+                                        <div
+                                            *ngIf="dataSourceReservation.length > 0 && dataSourceReservation !== undefined">
+                                            <mat-paginator #paginator [length]="dataLengthRes"
+                                                [pageSizeOptions]="[10,15,20]" [pageSize]="10" showFirstLastButtons>
+                                            </mat-paginator>
+                                        </div>
+                                        <div fxLayoutAlign="center center" class="mt-4"
+                                            *ngIf="dataSourceReservation.length === 0 || dataSourceReservation === undefined">
+                                            <p>No data available</p>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+
+                            </span>
+                        </span>
+
+                    </div>
+                    <!-- </mat-tab>
+                    </mat-tab-group> -->
+                </div>
+            </div>
+        </div>
+    </div>

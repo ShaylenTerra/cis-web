@@ -1,0 +1,32 @@
+<div class="text-center" mat-dialog-content>
+    <div class="row mb-2">
+        <div class="col">
+            <img alt="" src="assets/images/logos/circle.png">
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col heading">
+            Pre packaged Request Placed Successfully
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col desc-text">
+            Thank you for using our services
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col text">
+            Reference Number
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col heading" style="color: #c58b10;">
+            {{data.refNo}}
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col">
+            <button mat-raised-button (click)="notify()" class="back-button" mat-dialog-close>Close</button>
+        </div>
+    </div>
+</div>

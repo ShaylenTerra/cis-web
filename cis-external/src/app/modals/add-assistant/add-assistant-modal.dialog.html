@@ -1,0 +1,47 @@
+<div mat-dialog-title>Search PLS user</div>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="email" >
+          <button mat-icon-button matSuffix (click)="searchUser()">
+              <mat-icon class="attach">search</mat-icon>
+          </button>
+      </mat-form-field>
+
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="searchData">
+  <div class="col">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput disabled value="{{searchData.firstName || ''}}">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput disabled value="{{searchData.surname || ''}}">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput disabled value="{{searchData.email || ''}}">
+    </mat-form-field>
+  </div>
+  <div class="col">
+    <mat-form-field appearance="outline">
+      <mat-label>MobileNo</mat-label>
+      <input matInput disabled value="{{searchData.mobileNo || ''}}">
+    </mat-form-field>
+  </div>
+</div>
+<div class="row" mat-dialog-actions>
+  <div class="col">
+    <button class="submit-button" [disabled]="!searchData" (click)="addUser()">Add</button>
+    <button class="back-button float-right" mat-dialog-close>Close</button>
+  </div>
+</div>

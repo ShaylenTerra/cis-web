@@ -1,0 +1,15 @@
+<h4 mat-dialog-title><span>Default value for {{data?.header?.caption}}</span></h4>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-radio-group *ngFor="let x of dataSource1" [(ngModel)]="defaultVal">
+                <mat-radio-button class="m-r-10" [value]="x.itemId">{{x.caption}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button (click)="close()" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

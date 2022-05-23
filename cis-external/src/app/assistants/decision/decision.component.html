@@ -1,0 +1,33 @@
+<h4 mat-dialog-title><span>Land Surveyor Decision for: {{data.firstName}} </span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="row" *ngIf="status==107">
+            <mat-label class="checkbox-h2">Select Decision</mat-label>
+
+            <div class="col-12 col-md-6 col-lg-12" style="display: inline-flex;">
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                                 formControlName="decision" required>
+                    <mat-radio-button *ngFor="let decision of decisions" [value]="decision.id" class="radio-button">
+                        {{decision.desc}}
+                    </mat-radio-button>
+                </mat-radio-group>
+
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Notes</mat-label>
+                    <textarea  formControlName="notes" style="color: black;" matInput required #notes></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.value?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="btnCancel-css" mat-button>Cancel</button>
+    <button (click)="submit()" class="btnSubmit-css" [disabled]="!form.valid" mat-button >Submit</button>
+</div>

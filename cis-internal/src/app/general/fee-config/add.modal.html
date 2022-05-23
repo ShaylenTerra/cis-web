@@ -1,0 +1,33 @@
+<div mat-dialog-title>Create {{ data.title }}</div>
+<form [formGroup]="cardForm">
+    <div *ngIf="data.sc" class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>Selected Category</mat-label>
+            <input [value]="data.category.name" disabled matInput>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>{{data.title}} Name</mat-label>
+            <input [(ngModel)]="inputData.name" formControlName="name" matInput>
+        </mat-form-field>
+        <small *ngIf="cardForm.controls['name'].hasError('required') && cardForm.controls['name'].touched"
+               class="text-danger support-text">{{data.title}} name is Required.</small>
+    </div>
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>{{data.title}} Description</mat-label>
+            <textarea [(ngModel)]="inputData.description" formControlName="description" matInput style="color: black;"></textarea>
+            <span class="pull-right char" style="color: black;"><em>{{ 1000 - inputData.description?.length }} characters left</em></span>
+        </mat-form-field>
+        <small *ngIf="cardForm.controls['description'].hasError('required') && cardForm.controls['description'].touched"
+               class="text-danger support-text">{{data.title}} description is Required.</small>
+    </div>
+    <div class="row">
+        <mat-checkbox formControlName="isActive">Is Active?</mat-checkbox>
+    </div>
+</form>
+<div mat-dialog-actions class="float-right">
+    <button mat-dialog-close mat-raised-button class="cancel-button cancel">Cancel</button>
+    <button (click)="save()" class="submit-button bover float-right" [disabled]="!cardForm.valid" color="primary" mat-raised-button>Save</button>
+</div>

@@ -1,0 +1,52 @@
+.gray-card {
+    border-radius: 8px;
+    border: solid 1px #f9f9f9;
+    background-color: #f9f9f9;
+}
+
+.f-container {
+    margin-left: 205px;
+    margin-right: 200px;
+}
+
+.finsih-css {
+    border-radius: 4.8px;
+    background-color: #f48222;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+}
+
+.r-margin {
+    margin-right: 14px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.add-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #f48222 !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #f48222;
+}
+
+.f-css {
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+}

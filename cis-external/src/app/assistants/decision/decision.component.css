@@ -1,0 +1,64 @@
+.req_id {
+    font-size: 30px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #f48222;
+}
+
+.t-css {
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #6c757d;
+}
+
+.msg-css {
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.btnCancel-css {
+    width: 73px;
+    height: 31px;
+    border-radius: 4.8px;
+    color: white;
+    background-color: #f48222;
+}
+
+.btnSubmit-css {
+    width: 73px;
+    height: 31px;
+    border-radius: 4.8px;
+    color: white;
+    background-color: #066636;
+}
+
+.checkbox-h2 {
+    margin: 10px;
+}
+
+.checkbox-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.checkbox-margin {
+    margin: 0 10px;
+}
+
+.radio-button {
+    margin-left: 4px;
+}

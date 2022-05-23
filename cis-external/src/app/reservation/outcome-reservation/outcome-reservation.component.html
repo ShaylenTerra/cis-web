@@ -1,0 +1,17 @@
+<div fxLayoutAlign="center center" class="mt-4" *ngIf="showdetails === false">
+    <p>No data available</p>
+</div>
+<div *ngIf="showdetails === true">
+    <app-land-parcel [draftId]="draftId" [provinceId]="provinceId" [readonly]="true" [showOutcome]="true">
+    </app-land-parcel>
+</div>
+<div class="row mx-0" *ngIf="showdetails === true">
+    <div class="col-md-12">
+        <span class="float-right">
+            <a style="color: blue; cursor: pointer;">
+                <mat-icon class="float-left" style="cursor: pointer;color:black">get_app</mat-icon>
+                Download Draft Acknowledgement Letter
+            </a>
+        </span>
+    </div>
+</div>

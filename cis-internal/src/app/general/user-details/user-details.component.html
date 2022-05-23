@@ -1,0 +1,726 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div>
+            <!-- <div class="row">
+                <span class="col">
+                    <p class="heading"><a style="color: blue; cursor: pointer !important;">{{userDetail.details.firstName !== undefined ? userDetail.details.firstName : userDetail.details.firsname}} {{userDetail.details.surname}}</a> ({{userDetail.type}})</p>
+                </span>
+            </div> -->
+            <div class="row">
+                <div class="col">
+                    <i style="font-size: 30px; cursor: pointer;" (click)="back()" class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="card cardNew">
+                <div class="row detail" id="desktop-tab">
+                    <div [ngClass]="[showSideCollapser ? '' : 'small']" class="p-0 left-col">
+                        <div class="collapser">
+                            <mat-icon (click)="showSideCollapser=!showSideCollapser">
+                                {{showSideCollapser ? 'chevron_left' : 'chevron_right'}}
+                            </mat-icon>
+                        </div>
+                        <div *ngFor='let item of menuItems'>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div (click)="changeTab(item.id)" [ngClass]="[item.isActive ? 'link-active' : '']"
+                                         class="row profile-link left-col-button">
+                                        <div class="col-md-2">
+                                            <img [src]="item.isActive ? item.activeIconUrl : item.inActiveIconUrl"
+                                                 alt="" class="my-2 image">
+                                        </div>
+                                        <div *ngIf="showSideCollapser" class="col-md-10">
+                                            <p class="desc-text m-0">{{item.title}}</p>
+                                            <input type="checkbox" hidden id="{{item.title}}">
+                                            <p class="info-text m-0 truncate">{{item.description}}</p>
+                                            <label for="{{item.title}}" style="font-family: roboto;font-size: 12px;" role="button">read more</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div [ngClass]="[showSideCollapser ? '' : 'big']" class="right-col" style="position: relative;">
+                        <div *ngIf="(userDetail.type=='External' || userDetail.type=='Internal')" fxLayoutAlign="center" style="position: relative;top: -32px;">
+                            <img [src]="url"
+                                alt="" style="width: 64px;height: 64px;border-radius: 50%;">
+                        </div>
+                        <div *ngIf="(userDetail.type=='External' || userDetail.type=='Internal')" class="mb-2" fxLayoutAlign="center" style="margin-top:-24px">
+                            <span>{{userDetail.details.firstName !== undefined ? userDetail.details.firstName : userDetail.details.firsname}} {{userDetail.details.surname}} ,{{userDetail.type}}</span>
+                        </div>
+                        <div *ngIf="activeTabId == 1" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <!-- <p class="sub-heading">Basic Information</p> -->
+                            <form [formGroup]="basicInformationForm" *ngIf="userDetail.type=='External' || userDetail.type=='Internal'">
+                                <div class="container-fluid my-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Title</mat-label>
+                                                <mat-select matInput formControlName="titleItemId" [(ngModel)]="title" required style="height: 24px !important;">
+                                                    <mat-option *ngFor="let x of titles" [value]="x.itemId">
+                                                        {{ x.caption }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <small
+                                            *ngIf="basicInformationForm.controls['titleItemId'].hasError('required') && basicInformationForm.controls['titleItemId'].touched"
+                                            class="text-danger support-text">Title Required.</small>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>First Name</mat-label>
+                                                <input formControlName="firstName" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Last Name</mat-label>
+                                                <input formControlName="surname" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Country Code</mat-label>
+                                                <input matInput formControlName="countryCode" type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Mobile</mat-label>
+                                                <input formControlName="mobileNo" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Telephone</mat-label>
+                                                <input formControlName="telephoneNo" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Username</mat-label>
+                                                <input [value]="userDetail.details.userName" readonly disabled matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Email</mat-label>
+                                                <input [value]="userDetail.details.email" readonly disabled matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Date Created</mat-label>
+                                                <input [value]="date | date: 'dd/MMM/yyyy hh:mm:ss'" readonly disabled
+                                                    matInput
+                                                    type="text">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Status</mat-label>
+                                                <mat-select matInput formControlName="statusId" [(ngModel)]="status" style="height: 24px !important;">
+                                                  <mat-option *ngFor="let x of statuses" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                  </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Province</mat-label>
+                                                <input [value]="userDetail.details.province" readonly disabled matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 absolute absoluteNew mb-3" style="width: 100%;">
+                                    <div class="col p-0">
+                                        <div>
+                                            <button mat-raised-button (click)="updateInExUserBasicInfo()"
+                                                    class="submit-button bhover float-right mr-4">Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form [formGroup]="basicInfoPLSForm" *ngIf="userDetail.type=='PLS' || userDetail.type=='Architect'">
+                                <div class="container-fluid my-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>PPN Number</mat-label>
+                                                <input readonly matInput placeholder="PPN Number" formControlName="ppnNo">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Initials</mat-label>
+                                                <input formControlName="initials" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>First Name</mat-label>
+                                                <input formControlName="firstName" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Last Name</mat-label>
+                                                <input formControlName="surname" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Cell Phone No</mat-label>
+                                                <input formControlName="cellPhoneNo" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Telephone</mat-label>
+                                                <input formControlName="telephoneNumber" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Fax No</mat-label>
+                                                <input matInput formControlName="faxNo" type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Email</mat-label>
+                                                <input [value]="userDetail.details.email" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Province</mat-label>
+                                                <!-- <input [value]="plProvinceName" readonly disabled matInput type="text"> -->
+                                                <mat-select matInput formControlName="provinceId" [(ngModel)]="plProvinceName" style="height: 24px !important;">
+                                                    <mat-option *ngFor="let x of provinces" [value]="x.provinceId">
+                                                      {{ x.provinceName }}
+                                                    </mat-option>
+                                                  </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Status</mat-label>
+                                                <mat-select matInput formControlName="statusItemId" [(ngModel)]="status" style="height: 24px !important;">
+                                                  <mat-option *ngFor="let x of statuses" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                  </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                        <div class="col"></div>
+                                        <div class="col"></div>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 absolute absoluteNew mb-3" style="width: 100%;">
+                                    <div class="col p-0">
+                                        <div>
+                                            <button mat-raised-button (click)="updatePLSUserBasicInfo()"
+                                                    class="submit-button bhover float-right mr-4">Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="activeTabId == 2 && (userDetail.type=='Internal' || userDetail.type=='External' || userDetail.type=='PLS' || userDetail.type=='Architect')" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <form [formGroup]="moreInformationForm" *ngIf="userDetail.type=='External'">
+                                <div class="container-fluid my-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>alternative Email</mat-label>
+                                                <input formControlName="alternativeEmail" [value]="alternativeEmail" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Preferred Mode of Communication</mat-label>
+                                                    <mat-select matInput formControlName="communicationTypeItemId" [(ngModel)]="comType">
+                                                        <mat-option *ngFor="let x of communcationTypes" [value]="x.itemId">
+                                                            {{ x.caption }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Organisation</mat-label>
+                                                <mat-select matInput formControlName="organizationTypeItemId" [(ngModel)]="orgtype">
+                                                  <mat-option *ngFor="let x of organizationTypes" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                  </mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Sector</mat-label>
+                                                <mat-select matInput formControlName="sectorItemId" [(ngModel)]="sector">
+                                                  <mat-option *ngFor="let x of sectors" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                  </mat-option>
+                                                </mat-select>
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address Line 1</mat-label>
+                                                <input matInput placeholder="Address Line 1" formControlName="postalAddressLine1">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address Line 2</mat-label>
+                                                <input matInput placeholder="Address Line 2" formControlName="postalAddressLine2">
+                                              </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address Line 3</mat-label>
+                                                <input matInput placeholder="Address Line 3" formControlName="postalAddressLine3">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Postal Code</mat-label>
+                                                <input matInput placeholder="Postal Code" formControlName="postalCode">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>PPN Number</mat-label>
+                                                <input readonly matInput placeholder="PPN Number" formControlName="ppnNo">
+                                              </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Practise Name</mat-label>
+                                                <input matInput placeholder="Practise Name" formControlName="practiseName">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col"></div>
+                                        <div class="col"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-checkbox class="Enable-Information-Notification" matInput formControlName="subscribeNotifications">
+                                                Enable Information Notifications</mat-checkbox>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-checkbox class="Enable-News-Notification" matInput formControlName="subscribeNews">
+                                                Enable News Notifications</mat-checkbox>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-checkbox class="Enable-Events-Notification" matInput formControlName="subscribeEvents">
+                                                Enable Events Notifications</mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 absolute absoluteNew mb-3" style="width: 100%;">
+                                    <div class="col p-0">
+                                        <div>
+                                            <button mat-raised-button (click)="updateUserMetaData()"
+                                                    class="submit-button bhover float-right mr-4">Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form [formGroup]="moreInformationForm" *ngIf="userDetail.type=='Internal'">
+                                <div class="container-fluid my-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-checkbox class="Enable-Information-Notification" matInput formControlName="subscribeNotifications">
+                                                Enable Information Notifications</mat-checkbox>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-checkbox class="Enable-News-Notification" matInput formControlName="subscribeNews">
+                                                Enable News Notifications</mat-checkbox>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-checkbox class="Enable-Events-Notification" matInput formControlName="subscribeEvents">
+                                                Enable Events Notifications</mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 absolute absoluteNew mb-3" style="width: 100%;">
+                                    <div class="col p-0">
+                                        <div>
+                                            <button mat-raised-button (click)="updateUserMetaData()"
+                                                    class="submit-button bhover float-right mr-4">Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </form>
+                            <form [formGroup]="basicInfoPLSForm"  *ngIf="userDetail.type=='PLS' || userDetail.type=='Architect'">
+                                <div class="container-fluid my-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Alternative Email</mat-label>
+                                                <input formControlName="alternateEmail" [value]="alternateEmail" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Business Name</mat-label>
+                                                <input formControlName="businessName" [value]="businessName" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Courier Service</mat-label>
+                                                <input formControlName="courierService" [value]="courierService" matInput type="text">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address Line 1</mat-label>
+                                                <input matInput placeholder="Address Line 1" formControlName="postalAddress1">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address Line 2</mat-label>
+                                                <input matInput placeholder="Address Line 2" formControlName="postalAddress2">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address Line 3</mat-label>
+                                                <input matInput placeholder="Address Line 3" formControlName="postalAddress3">
+                                              </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Address Line 4</mat-label>
+                                                <input matInput placeholder="Address Line 3" formControlName="postalAddress4">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Postal Code</mat-label>
+                                                <input matInput placeholder="Postal Code" formControlName="postalCode">
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <!-- <mat-form-field appearance="outline">
+                                                <mat-label>Restricted *</mat-label>
+                                                <mat-select matInput formControlName="restrictedIndicator" >
+                                                    <mat-option *ngFor="let x of org" [value]="x.itemId">
+                                                        {{ x.caption }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Description</mat-label>
+                                                <!-- <input matInput placeholder="Descripion" formControlName="description"> -->
+                                                <textarea formControlName="description" matInput rows="4" style="color: black;" #description></textarea>
+                                                <span class="pull-right char" style="color: black;"><em>{{ 1000 - description?.value?.length }} characters left</em></span>
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>General Notes</mat-label>
+                                                <!-- <input matInput placeholder="general Notes" formControlName="generalNotes"> -->
+                                                <textarea formControlName="generalNotes" matInput rows="4" style="color: black;" #generalNotes></textarea>
+                                                <span class="pull-right char" style="color: black;"><em>{{ 1000 - generalNotes?.value?.length }} characters left</em></span>
+                                              </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <!-- <mat-form-field appearance="outline">
+                                                <mat-label>Sectional Plan *</mat-label>
+                                                <mat-select matInput formControlName="sectionalPlanInd" >
+                                                    <mat-option *ngFor="let x of org" [value]="x.itemId">
+                                                        {{ x.caption }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 absolute absoluteNew mb-3" style="width: 100%;">
+                                    <div class="col p-0">
+                                        <div>
+                                            <button mat-raised-button (click)="updatePLSUserBasicInfo()"
+                                                    class="submit-button bhover float-right mr-4">Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="activeTabId == 3 && userDetail.type=='External'" style="margin-left: 1.7%; margin-right: 1.7%;">
+                             <!-- <p class="sub-heading">Security Information</p> -->
+                             <div class="container-fluid my-3">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Security Question 1</mat-label>
+                                            <mat-select (selectionChange)="onSecqChange()" [(value)]="secq1" readonly matInput name="secq1">
+                                                <mat-option *ngFor="let x of userDetail.securityQuestions" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-5">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Answer 1</mat-label>
+                                            <input value="********" readonly matInput type="text">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Security Question 2</mat-label>
+                                            <mat-select (selectionChange)="onSecqChange()" [(value)]="secq2" readonly matInput name="secq2">
+                                                <mat-option *ngFor="let x of userDetail.securityQuestions" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-5">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Answer 2</mat-label>
+                                            <input value="********" readonly matInput type="text">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Security Question 3</mat-label>
+                                            <mat-select (selectionChange)="onSecqChange()" [(value)]="secq3" readonly matInput name="secq3">
+                                                <mat-option *ngFor="let x of userDetail.securityQuestions" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-5">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Answer 3</mat-label>
+                                            <input value="********" readonly matInput type="text">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="activeTabId == 4" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <div class="col">
+                                <!-- <p class="sub-heading">Role Information</p> -->
+                            </div>
+                                <div *ngIf="userDetail.type=='Internal'" class="container-fluid my-3">
+                                    <table [dataSource]="rolesInfo" class="table-margin" mat-table style="width: 100%;">
+                                        <ng-container matColumnDef="userRoleName">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 25%;">Role Name</th>
+                                            <td *matCellDef="let element" class="t-b" mat-cell>{{element.roleName}}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="userProvinceName">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 20%;">Province Name</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.provinceName}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="sectionName">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 15%;">Section Name</th>
+                                            <td *matCellDef="let element" mat-cell>{{element.sectionName}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="isActive">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 20%;">Is Primary</th>
+                                            <td *matCellDef="let element" mat-cell>
+                                                <span *ngIf="element.isPrimary === 1" class="bg-fl">
+                                                    YES
+                                                </span>
+                                                <span *ngIf="element.isPrimary === 0" class="bg-ss">
+                                                    NO
+                                                </span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 20%;">Edit</th>
+                                            <td *matCellDef="let element" mat-cell>
+                                             <div style="cursor: pointer;">
+                                                 <span (click)="viewRole(element,'Edit')" class="details">
+                                                    <mat-icon>edit</mat-icon>
+                                                     <!-- <mat-icon (click)="viewRole(element.id)" class="float-right mt-2" style="cursor: pointer;">get_app</mat-icon> -->
+                                                 </span>
+                                             </div>
+                                         </td>
+                                        </ng-container>
+                                        <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                                        <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="userDetail.type=='Internal'" class="col">
+                                    <span class="sub-heading">Additional Role Information</span>
+                                    <button mat-raised-button (click)="addAdditionalRole()" class="submit-button bover float-right mr-4">Assign Role</button>
+                                </div>
+                                <div *ngIf="userDetail.type=='Internal'" class="container-fluid my-3">
+                                    <table [dataSource]="AdditionaRolesInfo" class="table-margin" mat-table style="width: 100%;">
+                                        <ng-container matColumnDef="userRoleName">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 25%;">Role Name</th>
+                                            <td *matCellDef="let element" class="t-b" mat-cell style="width: 25%;">{{element.roleName}}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="userProvinceName">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 20%;">Province Name</th>
+                                            <td *matCellDef="let element" mat-cell style="width: 20%;">{{element.provinceName}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="sectionName">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 15%;">Section Name</th>
+                                            <td *matCellDef="let element" mat-cell style="width: 15%;">{{element.sectionName}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="isActive">
+                                            <th *matHeaderCellDef mat-header-cell style="width: 20%;">Is Primary</th>
+                                            <td *matCellDef="let element" mat-cell style="width: 20%;">
+                                                <span *ngIf="element.isPrimary === 1" class="bg-fl">
+                                                    YES
+                                                </span>
+                                                <span *ngIf="element.isPrimary === 0" class="bg-ss">
+                                                    NO
+                                                </span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th *matHeaderCellDef mat-header-cell  style="width: 20%;">Remove</th>
+                                            <td *matCellDef="let element" mat-cell style="width: 20%;">
+                                             <div style="cursor: pointer;">
+                                                 <span class="details">
+                                                    <mat-icon (click)="deleteExternalRole(element)" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                                                 </span>
+                                             </div>
+                                         </td>
+                                        </ng-container>
+                                        <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                                        <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+                                    </table>
+                                </div>
+                                <!-- <form [formGroup]="extrenalRoleForm" *ngIf="userDetail.type=='External'"> -->
+                                <div class="container-fluid my-3" *ngIf="userDetail.type=='External'">
+                                    <div class="row">
+                                            <div class="col">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Role</mat-label>
+                                                    <mat-select matInput disabled [(ngModel)]="roleId">
+                                                        <mat-option *ngFor="let x of roles" [value]="x.roleId">
+                                                            {{ x.roleName }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col">
+                                            </div>
+                                            <div class="col">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <section *ngFor="let x of provinces">
+                                                    <mat-checkbox
+                                                        [(ngModel)]="x.isSelected"
+                                                        (change)="updateExternalRole(x)"
+                                                        [value]="x.provinceId">{{x.provinceName}}
+                                                    </mat-checkbox>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    <!-- <div class="row mx-0 absolute absoluteNew mb-3" style="width: 100%;">
+                                        <div class="col p-0">
+                                            <div>
+                                                <button (click)="updateExternalRole()"
+                                                        class="submit-button btn1 submit bhover float-right">Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            <!-- </form> -->
+                        </div>
+                        <div *ngIf="activeTabId == 5" style="margin-left: 1.7%; margin-right: 1.7%;">
+                            <!-- <p class="sub-heading">Supporting Document</p> -->
+                            <div class="container-fluid my-3">
+                                <div class="row" *ngFor="let document of supprotingDoc">
+                                    <div class="col">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Document Type</mat-label>
+                                            <input [value]="document.DocumentType" disabled matInput type="text">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>File Name</mat-label>
+                                            <input [value]="document.fileName" disabled matInput/>
+                                            <button (click)="download(document.id, document.fileName)" mat-icon-button matSuffix>
+                                                <mat-icon class="delete">get_app</mat-icon>
+                                            </button>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                       </div>
+                       <div *ngIf="activeTabId == 6" style="margin-left: 1.7%; margin-right: 1.7%;">
+                        <!-- <p class="sub-heading">Supporting Document</p> -->
+                        <div class="container-fluid my-3">
+                            <div class="row">
+                                <button mat-raised-button (click)="sendPassword()"
+                                        class="submit-button bhover float-right mr-4" style="width: 140px !important;">Send Password
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

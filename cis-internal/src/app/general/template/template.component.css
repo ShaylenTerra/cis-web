@@ -1,0 +1,34 @@
+.contact {
+    width: 31.3%;
+    margin: 1%;
+    background-color: #e6e6e6;
+    border-radius: 4px;
+    text-align: center;
+    /* border: 0.5px solid gray; */
+}
+
+.left-col {
+    width: 20%;
+    background-color: #e6e6e6;
+}
+
+.right-col {
+    width: 80%;
+}
+
+.submit-button {
+    line-height: 2;
+    background-color: #298f5c;
+    width: 140px;
+    height: 40px;
+    color: #fafafa;
+  }
+
+  .bover:hover {
+    background-color: #c58b10;;
+  }
+
+.pencil {
+    margin: 4px;
+    cursor: pointer;
+}

@@ -1,0 +1,63 @@
+.box {
+    border-radius: 4px;
+    border: solid 1px #d4d4d4;
+    background-color: #fafafa;
+}
+
+.Headings {
+    height: 29px;
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.text {
+    height: 25px;
+    font-size: 20px;
+    font-weight: 400;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.download {
+    width: 128px;
+    height: 44px;
+    border-radius: 4px;
+    border: solid 1px #016533;
+    background-color: #fafafa;
+}
+
+.download-text {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #016533;
+}
+
+.submit {
+    width: 128px;
+    height: 44px;
+    border-radius: 4px;
+    border: solid 1px #016533;
+    background-color: #016533;
+}
+
+.submit-text {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+}

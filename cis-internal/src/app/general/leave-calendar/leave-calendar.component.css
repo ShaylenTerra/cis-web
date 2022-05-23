@@ -1,0 +1,21 @@
+.mat-column-sno {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.mat-column-action {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.submit-button {
+    line-height: 2;
+    background-color: #298f5c;
+    width: 160px;
+    height: 40px;
+    color: #fafafa;
+    margin-right: 3.2%;
+}
+.bover:hover {
+    background-color: #c58b10;;
+}

@@ -1,0 +1,1195 @@
+<mat-card>
+    <mat-card-content style="height: 100%;">
+        <!-- <div> -->
+        <mat-tab-group (selectedTabChange)="tabClick($event)">
+            <mat-tab label="User Registration">
+                <div class="row my-3 mx-0">
+                    <span class="col-10 p-0">
+                        <h4>User Registration Dashboard</h4>
+                    </span>
+                    <span class="col-2 p-0 ">
+                        <button style="margin-top: 0px;width: 80px;display: flex;" (click)="showFilterRow()"
+                            class="form-button back pull-right" type="submit">
+                            <span class="float-right"
+                                style="cursor: pointer;display: inline-flex; padding: 5px">Filter</span>
+                            <mat-icon style="padding-top: 3px;">filter_list</mat-icon>
+                        </button>
+                    </span>
+                </div>
+                <form [formGroup]="filterForm">
+                    <div class="row" *ngIf="showFilter === true">
+                        <div class="col-md-3">
+                            <!-- <mat-form-field appearance="outline">
+                                <mat-label>Province</mat-label>
+                                <input [(ngModel)]="province" [matAutocomplete]="auto3"
+                                       matInput formControlName="province" required>
+                                <mat-autocomplete #auto3="matAutocomplete"
+                                                  [displayWith]="displayProvince">
+                                  <mat-option *ngFor="let x of filteredProvince" [value]="x">
+                                    {{x.provinceName}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Province</mat-label>
+                                <mat-select style="height: 23px;" formControlName="provinceIds" multiple>
+                                    <!-- <mat-select-trigger>
+                                        {{filterProcessForm?.province?.value ? filterProcessForm?.province?.value[0] : ''}}
+                                        <span *ngIf="provinceList.value?.length > 1" class="example-additional-selection">
+                                          (+{{filterProcessForm?.province?.value?.length - 1}} {{filterProcessForm?.province?.value?.length === 2 ? 'other' : 'others'}})
+                                        </span>
+                                      </mat-select-trigger> -->
+                                    <mat-option *ngFor="let topping of filteredProvince" [value]="topping.provinceId">
+                                        {{topping.provinceName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- <b>Date From :</b> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date From</mat-label>
+                                <input matInput formControlName="fromDate" [matDatepicker]="picker1" [max]="dateTo"
+                                    [(ngModel)]="dateFrom" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- <b>Date To :</b> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date To</mat-label>
+                                <input matInput formControlName="toDate" [matDatepicker]="picker2" [min]="dateFrom"
+                                    [(ngModel)]="dateTo" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <span style="display: inline;">
+                                <!-- <mat-form-field appearance="outline" style="width: 50%;">
+                                <mat-label>Status</mat-label>
+                                <input [(ngModel)] = "status" formControlName="status" matInput [matAutocomplete]="auto1" required>
+                                <mat-autocomplete #auto1="matAutocomplete"
+                                [displayWith]="displayStatus">
+                                  <mat-option value="All">All</mat-option>
+                                  <mat-option value="ACTIVE">Active</mat-option>
+                                  <mat-option value="INACTIVE">Inactive</mat-option>
+                                  <mat-option value="PENDING">Pending</mat-option>
+                                  <mat-option value="APPROVED">Approved</mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field> -->
+                                <button mat-raised-button style="margin-top: 12px;" (click)="clear()"
+                                    class="clear-button back pull-right" type="submit">Clear</button>
+                                <button mat-raised-button style="margin-top: 12px; margin-right: 12px;"
+                                    (click)="search()" class="form-button bhover pull-right"
+                                    type="submit">Search</button>
+                            </span>
+                        </div>
+                        <!-- <div class="col col-md-3">
+                            
+                        </div> -->
+                    </div>
+                </form>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <p>Registered Users</p>
+                                <h3>{{userRegistrationTopCounts?.totalRegisteredUsers}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">group</mat-icon>
+                                </i>
+                                <!-- <i class="fas fa-user"></i> -->
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <p>Active</p>
+                                <h3>{{userRegistrationTopCounts?.totalActiveUsers}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">lock_open</mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <p>Locked</p>
+                                <h3>{{userRegistrationTopCounts?.totalLockedUsers}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">lock_clock</mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <p>Active Participants</p>
+                                <h3>{{userRegistrationTopCounts?.totalActiveParticipants}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">lock_open</mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <!-- <div class="row"> -->
+                <div class="row">
+                    <div class="col-xl-4 col-md-6">
+                        <app-card cardTitle="By month distribution" [options]="true">
+                            <div #lineIPMChart>
+                                <chart id="line_ipm_chart" [type]="'line'" [data]="lineIPMChartData"
+                                    [options]="lineIPMChartOption">
+                                </chart>
+                            </div>
+                        </app-card>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6">
+                        <app-card cardTitle="By province distribution Internal User" [options]="true">
+                            <div #pieChart>
+                                <chart id="pie_chart" [type]="'pie'" [data]="pieChartData" [options]="pieChartOption">
+                                </chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-6">
+                            <b>By role distribution</b>
+                            <app-card cardTitle="Doughnut Chart" [options]="false">
+                                <div #doughnutChart>
+                                    <chart id="doughnut_chart" [type]="'doughnut'" [data]="doughnutChartData"></chart>
+                                </div>
+                            </app-card>
+                        </div> -->
+                    <div class="col-xl-4 col-md-6">
+                        <app-card cardTitle="By province distribution External User" [options]="true">
+                            <div #externalUserpieChart>
+                                <chart id="externalpie_chart" [type]="'pie'" [data]="externalpieChartData"
+                                    [options]="pieChartOption"></chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-6" >
+                            <app-card cardTitle="Monthly Registration" [options]="true">
+                                <div #barBasicChart>
+                                    <chart id="bar_basic_chart" [type]="'bar'" [data]="barBasicChartData"
+                                        [options]="barBasicChartOption">
+                                    </chart>
+                                </div>
+                            </app-card>
+                        </div> -->
+                    <div class="col-xl-12 col-md-12" style="margin-top: 20px;">
+                        <!-- <b>By role distribution</b> -->
+                        <app-card cardTitle="By role distribution" [options]="true">
+                            <div #doughnutChart>
+                                <chart id="doughnut_chart" [type]="'doughnut'" [data]="doughnutChartData"
+                                    [options]="pieChartOption"></chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-4" style="margin-top: 20px;">
+                           <app-card cardTitle="By Province distribution" [options]="true">
+                                <div #provinceRolebarBasicChart>
+                                    <chart id="provinceRole_bar_basic_chart" [type]="'bar'" [data]="provinceRoleBarBasicChartData"
+                                        [options]="barBasicChartOption">
+                                    </chart>
+                                </div>
+                            </app-card>
+                        </div> -->
+                    <div class="col-xl-12 col-md-12" style="margin-top: 20px;">
+                        <app-card cardTitle="By Province distribution" [options]="true">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Provice</th>
+                                            <th>Internal</th>
+                                            <th>External</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let x of userByprovinceTbl">
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.province}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.usertypeInternal}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.usertypeExternal}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </app-card>
+                    </div>
+
+                    <!-- <div class="col-xl-6 col-md-6" style="margin-top: 20px;">
+                            <b>By role distribution</b>
+                            <mat-card>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <b class="text-muted">Role</b>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <b class="text-muted">GPECWCNWNCFSMPLPKZN</b>
+                                        </div>
+                                    </div>
+                                    <b>
+                                    <hr>
+                                    </b>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            National Admin
+                                        </div>
+                                        <div class="col-md-9">
+                                            10 20 30 40 50 60 70 80 90
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            Provincial Admin.
+                                        </div>
+                                        <div class="col-md-9">
+                                            10 20 30 40 50 60 70 80 90
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            Information Officer.
+                                        </div>
+                                        <div class="col-md-9">
+                                            10 20 30 40 50 60 70 80 90
+                                        </div>
+                                    </div>
+        
+                                </mat-card-content>
+                            </mat-card>
+                        </div> -->
+                </div>
+            </mat-tab>
+            <mat-tab label="Process Summary">
+                <div class="row my-3 mx-0">
+                    <span class="col-10 p-0">
+                        <h4>Process Summary Dashboard</h4>
+                    </span>
+                    <span class="col-2 p-0 ">
+                        <button style="margin-top: 0px;width: 80px;display: flex;" (click)="showFilterRow()"
+                            class="form-button back pull-right" type="submit">
+                            <span class="float-right"
+                                style="cursor: pointer;display: inline-flex; padding: 5px">Filter</span>
+                            <mat-icon style="padding-top: 3px;">filter_list</mat-icon>
+                        </button>
+                    </span>
+                </div>
+                <form [formGroup]="filterProcessForm">
+                    <div class="row" *ngIf="showFilter === true">
+                        <div class="col-md-3">
+                            <!-- <mat-form-field appearance="outline">
+                                    <mat-label>Province</mat-label>
+                                    <input [(ngModel)]="province" [matAutocomplete]="auto3"
+                                           matInput formControlName="province" required>
+                                    <mat-autocomplete #auto3="matAutocomplete"
+                                                      [displayWith]="displayProvince">
+                                      <mat-option *ngFor="let x of filteredProvince" [value]="x">
+                                        {{x.provinceName}}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Province</mat-label>
+                                <mat-select style="height: 23px;" formControlName="provinceIds" multiple>
+                                    <!-- <mat-select-trigger>
+                                        {{filterProcessForm?.province?.value ? filterProcessForm?.province?.value[0] : ''}}
+                                        <span *ngIf="provinceList.value?.length > 1" class="example-additional-selection">
+                                          (+{{filterProcessForm?.province?.value?.length - 1}} {{filterProcessForm?.province?.value?.length === 2 ? 'other' : 'others'}})
+                                        </span>
+                                      </mat-select-trigger> -->
+                                    <mat-option *ngFor="let topping of filteredProvince" [value]="topping.provinceId">
+                                        {{topping.provinceName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- <b>Date From :</b> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date From</mat-label>
+                                <input matInput formControlName="fromDate" [matDatepicker]="picker3" [max]="dateTo"
+                                    [(ngModel)]="dateFromProcess" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                <mat-datepicker #picker3></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- <b>Date To :</b> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date To</mat-label>
+                                <input matInput formControlName="toDate" [matDatepicker]="picker4" [min]="dateFrom"
+                                    [(ngModel)]="dateToProcess" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                <mat-datepicker #picker4></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <span style="display: inline;">
+                                <mat-form-field appearance="outline" style="width: 50%;">
+                                    <mat-label>Process</mat-label>
+                                    <mat-select style="height: 23px;" [(ngModel)]="process" formControlName="processId">
+                                        <mat-option *ngFor="let data of processData" [value]="data.processId">
+                                            {{data.processName}}</mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+                                <button mat-raised-button style="margin-top: 12px;" (click)="clearProcessSummary()"
+                                    class="clear-button back pull-right" type="submit">Clear</button>
+                                <button mat-raised-button style="margin-top: 12px; margin-right: 12px;"
+                                    (click)="searchProcessSummary()" class="form-button bhover pull-right"
+                                    type="submit">Search</button>
+                            </span>
+                        </div>
+                        <!-- <div class="col col-md-3">
+                                
+                            </div> -->
+                    </div>
+                </form>
+
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <p>Total Tasks</p>
+                                <h3>{{processSummaryTopCounts?.totalTask}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">work</mat-icon>
+                                </i>
+                                <!-- <i class="fas fa-user"></i> -->
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <p>Closed</p>
+                                <h3>{{processSummaryTopCounts?.closedTask}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">assignment_turned_in
+                                    </mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <p>Turnaround Time(Avg Minutes)</p>
+                                <h3>{{processSummaryTopCounts?.turnaroundDuration == null ? 0 :
+                                    processSummaryTopCounts.turnaroundDuration}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">hourglass_empty
+                                    </mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <p>No. of Notification</p>
+                                <h3>{{processSummaryTopCounts?.totalNotification}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">
+                                        notification_important</mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <!-- <div class="row"> -->
+                <div class="row">
+                    <div class="col-xl-6 col-md-12">
+                        <app-card cardTitle="Task Distribution by Role" [options]="true">
+                            <div #distributionRoleChart>
+                                <chart id="distributionRole_chart" [type]="'horizontalBar'"
+                                    [data]="distributionRoleChartData" [options]="distributionRoleChartOption"></chart>
+                            </div>
+                        </app-card>
+                    </div>
+
+                    <div class="col-xl-6 col-md-12">
+                        <app-card cardTitle="No Of Tasks Completed as per Turnaround Time" [options]="true">
+                            <div #IRTTChart>
+                                <chart id="IRTT_chart" [type]="'line'" [data]="IRTTChartData"
+                                    [options]="IRTTChartOption">
+                                </chart>
+                                <!-- <chart id="line_chart" [type]="line" [data]="data" [options]="lineChartOption"></chart> -->
+                            </div>
+                        </app-card>
+                    </div>
+
+
+                    <div class="col-xl-6 col-md-12" style="margin-top: 20px;">
+                        <app-card cardTitle="Monthly Task Distibution" [options]="true">
+                            <div #IRMonthly>
+                                <chart id="IRMonthly_chart" [type]="'bar'" [data]="IRMonthlyChartData"
+                                    [options]="topsinglebarBasicChartOption">
+                                </chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-6 col-md-12" style="margin-top: 20px;">
+                        <app-card cardTitle="Task Distibution by User" [options]="true">
+                            <div #distributionUserChart>
+                                <chart id="distributionUser_chart" [type]="'bar'" [data]="distributionUserChartData"
+                                    [options]="distributionUserChartOption">
+                                </chart>
+                            </div>
+                        </app-card>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Information Request">
+                <div class="row my-3 mx-0">
+                    <span class="col-10 p-0">
+                        <h4>Task Distribution</h4>
+                    </span>
+                    <span class="col-2 p-0 ">
+                        <button style="margin-top: 0px;width: 80px;display: flex;" (click)="showFilterRow()"
+                            class="form-button back pull-right" type="submit">
+                            <span class="float-right"
+                                style="cursor: pointer;display: inline-flex; padding: 5px">Filter</span>
+                            <mat-icon style="padding-top: 3px;">filter_list</mat-icon>
+                        </button>
+                    </span>
+                </div>
+                <form [formGroup]="filterInformationRequest">
+                    <div class="row" *ngIf="showFilter === true">
+                        <div class="col-md-3">
+                            <!-- <mat-form-field appearance="outline">
+                                <mat-label>Province</mat-label>
+                                <input [(ngModel)]="province" [matAutocomplete]="auto3"
+                                       matInput formControlName="province" required>
+                                <mat-autocomplete #auto3="matAutocomplete"
+                                                  [displayWith]="displayProvince">
+                                  <mat-option *ngFor="let x of filteredProvince" [value]="x">
+                                    {{x.provinceName}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Province</mat-label>
+                                <mat-select style="height: 23px;" formControlName="provinceIds" multiple>
+                                    <!-- <mat-select-trigger>
+                                    {{filterProcessForm?.province?.value ? filterProcessForm?.province?.value[0] : ''}}
+                                    <span *ngIf="provinceList.value?.length > 1" class="example-additional-selection">
+                                      (+{{filterProcessForm?.province?.value?.length - 1}} {{filterProcessForm?.province?.value?.length === 2 ? 'other' : 'others'}})
+                                    </span>
+                                  </mat-select-trigger> -->
+                                    <mat-option *ngFor="let topping of filteredProvince" [value]="topping.provinceId">
+                                        {{topping.provinceName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- <b>Date From :</b> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date From</mat-label>
+                                <input matInput formControlName="fromDate" [matDatepicker]="picker5" [max]="dateTo"
+                                    [(ngModel)]="dateFromRequestInfo" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                                <mat-datepicker #picker5></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- <b>Date To :</b> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date To</mat-label>
+                                <input matInput formControlName="toDate" [matDatepicker]="picker6" [min]="dateFrom"
+                                    [(ngModel)]="dateToRequestInfo" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                                <mat-datepicker #picker6></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <span style="display: inline;">
+                                <button mat-raised-button style="margin-top: 12px;" (click)="clearInformationRequest()"
+                                    class="clear-button back pull-right" type="submit">Clear</button>
+                                <button mat-raised-button style="margin-top: 12px; margin-right: 12px;"
+                                    (click)="searchInformationRequest()" class="form-button bhover pull-right"
+                                    type="submit">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <p>Total Request</p>
+                                <h3>{{informationTopCounts?.totalRequestCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">work</mat-icon>
+                                </i>
+                                <!-- <i class="fas fa-user"></i> -->
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <p>Invoice Amount (ZAR)</p>
+                                <h3>{{informationTopCounts?.invoiceAmount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">receipt</mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <p>Payment Received (ZAR)</p>
+                                <h3>{{informationTopCounts?.paymentAmount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">payment</mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <p>Dispatch Request</p>
+                                <h3>{{informationTopCounts?.dispatchedRequestCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">local_shipping
+                                    </mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+                        <!-- <b>By role distribution</b> -->
+                        <app-card cardTitle="Open Requests" [options]="true">
+                            <div #openRequest>
+                                <chart id="openRequest_chart" [type]="'doughnut'" [data]="PSOpenRequestChartData"
+                                    [options]="pieChartOption"></chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+                        <!-- <b>By role distribution</b> -->
+                        <app-card cardTitle="Closed Requests" [options]="true">
+                            <div #closeRequest>
+                                <chart id="closeRequest_chart" [type]="'doughnut'" [data]="PSCloseRequestChartData"
+                                    [options]="pieChartOption"></chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-6 col-md-6" style="margin-top: 20px;">
+                        <app-card cardTitle="Monthly Invoice Distribution" [options]="true">
+                            <div #PSRequest>
+                                <chart id="PSRequest_chart" [type]="'line'" [data]="PSRequestChartData"
+                                    [options]="PSRequestChartOption">
+                                </chart>
+                                <!-- <chart id="line_chart" [type]="line" [data]="data" [options]="lineChartOption"></chart> -->
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+                        <!-- <b>Monthly Registration</b> -->
+                        <app-card cardTitle="Billing" [options]="true">
+                            <div #billingChart>
+                                <chart id="billingchart" [type]="'bar'" [data]="BillingChartData"
+                                    [options]="billingChartOption">
+                                </chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-3 col-md-3" style="margin-top: 20px;">
+                        <app-card cardTitle="Invoice Overview Status" [options]="true">
+                            <!-- <div class="progress-group" style="padding: 6px;">
+                                    Draft
+                                    <span class="float-right"><b>160</b>/200</span>
+                                    <div class="progress progress-xs">
+                                      <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                  </div>
+                             
+              
+                                  <div class="progress-group" style="padding: 6px;">
+                                    Not Set
+                                    <span class="float-right"><b>310</b>/400</span>
+                                    <div class="progress progress-xs">
+                                      <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                    </div>
+                                  </div>
+              
+                                  
+                                  <div class="progress-group" style="padding: 6px;">
+                                    <span class="progress-text">Unpaid</span>
+                                    <span class="float-right"><b>480</b>/800</span>
+                                    <div class="progress progress-xs">
+                                      <div class="progress-bar bg-success" style="width: 60%"></div>
+                                    </div>
+                                  </div>
+              
+                                  
+                                  <div class="progress-group" style="padding: 6px;">
+                                    Partially Paid
+                                    <span class="float-right"><b>250</b>/500</span>
+                                    <div class="progress progress-xs">
+                                      <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="progress-group" style="padding: 6px;">
+                                    Overdue
+                                    <span class="float-right"><b>250</b>/500</span>
+                                    <div class="progress progress-xs">
+                                      <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                    </div>
+                                  </div>
+                                  <div class="progress-group" style="padding: 6px;">
+                                    Not Paid
+                                    <span class="float-right"><b>250</b>/500</span>
+                                    <div class="progress progress-xs">
+                                      <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                    </div>
+                                  </div> -->
+                            <div #InvoiceOverviewChart>
+                                <chart id="InvoiceOverview_chart" [type]="'horizontalBar'"
+                                    [data]="invoiceOverviewChartData" [options]="invoiceOverviewChartOption"></chart>
+                            </div>
+                            <!-- <div style="border: 1px solid #cccccc;background-color: green; height: 52px;border-radius: 7px;">
+                                    <div class="cell">
+                                        <p style="margin-top: 15px; margin-left: 15px;color: white; text-align: center;">
+                                            10,998.85
+                                        </p>
+                                    </div>
+                                </div> -->
+                        </app-card>
+                    </div>
+
+                    <div class="col-xl-6 col-md-6" style="margin-top: 20px;">
+                        <app-card cardTitle="Monthly Request Distribution" [options]="true">
+                            <div #PSTaskRequest>
+                                <chart id="PSTask_chart" [type]="'line'" [data]="PSTaskChartData"
+                                    [options]="PSTaskChartOption">
+                                </chart>
+                                <!-- <chart id="line_chart" [type]="line" [data]="data" [options]="lineChartOption"></chart> -->
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-4 col-md-4" style="margin-top: 20px;">
+                        <!-- <b>By role distribution</b> -->
+                        <app-card cardTitle="Manager Alerts" [options]="true">
+                            <div #managerAlert>
+                                <chart id="managerAlert_chart" [type]="'doughnut'" [data]="PSManagerAlertChartData"
+                                    [options]="pieChartOption"></chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-8 col-md-8" style="margin-top: 20px;">
+                        <app-card cardTitle="Alert Details" [options]="true">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>User Name</th>
+                                            <th>Reference Number</th>
+                                            <th>Notification Type</th>
+                                            <th>Dated</th>
+                                            <th class="text-right">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let x of processSummaryAlertDetail  | slice: (PSboundaryPage-1) * PSpagesize : (PSboundaryPage-1) * PSpagesize + PSpagesize">
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                                        <h6 (click)="openUserSummary(x.userName)">{{x.userName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                                        <h6 (click)="navigateToReference(x.referenceNo)">
+                                                            {{x.referenceNo}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.notificationType}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.dated | date: 'dd-MMM-yyyy hh:mm a'}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <label *ngIf="x.status == 'In Progress'"
+                                                    class="badge badge-light-danger">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Dispatched'"
+                                                    class="badge badge-light-primary">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Approved'"
+                                                    class="badge badge-light-success">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Pending'"
+                                                    class="badge badge-light-success">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Canceled'"
+                                                    class="badge badge-light-success">{{x.status}}</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div *ngIf="processSummaryAlertDetail?.length > 0" class="horizontal-scroll"
+                                    style="justify-content: flex-end;display: flex;">
+                                    <ngb-pagination [collectionSize]="processSummaryAlertDetail?.length"
+                                        [pageSize]="PSpagesize" [(page)]="PSboundaryPage" [maxSize]="5" [rotate]="true"
+                                        [boundaryLinks]="true"></ngb-pagination>
+                                </div>
+                            </div>
+                        </app-card>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="User Summary">
+                <div class="row my-3 mx-0">
+                    <span class="col-10 p-0">
+                        <h4><a (click)="openUserSummary(user.userName +user.surname)"
+                                style="color: blue; cursor: pointer;">{{user.userName +user.surname}}</a> Dashboard</h4>
+                    </span>
+                    <span class="col-2 p-0 ">
+                        <button style="margin-top: 0px;width: 80px;display: flex;" (click)="showFilterRow()"
+                            class="form-button back pull-right" type="submit">
+                            <span class="float-right"
+                                style="cursor: pointer;display: inline-flex; padding: 5px">Filter</span>
+                            <mat-icon style="padding-top: 3px;">filter_list</mat-icon>
+                        </button>
+                    </span>
+                </div>
+                <form [formGroup]="filterUserSummary">
+                    <div class="row" *ngIf="showFilter === true">
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date From</mat-label>
+                                <input matInput formControlName="fromDate" [matDatepicker]="picker8" [max]="dateTo"
+                                    [(ngModel)]="dateFromUserSummary" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
+                                <mat-datepicker #picker8></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Date To</mat-label>
+                                <input matInput formControlName="toDate" [matDatepicker]="picker9" [min]="dateFrom"
+                                    [(ngModel)]="dateToUserSummary" required>
+                                <mat-datepicker-toggle matSuffix [for]="picker9"></mat-datepicker-toggle>
+                                <mat-datepicker #picker9></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>User</mat-label>
+                                <mat-select style="height: 23px;" (selectionChange)="userChange($event)"
+                                    [(ngModel)]="user" [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let users of internaluser" [value]="users">{{users.userName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <span style="display: inline;">
+                                <button mat-raised-button style="margin-top: 12px;" (click)="clearUserSummary()"
+                                    class="clear-button back pull-right" type="submit">Clear</button>
+                                <button mat-raised-button style="margin-top: 12px; margin-right: 12px;"
+                                    (click)="searchUserSummay()" class="form-button bhover pull-right"
+                                    type="submit">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <p>Total Tasks</p>
+                                <h3>{{userSummaryTopCounts?.totalTaskCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">work</mat-icon>
+                                </i>
+                                <!-- <i class="fas fa-user"></i> -->
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <p>Closed</p>
+                                <h3>{{userSummaryTopCounts?.closedTaskCount}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">assignment_turned_in
+                                    </mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <p>Turnaround Time(Avg Minutes)</p>
+                                <h3>{{userSummaryTopCounts?.turnaroundDuration}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">hourglass_empty
+                                    </mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <p>No. of Notification</p>
+                                <h3>{{userSummaryTopCounts?.totalNotifications}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i>
+                                    <mat-icon style="font-size: 70px; display: inline !important;">
+                                        notification_important</mat-icon>
+                                </i>
+                            </div>
+                            <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-md-4" style="margin-top: 20px;">
+                        <!-- <b>By role distribution</b> -->
+                        <app-card cardTitle="Monthly Task Distibution" [options]="true">
+                            <div #monthlyDistributionChart>
+                                <chart id="monthlyDistribution_chart" [type]="'bar'"
+                                    [data]="monthlyDistributionChartData" [options]="monthlyDistributionChartOption">
+                                </chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-9 col-md-8" style="margin-top: 20px;">
+                        <app-card cardTitle="No. of tasks completed as per Turnaround Time" [options]="true">
+                            <div #USTTChart>
+                                <chart id="USTT_chart" [type]="'line'" [data]="USTTChartData"
+                                    [options]="USTTChartOption">
+                                </chart>
+                                <!-- <chart id="line_chart" [type]="line" [data]="data" [options]="lineChartOption"></chart> -->
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-3 col-md-4" style="margin-top: 20px;">
+                        <app-card cardTitle="Distribution By Action" [options]="true">
+                            <div #distributionActionChart>
+                                <chart id="distributionAction_chart" [type]="'pie'" [data]="distributionActionChartData"
+                                    [options]="distributionActionChartOption"></chart>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-9 col-md-8" style="margin-top: 20px;">
+                        <app-card cardTitle="Alert Details" [options]="true">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>User Name</th>
+                                            <th>Reference Number</th>
+                                            <th>Notification Type</th>
+                                            <th>Dated</th>
+                                            <th class="text-right">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let x of userSummaryAlertDetails  | slice: (boundaryPage-1) * pagesize : (boundaryPage-1) * pagesize + pagesize">
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                                        <h6 (click)="openUserSummary(x.userName)">{{x.userName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                                        <h6 (click)="navigateToReference(x.referenceNo)">
+                                                            {{x.referenceNo}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.notificationType}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.dated | date: 'dd-MMM-yyyy hh:mm a'}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <label *ngIf="x.status == 'In Progress'"
+                                                    class="badge badge-light-danger">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Dispatched'"
+                                                    class="badge badge-light-primary">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Approved'"
+                                                    class="badge badge-light-success">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Pending'"
+                                                    class="badge badge-light-success">{{x.status}}</label>
+                                                <label *ngIf="x.status == 'Canceled'"
+                                                    class="badge badge-light-success">{{x.status}}</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div *ngIf="userSummaryAlertDetails?.length > 0" class="horizontal-scroll"
+                                    style="justify-content: flex-end;display: flex;">
+                                    <ngb-pagination [collectionSize]="userSummaryAlertDetails?.length"
+                                        [pageSize]="pagesize" [(page)]="boundaryPage" [maxSize]="5" [rotate]="true"
+                                        [boundaryLinks]="true"></ngb-pagination>
+                                </div>
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="col-xl-12 col-md-12" style="margin-top: 20px;">
+                        <app-card cardTitle="Task List" [options]="true">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Workflow Id</th>
+                                            <th>Reference No.</th>
+                                            <th>Process Name</th>
+                                            <th>Context</th>
+                                            <th>Full Name</th>
+                                            <th>Productivity Minutes</th>
+                                            <th>Action On</th>
+                                            <th>Posted On</th>
+                                            <th class="text-right">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let x of userSummaryTaskList  | slice: (taskboundaryPage-1) * taskpagesize : (taskboundaryPage-1) * taskpagesize + taskpagesize">
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.workflowId}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                                        <h6 (click)="navigateToReference(x.referenceNo)">
+                                                            {{x.referenceNo}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.processName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.context}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block" style="color: blue; cursor: pointer;">
+                                                        <h6 (click)="openUserSummary(x.fullName)">{{x.fullName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.productivityMinutes}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.actedOn | date: 'dd-MMM-yyyy hh:mm a'}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>{{x.postedOn | date: 'dd-MMM-yyyy hh:mm a'}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <label *ngIf="x.internalStatusCaption == 'In Progress'"
+                                                    class="badge badge-light-danger">{{x.internalStatusCaption}}</label>
+                                                <label *ngIf="x.internalStatusCaption == 'Canceled'"
+                                                    class="badge badge-light-danger">{{x.internalStatusCaption}}</label>
+                                                <label *ngIf="x.internalStatusCaption == 'Dispatched'"
+                                                    class="badge badge-light-primary">{{x.internalStatusCaption}}</label>
+                                                <label *ngIf="x.internalStatusCaption == 'Approved'"
+                                                    class="badge badge-light-success">{{x.internalStatusCaption}}</label>
+                                                <label *ngIf="x.internalStatusCaption == 'Pending'"
+                                                    class="badge badge-light-success">{{x.internalStatusCaption}}</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div *ngIf="userSummaryTaskList?.length > 0" class="horizontal-scroll"
+                                    style="justify-content: flex-end;display: flex;">
+                                    <ngb-pagination [collectionSize]="userSummaryTaskList?.length"
+                                        [pageSize]="taskpagesize" [(page)]="taskboundaryPage" [maxSize]="5"
+                                        [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+                                </div>
+                            </div>
+                        </app-card>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Map View">
+                <mat-card style="height: 120vh;">
+                    <mat-card-content style="height: 100%;text-align: center">
+                        <iframe allowfullscreen="true" frameborder="0" height="100%" id="iFrameURL" [src]="mapsrc"
+                            width="100%"></iframe>
+                    </mat-card-content>
+                </mat-card>
+            </mat-tab>
+            <mat-tab label="Reservation">
+                <app-reservation-chart [reservationTab]="reservationTab"></app-reservation-chart>
+            </mat-tab>
+            <mat-tab label="Lodgement">
+                <app-lodgement-chart [lodgementTab]="lodgementTab"></app-lodgement-chart>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,207 @@
+.form-button {
+    width: 75px;
+    height: 36px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    border-radius: 8px;
+    border: 0;
+    background-color: #f48222;
+}
+
+.invalid {
+    background-color: gray;
+}
+
+.specer{
+    flex: 1 1 auto;
+}
+
+hr {
+    position: relative;
+    top: 20px;
+    border: none;
+    height: 1px;
+    background: black;
+    margin-bottom: 50px;
+}
+
+.table-margin {
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+.mat-column-icon {
+    width: 15%;
+}
+
+.mat-column-title {
+    width: 45%;
+}
+
+.mat-column-timeAgo {
+    width: 40%;
+}
+
+::ng-deep .mat-row {
+    height: 12px !important;
+}
+
+.text-yellow {
+    font-size: 14px;
+    color: #f48222;
+    cursor: pointer;
+}
+
+.text {
+    font-size: 15px !important;
+}
+
+.image-thumbnail {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    aspect-ratio: 1;
+    width: 140px;
+    height: 210px;
+    vertical-align: middle;
+}
+
+img:hover {
+    box-shadow: 0 0 2px 1px #f48222;
+}
+
+.card-BaseList-group {
+    height: fit-content;
+    border: solid 1px #f9f9f9;
+    background-color: #ffffff;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.result {
+    cursor: pointer;
+}
+
+.truncate {
+    /* width: 250px !important; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    /* text-overflow: ellipsis !important; */
+}
+
+.bover:hover {
+    background-color: #c58b10;;
+  }
+
+.submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    width: 120px;
+    background-color: #016533;
+    border: 0;
+    height: 44px;
+    color: white;
+}
+
+.inline-table {
+    display: inline-table;
+}
+
+.table-tasks span:nth-child(2) p:first-child {
+    font-size: 16px;
+    color: #333333;
+}
+
+.table-tasks span:nth-child(2) p:nth-child(2) {
+    font-size: 14px;
+    color: #666666;
+}
+
+.mat-column-createdAt {
+    text-align: right;
+    padding-right: 16px !important;
+    font-weight: bold;
+    color: #666666;
+}
+
+
+.mat-row-cell {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #666666;
+}
+
+.card-table-tasks {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+.table-tasks tr.mat-row {
+    background-color: #F1F1F1;
+    border-bottom: 8px solid #fafafa;
+}
+
+.table-tasks tr.mat-footer-row {
+    background-color: #F1F1F1;
+    border-bottom: 8px solid #fafafa;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .tab-grid-remove .card.filter-card {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .table-margin tr th, .table-margin tr td {
+        padding: 10px;
+    }
+}
+
+.mat-column-action {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 13%;
+}
+
+table th
+    /*To remove the horizontal line after header*/
+
+{
+    border-bottom: 0 solid
+}
+
+.table-details {
+    color: #0880c3 !important;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+::ng-deep .mat-checkbox.mat-accent {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}

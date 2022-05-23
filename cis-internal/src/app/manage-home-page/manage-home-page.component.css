@@ -1,0 +1,26 @@
+.default-pg-opt p {
+    width: 100%;
+}
+
+.default-pg-opt .mat-radio-button {
+    width: 100%;
+}
+
+.toggle-opt {
+    margin-top: 30px !important;
+}
+
+.toggle-opt .mat-checkbox {
+    width: 100%;
+}
+.submit-button {
+    line-height: 2;
+    background-color: #298f5c;
+    width: 160px;
+    height: 40px;
+    color: #fafafa;
+    margin-right: 3.2%;
+}
+.bover:hover {
+    background-color: #c58b10;;
+}

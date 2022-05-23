@@ -1,0 +1,80 @@
+<div mat-dialog-title>Create New Template</div>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col">
+            <!-- <mat-form-field appearance="outline">
+                <mat-label>Module Name</mat-label>
+                <input disabled matInput value="Information Management">
+            </mat-form-field> -->
+            <mat-form-field appearance="outline">
+                <mat-label>Module</mat-label>
+                <mat-select [(value)]="selectedModule"
+                            matInput
+                            required>
+                    <mat-option *ngFor="let module of modules" [value]="module">
+                        {{ module.caption }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Template Name</mat-label>
+                <input [(ngModel)]="templateName" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Template Type</mat-label>
+                <mat-select (selectionChange)="templateTypeChange()" [(value)]="selectedTempType" matInput required>
+                    <mat-option *ngFor="let type of tempTypes" [value]="type">
+                        {{ type.caption }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div *ngIf="tempTypeShow === 286" class="row">
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Subject</mat-label>
+                <input [(ngModel)]="emailSubj" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <div *ngIf="tempTypeShow === 286" class="row">
+        <div class="col">
+            Body:
+            <quill-editor [(ngModel)]="emailBody" [styles]="{height: '200px'}"></quill-editor>
+            <span class="pull-right char" style="color: black;"><em>{{ 4000 - emailBody?.length }} characters left</em></span>
+        </div>
+    </div>
+    <div *ngIf="tempTypeShow === 288" class="row">
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Body</mat-label>
+                <textarea matInput [(ngModel)]="smsBody" cols="50" rows="5" style="color: black;"></textarea>
+                <span class="pull-right char" style="color: black;"><em>{{ 1000 - smsBody?.length }} characters left</em></span>
+            </mat-form-field>
+        </div>
+    </div>
+    <div *ngIf="tempTypeShow === 287" class="row">
+        <div class="col">
+            <quill-editor [(ngModel)]="pdfBody" [styles]="{height: '200px'}"></quill-editor>
+            <span class="pull-right char" style="color: black;"><em>{{ 4000 - pdfBody?.length }} characters left</em></span>
+        </div>
+    </div>
+</div>
+
+<div class="row" mat-dialog-actions>
+    <div class="col">
+        <span class="float-right">
+            <button mat-raised-button [mat-dialog-close]="1" class="back-button back">Close</button>
+            <button mat-raised-button (click)="sendData()" class="submit-button bover">Add New Template</button>
+        </span>
+    </div>
+</div>

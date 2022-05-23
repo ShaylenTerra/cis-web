@@ -1,0 +1,33 @@
+<p class="heading" mat-dialog-title>Send Email</p>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>To</mat-label>
+                <input [(ngModel)]="response.to" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Subject</mat-label>
+                <input [(ngModel)]="response.subject" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Body:
+            <quill-editor (onContentChanged)="emailBodyChanged($event)" [styles]="{height: '200px'}"></quill-editor>
+        </div>
+    </div>
+</div>
+<div class="row" mat-dialog-actions>
+    <div class="col">
+    <span class="float-right">
+      <button mat-raised-button [mat-dialog-close]="response" class="submit-button">Send Email</button>
+      <button mat-raised-button class="back-button" mat-dialog-close>Close</button>
+    </span>
+    </div>
+</div>

@@ -1,0 +1,227 @@
+<h4 mat-dialog-title><span>Requester Information</span></h4>
+<div style="margin-left: 1.7%; margin-right: 1.7%;">
+  <p class="sub-heading">Request Logged by {{this.requestorInformation?.requestLoggedBy?.firstName === null ? '': this.requestorInformation?.requestLoggedBy?.firstName + ' ' +
+    this.requestorInformation?.requestLoggedBy?.surName === null ? '' : this.requestorInformation?.requestLoggedBy?.surName}}</p>
+  <div class="row mx-0">
+    <div class="col-8">
+        <form [formGroup]="RequestersInfo">
+            <mat-form-field appearance="outline" class="input-margin">
+                <mat-label>Email</mat-label>
+                <input formControlName="email" matInput readonly />
+            </mat-form-field>
+            <span class="row mx-0">
+                <span class="col-6 pl-0">
+                    <mat-form-field appearance="outline" class="input-margin">
+                        <mat-label>First Name</mat-label>
+                        <input formControlName="firstName" matInput readonly />
+                    </mat-form-field>
+                </span>
+                <span class="col-6 pr-0">
+                    <mat-form-field appearance="outline" class="input-margin">
+                        <mat-label>Last Name</mat-label>
+                        <input formControlName="lastName" matInput readonly />
+                    </mat-form-field>
+                </span>
+            </span>
+            <span class="row mx-0">
+                <span class="col-6 pl-0">
+                    <mat-form-field appearance="outline" class="input-margin">
+                    <mat-label>Phone</mat-label>
+                    <input formControlName="phone" matInput readonly />
+                </mat-form-field>
+                </span>
+            </span>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row" *ngIf="requestor !== undefined">
+    <div class="col-12 col-md-6 col-lg-4 m-t-10">
+      <p>Are you the requestor of data?</p>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 m-t-10">
+      <mat-radio-group disabled [(ngModel)]="requestor">
+        <mat-radio-button class="m-r-10" value="Yes">Yes</mat-radio-button>
+        <mat-radio-button value="No">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+<form [formGroup]="requesterForm">
+    <div *ngIf="requestor === 'No' || requestor === undefined" class=" m-t-10">
+        <div class="row">
+            <div *ngIf="requestor === 'No'" class="col-12 col-md-6 col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Requestor</mat-label>
+                <mat-select disabled [(ngModel)]="requestorClient"
+                  [ngModelOptions]="{ standalone: true }" matInput>
+                    <mat-option [value]="requestorClient">
+                        {{requestorClient}}
+                    </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Requestor Name</mat-label>
+                <input readonly formControlName="requesterName" matInput />
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Requestor Surname</mat-label>
+                <input readonly formControlName="requesterSurame" matInput required />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                requestorClient == 'ANONYMOUS' ||
+                requestorClient == 'SMS' ||
+                requestorClient == 'TELEPHONE'
+              ">
+              <mat-form-field appearance="outline">
+                <mat-label>Contact Number</mat-label>
+                <input readonly formControlName="contactNumber" matInput />
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                requestorClient == 'ANONYMOUS' ||
+                requestorClient == 'EMAIL'
+              ">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input readonly formControlName="Email" matInput />
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                requestorClient == 'ANONYMOUS' ||
+                requestorClient == 'FAX'
+              ">
+              <mat-form-field appearance="outline">
+                <mat-label>Fax</mat-label>
+                <input readonly formControlName="Fax" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                requestorClient == 'ANONYMOUS' ||
+                requestorClient == 'POST' ||
+                requestorClient == 'COURIER'
+              ">
+              <mat-form-field appearance="outline">
+                <mat-label>Address Line 1</mat-label>
+                <input readonly formControlName="Address1" matInput />
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                requestorClient == 'ANONYMOUS' ||
+                requestorClient == 'POST' ||
+                requestorClient == 'COURIER'
+              ">
+              <mat-form-field appearance="outline">
+                <mat-label>Address Line 2</mat-label>
+                <input readonly formControlName="Address2" matInput />
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                requestorClient == 'ANONYMOUS' ||
+                requestorClient == 'POST' ||
+                requestorClient == 'COURIER'
+              ">
+              <mat-form-field appearance="outline">
+                <mat-label>Address Line 3</mat-label>
+                <input readonly formControlName="Address3" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-4" *ngIf="
+                requestorClient == 'ANONYMOUS' ||
+                requestorClient == 'POST' ||
+                requestorClient == 'COURIER'
+              ">
+              <mat-form-field appearance="outline">
+                <mat-label>Postal Code</mat-label>
+                <input readonly formControlName="PostalCode" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+</form>
+<p class="sub-heading">Delivery Information </p>
+<div class="row mx-0">
+    <div class="col-8">
+        <form [formGroup]="RequestersInfo">
+            <mat-form-field appearance="outline" class="input-margin">
+                <mat-label>Request Type</mat-label>
+                <input formControlName="requestType" matInput readonly />
+            </mat-form-field>
+            <span *ngIf="data.processName == 'Information Request'" class="row mx-0">
+                <span class="col-6 pl-0">
+                    <mat-form-field appearance="outline" class="input-margin">
+                        <mat-label>Delivery Method</mat-label>
+                        <input formControlName="deliveryMethod" matInput readonly />
+                    </mat-form-field>
+                </span>
+                <span class="col-6 pr-0">
+                    <mat-form-field appearance="outline" class="input-margin">
+                        <mat-label>Data Delivery Media</mat-label>
+                        <input formControlName="formatType" matInput readonly />
+                    </mat-form-field>
+                </span>
+            </span>
+            <div *ngIf="requestorInformation?.deliveryMethod != 'ELECTRONIC'">
+                <mat-form-field appearance="outline" class="input-margin"
+                    *ngIf="data.processName == 'Information Request' && requestorInformation?.deliveryMethod != 'COURIER'">
+                    <mat-label>Phone</mat-label>
+                    <input formControlName="phone" matInput readonly />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="input-margin"
+                    *ngIf="data.processName == 'Information Request'">
+                    <mat-label>Collection Address</mat-label>
+                    <input formControlName="collectionAddress" matInput readonly />
+                </mat-form-field>
+                <span *ngIf="data.processName == 'Information Request'" class="row mx-0">
+                    <span class="col-6 pl-0" *ngIf="RequestersInfo.value.add1 !== undefined">
+                        <mat-form-field appearance="outline" class="input-margin">
+                            <mat-label>Address 1</mat-label>
+                            <input formControlName="add1" matInput readonly />
+                        </mat-form-field>
+                    </span>
+                    <span class="col-6 pr-0" *ngIf="RequestersInfo.value.add2 !== undefined">
+                        <mat-form-field appearance="outline" class="input-margin">
+                            <mat-label>Address 2</mat-label>
+                            <input formControlName="add2" matInput readonly />
+                        </mat-form-field>
+                    </span>
+                </span>
+
+                <span *ngIf="data.processName == 'Information Request'" class="row mx-0">
+                    <span class="col-6 pl-0" *ngIf="RequestersInfo.value.add3 !== undefined">
+                        <mat-form-field appearance="outline" class="input-margin">
+                            <mat-label>Address 3</mat-label>
+                            <input formControlName="add3" matInput readonly />
+                        </mat-form-field>
+                    </span>
+                    <span class="col-6 pr-0" *ngIf="RequestersInfo.value.zipcode !== undefined">
+                        <mat-form-field appearance="outline" class="input-margin">
+                            <mat-label>Zip Code</mat-label>
+                            <input formControlName="zipcode" matInput readonly />
+                        </mat-form-field>
+                    </span>
+                </span>
+            </div>
+        </form>
+        <div class="row" *ngIf="ownMedia !== undefined">
+            <div class="col-12">
+                <p>I will give my own media to department : {{ownMedia}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+</div>

@@ -1,0 +1,32 @@
+.mat-column-pageNumber {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 12%;
+}
+
+.mat-column-adminDep {
+    width: 18%;
+}
+
+.mat-column-farmNumber {
+    width: 14%;
+}
+
+.mat-column-farmName {
+    width: 20%;
+}
+
+.mat-column-lpiCode {
+    width: 20%;
+}
+
+.mat-column-sgNumber {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 16%;
+}
+
+.back-button {
+    width: 160px;
+    height: 44px;
+}

@@ -1,0 +1,355 @@
+.req_id {
+    font-size: 30px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #f48222;
+}
+
+.t-css {
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #6c757d;
+}
+
+.msg-css {
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.btnCancel-css {
+    width: 73px;
+    height: 31px;
+    border-radius: 4.8px;
+    color: white;
+    background-color: #f48222;
+}
+
+.btnSubmit-css {
+    width: 73px;
+    height: 31px;
+    border-radius: 4.8px;
+    color: white;
+    background-color: #066636;
+}
+
+/* basic positioning */
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+/* your colors */
+.legend .nationalHoliday { margin-top: 5px; background-color: #f48222; }
+.legend .officeHoliday { margin-top: 5px; background-color: #1709d8; }
+.legend .employeeLeave { margin-top: 5px; background-color: #f3300d; }
+
+.image {
+    position: absolute;
+    top: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+  }
+
+  @media screen and (max-width: 25%) {
+    /* .image{
+        top: 730px;
+    } */
+    .image {
+      position: absolute;
+      top: 730px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 33%) {
+    /* .image{
+        top: 430px;
+    } */
+    .image {
+      position: absolute;
+      top: 430px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 1326px) {
+    /* .image{
+        top: 118px;
+    } */
+    .image {
+      position: absolute;
+      top: 40px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 2472px) {
+    /* .image{
+        top: 118px;
+    } */
+    .image {
+      position: absolute;
+      top: 24px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 67%) {
+    /* .image{
+        top: 60px;
+    } */
+    .image {
+      position: absolute;
+        top: 60px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 812px) {
+    /* .image{
+        top: 43px;
+    } */
+    .image {
+      position: absolute;
+      top: -40px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 80%) {
+    /* .image{
+        top: 34px;
+    } */
+    .image {
+      position: absolute;
+       top: 34px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 90%) {
+    /* .image{
+        top: 18px;
+        
+    } */
+    .image {
+      position: absolute;
+      top: 18px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 1236px) {
+    /* .image{
+        top: 4px;
+    } */
+    .image {
+      position: absolute;
+      top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 110%) {
+    /* .image{
+        top: -4px;
+    } */
+    .image {
+      position: absolute;
+       top: -4px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    @media screen and (max-width: 989px) {
+    /* .image{
+        top: -16px;
+    } */
+    .image {
+      position: absolute;
+       top: -12px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 824px) {
+    /* .image{
+        top: -32px;
+    } */
+    .image {
+      position: absolute;
+     top: -65px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 1366px) {
+    .image {
+      position: absolute;
+       top: 4px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    @media screen and (max-width: 1024px) {
+    .image {
+      position: absolute;
+      top: 80px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    @media screen and (max-width: 992px) {
+        .image {
+      position: absolute;
+      top: 18px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    @media screen and (max-width: 569px) {
+        .image {
+      position: absolute;
+      top: 730px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 1280px) {
+        .image {
+      position: absolute;
+      top: 5px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    /* @media screen and (max-width: 1152px) {
+            .image {
+      position: absolute;
+       top: -16px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    } */
+    
+    @media screen and (max-width: 480px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 424px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 414px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 400px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 390px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 375px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 360px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }
+    
+    @media screen and (max-width: 320px) {
+            .image {
+      position: absolute;
+       top: 0px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    }

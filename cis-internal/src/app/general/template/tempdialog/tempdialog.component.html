@@ -1,0 +1,51 @@
+<h4 mat-dialog-title><span>{{data?.templateName}} History</span></h4>
+<div mat-dialog-content>
+    <mat-card>
+        <mat-card-content>
+            <table [dataSource]="dataSource" class="w-100" mat-table>
+              
+                <ng-container matColumnDef="Dated">
+                    <th *matHeaderCellDef mat-header-cell>Dated</th>
+                    <td *matCellDef="let element"
+                        mat-cell>{{element.dated | date :'dd/MMM/yyyy hh:mm a'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="UserName">
+                    <th *matHeaderCellDef mat-header-cell>User Name</th>
+                    <td *matCellDef="let element" mat-cell>&nbsp;{{element.userName}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Subject">
+                    <th *matHeaderCellDef mat-header-cell>Subject</th>
+                    <td *matCellDef="let element" mat-cell>{{element.emailDetails.subject}}</td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th *matHeaderCellDef mat-header-cell>Action</th>
+                    <td (click)="save(element)" *matCellDef="let element"
+                        class="table-details"
+                        mat-cell>&nbsp;View Details
+                    </td>&nbsp;
+                </ng-container>
+                <!-- <ng-container matColumnDef="Email">
+                    <th *matHeaderCellDef mat-header-cell>Email</th>
+                    <td *matCellDef="let element" mat-cell>{{element.body}}</td>
+                </ng-container> -->
+                <!-- <ng-container matColumnDef="SMS">
+                    <th *matHeaderCellDef mat-header-cell>SMS</th>
+                    <td *matCellDef="let element" mat-cell>{{element.smsDetails.body}}</td>
+                </ng-container> -->
+                <!-- <ng-container matColumnDef="PDF">
+                    <th *matHeaderCellDef mat-header-cell>PDF</th>
+                    <td *matCellDef="let element" class="truncate" mat-cell>{{element.pdfDetails}}</td>
+                </ng-container> -->
+  
+                <tr *matHeaderRowDef="columns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+            </table>
+            <mat-paginator #paginator [length]="dataLength" [pageSizeOptions]="[10, 15, 20]" [pageSize]="10"
+                           showFirstLastButtons>
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button mat-raised-button  class="cancel-button cancel" mat-button (click)="onClose()">Close</button>
+</div>

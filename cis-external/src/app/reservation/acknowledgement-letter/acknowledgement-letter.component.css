@@ -1,0 +1,36 @@
+.submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    width: 120px;
+    background-color: #016533;
+    border: 0;
+    height: 44px;
+    color: white;
+}
+.bover:hover {
+    background-color: #c58b10;;
+}
+
+.mat-column-Reason {
+     border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 20%;
+}
+.mat-column-Condition {
+    width: 20%;
+}
+.mat-column-Reference {
+    width: 40%;
+         border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.mat-column-Action {
+     border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 20%;
+}

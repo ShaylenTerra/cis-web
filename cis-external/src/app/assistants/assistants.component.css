@@ -1,0 +1,62 @@
+.mat-column-username {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 20%;
+}
+
+.mat-column-firstname {
+    width: 25%;
+}
+
+.mat-column-lastname {
+    width: 25%;
+}
+
+.mat-column-approved {
+    width: 10%;
+}
+
+.mat-column-active {
+    width: 10%;
+}
+
+.mat-column-detach {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 10%;
+}
+
+.back-button {
+    width: 160px;
+    height: 44px;
+}
+
+table th
+/*To remove the horizontal line after header*/
+
+{
+    border-bottom: 0 solid
+}
+
+
+@media screen and (max-width: 767px) {}
+@media screen and (max-width: 753px) {}
+@media screen and (max-width: 711px) {}
+
+@media screen and (max-width: 667px) {}
+@media screen and (max-width: 640px) {}
+
+@media screen and (max-width: 569px) {}
+@media screen and (max-width: 533px) {}
+@media screen and (max-width: 480px) {
+    .back-button{width: 160px; height: 44px; margin: 0 auto 20px auto !important; display: block;}
+    ::ng-deep .mat-paginator-range-label {margin: 0 0px 0 0px !important; }
+    ::ng-deep .mat-column-firstname{  padding: 10px !important;  }
+}
+@media screen and (max-width: 424px) {}
+@media screen and (max-width: 414px) {}
+@media screen and (max-width: 400px) {}
+@media screen and (max-width: 390px) {}
+@media screen and (max-width: 375px) {}
+@media screen and (max-width: 360px) {}
+@media screen and (max-width: 320px) {}

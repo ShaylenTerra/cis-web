@@ -1,0 +1,173 @@
+<div mat-dialog-title>{{data.type}} User Details</div>
+<div mat-dialog-content>
+    <mat-tab-group mat-stretch-tabs>
+        <mat-tab label="Personal Information">
+            <div class="container-fluid my-3">
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>First Name</mat-label>
+                            <input [value]="data.details.firstName" readonly matInput type="text">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Last Name</mat-label>
+                            <input [value]="data.details.surname" readonly matInput type="text">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Username</mat-label>
+                            <input [value]="data.details.userName" readonly matInput type="text">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Mobile</mat-label>
+                            <input [value]="data.details.mobileNo" readonly matInput type="text">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Telephone</mat-label>
+                            <input [value]="data.details.telephoneNo" readonly matInput type="text">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input [value]="data.details.email" readonly matInput type="text">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Date Created</mat-label>
+                            <input [value]="date | date: 'dd/MMM/yyyy hh:mm:ss'" readonly
+                                   matInput
+                                   type="text">
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <input [value]="data.details.status" readonly matInput type="text">
+                        </mat-form-field>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row" mat-dialog-actions>
+                    <div class="col">
+                        <!-- <button (click)="updateProfile()" class="submit-button">Update</button> -->
+                        <button mat-raised-button class="back-button float-right" mat-dialog-close>Close</button>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+
+
+        <mat-tab *ngIf="data.type=='External'" label="Security Information">
+            <div class="container-fluid my-3">
+                <div class="row">
+                    <div class="col-7">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Security Question 1</mat-label>
+                            <mat-select (selectionChange)="onSecqChange()" [(value)]="secq1" matInput name="secq1">
+                                <mat-option *ngFor="let x of data.securityQuestions" [value]="x">
+                                    {{ x.caption }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Answer 1</mat-label>
+                            <input [(ngModel)]="securityInfo.securityAnswer1" matInput type="text">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Security Question 2</mat-label>
+                            <mat-select (selectionChange)="onSecqChange()" [(value)]="secq2" matInput name="secq2">
+                                <mat-option *ngFor="let x of data.securityQuestions" [value]="x">
+                                    {{ x.caption }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Answer 2</mat-label>
+                            <input [(ngModel)]="securityInfo.securityAnswer2" matInput type="text">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Security Question 3</mat-label>
+                            <mat-select (selectionChange)="onSecqChange()" [(value)]="secq3" matInput name="secq3">
+                                <mat-option *ngFor="let x of data.securityQuestions" [value]="x">
+                                    {{ x.caption }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-5">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Answer 3</mat-label>
+                            <input [(ngModel)]="securityInfo.securityAnswer3" matInput type="text">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" mat-dialog-actions>
+                    <div class="col">
+                        <button mat-raised-button (click)="updateSecurityInfo()" class="submit-button">Update</button>
+                        <button mat-raised-button class="back-button float-right" mat-dialog-close>Close</button>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+
+
+        <mat-tab label="Role Information">
+            <div class="container-fluid my-3">
+                <table [dataSource]="rolesInfo" class="table-margin w-100" mat-table>
+                    <ng-container matColumnDef="userRoleName">
+                        <th *matHeaderCellDef mat-header-cell>Role Name</th>
+                        <td *matCellDef="let element" class="t-b" mat-cell>{{element.userRoleName}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="userProvinceName">
+                        <th *matHeaderCellDef mat-header-cell>Province Name</th>
+                        <td *matCellDef="let element" mat-cell>{{element.userProvinceName}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="isActive">
+                        <th *matHeaderCellDef mat-header-cell>Is Active</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <span *ngIf="element.isActive === 'Y'" class="bg-fl">
+                                YES
+                            </span>
+                            <span *ngIf="element.isActive !== 'Y'" class="bg-ss">
+                                NO
+                            </span>
+                        </td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="tableColumns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: tableColumns;" mat-row></tr>
+                </table>
+                <div class="row" mat-dialog-actions>
+                    <div class="col">
+                        <button mat-raised-button class="back-button float-right" mat-dialog-close>Close</button>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

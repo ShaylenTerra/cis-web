@@ -1,0 +1,481 @@
+<div style="overflow-x: hidden;">
+    <!-- <div class="fixed-header" id="myTopnav">
+        <div class="container">
+            <img src="../../../assets/images/logo-new.png">
+            <span class="beta-text">BETA</span>
+
+            <div class="topnav-right" style="background-color: white;">
+
+            </div>
+        </div>
+    </div> -->
+    <!-- <div class="container2">
+        <img class="bg5" src="../../../assets/images/forest.jpg" width="100%" height="300px">
+        <h2 class="bottom-left">KNOW YOUR FEE</h2>
+    </div> -->
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-4 col-sm-12">
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item c-header" style="padding: 20px;"
+                    (click)="nvigate('fee-simulator')">
+                        INFORMATION REQUEST SIMULATOR
+                    </li>
+                    <li class="list-group-item" style="padding: 20px;" 
+                    (click)="nvigate('reservation-simulator')">
+                        RESERVATION SIMULATOR
+                    </li>
+                    <li class="list-group-item" style="padding: 20px;" 
+                    (click)="nvigate('lodgement-simulator')">
+                        LODGEMENT SIMULATOR
+                    </li>
+                    <!-- <li class="list-group-item" style="padding: 20px;" (click)="changeManu('MS')">MAINTENANCE SIMULATOR
+                    </li> -->
+                    <li class="list-group-item" style="padding: 20px;"
+                    (click)="nvigate('ngi-data-simulator')">NGI DATA
+                        SIMULATOR
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-12">
+            <div>
+                <div>
+                    <h2 style="color: #30a450;">INFORMATION REQUEST SIMULATOR</h2>
+                    <h3>Simulate the cost for all the different types of information request as per Scale of
+                        Fees
+                        to be charged in
+                        the offices of the Chief Surveyor-General and the Surveyors-General for products and services
+                        provided in terms of the
+                        Sections 3 and 6 of the land survey act, No 8 of 1997 , and in terms of section 7 of the
+                        Sectional
+                        Titles Act, No 95 of
+                        1986.</h3>
+                </div>
+                <div class="card">
+                    <form [formGroup]="form">
+                    <h5 class="card-header b">Step 1: Type of Information</h5>
+                    <div class="card-body cb">
+                        <div class="row">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Type of Information</h5>
+                                <h6 class="card-t3">Select the Type of information you are looking for.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select matInput formControlName="infoType" [(ngModel)]="infoType"
+                                                (selectionChange)="onInfoTypeChange($event)">
+                                                <mat-option *ngFor="let x of infoData" [value]="x">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3" *ngIf="state == 'Advisory Services'">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Category of information</h5>
+                                <h6 class="card-t3">Select the category of the information you have requested.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select required matInput formControlName="selectedCat" [(ngModel)]="selectedCat">
+                                                <mat-option *ngFor="let x of categorydata" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3" *ngIf="state == 'Alpha Numeric data'">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Category of information</h5>
+                                <h6 class="card-t3">Select the category of the information you have requested.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select matInput formControlName="selectedCatDummy" [(ngModel)]="selectedCatDummy">
+                                                <mat-option *ngFor="let x of categorydata" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3" *ngIf="state == 'Cadastral Images'">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Category of information</h5>
+                                <h6 class="card-t3">Select the category of the information you have requested.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select required matInput formControlName="selectedCat" [(ngModel)]="selectedCat">
+                                                <mat-option *ngFor="let x of cadastrialImagedata" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3" *ngIf="state == 'Coordinates List'">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Category of information</h5>
+                                <h6 class="card-t3">Select the category of the information you have requested.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select required matInput formControlName="selectedCat" [(ngModel)]="selectedCat">
+                                                <mat-option *ngFor="let x of categorydata" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3" *ngIf="state == 'Miscellaneous'">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Category of information</h5>
+                                <h6 class="card-t3">Select the category of the information you have requested.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select required matInput formControlName="selectedCat" [(ngModel)]="selectedCat">
+                                                <mat-option *ngFor="let x of categorydata" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3" *ngIf="state == 'Preparation of Certificates'">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Category of information</h5>
+                                <h6 class="card-t3">Select the category of the information you have requested.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select required matInput formControlName="selectedCat" [(ngModel)]="selectedCat">
+                                                <mat-option *ngFor="let y of certificateType"
+                                                    [value]="y != null?y.itemId:y">
+                                                    {{ y.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3" *ngIf="state == 'Spatial Data'">
+                            <div class="col-md-5 col-sm-12">
+                                <h5 class="card-title">Category of information</h5>
+                                <h6 class="card-t3">Select the category of the information you have requested.</h6>
+                            </div>
+                            <div class="col-md-7 col-sm-12">
+                                <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                    <div style="width: 100%;background-color: white;">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Type of Information</mat-label>
+                                            <mat-select matInput formControlName="selectedCatDummy" [(ngModel)]="selectedCatDummy">
+                                                <mat-option *ngFor="let x of categorydata" [value]="x.itemId">
+                                                    {{ x.caption }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="card-header b">Step 2: Supply</h5>
+                        <div class="card-body cb">
+                            <div class="row" *ngIf="state == 'Advisory Services'">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">Advisory Services</h5>
+                                    <h6 class="card-t3">Data in the format you are looking for.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Advisory Services</mat-label>
+                                                <mat-select matInput formControlName="supplyData" [(value)]="supplyData">
+                                                    <mat-option *ngFor="let x of statData" [value]="x.value">
+                                                    {{x.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="state == 'Alpha Numeric data'">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">ALPHA NUMERICS</h5>
+                                    <h6 class="card-t3">Data in the format you are looking for.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Alpha Numeric</mat-label>
+                                                <!-- <input matInput autocomplete="off"> -->
+                                                <mat-select required formControlName="format" [(ngModel)]="format" matInput>
+                                                    <mat-option
+                                                        *ngFor="let y of alphaType" [value]="y">{{y.caption}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" row" *ngIf="state == 'Miscellaneous'">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">MISCELLANEOUS</h5>
+                                    <h6 class="card-t3">Data in the format you are looking for.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>MISCELLANEOUS</mat-label>
+                                                <mat-select formControlName="supplyData" matInput [(value)]="supplyData">
+                                                    <mat-option *ngFor="let x of statData" [value]="x.value">
+                                                    {{x.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="state == 'Spatial Data'">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">SPATIAL DATA</h5>
+                                    <h6 class="card-t3">Data in the format you are looking for.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>SPATIAL DATA Type</mat-label>
+                                                <mat-select matInput required formControlName="format" [(ngModel)]="format">
+                                                    <mat-option *ngFor="let y of spatialType"
+                                                        [value]="y">
+                                                        {{y.caption}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"
+                                *ngIf="state == 'Cadastral Images' || state == 'Preparation of Certificates'">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title" *ngIf="state == 'Cadastral Images'">Format</h5>
+                                    <h5 class="card-title" *ngIf="state == 'Preparation of Certificates'">
+                                        Format
+                                    </h5>
+                                    <h6 class="card-t3">Select the format you would like the data to be in.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Format</mat-label>
+                                                <mat-select matInput required formControlName="format" [(ngModel)]="format">
+                                                    <mat-option *ngFor="let y of formatType"
+                                                        [value]="y">
+                                                        {{y.caption}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3"
+                                *ngIf="state == 'Cadastral Images' || state == 'Preparation of Certificates'">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title" *ngIf="state == 'Cadastral Images'">Paper Size
+                                    </h5>
+                                    <h5 class="card-title" *ngIf="state == 'Preparation of Certificates'">
+                                        Paper Size
+                                    </h5>
+                                    <h6 class="card-t3"> Select the paper size.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field *ngIf="format?.caption !== 'SOFT/ ELECTRONIC'" appearance="outline">
+                                                <mat-label>Paper Size</mat-label>
+                                                <mat-select matInput required formControlName="paper" [(ngModel)]="paper">
+                                                    <mat-option *ngFor="let y of paperSize"
+                                                        [value]="y!= null?y.itemId:y">
+                                                        {{y.caption}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <mat-form-field *ngIf="format?.caption === 'SOFT/ ELECTRONIC'" appearance="outline">
+                                                <mat-label>Type</mat-label>
+                                                <mat-select required formControlName="paper" [(ngModel)]="paper" matInput>
+                                                    <mat-option 
+                                                        *ngFor="let y of documentFormat" [value]="y!= null?y.itemId:y">
+                                                        {{y.caption}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="state == 'Coordinates List'">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">INCL. COORDINATES</h5>
+                                    <h6 class="card-t3"> Data you are looking in the paper size.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Format</mat-label>
+                                                <mat-select matInput required formControlName="format" [(ngModel)]="format">
+                                                    <mat-option *ngFor="let y of coordinateType"
+                                                        [value]="y">
+                                                        {{y.caption}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5 class="card-header b">Step 3: No. of Items</h5>
+                        <div class="card-body cb">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">Count of Items</h5>
+                                    <h6 class="card-t3">Select the Number of Items you are requesting.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group" style="width: 100%; border: solid 1px;padding: 10px;">
+                                        <div style="width: 100%;background-color: white;">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>No. of items</mat-label>
+                                                <input formControlName="ItemNumber" required matInput type="number" autocomplete="off" [(ngModel)]="ItemNumber" min="1">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5 class="card-header b">Step 4: Delivery Method</h5>
+                        <div class="card-body cb">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">Delivery Method</h5>
+                                    <h6 class="card-t3">Select the delivery method.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group delivery">
+                                        <mat-radio-group aria-label="Select an option" formControlName="selectedMode" [(ngModel)]="selectedMode"
+                                            style="padding: 20px; border: solid 2px;width: 100%;">
+                                            <mat-radio-button *ngFor="let x of selectedModes" [value]="x"
+                                                (change)="deliveryMediaChange(x)" class="r-margin">
+                                                {{x.caption}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-5 col-sm-12">
+                                    <h5 class="card-title">Delivery Method Media</h5>
+                                    <h6 class="card-t3">Select the type of media.</h6>
+                                </div>
+                                <div class="col-md-7 col-sm-12">
+                                    <div class="btn-group delivery">
+                                        <mat-radio-group aria-label="Select an option" formControlName="deliveryMedia" [(ngModel)]="deliveryMedia"
+                                            style="padding: 20px; border: solid 2px;width: 100%;">
+                                            <mat-radio-button *ngFor="let x of deliveryMediasdata" [value]="x"
+                                                class="r-margin">
+                                                {{x.caption}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b">
+
+                        <div style="padding: 10px;margin: 10px;">
+                            <div fxLayoutAlign="center center" style="margin: 10px;">
+                                <button class="cancel-button cancel" mat-raised-button (click)="calculate()">Calculate</button>
+                                &nbsp;&nbsp;
+                                <button class="submit-button bover" mat-raised-button (click)="reset()">Reset</button>
+                            </div>
+                            <div *ngIf="showResult">
+                                <!-- <h5 fxLayoutAlign="center center">The Results are In</h5> -->
+                                <h4 fxLayoutAlign="center center">Total Estimated Cost will be {{calculationData?.totalCost | currency:'ZAR':'ZAR '}}</h4>
+                            </div>
+                        </div>
+                        <h4>**Notes:</h4>
+                        <h5>This estimate may change after the application submition and based on
+                            the different effort required for the generation of this data
+                        </h5>
+                    </div>
+                </form></div>
+            </div>
+        </div>
+
+    </div>
+</div>

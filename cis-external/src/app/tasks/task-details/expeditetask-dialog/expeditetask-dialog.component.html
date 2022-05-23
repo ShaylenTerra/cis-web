@@ -1,0 +1,41 @@
+<h4 mat-dialog-title><span>Expedite Task</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="row">
+            <mat-label class="checkbox-h2">Select priority</mat-label>
+
+            <div class="col-12 col-md-6 col-lg-12" style="display: inline-flex;">
+
+                <!-- <section class="example-section" *ngFor="let priority of priorities; let i = index">
+                    <mat-checkbox class="checkbox-margin" (change)="showOptions(priority.id)" [checked]="selected === i"
+                        (change)="selected = i">
+                        {{priority.description}}</mat-checkbox>
+
+                </section> -->
+
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                                 formControlName="priorityFlag" required>
+                    <mat-radio-button *ngFor="let priority of priorities" [value]="priority.id" class="radio-button">
+                        {{priority.description}}
+                    </mat-radio-button>
+                </mat-radio-group>
+
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Notes</mat-label>
+                    <textarea [(ngModel)]="notes" formControlName="notes" matInput required style="color: black;"></textarea>
+                    <span class="pull-right char" style="color: black;"><em>{{ 1000 - notes?.length }} characters left</em></span>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="submit()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

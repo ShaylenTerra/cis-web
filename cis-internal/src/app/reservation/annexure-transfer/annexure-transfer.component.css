@@ -1,0 +1,24 @@
+.submit-button {
+    margin-right: 10px;
+    line-height: 2;
+    background-color: #298f5c;
+    width: 109px;
+    height: 40px;
+    color: #fafafa;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+.submit {
+    background-color: green;
+    margin-right: 3.2%;
+}
+
+
+.bover:hover {
+  background-color: #c58b10;;
+}
+
+    .absolute.absoluteNew {
+        width: 72%;
+    }

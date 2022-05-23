@@ -1,0 +1,47 @@
+.mat-column-select {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 10%;
+}
+
+.mat-column-pageNumber {
+    width: 10%;
+}
+
+.mat-column-adminDep {
+    width: 16%;
+}
+
+.mat-column-farmNumber {
+    width: 12%;
+}
+
+.mat-column-farmName {
+    width: 14%;
+}
+
+.mat-column-lpiCode {
+    width: 16%;
+}
+
+.mat-column-sgNumber {
+    width: 10%;
+}
+
+.mat-column-details {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 8%;
+}
+
+.back-button {
+    width: 160px;
+    height: 44px;
+}
+
+table th
+/*To remove the horizontal line after header*/
+
+{
+    border-bottom: 0 solid
+}

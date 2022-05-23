@@ -1,0 +1,185 @@
+<div class="main mx-auto">
+    <div class="row">
+        <div class="col">
+            <mat-card>
+                <mat-card-content class="heading-card">
+                    <div class="row m-0">
+                        <div class="col p-l-0">
+                            <p class="heading">Pre Packaged Data</p>
+                        </div>
+                        <div class="col text-right p-r-0">
+                            <a (click)="navigate()" class="info-btn-link">View my subscriptions</a>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-8 p-l-0">
+                            <p class="sub-heading">Using this option, you are requesting data that has been
+                                pre-processed. The data updates will be based on scanning, rescanning, new records. The
+                                pre-processed data shall be sent via email or FTP with the fee allocated as per
+                                goverment scale of fees. The latest data will be avilabel as per the subscription
+                                details.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field appearance="outline">
+                                <!-- <mat-label>Location</mat-label>
+                                <mat-select [(ngModel)]="location" (selectionChange) = "changeLocation()">
+                                    <mat-option value="1">National</mat-option>
+                                    <mat-option value="2">Province</mat-option>
+                                    <mat-option value="3">Admin District/Registration District</mat-option>
+                                    <mat-option value="4">Municipality</mat-option>
+                                    <mat-option value="5">Major Region</mat-option>
+                                    <mat-option value="6">Minor Region</mat-option>
+                                </mat-select> -->
+                                <!-- <mat-form-field appearance="outline"> -->
+                                <mat-label>Location</mat-label>
+                                <input [(ngModel)]="location" [matAutocomplete]="auto30"
+                                       matInput>
+                                <mat-autocomplete #auto30="matAutocomplete" (optionSelected)="changeLocation()"
+                                                  [displayWith]="displayLocation">
+                                    <mat-option *ngFor="let x of filteredLocation" [value]="x">
+                                        {{x.caption}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div *ngIf="location?.caption !== 'National'" class="col">
+                            <form [formGroup]="provinceForm">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Province</mat-label>
+                                    <input [(ngModel)]="province" [matAutocomplete]="auto3" [ngModelOptions]="{standalone: true}" matInput>
+                                    <mat-autocomplete #auto3="matAutocomplete" (optionSelected)="onProvince()"
+                                                      [displayWith]="displayProvince">
+                                        <mat-option *ngFor="let x of filteredProvince" [value]="x">
+                                            {{x.province}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div *ngIf="location?.caption === 'Admin District' || location?.caption === 'Major Region'"
+                             class="col">
+                            <form [formGroup]="townshipForm">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Administration District/Registration Division</mat-label>
+                                    <input [matAutocomplete]="auto3" [(ngModel)]="MajorRegionOrAdminDistrict" formControlName="assignedTownship" matInput>
+                                    <mat-autocomplete #auto3="matAutocomplete"
+                                                      (optionSelected)="assignedTownship($event)"
+                                                      [displayWith]="displayTownship">
+                                        <mat-option *ngFor="let x of filteredTownship" [value]="x">
+                                            {{x.majorRegionOrAdminDistrict}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div *ngIf="location?.caption === 'Municipality'"
+                             class="col">
+                            <form [formGroup]="municipalityForm">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Municipality</mat-label>
+                                    <input [(ngModel)]="municipality" [matAutocomplete]="auto2" formControlName="assignedMunicipality" matInput>
+                                    <mat-autocomplete #auto2="matAutocomplete"
+                                                      (optionSelected)="assignedMunicipality($event)"
+                                                      [displayWith]="displayFn">
+                                        <mat-option *ngFor="let x of filteredMuncipality" [value]="x">
+                                            {{x.municipality}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </form>
+                        </div>
+                        <div *ngIf="location?.caption === 'Minor Region'"
+                        class="col">
+                       <form [formGroup]="minorregionForm">
+                           <mat-form-field appearance="outline">
+                               <mat-label>Minor Region</mat-label>
+                               <input [(ngModel)]="minorregion" [matAutocomplete]="auto5" formControlName="assignedminorregion" matInput>
+                               <mat-autocomplete #auto5="matAutocomplete"
+                                                 (optionSelected)="assignedminorregion($event)"
+                                                 [displayWith]="displayF">
+                                   <mat-option *ngFor="let x of filteredminorregion" [value]="x">
+                                       {{x.minorRegion}}
+                                   </mat-option>
+                               </mat-autocomplete>
+                           </mat-form-field>
+                       </form>
+                   </div>
+                        <!-- <div class="col" *ngIf="location === '5'">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Major Region</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">Reg1</mat-option>
+                                    <mat-option value="2">Reg2</mat-option>
+                                    <mat-option value="3">Reg3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col" *ngIf="location === '6'">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Minor Region</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">Reg1</mat-option>
+                                    <mat-option value="2">Reg2</mat-option>
+                                    <mat-option value="3">Reg3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div *ngFor="let element of prePackages" class="col-xs-12 col-sm-12 col-md-12 col-lg-6 p-0">
+            <mat-card class="pp-card">
+                <mat-card-content>
+                    <div class="row m-0">
+                        <img [src]="element.sampleImageFile" alt="" height="266px" style="margin: 0px auto; max-width: -webkit-fill-available;">
+                    </div>
+                    <div class="row m-0" style="margin-top: 20px !important;">
+                        <p class="title">{{element.name}}</p>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-7 p-0">
+                            <p class="description">{{element.description}}</p>
+                        </div>
+                        <div class="col-5 p-r-0 feature-info">
+                            <label>Type: <span>{{element.prepackageDataType}}</span></label>&nbsp;&nbsp;&nbsp;
+                            <span *ngIf="element.cost !== ''">
+                                <label>Cost(R): <span>{{element.cost}}</span></label>
+                            </span>
+                            <br>
+                            <!-- <label>Features: <span>Point</span></label> -->
+                        </div>
+                    </div>
+                    <div class="row m-0 feature-opt">
+                        <div class="col-7 p-0">
+                            <p>Select Subcription frequency</p>
+                            <mat-radio-group [(ngModel)]="element.frequencyType">
+                                <mat-radio-button *ngIf="element.configurationData?.daily == 1" value="1">Daily
+                                </mat-radio-button>
+                                <mat-radio-button *ngIf="element.configurationData?.monthly == 1" value="2">Monthly
+                                </mat-radio-button>
+                                <mat-radio-button *ngIf="element.configurationData?.yearly == 1" value="3">Yearly
+                                </mat-radio-button>
+                                <mat-radio-button *ngIf="element.configurationData?.weekly == 1" value="4">Weekly
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="element.errorMsg != ''">
+                                {{element.errorMsg}}
+                            </mat-error>
+                        </div>
+                        <div class="col-5 m-t-30 p-r-0">
+                            <button (click)="subscribe(element)" class="submit-button bover float-right" mat-raised-button
+                                    type="button">Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

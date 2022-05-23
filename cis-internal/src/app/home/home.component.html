@@ -1,0 +1,234 @@
+<div class="top-spacing">
+    <div class="w-100 main">
+        <div class="container-fluid pr-0">
+            <div class="row mx-0 justify-content-center">
+                <div class="col col-lg-8 p-l-0">
+                    <div *ngIf="bind.ActiveTask">
+                        <span class="row mx-0">
+                            <span class="col p-l-0">
+                                <p class="Headings">Active Tasks</p>
+                            </span>
+                            <!-- <span class="col">
+                                <p class="float-right m-b-0 m-t-8 common-style" [routerLink]="['/tasks/task-list']"
+                                    style="cursor: pointer;">See All</p>
+                            </span> -->
+                        </span>
+                        <mat-card class="card-table-tasks">
+                            <mat-card-content class="table-tasks overflow-auto">
+                                <table [dataSource]="dataSource1" class="table-responsive inline-table" mat-table>
+                                    <ng-container matColumnDef="TimeAgo">
+                                        <td *matCellDef="let element" mat-cell>
+                                            <div class="cell-time-ago">
+                                                <mat-icon class="watch">query_builder</mat-icon>
+                                                <p>{{element.triggeredOn |dateDifference:serverDate1}}</p>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="Task">
+                                        <td *matCellDef="let element" mat-cell>
+                                            <div class="cell-task">
+                                                {{element.processName}}
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="TaskId">
+                                        <td *matCellDef="let element" mat-cell>
+                                            <div class="cell-task req-highlight">
+                                                <a (click)="navigateQuery(element)"
+                                                   style="color: blue;cursor: pointer;">{{element.referenceNo}}</a>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="CreatedAt">
+                                        <td *matCellDef="let element" mat-cell style="float: right;padding-top: 10px;">
+                                            {{element.triggeredOn |date:
+                                            "d-MMM-y"}}
+                                        </td>
+                                    </ng-container>
+                                    <tr *matRowDef="let row; columns: tasksColumns;" mat-row></tr>
+                                </table>
+                                <!-- <div class="row" style="float: right;margin-top: 5px;margin-right: 2px;">
+                                    {{activePageFrom}} - {{activePageTo}} of {{totalInboxTasks}}
+                                    <mat-icon (click)="activeprevious()" style="cursor: pointer;">
+                                        keyboard_arrow_left
+                                    </mat-icon>
+                                    &nbsp; &nbsp;<label></label>&nbsp;
+                                    <mat-icon (click)="activenext()" style="cursor: pointer;">
+                                        keyboard_arrow_right
+                                    </mat-icon>
+                                </div> -->
+                                <div>
+                                    <mat-paginator #paginator [length]="dataLength"
+                                                   [pageSizeOptions]="[3]"
+                                                   showFirstLastButtons>
+                                    </mat-paginator>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <br>
+                    <div *ngIf="bind.MyRequests">
+                        <span class="row mx-0">
+                            <span class="col p-l-0">
+                                <p class="Headings">My Requests</p>
+                            </span>
+                            <!-- <span class="col">
+                                <p class="float-right m-b-0 m-t-8 common-style" [routerLink]="['/requests/my-requests']"
+                                    style="cursor: pointer;">See All
+                                </p>
+                            </span> -->
+                        </span>
+                        <mat-card class="card-table-tasks">
+                            <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                <table (matSortChange)="sortData($event)" [dataSource]="dataSource" [matSort]
+                                       class="table-margin w-100 m-0 inline-table"
+                                       mat-table>
+                                    <ng-container matColumnDef="select">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Select</th>
+                                        <td *matCellDef="let element" mat-cell>
+                                            <mat-checkbox></mat-checkbox>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="referenceNumber">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                                            Reference
+                                        </th>
+                                        <td *matCellDef="let element" mat-cell style="color: blue;">
+                                            {{element.referenceNumber}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="processName">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Context</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.processName}}</td>
+                                    </ng-container>
+                                    <!-- <ng-container matColumnDef="actionRequired">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Summary</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.actionRequired}}</td>
+                                    </ng-container> -->
+                                    <ng-container matColumnDef="internalStatusCaption">
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.internalStatusCaption}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="pendingSince">
+                                        <th *matHeaderCellDef mat-header-cell>Pending Since</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.lastStatusUpdate |
+                                            dateDifference:serverDate}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="lastStatusUpdate">
+                                        <th *matHeaderCellDef mat-header-cell>Last Status Updated</th>
+                                        <td *matCellDef="let element" mat-cell>{{element.lastStatusUpdate | date:
+                                            "d-MMM-y"}}</td>
+                                    </ng-container>
+                                    <tr *matHeaderRowDef="requestsColumns" mat-header-row></tr>
+                                    <tr (click)="navigate(row)" *matRowDef="let row; columns: requestsColumns;" mat-row
+                                        style="cursor: pointer;"></tr>
+                                </table>
+                                <!-- <div class="row" style="float: right;margin-top: 5px;margin-right: 2px;">
+                                    {{PageFrom}} - {{PageTo}} of {{totalMyRequest}}
+                                    <mat-icon (click)="previous()" style="cursor: pointer;">
+                                        keyboard_arrow_left
+                                    </mat-icon>
+                                    &nbsp; &nbsp;<label></label>&nbsp;
+                                    <mat-icon (click)="next()" style="cursor: pointer;">
+                                        keyboard_arrow_right
+                                    </mat-icon>
+                                </div> -->
+                                <div *ngIf="requestsData.length === 0" class="mx-auto p-10">
+                                    No records found
+                                </div>
+                                <div>
+                                    <mat-paginator #paginator [length]="requestsLength"
+                                                   [pageSizeOptions]="[5]"
+                                                   showFirstLastButtons>
+                                    </mat-paginator>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="col col-lg-4 p-r-0">
+                    <div *ngIf="bind.MyRequests">
+                        <span class="row mx-0">
+                            <span class="col-12 p-l-0">
+                                <p class="Headings">Search By Reference No</p>
+                            </span>
+                            <span class="col-12 p-l-0">
+                                <mat-card class="card-table-tasks">
+                                    <mat-spinner *ngIf="isSearchRequestsSpinnerVisible" class="center">
+                                    </mat-spinner>
+                                    <mat-card-content class="table-tasks overflow-auto">
+                                        <form (ngSubmit)="searchMyRequests()" [formGroup]="serachrefform">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Search By Reference Number</mat-label>
+                                                <input formControlName="referenceNo" matInput>
+                                                <button mat-icon-button matSuffix type="button">
+                                                    <mat-icon (click)="searchMyRequests()" type="submit">search
+                                                    </mat-icon>
+                                                </button>
+                                            </mat-form-field>
+
+                                        </form>
+
+                                        <div *ngFor="let serachdata of searchRequestsData" class="mx-auto p-10">
+                                            <span style="padding-left: 0;">
+                                                {{serachdata.processName}} with reference no.
+                                                <a (click)="navigate()"
+                                                   style="color: blue; cursor: pointer; margin-left: 2px;">{{serachdata.referenceNumber}}</a> dated
+                                                {{serachdata.triggeredOn | date:"d-MMM-y"}}is
+                                                {{serachdata.internalStatusCaption}}
+                                            </span>
+                                        </div>
+                                        <div *ngIf="serachrefform.value.referenceNo.length > 0 && searchRequestsData.length == 0 "
+                                             class="mx-auto p-10">
+                                            No records found
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </span>
+                        </span>
+                    </div>
+                    <div *ngIf="bind.Notifications">
+                        <span class="row mx-0">
+                            <span class="col p-l-0">
+                                <p class="Headings">Notifications</p>
+                            </span>
+                            <span class="col">
+                                <p class="float-right m-b-0 m-t-6 pt-2 common-style" style="cursor: pointer;" (click)="showAllNotifications()">More</p>
+                            </span>
+                        </span>
+                        <mat-card class="card-table-tasks">
+                            <mat-card-content class="table-tasks common-style">
+                                <div *ngFor="let notification of notifications|slice:0:3" class="row mx-0" mat-line>
+                                    <span class="col-auto p-r-0">
+                                        <p [attr.data-letters]="notification.initials"></p>
+                                    </span>
+                                    <span class="col-auto">
+                                        <p class="truncate" matTooltip="{{notification.subject}}">{{notification.subject}}</p>
+                                        <p>{{notification.description}}</p>
+                                    </span>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div *ngIf="bind.RequestStatus">
+                        <span class="row mx-0">
+                            <span class="col p-l-0 m-t-30">
+                                <p class="Headings">Requests Status</p>
+                            </span>
+                        </span>
+                        <mat-card class="card-table-tasks">
+                            <mat-card-content class="table-tasks">
+                                <div #doughnutChart [hidden] ="arrData.length === 0">
+                                    <chart id="doughnut_chart" [type]="'doughnut'" [data]="doughnutChartData"
+                                    [options]="pieChartOption" [routerLink]="['/general/requests-charts']"></chart>
+                                </div>
+                                <div *ngIf ="arrData.length === 0">
+                                    No data to display
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <p class="heading">Office Timings</p>
+                </div>
+            </div>
+            <mat-card class="scroll">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Province</mat-label>
+                                <mat-select [(value)]="province" (selectionChange)="getOfficeTimings()">
+                                    <mat-option *ngFor="let x of provinces" [value]="x">{{x.provinceName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Type</mat-label>
+                                <mat-select [(ngModel)]="type" (selectionChange)="getOfficeTimings()">
+                                    <mat-option value="office">Office Timings</mat-option>
+                                    <mat-option value="holiday">Office Holidays</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table mat-table [dataSource]="dataSource" matSort class="table-margin w-100">
+                            <ng-container matColumnDef="sno">
+                                <th mat-header-cell *matHeaderCellDef>S.No.</th>
+                                <td mat-cell *matCellDef="let element, let i = index;">{{i+1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="start">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+                                <td mat-cell *matCellDef="let element">{{element.fromDate}}
+                                    <span *ngIf="element.fromTime">({{element.fromTime}})</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="end">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
+                                <td mat-cell *matCellDef="let element">{{element.toDate}}
+                                    <span *ngIf="element.toTime">({{element.toTime}})</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="type">
+                                <th mat-header-cell *matHeaderCellDef>Type</th>
+                                <td mat-cell *matCellDef="let element">{{element.officeTimingType}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="occasion">
+                                <th mat-header-cell *matHeaderCellDef>Occasion</th>
+                                <td mat-cell *matCellDef="let element">{{element.description}}</td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                            <tr mat-row *matRowDef="let myRowData; columns: columns"></tr>
+                        </table>
+                        <mat-paginator [length]="dataLength" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]">
+                        </mat-paginator>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

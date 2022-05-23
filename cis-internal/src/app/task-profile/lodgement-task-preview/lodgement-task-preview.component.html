@@ -1,0 +1,148 @@
+<div mat-dialog-title>
+    <span class="Headings">{{processName}}<i class="fa fa-window-close" matTooltip="Close" aria-hidden="true"
+            (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span>
+    <span>
+        <button class="submit-button bover"
+            style="right: 24px;size: 30px;margin-left: 10px; float: right;cursor: pointer;" mat-raised-button
+            [useExistingCss]="true" printSectionId="print-section" ngxPrint>Print</button>
+    </span>
+</div>
+<div mat-dialog-content class="mat-dialog-content1">
+    <!-- <div class="w-100"> -->
+    <div class="container-fluid pr-0" id="print-section">
+        <div class="row mx-0 tab-grid-remove">
+            <div class="col-lg-12">
+                <mat-accordion [multi]="true">
+                    <mat-expansion-panel class="mt-3" [expanded]="applicantLodgement == true"
+                        (opened)="applicantLodgement = true" (closed)="applicantLodgement = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Applicant Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-applicant-lodgement *ngIf="lodgeDraftData !== undefined" [readonly]="readonly"
+                            [preview]="preview" (outputFromChild)="receiveChildData($event)"
+                            [draftData]="lodgeDraftData">
+                        </app-applicant-lodgement>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="applicationLodgement == true" class="mt-3"
+                        (opened)="applicationLodgement = true" (closed)="applicationLodgement = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Application Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-application-lodgement *ngIf="lodgeDraftData !== undefined"
+                            (outputFromChild)="receiveChildData($event)" [draftData]="lodgeDraftData"
+                            [readonly]="readonly" [preview]="preview">
+                        </app-application-lodgement>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="lodgementDocument == true" class="mt-3"
+                        (opened)="lodgementDocument = true" (closed)="lodgementDocument = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Lodgement Document
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-lodgement-document *ngIf="draftId !== undefined" [draftId]="draftId"
+                            [provinceId]="lodgeDraftData.provinceId" [readonly]="readonly" [showOutcome]="false"
+                            [tempData]="data.tempData" [preview]="preview">
+                        </app-lodgement-document>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="paymentDetails == true" class="mt-3"
+                        (opened)="paymentDetails = true" (closed)="paymentDetails = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Payment Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-payment-details *ngIf="draftId !== undefined" [draftId]="draftId"
+                            [provinceId]="lodgeDraftData.provinceId" [readonly]="readonly" [showOutcome]="false"
+                            [preview]="preview">
+                        </app-payment-details>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="annexureLodgement == true" class="mt-3 mb-2"
+                        (opened)="annexureLodgement = true" (closed)="annexureLodgement = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Annexure
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-annexure-lodgement *ngIf="draftId !== undefined" [draftData]="lodgeDraftData"
+                            [draftId]="draftId" [readonly]="readonly" [preview]="preview">
+                        </app-annexure-lodgement>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <!-- <mat-card>
+                <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Applicant Details</p>
+                        </span>
+                    </span>
+                    <app-applicant-lodgement *ngIf="lodgeDraftData !== undefined" [preview]="preview"
+                        (outputFromChild)="receiveChildData($event)" [draftData]="lodgeDraftData">
+                    </app-applicant-lodgement>
+                </mat-card> -->
+                <!-- <mat-card>
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Application Details</p>
+                        </span>
+                    </span>
+                    <app-application-lodgement *ngIf="lodgeDraftData !== undefined"
+                        (outputFromChild)="receiveChildData($event)" [draftData]="lodgeDraftData" [readonly]="readonly"
+                        [preview]="preview">
+                    </app-application-lodgement>
+                </mat-card>
+
+                <mat-card>
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Lodgement Document</p>
+                        </span>
+                    </span>
+                    <app-lodgement-document [draftId]="lodgeDraftData.draftId" [provinceId]="lodgeDraftData.provinceId"
+                        [readonly]="false" [showOutcome]="false" [tempData]="data.tempData" [preview]="preview">
+                    </app-lodgement-document>
+
+                </mat-card>
+
+                <mat-card>
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Payment Details</p>
+                        </span>
+                    </span>
+                    <app-payment-details [draftId]="lodgeDraftData.draftId" [provinceId]="lodgeDraftData.provinceId"
+                        [readonly]="false" [showOutcome]="false" [preview]="preview">
+                    </app-payment-details>
+
+                </mat-card>
+
+                <mat-card>
+                    <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
+                        <span class="col p-2">
+                            <p class="sub-heading">Annexure</p>
+                        </span>
+                    </span>
+                    <app-annexure-lodgement [draftData]="lodgeDraftData" [draftId]="lodgeDraftData.draftId"
+                        [readonly]="readonly" [preview]="preview">
+                    </app-annexure-lodgement>
+
+                </mat-card> -->
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>
+
+<!-- <div mat-dialog-footer class="mat-dialog-footer1">
+    <div style="float: right;">
+        <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    </div>
+</div> -->

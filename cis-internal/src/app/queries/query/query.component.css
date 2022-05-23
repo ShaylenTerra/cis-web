@@ -1,0 +1,91 @@
+.Headings {
+    height: 29px;
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.mat-header-row {
+    height: 36px;
+    background: transparent;
+    background-color: #ddc269;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+}
+
+.mat-column-issueType {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    width: 24%;
+}
+
+.mat-column-issueStatus {
+    width: 24%;
+}
+
+.mat-column-date {
+    width: 24%;
+}
+
+.mat-column-action {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    width: 27%;
+}
+
+.mat-row {
+    height: 36px;
+}
+
+.mat-row-cell {
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #666666;
+}
+
+.my-snack-bar {
+    background: #066636;
+    color: white
+}
+
+.my-snack-bar button {
+    background: #066636;
+    color: white
+}
+
+.s-f {
+    color: #DEC269;
+    font-weight: bold;
+}
+
+.s-f1 {
+    color: #DEC269;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.submit {
+    width: 128px;
+    height: 44px;
+    border-radius: 4px;
+    border: solid 1px #016533;
+    background-color: #016533;
+    color: white;
+    text-align: center;
+}

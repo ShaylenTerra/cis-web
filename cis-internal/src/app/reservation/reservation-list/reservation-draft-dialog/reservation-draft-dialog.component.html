@@ -1,0 +1,57 @@
+<h4><span><span *ngIf="data.processId === 229">New Draft Reservation</span>
+        <span *ngIf="data.processId === 239">New Draft Reservation Transfer Request</span>
+        <i class="fa fa-window-close" aria-hidden="true" (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span>
+</h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input formControlName="name" autocomplete="off" matInput required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input formControlName="description" autocomplete="off" matInput required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select Province</mat-label>
+                    <mat-select [(ngModel)]="provinceModel" formControlName="province" #provinceSelect required>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="ProvinceFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredProvince | async" [value]="x">
+                            {{ x.provinceName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-8">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Note</mat-label>
+                        <textarea matInput formControlName="Notes" required></textarea>
+                </mat-form-field>
+            </div>
+        </div> -->
+
+
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <!-- <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button> -->
+    <button (click)="CreateReservation()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

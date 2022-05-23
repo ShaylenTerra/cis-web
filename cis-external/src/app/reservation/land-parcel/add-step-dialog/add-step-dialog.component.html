@@ -1,0 +1,67 @@
+<h4><span>Add Step <i class="fa fa-window-close" aria-hidden="true" (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Reservation Reason</mat-label>
+                    <mat-select [(ngModel)]="searchType" formControlName="reservationType" #searchTypeSelect required
+                        (selectionChange)="setParcel()">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="ReservationReasonFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredReservationReason | async" [value]="x">
+                            {{ x.caption }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- <span class="col-md-12"
+                *ngIf="searchType?.itemId === ReservationReason?.CREATIONOFTOWNALLOTMENTAREASTOWNSHIPS">
+                <mat-form-field appearance="outline">
+                    <mat-label>New Township/Allotment Name</mat-label>
+                    <input autocomplete="off" matInput [(ngModel)]="newTownshipName"
+                        [ngModelOptions]="{ standalone: true }" />
+                </mat-form-field>
+            </span> -->
+            <div class="col-md-12" *ngIf="searchType?.itemId !== ReservationReason.REDESIGNATION">
+                <mat-form-field appearance="outline">
+                    <mat-label>No. of Parcels Requested</mat-label>
+                    <input matInput type="number" [disabled]="disableParcel" [readonly]="disableParcel"
+                        formControlName="parcelNo" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-12" *ngIf="searchType?.itemId === ReservationReason.REDESIGNATION">
+                <mat-form-field appearance="outline">
+                    <mat-label>Township/Allotment</mat-label>
+                    <mat-select formControlName="assignedTownship" [(ngModel)]="TownshipModel" #townshipSelect required>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="townshipFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredTownship | async" [value]="x">
+                            {{ x?.majorRegionOrAdminDistrict }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+            <div class="col-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea [(ngModel)]="Description" [ngModelOptions]="{ standalone: true }" matInput readonly
+                        style="color: black;"></textarea>
+                    <!-- <span class="pull-right char" style="color: black;"><em>{{ 1000 - Description?.length }} characters left</em></span> -->
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button (click)="addStep()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

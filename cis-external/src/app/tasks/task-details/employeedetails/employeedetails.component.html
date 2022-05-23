@@ -1,0 +1,65 @@
+<div fxLayoutAlign="center">
+    <img [src]="url" class="image">
+</div>
+<h4 mat-dialog-title>
+    <span>Employee Details</span>
+</h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">First Name</mat-label>
+                        <input matInput formControlName="firstName" readonly required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Last Name</mat-label>
+                        <input matInput formControlName="lastName" readonly required>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Email</mat-label>
+                        <input matInput formControlName="email" readonly required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label class="text-muted">Mobile</mat-label>
+                        <input matInput formControlName="mobileNo" readonly required>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <h4>Holiday Calender</h4>
+            <ul class="legend">
+                <li><span class="nationalHoliday"></span> National Holiday</li>
+                <li><span class="officeHoliday"></span> Office Holiday</li>
+                <li><span class="employeeLeave"></span> Employee Leave</li>
+            </ul>
+            <div class='app-calendar'>
+                <full-calendar #calendar
+                               [events]="calendarEvents" [header]="{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                  }" [plugins]="calendarPlugins"
+                               [weekends]="calendarWeekends" contentHeight="auto"
+                               [deepChangeDetection]="true" defaultView="dayGridMonth">
+                </full-calendar>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="btnCancel-css" mat-raised-button>Cancel</button>
+    <!-- <button (click)="submit()" class="btnSubmit-css" mat-button>Submit</button> -->
+</div>

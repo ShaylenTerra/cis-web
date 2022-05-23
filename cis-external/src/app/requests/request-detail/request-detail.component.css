@@ -1,0 +1,15 @@
+.box {
+  border-radius: 4px;
+  border: solid 1px #d4d4d4;
+  background-color: #fafafa;
+}
+
+.back-button {
+  width: 128px;
+  height: 44px;
+}
+
+.submit-button {
+  width: 128px;
+  height: 44px;
+}

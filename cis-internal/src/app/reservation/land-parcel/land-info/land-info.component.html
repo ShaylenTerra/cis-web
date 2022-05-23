@@ -1,0 +1,12 @@
+<h4 mat-dialog-title><span>{{data?.value?.designation}}<i class="fa fa-window-close" aria-hidden="true"
+            (click)="close()"
+            style="right: 401px;font-size: 30px;margin-left: 10px; float: right;cursor: pointer;"></i></span></h4>
+<div mat-dialog-content>
+    <p *ngFor="let record of records let i = index">{{i+1}}. <a style="cursor: pointer; color: blue;"
+            (click)="navigateTaskProfile(y?.reservationWorkflowId)">{{record?.referenceNo}}</a> by Applicant
+        {{record?.firstName}}
+        {{record?.surName}} request
+        <i><b>{{record?.status}}</b></i>
+    </p>
+    <p *ngIf="recordFound === 'NO'" fxLayoutAlign="center center">No {{data.header}} information found.</p>
+</div>

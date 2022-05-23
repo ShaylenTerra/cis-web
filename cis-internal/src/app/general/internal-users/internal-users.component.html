@@ -1,0 +1,193 @@
+<div class="row">
+    <div class="col">
+        <span class="heading">Internal Users</span>
+        <mat-icon (click)="download()" class="float-right mt-2" style="cursor: pointer;">get_app</mat-icon>
+    </div>
+</div>
+<div class="top-spacing">
+    <div class="w-100">
+        <div>
+            <div class="row mx-0 tab-grid-remove">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 card filter-card">
+                    <span class="col">
+                        <div class="left-col-button mx-auto">
+                            <span class="row mx-0 w-100 pt-2">
+                                <span class="col">
+                                    <form [formGroup]="filterForm">
+                                        <mat-form-field>
+                                            <mat-label>Email</mat-label>
+                                            <input #input formControlName="email" (keyup)="emailFilter($event)" matInput placeholder="Ex. bob@email.com" autocomplete="off">
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Province</mat-label>
+                                            <mat-select formControlName="selProvince" (selectionChange)="onRequestTypeChange($event.value)" multiple>
+                                                <mat-option *ngFor="let requestType of provinceFilter" [value]="requestType.key">
+                                                    {{ requestType.key }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Roles</mat-label>
+                                            <mat-select formControlName="selRole" (selectionChange)="onRoleTypeChange($event.value)" multiple>
+                                                <mat-option *ngFor="let roleType of rolesFilter" [value]="roleType.key">
+                                                    {{ roleType.key }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </form>
+                                    <span class="mt-2">
+                                        <mat-radio-group [value]="radioTypeSelected" aria-label="Select an option"
+                                                         class="r-css">
+                                            <mat-radio-button (change)="ondateFilter(0)" matBadgeOverlap="false"
+                                            [checked]="radioTypeSelected == '0' ? true : false" matTooltip="Today Requests" value="0">
+                                                <span [matBadge]="dateBadges[0]" matBadgeOverlap="false">All</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(1)" matBadgeOverlap="false"
+                                            [checked]="radioTypeSelected == '1' ? true : false" matTooltip="Today Requests" value="1">
+                                                <span [matBadge]="dateBadges[1]" matBadgeOverlap="false">Today</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(7)" matBadgeOverlap="false"
+                                            [checked]="radioTypeSelected == '7' ? true : false" matTooltip="Last 7 Days Requests" value="7">
+                                                <span [matBadge]="dateBadges[7]"
+                                                      matBadgeOverlap="false">Last 7 Days</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button (change)="ondateFilter(30)" matBadgeOverlap="false"
+                                            [checked]="radioTypeSelected == '30' ? true : false" matTooltip="Last 30 Days Requests" value="30">
+                                                <span [matBadge]="dateBadges[30]"
+                                                      matBadgeOverlap="false">Last 30 Days</span>
+                                            </mat-radio-button><br>
+                                            <mat-radio-button #custom (change)="ondateFilter(5)" matBadgeOverlap="false"
+                                            [checked]="radioTypeSelected == '5' ? true : false" matTooltip="Custom" value="5">Custom</mat-radio-button>
+                                        </mat-radio-group>
+                                    </span>
+                                </span>
+                            </span>
+                            <span *ngIf="custom.checked" class="row mx-0 w-100">
+                                <form [formGroup]="dateRangeForm">
+                                    <span class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>From Date</mat-label>
+                                            <input (dateChange)="datechangeEvent()" [matDatepicker]="picker1"
+                                                   formControlName="startDate"
+                                                   matInput style="font-size: 11px !important;">
+                                            <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </span>
+                                    <span class="col-12 col-md-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>To Date</mat-label>
+                                            <input (dateChange)="datechangeEvent()" [matDatepicker]="picker2"
+                                                   [min]="startDate"
+                                                   formControlName="endDate" matInput
+                                                   style="font-size: 11px !important;">
+                                            <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </span>
+                                </form>
+                            </span>
+                        </div>
+                        <form [formGroup]="filterForm">
+                            <div class="left-col-button mx-auto" style="margin-left: 10px !important;">
+                                <span class="row mx-0 w-100 py-2 r-css"> Status </span>
+                                <span aria-label="Select an option" class="r-css" style="display: inline-grid;">
+                                    <mat-checkbox (change)="onRequestPriority($event)" *ngFor="let p of status"
+                                                [value]="p.key" class="checkbox-margin" [checked]="p.checked">
+                                        <span [matBadge]="p.count" matBadgeOverlap="false">{{p.key}}</span>
+                                    </mat-checkbox>
+                                </span>
+                            </div>
+                        </form>
+                    </span>
+                </div>
+                <div class="col-lg-9">
+                    <div class="container-fluid">
+                        <!-- <div class="row mt-3">
+                            <div class="col">
+                                <span class="heading">Users List</span>
+                            </div>
+                        </div> -->
+                        <mat-card class="card-table-tasks">
+                            <mat-card-content class="table-tasks" style="overflow-x: hidden;">
+                                <div>
+                                    <table mat-table [dataSource]="dataSource" matSort class=" table-tasks w-100">
+                                        <ng-container matColumnDef="firstName">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <div class="d-inline-block align-middle" style="margin: 10px 0px;">
+                                                    <img [src]="element.sampleImageFile" alt="user image"
+                                                        class="img-radius align-top m-r-15" style="width:40px; border-radius: 50%;">
+                                                    <div class="d-inline-block">
+                                                        <h6 class="m-b-0">{{element.firstName}} {{element.surname}}</h6>
+                                                        <p class="m-b-0">{{element.email}}</p>
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <!-- <ng-container matColumnDef="userType">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+                                            <td mat-cell *matCellDef="let element"> {{element.userType}} </td>
+                                        </ng-container> -->
+                                        <ng-container matColumnDef="createdDate">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</th>
+                                            <td mat-cell *matCellDef="let element"> {{element?.createdDate | date: "d/MMM/y"}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                                            <td mat-cell *matCellDef="let element"> {{element.status}}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="details">
+                                            <th mat-header-cell *matHeaderCellDef>Details</th>
+                                            <td mat-cell *matCellDef="let element" class="details">
+                                                <span class="details" style="cursor: pointer;margin-left: 15px;" (click)="viewDetails(element)">
+                                                    <mat-icon>remove_red_eye</mat-icon>
+                                                </span>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef>Action</th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <div class="dropdown" style="cursor: pointer;margin-left: 15px;">
+                                                    <span data-toggle="dropdown"><img alt=""
+                                                                                      src="assets/images/Three dots.png"></span>
+                                                    <span class="dropdown-menu">
+                                                        <a (click)="openDialog(6,element)" *ngIf="element.status=='ACTIVE' || element.status=='APPROVED'"
+                                                           class="dropdown-item">Lock</a>
+                                                        <a (click)="openDialog(2,element)" *ngIf="element.status=='ACTIVE' || element.status=='APPROVED'"
+                                                           class="dropdown-item">De-Activate</a>
+                                                        <a (click)="openDialog(1,element)" *ngIf="element.status=='PENDING'"
+                                                           class="dropdown-item">Approve</a>
+                                                        <a (click)="openDialog(3,element)" *ngIf="element.status=='PENDING'"
+                                                           class="dropdown-item">Reject</a>
+                                                        <a (click)="openDialog(5,element)" *ngIf="element.status=='INACTIVE'"
+                                                           class="dropdown-item">Re-Activate</a>
+                                                        <a (click)="openDialog(7,element)" *ngIf="element.status=='LOCK'"
+                                                           class="dropdown-item">Unlock</a>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: columns"></tr>
+                                    </table>
+                                    <mat-paginator [length]="dataLength" [pageSize]="10"
+                                        [pageSizeOptions]="[10, 25, 50, 100]">
+                                    </mat-paginator>
+                                    <!-- <div class="row mx-0 ml-3">
+                                        <div class="col" *ngIf="dataLength > 0">
+                                          {{pageFromValue}} - {{pageToValue}} Out Of {{pageSize}}
+                                        </div>
+                                        <div class="col" *ngIf="dataLength > 0">
+                                          <ngb-pagination  style="float: right;" [collectionSize]="pageSize" [pageSize]="20" [(page)]="boundaryPage" [maxSize]="20"
+                                          [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+                                        </div>
+                                      </div> -->
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

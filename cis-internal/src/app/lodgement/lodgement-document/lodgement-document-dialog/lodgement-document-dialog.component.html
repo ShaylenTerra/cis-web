@@ -1,0 +1,93 @@
+<h4><span>Lodgement Document/Purpose</span></h4>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-md-12  mt-2">
+                <mat-radio-group [(ngModel)]="lodgementAction" formControlName="lodgementAction"
+                    #radioGroup="matRadioGroup">
+                    <mat-radio-button value="purpose">Purpose</mat-radio-button>
+                    &nbsp;&nbsp;
+                    <mat-radio-button value="reservation">Reservation</mat-radio-button>
+                </mat-radio-group>
+                <!-- <mat-radio-group aria-label="Select an option" class="r-css" #radioGroup="matRadioGroup"
+                    [(ngModel)]="lodgementAction">
+                    <mat-radio-button value="purpose" matTooltip="by purpose">
+                        <span>Purpose</span>
+                    </mat-radio-button>
+                    &nbsp;&nbsp;
+                    <mat-radio-button value="reservation" matTooltip="by reservation">
+                        <span>Reservation</span>
+                    </mat-radio-button>
+                </mat-radio-group> -->
+            </div>
+        </div>
+    </form>
+    <form [formGroup]="formPurpose">
+        <div class="row">
+            <div class="col-md-12 mt-2" *ngIf="form.value.lodgementAction == 'purpose'">
+                <mat-form-field appearance="outline">
+                    <mat-label>Lodgement Document</mat-label>
+                    <mat-select formControlName="lodgementDocument" [(ngModel)]="lodgementDocument"
+                        #searchLodgementDocument required (selectionChange)="changeDocument()">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="LodgementDocumentFilterCtrl"
+                                placeholderLabel="Search..." noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredLodgementDocument | async" [value]="x">
+                            {{ x.caption }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12" *ngIf="form.value.lodgementAction == 'purpose'">
+                <mat-form-field appearance="outline">
+                    <mat-label>Lodgement Purpose</mat-label>
+                    <mat-select formControlName="lodgementPurpose" [(ngModel)]="lodgementPurpose"
+                        #searchLodgementPurpose required>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="LodgementPurposeFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredLodgementPurpose | async" [value]="x">
+                            {{ x.caption }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+    <form [formGroup]="formReservation">
+        <div class="row">
+            <div class="col-md-12 mt-2" *ngIf="form.value.lodgementAction == 'reservation'">
+                <mat-form-field appearance="outline">
+                    <mat-label>Search by Reference Number/File Reference Number/Name</mat-label>
+                    <mat-select formControlName="refrenceNumber" #searchReferenceNumber required>
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="RefrenceNumberFilterCtrl"
+                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                noEntriesFoundLabel="'No result found'">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of filteredRefrenceNumber | async" [value]="x">
+                            {{ x.caption }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-12 mt-2" *ngIf="form.value.lodgementAction == 'reservation'">
+                <mat-form-field appearance="outline">
+                    <mat-label>Type for search</mat-label>
+                    <input formControlName="searchType" matInput required autocomplete="off">
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button class="submit-button bover float-right" mat-raised-button (click)="submit()">Next</button>
+</div>

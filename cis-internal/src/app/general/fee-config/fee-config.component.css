@@ -1,0 +1,23 @@
+.btn-css {
+    width: 95px;
+    height: 35px;
+    border-radius: 6px;
+    background-color: #016533;
+    color: white;
+}
+
+.back-button {
+    height: 40px;
+}
+
+.submit-button {
+    line-height: 2;
+    background-color: #298f5c;
+    width: 160px;
+    height: 40px;
+    color: #fafafa;
+    margin-right: 3.2%;
+}
+.bover:hover {
+    background-color: #c58b10;;
+}

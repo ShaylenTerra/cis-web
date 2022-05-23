@@ -1,0 +1,59 @@
+<div class="d-inline-flex">
+    <b class="pt-2 dropdown">
+        <a [hidden]="noGrid" data-toggle="dropdown">
+            <mat-icon class="apps-menu" matTooltip="Menu" style="cursor: pointer;">apps</mat-icon>
+            <div #menu class="dropdown-menu menu-items" (click)="$event.stopPropagation()">
+                <mat-form-field appearance="outline" style="padding: 0px 10px;">
+                    <mat-label>Search Apps</mat-label>
+                    <input [(ngModel)]="searchMenu" autocomplete="off" (ngModelChange)="filterMenu()" matInput>
+                </mat-form-field>
+                <mat-grid-list cols="3" rowHeight="1:1">
+                    <mat-grid-tile *ngFor="let item of filterMenuItems">
+                        <div (click)="navigateToRoute(item.route);" class="card card-body menu-item">
+                            <mat-icon *ngIf="item.icon !== 1" class="icon-css">{{ item.icon }}</mat-icon>
+                            <div *ngIf="item.icon == 1">
+                                <i aria-hidden="true" class="fa fa-registered fa-css"> </i>
+                            </div>
+                            <p class="text-center">{{ item.text }}</p>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+        </a>
+    </b>
+    <b class="pt-2">
+        <a> <img (click)="navigateToRoute('/general/faq')" matTooltip="Help" src="assets/images/logos/query.png"></a>
+    </b>
+    <b class="pl-4 pt-2">
+        <img  (click)="navigateToRoute('/home')" matTooltip="Notifications" src="assets/images/logos/notify.png">
+    </b>
+    <b class="pl-4 pt-2">
+        <a [routerLink]="['/search/cart-page']">
+            <mat-icon [matBadge]="searchService.cartLength" class="cart-menu" matBadgeColor="warn" matTooltip="My Cart">
+                shopping_cart
+            </mat-icon>
+        </a>
+    </b>
+    <div class="row dropdown mt-1 mr-1 pl-5">
+        <span data-toggle="dropdown">
+            <img [matTooltip]="name" [src]="searchService.userProfileImage ? searchService.userProfileImage : 'assets/images/users/dp.jpg'" style="width: 40px;height: 40px;border-radius: 50%;">
+        </span>
+        <div class="dropdown-menu">
+            <a (click)="navigateToRoute('/general/leave-calendar')" class="dropdown-item">My Leave Calender</a>
+            <!-- <a (click)="navigateToRoute('/general/delegation')" class="dropdown-item">Delegation</a> -->
+            <!-- <a (click)="navigateToRoute('/general/reassign')" class="dropdown-item">Reassign</a> -->
+            <a (click)="navigateToRoute('/manage-home-page')" class="dropdown-item">Manage My Home Page</a>
+            <!-- <a (click)="navigateToRoute('/general/pls-users')" class="dropdown-item">PLS Users</a>
+            <a (click)="navigateToRoute('/general/internal-users')" class="dropdown-item">Internal User Management</a>
+            <a (click)="navigateToRoute('/general/external-users')" class="dropdown-item">External User Management</a> -->
+            <a (click)="navigateToRoute('/general/holiday-list')" class="dropdown-item">Holiday List</a>
+            <a (click)="navigateToRoute('/general/office-timings-list')" class="dropdown-item">Office Timings</a>
+            <a (click)="navigateToRoute('/profile')" class="dropdown-item">Profile</a>
+            <a (click)="logoutUser()" class="dropdown-item" style="cursor: pointer;">Sign Out</a>
+        </div>
+    </div>
+
+</div>
+<!-- <button mat-icon-button matTooltip="Signout" (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>  </button>
+ -->

@@ -1,0 +1,35 @@
+.main-card {
+    margin-right: 300px;
+    margin-left: 300px
+}
+
+.btn-css {
+    width: 95px;
+    height: 35px;
+    border-radius: 6px;
+    background-color: #298f5c;
+    color: white;
+}
+
+.bover:hover {
+    background-color: #c58b10;;
+  }
+
+.mat-column-sno {
+    width: 15%;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.mat-column-occasion {
+    width: 40%;
+}
+
+.mat-column-action {
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.table-margin {
+    margin-top: 50px;
+}

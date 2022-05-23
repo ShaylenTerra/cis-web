@@ -1,0 +1,362 @@
+<div [hidden]="resDraftData?.length > 0 ? false : true">
+    <div class="padd-right" *ngFor="let steps of resDraftData">
+        <span class="row mx-0 mt-3">
+            <span class="col-6">
+                <mat-card class="card-table-res card filter-card">
+                    <mat-card-title style="background-color: #f1f1f1;">
+                        <span class="row p-2">
+                            <span [ngClass]="!readonly ? 'col-md-3 ' : 'col-md-12 p-4'"
+                                [ngStyle]="{'top': !readonly ? '10px' : '0px'}">
+                                <h6 class="mt-0">Step {{steps?.stepNo}} -
+                                    {{steps?.requestReason}}</h6>
+                            </span>
+                            <span class="col-md-7" [hidden]="readonly">
+                                <mat-form-field appearance="outline"
+                                    *ngIf="steps?.reasonItemId !== ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                    <mat-label>Search Property</mat-label>
+                                    <mat-select [(ngModel)]="findProperty"
+                                        (selectionChange)="addDraftRequest(steps?.stepId)" #propertySelect required
+                                        [disabled]="steps?.reservationDraftRequestOutcome.length > 0 ||
+                                    (steps?.stepNo > 1 && (steps?.reasonItemId === ReservationReason.SUBDIVISION || steps?.reasonItemId === ReservationReason.LEASE)) ? true : false ">
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="propertyFilterCtrl"
+                                                (ngModelChange)="changeProperty($event,steps?.stepId)"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredProperty | async" [value]="x">
+                                            {{ x.designation }} - {{x.lpi}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-icon-button matSuffix type="button">
+                                        <mat-icon type="submit">search
+                                        </mat-icon>
+                                    </button>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline"
+                                    *ngIf="steps?.reasonItemId === ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                    <mat-label>Township/Allotment</mat-label>
+                                    <mat-select [disabled]="steps?.reservationDraftRequestOutcome.length > 0"
+                                        (selectionChange)="addExtTownship($event.value,steps?.stepId)" #townshipSelect
+                                        required>
+                                        <mat-option>
+                                            <ngx-mat-select-search [formControl]="townshipFilterCtrl"
+                                                [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                noEntriesFoundLabel="'No result found'">
+                                            </ngx-mat-select-search>
+                                        </mat-option>
+                                        <mat-option *ngFor="let x of filteredTownship | async" [value]="x">
+                                            {{ x?.majorRegionOrAdminDistrict }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-icon-button matSuffix type="button">
+                                        <mat-icon type="submit">search
+                                        </mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </span>
+                            <span class="col-md-2" [hidden]="readonly">
+                                <span style="display: flex; float: right;">
+                                    <button
+                                        style="cursor: pointer; font-size: 25px; margin: 2px;border:none;background-color: transparent;"
+                                        (click)="addRecord()" [disabled]="steps?.reservationDraftRequestOutcome.length > 0 || steps?.reservationDraftRequests.length === 0 
+                                        || steps?.reasonItemId === ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                        <i class="material-icons" matTooltip="Search Property"
+                                            [ngStyle]="{color: steps?.reservationDraftRequestOutcome.length > 0 || steps?.reservationDraftRequests.length === 0 
+                                                || steps?.reasonItemId === ReservationReason.EXTENSIONOFTOWNSHIPS ?'':'green'}"
+                                            style="cursor: pointer;  font-size: 32px;">add_circle</i>
+                                    </button>
+                                    &nbsp;&nbsp;
+                                    <button [disabled]="steps?.reservationDraftRequestOutcome.length > 0" style="cursor: pointer; font-size: 25px; margin: 2px;border:none;background-color: transparent;
+                                        margin-left: -15px;">
+                                        <mat-icon matTooltip="Search Property from map"
+                                            [disabled]="steps?.reservationDraftRequestOutcome.length > 0"
+                                            style="cursor: pointer; color:green; font-size: 32px;"
+                                            (click)="searchOnMap(steps?.stepId, steps?.draftId)">
+                                            map
+                                        </mat-icon>
+                                    </button>
+                                </span>
+                            </span>
+                        </span>
+                    </mat-card-title>
+                    <mat-card-content class="table-tasks" style="overflow-x: hidden;margin-top: -5px;
+                    display: flex;height: 227px;">
+                        <span class="col-11 mt-3 p-l-0" style="margin-top:-20px !important">
+                            <div class="row mx-0 mt-2"
+                                *ngIf="steps?.reservationDraftRequests.length === 0 && steps?.reasonItemId !== ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                <span class="col-11  p-r-0">
+                                    <p>No parcel found, please search and add parcel</p>
+                                </span>
+                            </div>
+                            <div class="row mx-0 mt-2"
+                                *ngIf="steps?.reservationDraftRequests.length === 0 && steps?.reasonItemId === ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                <span class="col-11  p-r-0">
+                                    <p>No town found, please search and add parcel</p>
+                                </span>
+                            </div>
+
+                            <div *ngFor="let y of steps?.reservationDraftRequests" class="row mx-0 mt-2" mat-line>
+                                <div class="node" fxFlex="1 0 100%" fxLayout="row wrap" fxLayoutAlign="start center">
+                                    <span class="col-11  p-r-0"
+                                        *ngIf="steps?.reasonItemId !== ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                        <p class="truncate" matTooltip="{{y.designation}} - {{y.lpi}}">{{y.designation}}
+                                            - {{y.lpi}}</p>
+
+                                    </span>
+                                    <span class="col-11  p-r-0"
+                                        *ngIf="steps?.reasonItemId === ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                        <p class="truncate" matTooltip="{{y.location}}">{{y.location}}</p>
+
+                                    </span>
+                                    <span class="col-1">
+                                        <div class="dropdown menu" style="float: right">
+                                            <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu"
+                                                #menuTrigger="matMenuTrigger" class="hover-display"
+                                                [ngClass]="{ 'open': menuTrigger.menuOpen }">
+                                                <img alt="" src="assets/images/Three dots.png" class="mb-3">
+                                            </span>
+                                            <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
+                                                [overlapTrigger]="true">
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="navigateToLandProfile(y.lpi, y.recordId)">
+                                                    <mat-icon matTooltip="View Property" color="primary"
+                                                        (click)="navigateToLandProfile(y.lpi, y.recordId)"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        visibility
+                                                    </mat-icon> View
+                                                </button>
+                                                <button mat-menu-item
+                                                    [disabled]="steps?.reservationDraftRequestOutcome.length > 0"
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="deleteDraftRequest(y)">
+                                                    <mat-icon matTooltip="Remove Property"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;"
+                                                        [disabled]="steps?.reservationDraftRequestOutcome.length > 0">
+                                                        delete
+                                                    </mat-icon> Delete
+                                                </button>
+                                                <button mat-menu-item
+                                                    style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
+                                                    (click)="landInfo(y)">
+                                                    <mat-icon matTooltip="Info"
+                                                        style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                        info
+                                                    </mat-icon> Info
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                        <!-- <span style="display: flex;" [hidden]="readonly">
+                                            <mat-icon matTooltip="View Property" color="primary" (click)="navigateToLandProfile(y.lpi, y.recordId)"
+                                                style="cursor: pointer; font-size: 25px; margin: 2px;">
+                                                visibility
+                                            </mat-icon>
+                                            <button [disabled]="steps?.reservationDraftRequestOutcome.length > 0" 
+                                                style="cursor: pointer; font-size: 25px; margin: 2px;border:none;background-color: transparent;"
+                                                (click)="deleteDraftRequest(y)">
+                                                <mat-icon matTooltip="Remove Property" 
+                                                    style="cursor: pointer; font-size: 25px; margin: 2px;"
+                                                    [disabled]="steps?.reservationDraftRequestOutcome.length > 0" >
+                                                    delete
+                                                </mat-icon>
+                                            </button> 
+                                            
+                                        </span> -->
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- <div *ngFor="let y of steps?.reservationDraftRequests" class="row mx-0 mt-2" mat-line>
+                                        <div class="node" fxFlex="1 0 100%" fxLayout="row wrap" fxLayoutAlign="start center">
+                                            <span class="col-11  p-r-0">
+                                                <p class="truncate" matTooltip="{{y.designation}} - {{y.lpi}}">{{y.designation}}
+                                                    - {{y.lpi}}</p>
+                                        
+                                            </span>
+                                            </div>
+                            </div> -->
+                        </span>
+                    </mat-card-content>
+                    <mat-card-footer style="background-color: #f1f1f1;">
+                        <div class="row p-2">
+                            <div class="col-md-5">
+                                <mat-form-field appearance="outline" [ngSwitch]="steps?.reasonItemId"
+                                    *ngIf="steps?.reasonItemId !== ReservationReason.REDESIGNATION">
+                                    <mat-label>No. of Parcels Requested</mat-label>
+                                    <!-- <input matInput type="number" autocomplete="off" [(ngModel)]="steps.parcelRequested"
+                                        [disabled]="(steps?.reasonItemId !== ReservationReason.SUBDIVISION && steps?.reasonItemId !== ReservationReason.LEASE) || steps?.reservationDraftRequestOutcome.length > 0"
+                                        [readonly]="steps?.reasonItemId !== ReservationReason.SUBDIVISION && steps?.reasonItemId !== ReservationReason.LEASE"> -->
+                                    <input *ngSwitchCase="596" matInput type="number" autocomplete="off"
+                                        [(ngModel)]="steps.parcelRequested"
+                                        [disabled]="(steps?.reasonItemId !== ReservationReason.SUBDIVISION) || steps?.reservationDraftRequestOutcome.length > 0"
+                                        [readonly]="steps?.reasonItemId !== ReservationReason.SUBDIVISION">
+                                    <input *ngSwitchCase="648" matInput type="number" autocomplete="off"
+                                        [(ngModel)]="steps.parcelRequested"
+                                        [disabled]="(steps?.reasonItemId !== ReservationReason.LEASE) || steps?.reservationDraftRequestOutcome.length > 0"
+                                        [readonly]="steps?.reasonItemId !== ReservationReason.LEASE">
+                                    <input *ngSwitchCase="599" matInput type="number" autocomplete="off"
+                                        [(ngModel)]="steps.parcelRequested"
+                                        [disabled]="(steps?.reasonItemId !== ReservationReason.EXTENSIONOFTOWNSHIPS) || steps?.reservationDraftRequestOutcome.length > 0"
+                                        [readonly]="steps?.reasonItemId !== ReservationReason.EXTENSIONOFTOWNSHIPS">
+                                    <input *ngSwitchCase="601" matInput type="number" autocomplete="off"
+                                        [(ngModel)]="steps.parcelRequested"
+                                        [disabled]="(steps?.reasonItemId !== ReservationReason.CREATIONOFTOWNALLOTMENTAREASTOWNSHIPS) || steps?.reservationDraftRequestOutcome.length > 0"
+                                        [readonly]="steps?.reasonItemId !== ReservationReason.CREATIONOFTOWNALLOTMENTAREASTOWNSHIPS">
+                                    <input *ngSwitchDefault matInput type="number" autocomplete="off"
+                                        [(ngModel)]="steps.parcelRequested" [disabled]="true" [readonly]="true">
+                                </mat-form-field>
+
+                                <form [formGroup]="form"
+                                    *ngIf="steps?.reasonItemId === ReservationReason.REDESIGNATION">
+                                    <mat-form-field appearance="outline" style="padding: 5px;">
+                                        <mat-label>Township/Allotment</mat-label>
+                                        <mat-select formControlName="assignedTownship"
+                                            [disabled]="steps?.reservationDraftRequestOutcome.length > 0"
+                                            [(ngModel)]="steps.otherData.toLocationId" #townshipSelect required>
+                                            <mat-option>
+                                                <ngx-mat-select-search [formControl]="townshipFilterCtrl"
+                                                    [ngModelOptions]="{ standalone: true }" placeholderLabel="Search..."
+                                                    noEntriesFoundLabel="'No result found'">
+                                                </ngx-mat-select-search>
+                                            </mat-option>
+                                            <mat-option *ngFor="let x of filteredTownship | async"
+                                                [value]="x.boundaryId">
+                                                {{ x?.majorRegionOrAdminDistrict }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </form>
+                            </div>
+                            <!-- No. of Parsels Requested - {{steps?.parcelRequested}} <span class="specer"></span>-->
+                            <div class="col-md-4">
+                                <form [formGroup]="townshipForm">
+                                    <mat-form-field appearance="outline"
+                                        *ngIf="steps?.reasonItemId  === ReservationReason?.CREATIONOFTOWNALLOTMENTAREASTOWNSHIPS">
+                                        <mat-label>New Township/Allotment Name</mat-label>
+                                        <input autocomplete="off" matInput formControlName="newTownshipName" required
+                                            [readonly]="(steps?.reasonItemId !== ReservationReason.CREATIONOFTOWNALLOTMENTAREASTOWNSHIPS) || steps?.reservationDraftRequestOutcome.length > 0" />
+                                    </mat-form-field>
+                                </form>
+                            </div>
+                            <div class="col-md-3">
+
+                                <button [hidden]="readonly"
+                                    [disabled]="steps?.reservationDraftRequestOutcome.length > 0 || steps?.reservationDraftRequests.length === 0"
+                                    style="border:none;text-align: right;float:right;cursor: pointer;background-color: transparent;margin-left:10px"
+                                    (click)="processOutcome(steps?.stepId,steps?.reasonItemId)">
+                                    <i [disabled]="steps?.reservationDraftRequestOutcome.length > 0"
+                                        class="fa fa-play fa-2x" style="text-align: right;float:right;cursor: pointer;"
+                                        aria-hidden="true" matTooltip="Process Request"></i>
+                                </button>
+                                <button
+                                    style="border:none;text-align: right;float:right;cursor: pointer;background-color: transparent;margin-left:10px">
+                                    <mat-icon matTooltip="View on map"
+                                        (click)="viewOnMap(steps?.stepId, steps?.draftId)"
+                                        style="cursor: pointer; font-size: 32px;float: right;">
+                                        map
+                                    </mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-card-footer>
+                </mat-card>
+            </span>
+            <span class="col-2" *ngIf="steps?.reservationDraftRequestOutcome.length > 0">
+                <div fxLayoutAlign="center center">
+                    <div fxLayoutAlign="center" style="margin-top: 75%;">
+                        {{steps?.requestReason}}
+                    </div>
+                    <button mat-icon-button fxLayoutAlign="end" style="margin-top: 100%; margin-left: -20px;">
+                        <i class="fa fa-minus fa-2x" aria-hidden="true" style="margin-top:3px;color: #666666;"></i>
+                        &nbsp;
+                        <i class="fa fa-minus fa-2x" aria-hidden="true" style="margin-top:3px;color: #666666;"></i>
+                        &nbsp;
+                        <i class="fa fa-minus fa-2x" aria-hidden="true" style="margin-top:3px;color: #666666;"></i>
+                        &nbsp;
+                        <i class="fa fa-arrow-right fa-2x" style="color: #666666;" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+            </span>
+            <span class="col-4" *ngIf="steps?.reservationDraftRequestOutcome.length > 0 && showOutcome === false">
+                <mat-card class="card-table-res card filter-card">
+                    <mat-card-title style="background-color: #f1f1f1;">
+                        <span class="col-12 p-4" style="display:inline-flex; margin-top:-20px !important;">
+                            <span class="col-lg-10 mt-3">
+                                <h6 style="margin-top: 10px !important;">Step {{steps?.stepNo}} - Outcome</h6>
+                            </span>
+                            <span class="col-lg-1">
+                                <div class="dropdown menu" style="margin-top:12px" [hidden]="readonly">
+                                    <span [matMenuTriggerFor]="dropdown">
+                                        <img alt="" src="assets/images/Three dots.png">
+                                    </span>
+                                    <mat-menu #dropdown="matMenu">
+                                        <a mat-menu-item (click)="deleteDraftStep(steps?.stepId)">
+                                            <mat-icon>delete</mat-icon>
+                                            Remove
+                                        </a>
+                                    </mat-menu>
+                                </div>
+                            </span>
+                        </span>
+                    </mat-card-title>
+                    <mat-card-content class="table-tasks" style="overflow-x: hidden;margin-top: -5px;
+                    display: flex;height: 321px;">
+                        <span class="col-12 mt-3 p-l-0" style="margin-top:-20px !important">
+                            <div *ngFor="let z of steps?.reservationDraftRequestOutcome" class="row mx-0 mt-2" mat-line>
+                                <span class="col-12  p-r-0">
+                                    <p class="truncate" matTooltip="{{z.designation}}">{{z.designation}}</p>
+                                </span>
+                            </div>
+                        </span>
+                    </mat-card-content>
+                </mat-card>
+            </span>
+            <span class="col-4" *ngIf="steps?.reservationOutcome.length > 0 && showOutcome === true">
+                <mat-card class="card-table-res card filter-card">
+                    <mat-card-title style="background-color: #f1f1f1;">
+                        <span class="col-12 p-4" style="display:inline-flex; margin-top:-20px !important;">
+                            <span class="col-lg-10 mt-3">
+                                <h6 style="margin-top: 10px !important;">Step {{steps?.stepNo}} - Outcome</h6>
+                            </span>
+                            <span class="col-lg-1">
+                                <div class="dropdown menu" style="margin-top:12px" [hidden]="readonly">
+                                    <span [matMenuTriggerFor]="dropdown">
+                                        <img alt="" src="assets/images/Three dots.png">
+                                    </span>
+                                    <mat-menu #dropdown="matMenu">
+                                        <a mat-menu-item>
+                                            <mat-icon>delete</mat-icon>
+                                            Remove
+                                        </a>
+                                    </mat-menu>
+                                </div>
+                            </span>
+                        </span>
+                    </mat-card-title>
+                    <mat-card-content class="table-tasks" style="overflow-x: hidden;margin-top: -5px;
+                    display: flex;">
+                        <span class="col-12 mt-3 p-l-0" style="margin-top:-20px !important">
+                            <div *ngFor="let z of steps?.reservationOutcome" class="row mx-0 mt-2" mat-line>
+                                <span class="col-12  p-r-0">
+                                    <p class="truncate" matTooltip="{{z.designation}}">{{z.designation}}</p>
+                                </span>
+                            </div>
+                        </span>
+                    </mat-card-content>
+                </mat-card>
+            </span>
+        </span>
+    </div>
+</div>
+<div *ngIf="resDraftData === null && showOutcome === false" class="mt-4" [hidden]="readonly">
+    <center>No Data available. <a style="color: blue;cursor: pointer;" (click)="addStep()">Click here to add new
+            step</a></center>
+</div>
+<div [hidden]="readonly">
+    <button mat-fab class="menu-button bover" (click)="addStep()" matTooltip="Add Step" [disabled]="isAddStep">
+        <i class="material-icons">add</i>
+    </button>
+</div>

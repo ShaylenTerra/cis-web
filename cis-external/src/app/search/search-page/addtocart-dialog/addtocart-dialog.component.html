@@ -1,0 +1,302 @@
+<h4 mat-dialog-title><span>Information Type</span></h4>
+<div mat-dialog-content>
+    <div class="row" style="margin-top: 4%;">
+        <div class="col">
+            <!-- <p class="sub-heading">Information Type</p> -->
+            <div class="row">
+                <span *ngFor="let x of infoData; let i = index;" class="col-12 col-md-6 col-lg-3">
+                    <mat-checkbox (change)="changeInfoData(x)" [checked]="x.isChecked" id="{{x.dataType}}">
+                        {{x.dataType}}</mat-checkbox>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="diagrams">
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <p class="text">{{diagramsLabel}}</p>
+            </div>
+        </div>
+        <div *ngFor="let x of diagramsData; let i = index;" class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Format</mat-label>
+                    <mat-select [(ngModel)]="x.format != null?x.format.itemId:x.format" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'format',126)" *ngFor="let y of formatType"
+                            [value]="y != null?y.itemId:y">
+                            {{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="x.format" class="col-12 col-md-6 col-lg-3">
+                <mat-form-field *ngIf="x.format.caption !== 'SOFT/ ELECTRONIC'" appearance="outline">
+                    <mat-label>Paper Size</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',126)" *ngFor="let y of paperSize"
+                            [value]="y!= null?y.itemId:y">
+                            {{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="x.format.caption === 'SOFT/ ELECTRONIC'" appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',126)"
+                            *ngFor="let y of documentFormat" [value]="y!= null?y.itemId:y">
+                            {{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-1">
+                <span (click)="remove(126, i)" *ngIf="i!==0">
+                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                </span>
+            </div>
+        </div>
+        <div *ngIf="diagramsData.length<5" class="row">
+            <div class="col">
+                <span style="cursor: pointer;">
+                    <mat-icon>add</mat-icon>
+                    <span (click)="add(126)" class="text">Add New</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="general">
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <p class="text">{{generalLabel}}</p>
+            </div>
+        </div>
+        <div *ngFor="let x of generalData; let i = index;" class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Format</mat-label>
+                    <mat-select [(ngModel)]="x.format != null?x.format.itemId:x.format" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'format',125)" *ngFor="let y of formatType"
+                            [value]="y != null?y.itemId:y">{{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="x.format" class="col-12 col-md-6 col-lg-3">
+                <mat-form-field *ngIf="x.format.caption !== 'SOFT/ ELECTRONIC'" appearance="outline">
+                    <mat-label>Paper Size</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',125)" *ngFor="let y of paperSize"
+                            [value]="y != null?y.itemId:y">{{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="x.format.caption === 'SOFT/ ELECTRONIC'" appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',125)"
+                            *ngFor="let y of documentFormat" [value]="y != null?y.itemId:y">
+                            {{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-1">
+                <span (click)="remove(125,i)" *ngIf="i!==0">
+                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                </span>
+            </div>
+        </div>
+        <div *ngIf="generalData.length<5" class="row">
+            <div class="col">
+                <span style="cursor: pointer;">
+                    <mat-icon>add</mat-icon>
+                    <span (click)="add(125)" class="text">Add New</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="certificates">
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <p class="text">{{certificatesLabel}}</p>
+            </div>
+        </div>
+        <div *ngFor="let x of certificatesData; let i = index;" class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{certificatesLabel}} Type</mat-label>
+                    <mat-select [(ngModel)]="x.certType != null?x.certType.itemId:x.certType" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'certType',129)"
+                            *ngFor="let y of certificateType" [value]="y != null?y.itemId:y">
+                            {{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Format</mat-label>
+                    <mat-select [(ngModel)]="x.format != null?x.format.itemId:x.format" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'format',129)"
+                            *ngFor="let y of formatType" [value]="y != null?y.itemId:y">{{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="x.format" class="col-12 col-md-6 col-lg-3">
+                <mat-form-field *ngIf="x.format.caption !== 'SOFT/ ELECTRONIC'" appearance="outline">
+                    <mat-label>Paper Size</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',129)"
+                            *ngFor="let y of paperSize" [value]="y != null?y.itemId:y">{{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="x.format.caption === 'SOFT/ ELECTRONIC'" appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',129)"
+                            *ngFor="let y of documentFormat" [value]="y != null?y.itemId:y">
+                            {{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-1">
+                <span (click)="remove(129, i)" *ngIf="i!==0">
+                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                </span>
+            </div>
+        </div>
+        <div *ngIf="certificatesData.length<5" class="row">
+            <div class="col">
+                <span style="cursor: pointer;">
+                    <mat-icon>add</mat-icon>
+                    <span (click)="add(129)" class="text">Add New</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="spatial">
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <p class="text">{{spatialLabel}}</p>
+            </div>
+        </div>
+        <div *ngFor="let x of spatialData; let i = index;" class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{spatialLabel}} Data Type</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',127)" *ngFor="let y of spatialType"
+                            [value]="y != null?y.itemId:y">{{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-1">
+                <span (click)="remove(127, i)" *ngIf="i!==0">
+                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                </span>
+            </div>
+        </div>
+        <div *ngIf="spatialData.length<5" class="row">
+            <div class="col">
+                <span style="cursor: pointer;">
+                    <mat-icon>add</mat-icon>
+                    <span (click)="add(127)" class="text">Add New</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="coordinates">
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <p class="text">{{coordinatesLabel}} Data</p>
+            </div>
+        </div>
+        <div *ngFor="let x of coordinateData; let i = index;" class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{coordinatesLabel}} Data Type</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',128)"
+                            *ngFor="let y of coordinateType" [value]="y != null?y.itemId:y">
+                            {{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-1">
+                <span (click)="remove(128, i)" *ngIf="i!==0">
+                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                </span>
+            </div>
+        </div>
+        <div *ngIf="coordinateData.length<3" class="row">
+            <div class="col">
+                <span style="cursor: pointer;">
+                    <mat-icon>add</mat-icon>
+                    <span (click)="add(128)" class="text">Add New</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="alphaNumerics">
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <p class="text">{{alphaNumericsLabel}} Data</p>
+            </div>
+        </div>
+        <div *ngFor="let x of alphaNumericsData; let i = index;" class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{alphaNumericsLabel}} Data Type</mat-label>
+                    <mat-select [(ngModel)]="x.type != null?x.type.itemId:x.type" matInput>
+                        <mat-option (onSelectionChange)="onchange(y,i,'type',130)"
+                            *ngFor="let y of alphaType" [value]="y != null?y.itemId:y">{{y.caption}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-1">
+                <span (click)="remove(130, i)" *ngIf="i!==0">
+                    <mat-icon class="my-3" style="cursor: pointer; color: #f48222;">close</mat-icon>
+                </span>
+            </div>
+        </div>
+        <div *ngIf="alphaNumericsData.length<5" class="row">
+            <div class="col">
+                <span style="cursor: pointer;">
+                    <mat-icon>add</mat-icon>
+                    <span (click)="add(130)" class="text">Add New</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-0" style="margin-top: 5% !important;">
+        <mat-form-field *ngIf="advisory" class="example-full-width">
+            <mat-label>{{advisoryLabel}}</mat-label>
+            <textarea [(ngModel)]="advisoryData" matInput style="color: black;"></textarea>
+            <span class="pull-right char" style="color: black;"><em>{{ 1000 - advisoryData?.length }}
+                    characters left</em></span>
+        </mat-form-field>
+        <mat-form-field *ngIf="misc" class="example-full-width">
+            <mat-label>{{miscLabel}}</mat-label>
+            <textarea [(ngModel)]="miscData" matInput style="color: black;"></textarea>
+            <span class="pull-right char" style="color: black;"><em>{{ 1000 - miscData?.length }}
+                    characters left</em></span>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions style="float: right;">
+    <button [mat-dialog-close]="1" class="cancel-button cancel" mat-raised-button>Cancel</button>
+    <button (click)="addToCart()" class="submit-button bover float-right" mat-raised-button>Submit</button>
+</div>

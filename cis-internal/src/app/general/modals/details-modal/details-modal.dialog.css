@@ -1,0 +1,25 @@
+.back-button {
+    width: 100px;
+    height: 40px;
+}
+
+.submit-button {
+    width: 100px;
+    height: 40px;
+}
+
+.mat-column-userRoleName {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 30%;
+}
+
+.mat-column-isActive {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 20%;
+}
+
+.mat-tab-body-content {
+    overflow: hidden !important;
+}

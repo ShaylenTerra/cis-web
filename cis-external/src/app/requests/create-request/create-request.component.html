@@ -1,0 +1,60 @@
+<div class="row mx-0">
+  <span class="col">
+    <p class="heading">Create Request</p>
+  </span>
+</div>
+<div class="row mx-0">
+  <div class="col">
+    <div class="card">
+      <table mat-table [dataSource]="dataSource" class="table-margin">
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>Select</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="pageNumber">
+          <th mat-header-cell *matHeaderCellDef>Page No.</th>
+          <td mat-cell *matCellDef="let element">{{element.pageNumber}}</td>
+        </ng-container>
+        <ng-container matColumnDef="adminDep">
+          <th mat-header-cell *matHeaderCellDef>Admin Department</th>
+          <td mat-cell *matCellDef="let element">{{element.adminDep}}</td>
+        </ng-container>
+        <ng-container matColumnDef="farmNumber">
+          <th mat-header-cell *matHeaderCellDef>Farm No.</th>
+          <td mat-cell *matCellDef="let element">{{element.farmNumber}}</td>
+        </ng-container>
+        <ng-container matColumnDef="farmName">
+          <th mat-header-cell *matHeaderCellDef>Farm Name</th>
+          <td mat-cell *matCellDef="let element">{{element.farmName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="lpiCode">
+          <th mat-header-cell *matHeaderCellDef>LPI Code</th>
+          <td mat-cell *matCellDef="let element">{{element.lpiCode}}</td>
+        </ng-container>
+        <ng-container matColumnDef="sgNumber">
+          <th mat-header-cell *matHeaderCellDef>SG No.</th>
+          <td mat-cell *matCellDef="let element">{{element.sgNumber}}</td>
+        </ng-container>
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef>Details</th>
+          <td mat-cell *matCellDef="let element" class="table-details" (click)="openDetails()">
+            <u>View Details</u></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="requestsColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: requestsColumns;"></tr>
+      </table>
+      <div class="row w-100">
+        <span class="col">
+          <button class="back-button mx-2 my-3" [routerLink]="['/home']">Back</button>
+        </span>
+        <span class="col">
+          <mat-paginator #paginator [length]="dataLength" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons>
+          </mat-paginator>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

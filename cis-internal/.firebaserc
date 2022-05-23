@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "cisp-92af1"
+  },
+  "targets": {
+    "cisp-92af1": {
+      "hosting": {
+        "internal-cis": [
+          "internal-cis"
+        ]
+      }
+    }
+  }
+}

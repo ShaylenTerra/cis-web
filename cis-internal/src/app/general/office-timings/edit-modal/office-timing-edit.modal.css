@@ -1,0 +1,11 @@
+::ng-deep .ngx-timepicker {
+    border-bottom: none !important;
+}
+
+.submit-button {
+    width: 100px;
+    height: 44px;
+    border-radius: 4px;
+    background-color: #016533;
+    color: white;
+}

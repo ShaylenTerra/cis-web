@@ -1,0 +1,113 @@
+.req_id {
+    font-size: 30px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #f48222;
+}
+
+.t-css {
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #6c757d;
+}
+
+.msg-css {
+    font-size: 24px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.btnCancel-css {
+    width: 73px;
+    height: 31px;
+    border-radius: 4.8px;
+    color: white;
+    background-color: #f48222;
+}
+
+.btnSubmit-css {
+    width: 73px;
+    height: 31px;
+    border-radius: 4.8px;
+    color: white;
+    background-color: #066636;
+}
+
+/* basic positioning */
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+/* your colors */
+.legend .nationalHoliday { margin-top: 5px; background-color: #f48222; }
+.legend .officeHoliday { margin-top: 5px; background-color: #1709d8; }
+.legend .employeeLeave { margin-top: 5px; background-color: #f3300d; }
+
+.mat-dialog-content {
+    overflow: hidden;
+}
+
+.bover:hover {
+    background-color: #c58b10;;
+  }
+
+  .back-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    background-color: #fff;
+    border: 0;
+    width: 120px;
+    height: 44px;
+}
+
+.back:hover{
+    background-color: lightgray;
+}
+
+.submit-button {
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    width: 120px;
+    background-color: #016533;
+    border: 0;
+    height: 44px;
+    color: white;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    border-radius: 8px;
+    border: solid 1px green !important;
+    background-color: green !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: green !important; /*replace with your color*/
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: green !important; /*replace with your color*/
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-ripple-element {
+    background-color: green !important; /*replace with your color*/
+}
