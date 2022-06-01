@@ -1763,5 +1763,12 @@ export class RestcallService extends BaseService {
     getLodgementAllDocument(draftId) {
         return this.get(new HttpParams(), environment.uamBaseUrl + environment.getLodgementAllDocument + draftId);
     }
+
+    /* Examination Requests */
+
+    //getExaminationAllocatedUsers(){
+       // return this.get();
+    //}
+
 }
 

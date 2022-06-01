@@ -61,6 +61,7 @@ import { LodgementDraftComponent } from './lodgement/lodgement-draft/lodgement-d
 import { LodgementTaskComponent } from './lodgement/lodgement-task/lodgement-task.component';
 import { TaskDetailLodgementComponent } from './lodgement/task-detail-lodgement/task-detail-lodgement.component';
 import { ExaminationListComponent } from './examination/examination-list/examination-list/examination-list.component';
+import { TaskDetailsExaminationComponent } from './examination/task-details-examination/task-details-examination/task-details-examination.component';
 export const AppRoutes: Routes = [
     {
         path: '',
@@ -220,7 +221,8 @@ export const AppRoutes: Routes = [
             {
                 path:'examination',
                 children:[
-                    {path:'examination-list',component:ExaminationListComponent,canActivate:[AuthGuard]}
+                    { path:'examination-list',component:ExaminationListComponent,canActivate:[AuthGuard] },
+                    { path: 'task-detail-examination', component:TaskDetailsExaminationComponent, canActivate: [AuthGuard] },
                 ]
             }
         ]

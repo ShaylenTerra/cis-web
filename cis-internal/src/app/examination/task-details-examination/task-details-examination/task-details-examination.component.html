@@ -1,0 +1,50 @@
+<div class="top-spacing">
+    <div class="w-100">
+        <div class="container-fluid pr-0">
+            <span class="row mx-0">
+                <span class="col-lg-12 p-l-0" style="display: inline-flex;">
+                    <i style="font-size: 30px; cursor: pointer; margin-right: 20px" (click)="nvaigateToLodgementList()"
+                        class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                   <!--  <h2><a style="color: blue; cursor: pointer !important;" (click)="navigateTaskProfile()">
+                            {{lodgeData?.referenceNo}} </a> - {{lodgeData?.actionRequiredDescription}}
+                        {{lodgeDraftData?.name}} of {{lodgeDraftData?.provinceName}}</h2> -->
+                        <h2><a style="color: blue; cursor: pointer !important;" (click)="navigateTaskProfile()">
+                           Test </a> - Examination
+                        Test of National</h2>
+                </span>
+            </span>
+            <div class="row mx-0 tab-grid-remove">
+                <div class="col-lg-12">
+                    <mat-tab-group selectedIndex="0" >
+                        <mat-tab label="Lodgement Details">
+                            <app-examination-lodgement-details> <!-- [data1]="data1" (outputFromChild)="receiveChildData($event)" --></app-examination-lodgement-details>
+                        </mat-tab>
+                        <mat-tab label="Batch Management">
+                           <app-batch-management></app-batch-management>
+                        </mat-tab>
+                        <mat-tab label="Docket">
+                           
+                        </mat-tab>
+                        <mat-tab label="Request Flow">
+                            <app-examination-request-flow></app-examination-request-flow>
+                        </mat-tab>
+                        <mat-tab label="Referral Input">
+                            <app-referral-input-examination></app-referral-input-examination>
+                        </mat-tab>
+                       <!--  <mat-tab label="Sign Approval Document">
+                            
+                        </mat-tab>
+                        <mat-tab label="Post Approval Process">
+                            
+                        </mat-tab> -->
+                        <mat-tab label="Dispatch">
+                            <app-examination-dispatch></app-examination-dispatch>
+                        </mat-tab>
+                        <mat-tab label="Decision">
+                            <app-examination-decision></app-examination-decision>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>

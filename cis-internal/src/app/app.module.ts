@@ -238,6 +238,15 @@ import { RequestflowLodgementComponent } from './lodgement/requestflow-lodgement
 import { LodgementDispatchComponent } from './lodgement/lodgement-dispatch/lodgement-dispatch.component';
 import { AssignNumberDialogComponent } from './lodgement/numbering/assign-number-dialog/assign-number-dialog.component';
 import { ExaminationListComponent } from './examination/examination-list/examination-list/examination-list.component';
+import { TaskDetailsExaminationComponent } from './examination/task-details-examination/task-details-examination/task-details-examination.component';
+import { ExaminationDecisionComponent } from './examination/examination-decision/examination-decision/examination-decision.component';
+import { ExaminationLodgementDetailsComponent } from './examination/examination-lodgement-details/examination-lodgement-details/examination-lodgement-details.component';
+import { BatchManagementComponent } from './examination/batch-management/batch-management/batch-management.component';
+import { DocketExaminationComponent } from './examination/dockets-examination/docket-examination/docket-examination.component';
+import { ExaminationDispatchComponent } from './examination/examination-dispatch/examination-dispatch/examination-dispatch.component';
+import { ReferralInputExaminationComponent } from './examination/referral-input-examination/referral-input-examination/referral-input-examination.component';
+import { ExaminationRequestFlowComponent } from './examination/examination-request-flow/examination-request-flow/examination-request-flow.component';
+import { ExaminationReferenceNumberDialogComponent } from './examination/examination-dialog/examination-reference-number-dialog/examination-reference-number-dialog.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -443,7 +452,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         RequestflowLodgementComponent,
         LodgementDispatchComponent,
         AssignNumberDialogComponent,
-        ExaminationListComponent
+        ExaminationListComponent,
+        TaskDetailsExaminationComponent,
+        ExaminationDecisionComponent,
+        ExaminationLodgementDetailsComponent,
+        BatchManagementComponent,
+        DocketExaminationComponent,
+        ExaminationDispatchComponent,
+        ReferralInputExaminationComponent,
+        ExaminationRequestFlowComponent,
+        ExaminationReferenceNumberDialogComponent
     ],
     imports: [
         BrowserModule,

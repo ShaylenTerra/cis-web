@@ -350,7 +350,10 @@ export class TaskListComponent implements OnInit {
             this.router.navigate(['/reservation/task-detail-reservation'], { state: { resData: taskDetail } });
         } else if (taskDetail.processName === 'Lodgement Request') {
             this.router.navigate(['/lodgement/task-detail-lodgement'], { state: { lodgeData: taskDetail } });
-        } else {
+        }else if(taskDetail.processName === 'Examination'){
+            this.router.navigate(['/examination/task-detail-examination'], { state: { resData: taskDetail } });
+        } 
+        else {
             const filters = {
                 'selectedAction': this.selectedAction,
                 'selectedDateRange': this.selectedDateRange,

@@ -239,7 +239,8 @@ export enum ReservationReason {
 export enum ProcessID {
     ReservationRequest = 229,
     ReservationTransfer = 239,
-    Lodgement = 278
+    Lodgement = 278,
+    Examination = 322
 }
 
 export enum LODGEMENTFORM {

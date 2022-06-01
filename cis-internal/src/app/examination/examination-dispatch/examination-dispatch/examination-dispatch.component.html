@@ -1,0 +1,168 @@
+<div class="container-fluid">
+    <div class="row">
+        <div Class="col-12 col-lg-12 mt-3">
+            <mat-card class="card-table-tasks card filter-card">
+                <mat-card-content style="overflow-x: hidden;
+                display: flex;">
+                    <span class="col-12 mt-3 p-l-0">
+                        <div class="row">
+                            <div class="col-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dispatch Method</mat-label>
+                                    <mat-select 
+                                        [(ngModel)]="dispatchMethodName">
+                                        <mat-option *ngFor="let x of selectedModes" [value]="x.caption">
+                                            {{x.caption}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dispatch Medium</mat-label>
+                                    <mat-select [(ngModel)]="dispatchMedia">
+                                        <mat-option *ngFor="let x of deliveryMediasdata" [value]="x.caption"
+                                            class="r-margin">{{x.caption}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4" style="margin-top: 8px;">
+                            </div>
+                        </div>
+                        <form [formGroup]="dispatchMethod">
+                    
+                            <div class="row">
+                    
+                                <div class="col-4">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Reference Number</mat-label>
+                                        <input formControlName="referenceNumber" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMedia == 'EMAIL'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Primary Email</mat-label>
+                                        <input formControlName="primaryEmail" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMedia == 'EMAIL'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Secondary Email</mat-label>
+                                        <input formControlName="secondaryEmail" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4"
+                                    *ngIf="dispatchMethodName == 'COLLECTION' || dispatchMethodName == 'COURIER'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Data Dispatched</mat-label>
+                                        <input formControlName="dataDispatched" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'COLLECTION'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Collector Name</mat-label>
+                                        <input formControlName="collectorName" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'COLLECTION'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Collector Surname</mat-label>
+                                        <input formControlName="collectorSurname" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'COLLECTION'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Collector Contact Number</mat-label>
+                                        <input formControlName="collectorContactNumber" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'POST'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Postal AddressLine 1</mat-label>
+                                        <input formControlName="postaladdressLine1" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'POST'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Postal AddressLine 2</mat-label>
+                                        <input formControlName="postaladdressLine2" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'POST'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Postal AddressLine 3</mat-label>
+                                        <input formControlName="postaladdressLine3" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'POST'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Postal Code</mat-label>
+                                        <input formControlName="postalCode" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'COURIER'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Courier Name</mat-label>
+                                        <input formControlName="courierName" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMethodName == 'COURIER'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Contact Person</mat-label>
+                                        <input formControlName="contactPerson" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                                <div class="col-4" *ngIf="dispatchMedia == 'FTP'">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>FTP Details</mat-label>
+                                        <input formControlName="ftpDetails" matInput type="text" />
+                                    </mat-form-field>
+                                </div>
+                    
+                    
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dispatch Reference Number</mat-label>
+                                    <input [(ngModel)]="dispatchRefNo" matInput type="text" />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Dispatch date</mat-label>
+                                    <input [(ngModel)]="dispatchDate"
+                                        [matDatepicker]="picker1" matInput />
+                                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                    
+                        </div>
+                        <div class="row" class="float-right">
+                            <span >
+                                <button mat-raised-button
+                                    class="submit-button bover"
+                                    style="height: 44px; margin-right: 5px;">Save</button>
+                            </span>
+                        </div>
+                    </span>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

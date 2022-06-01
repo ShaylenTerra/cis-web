@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <!-- <div *ngIf="decision === 'pending'">
+        <div class="col text-center">
+            <p class="msg-css">Do you like to add any supporting document ?</p>
+        </div>
+        <div mat-dialog-actions>
+            <button type="button" class="btn-css mx-auto" (click)="decision='no'">No</button>
+            <button type="button" class="btn-css mx-auto" (click)="decision='yes'">Yes</button>
+        </div>
+    </div>
+    <div *ngIf="decision === 'yes'">
+        <supporting-docs [workflowId]="workflowId" [changeDecision]="invokeChangeDecision"></supporting-docs>
+    </div> -->
+    <div>
+        <div class="row">
+            <div class="col text-center">
+                <img alt="" src="assets/images/logos/circle.png">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <p class="msg-css">Examination Request Made</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <h4 class="t-css">Thank you for using our services.</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <h4>REQUEST CODE</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <p class="req_id">{{requestCode}}</p>
+            </div>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-raised-button [mat-dialog-close]="false" class="btn-css mx-auto">Close</button>
+        </div>
+    </div>
+</div>
