@@ -45,7 +45,7 @@ export class SummaryLodgementComponent implements OnInit, OnChanges {
     private dialog: MatDialog, private router: Router) {
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
   }
 
   // getAllLodgementDraftSteps() {
@@ -254,11 +254,14 @@ export class SummaryLodgementComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.draftData = this.draftData;
-    // this.getAllLodgementDraftSteps();
-    // this.documentCost();
-    // this.getLodgementAllDocument();
-    this.loadInitialize();
+    if(this.draftId!=undefined){
+      this.draftData = this.draftData;
+      // this.getAllLodgementDraftSteps();
+      // this.documentCost();
+      // this.getLodgementAllDocument();
+      this.loadInitialize();
+    }
+
   }
 
 

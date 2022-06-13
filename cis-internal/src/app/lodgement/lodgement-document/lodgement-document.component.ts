@@ -180,7 +180,7 @@ export class LodgementDocumentComponent implements OnInit, OnDestroy, OnChanges 
       // const len = this.lodgeDraftData === null ? 0 : this.lodgeDraftData.filter(x => x.reservationDraftRequestOutcome.length === 0).length;
       // this.isAddStep = len > 0 ? true : false;
       this.loaderService.display(false);
-
+      
     }, error => {
       this.snackbar.openSnackBar('Unknown error while retreiving information.', 'Error');
       this.loaderService.display(false);

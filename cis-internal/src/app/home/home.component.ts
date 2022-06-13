@@ -295,6 +295,8 @@ export class HomeComponent implements OnInit {
             this.router.navigate(['/reservation/task-detail-reservation'], { state: { resData: element } });
         } else if (element.processName === 'Lodgement Request') {
             this.router.navigate(['/lodgement/task-detail-lodgement'], { state: { lodgeData: element } });
+        } else if(element.processName === 'Examination'){
+            this.router.navigate(['/examination/task-detail-examination'], { state: { examData: element } });
         } else {
             this.router.navigate(['/tasks/task-details'], { state: { taskDetail: element } });
         }

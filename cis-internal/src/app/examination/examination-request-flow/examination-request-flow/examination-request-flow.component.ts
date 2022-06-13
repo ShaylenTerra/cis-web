@@ -24,7 +24,7 @@ export class ExaminationRequestFlowComponent implements OnInit {
 
   getWorkflowTasks() {
     this.loaderService.display(true);
-    this.restService.getWorkflowTasks(/* this.workflowId */1945).subscribe(payload => {
+    this.restService.getWorkflowTasks(this.workflowId).subscribe(payload => {
       const notesData = payload.data;
       for (let i = 0; i < notesData.length; i++) {
         notesData[i].convertedDate = notesData[i].postedOn.substring(0, 10);

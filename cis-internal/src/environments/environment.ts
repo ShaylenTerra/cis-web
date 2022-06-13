@@ -524,5 +524,11 @@ export const environment = {
     issueBatchLodgement: 'lodgement/issueBatch',
     getLdgDraftAcknowledement: 'lodgement/getLdgDraftAcknowledement?draftId=',
     getBatchDetails: 'lodgement/getBatchDetails?draftId=',
-    getLodgementAllDocument: 'lodgement/getLodgementAllDocument?draftId='
+    getLodgementAllDocument: 'lodgement/getLodgementAllDocument?draftId=',
+
+    /* Examination */
+     saveExaminatiion: 'examination/saveExamination',
+     getExaminationById: 'examination/getExaminationById?examinationId=',
+     getExaminationByWorkflowId: 'examination/getExaminationByWorkflowId?workflowId='
+
 };

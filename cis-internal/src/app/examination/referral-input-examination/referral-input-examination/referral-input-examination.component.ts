@@ -37,7 +37,7 @@ export class ReferralInputExaminationComponent implements OnInit {
   
     getAllReferrals() {
       this.loaderService.display(true);
-      this.restService.getAllReferrals(/* this.workflowId */1945).subscribe((res: any) => {
+      this.restService.getAllReferrals(this.workflowId ).subscribe((res: any) => {
         this.loaderService.display(false);
         this.referrals = res.data;
         this.refData = new MatTableDataSource(this.referrals);

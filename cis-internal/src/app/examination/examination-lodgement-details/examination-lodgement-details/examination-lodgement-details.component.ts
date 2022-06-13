@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoaderService } from '../../../services/loader.service';
 import { RestcallService } from '../../../services/restcall.service';
@@ -20,8 +20,10 @@ import { ReservationReason } from '../../../constants/enums';
   templateUrl: './examination-lodgement-details.component.html',
   styleUrls: ['./examination-lodgement-details.component.css']
 })
-export class ExaminationLodgementDetailsComponent implements OnInit {
-  @Input() data1;
+export class ExaminationLodgementDetailsComponent implements OnInit,OnChanges {
+  @Input() taskDetails;
+  @Input() examinationData;
+
   ReservationReason = ReservationReason;
   statuses: any[] = [];
   status = "";
@@ -96,7 +98,7 @@ export class ExaminationLodgementDetailsComponent implements OnInit {
   deliveryEmailElec;
   isPrimary;
   surveyname;
-  draftId;
+  draftId: any;
   provinceId;
   annexure;
 
@@ -126,48 +128,48 @@ export class ExaminationLodgementDetailsComponent implements OnInit {
   lodgeDocumentcolumns = ['documentName', 'documentType', 'purposeType', 'dated', 'notes', 'Action'];
   lodgeDocumentDataSource: any;
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
-
   lodgeData: any;
   lodgementDraftData: any;
   tempData: any = "";
 
   panelOpenState = false;
   
+  /* Examination */
+  examinationDetails: any;
+  lodgeID: any;
+  batchDetails: any;
+  @Output() outputFromChild: EventEmitter<any> = new EventEmitter();
+
   constructor(private restService: RestcallService, private fb: FormBuilder,
     private loaderService: LoaderService, private snackbar: SnackbarService,
     private dialog: MatDialog, private router: Router) { 
       this.workflowId = this.lodgeData?.workflowId;
-      this.processName = this.lodgeData?.processName
+      this.processName = this.lodgeData?.processName;
       this.provinceId = this.lodgeData?.provinceId;
-  
-      }
+    }
+
+  ngOnChanges() {
+    if(this.examinationData==undefined){
+      console.log("First");
+    }else{
+      this.examinationDetails = this.examinationData.data;
+      this.lodgeID = this.examinationData.data.lodgementId;
+      this.initialize();
+    }
+  }
 
   ngOnInit(): void {
     const userInfoJson = JSON.parse(sessionStorage.getItem('userInfo'));
-    this.userId = userInfoJson.userId;  
-    this.initialize();
+    this.userId = userInfoJson.userId; 
   }
 
-  getDatabyDraftId() {
-    debugger
-    this.restService.getLodgementDraftById(265).subscribe(payload => {
-      debugger;
-      this.lodgeData = payload.data;
-      this.loaderService.display(false);
-    }, () => {
-      this.snackbar.openSnackBar('Unknown error while retreiving information.', 'Error');
-      this.loaderService.display(false);
-    });
-   }
-
   initialize() {
-    //this.getDatabyDraftId();
     this.loaderService.display(true);
-    this.lodgeData=this.data1;
+    this.lodgeData = this.taskDetails;
     forkJoin([
-      this.restService.getLodgementDraftById(/* this.lodgeData?.draftId */265),
-      this.restService.getLodgementAllDocument(/* this.lodgeData?.draftId */265),
-      this.restService.getDocumentSummary(/* this.lodgeData?.draftId */265, 0)
+      this.restService.getLodgementDraftById(this.lodgeID),
+      this.restService.getLodgementAllDocument(this.lodgeID),
+      this.restService.getDocumentSummary(this.lodgeID, 0),
     ]).subscribe(([DraftRequest, ldgDoc, paymentData]) => {
       this.lodgeDraftData = DraftRequest.data;
       this.draftId = this.lodgeDraftData?.draftId;
@@ -212,71 +214,15 @@ export class ExaminationLodgementDetailsComponent implements OnInit {
   }
 
   receiveChildData(data) {
-    this.data1 = data;
+    this.lodgeDraftData = data;
   }
 
-  /* postRequest() {
-    this.loaderService.display(true);
-    if (this.resubmitData !== undefined && this.resubmitData?.actionRequired === ReservationAction.RESUBMITMODIFY) {
-      const data: any = {
-        actionId: this.resubmitData.actionId,
-        actionTakenId: 13,
-        assignedToUserId: 0,
-        context: "This is context",
-        currentNodeId: this.resubmitData.nodeId,
-        loggedUserId: this.userId,
-        notes: "This is notes",
-        processData: "largedata",
-        processId: this.resubmitData.processId,
-        type: 1,
-
-      };
-      this.restService.processtask(data).subscribe((res: any) => {
-        this.decisionDialog(res);
-        this.loaderService.display(false);
-        this.addUserNotification();
-        this.dialogRef.close();
-      }, error => {
-        this.loaderService.display(false);
-      });
-    } else {
-
-      this.setRequestorData();
-      const payload: any = {
-        processid: 278,
-        provinceid: this.lodgeDraftData.provinceId,
-        loggeduserid: this.userId,
-        notes: '',
-        context: 'context',
-        type: 1,
-        processdata: JSON.stringify(this.requestorData), // queryData: data}),
-        parentworkflowid: 0,
-        assignedtouserid: 0
-      };
-      this.restService.triggertask(payload).subscribe(response => {
-        this.triggerPayload = {
-          'referenceNo': response.ReferenceNumber,
-          'templateId': response.TemplateID,
-          'transactionId': response.TransactionId,
-          'userId': response.userId,
-          'workflowId': response.WorkflowID
-        };
-        this.loaderService.display(false);
-        this.notification();
-        this.restService.checkoutLodgementDraft(this.lodgeDraftData.draftId, response.WorkflowID).subscribe(res => {
-          this.loaderService.display(false);
-          this.lodgementNotification();
-          this.dialogRef.close();
-        });
-        this.openDialog(response.ReferenceNumber, response.WorkflowID);
-      });
-    }
-
-
-  } */
+  receiveChildBatchData(data) {
+    this.batchDetails = data;
+    this.outputFromChild.emit(this.batchDetails);
+  }
 
   addUserNotification() {
-
     const notification = {
       'loggedInUserId': this.userId,
       'notifyUserId': this.resubmitData.userId,
@@ -302,7 +248,7 @@ export class ExaminationLodgementDetailsComponent implements OnInit {
 
 
 
-  lodgementNotification() {
+  /* lodgementNotification() {
     this.loaderService.display(true);
     const obj = {
       'referenceNumber': this.triggerPayload.referenceNo,
@@ -316,9 +262,9 @@ export class ExaminationLodgementDetailsComponent implements OnInit {
     }), error => {
       this.loaderService.display(false);
     });
-  }
+  } */
 
-  setRequestorData() {
+ /*  setRequestorData() {
     const loggedUserData = JSON.parse(sessionStorage.getItem('userInfo'));
     this.requestorData = {
       'requesterInformation': {
@@ -355,7 +301,7 @@ export class ExaminationLodgementDetailsComponent implements OnInit {
         'email': JSON.parse(sessionStorage.getItem('userInfo')).email
       }
     };
-  }
+  } */
 
   downloadDoc(document) {
     this.loaderService.display(true);

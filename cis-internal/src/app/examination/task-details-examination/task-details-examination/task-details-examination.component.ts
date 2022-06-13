@@ -7,15 +7,32 @@ import { LoaderService } from '../../../services/loader.service';
 import { RestcallService } from '../../../services/restcall.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { TopMenuService } from '../../../services/topmenu.service';
-
+import { Location } from '@angular/common';
+import { EXAMINATIONFORM } from '../../../constants/enums';
 @Component({
   selector: 'app-task-details-examination',
   templateUrl: './task-details-examination.component.html',
   styleUrls: ['./task-details-examination.component.css']
 })
 export class TaskDetailsExaminationComponent implements OnInit {
-  lodgeData: any;
+
+  examData: any;
   lodgeDraftData: any;
+  draftId: any;
+
+  /*Tab variables*/
+  tabIndex = 0;
+  nodeDetails: any;
+
+  signApprovalTab = false;
+  postApprovalTab = false;
+  dispatchTab = false;
+  docketTab = true;
+
+  /* Examination */
+  examinationDetails: any;
+  batchDetails
+
   constructor(  private router: Router,
     private snackbar: SnackbarService,
     private restService: RestcallService,
@@ -25,80 +42,98 @@ export class TaskDetailsExaminationComponent implements OnInit {
     private topMenu: TopMenuService,
     private dom: DomSanitizer,
     private formBuilder: FormBuilder,
+    private _location: Location
     ) { 
-     // this.lodgeData = this.router.getCurrentNavigation().extras.state.lodgeData;
+        if (this.router.getCurrentNavigation().extras.state === undefined) {
+          this.router.navigate(['/home']);
+        } 
+      this.examData = this.router.getCurrentNavigation().extras.state.examData;
+      this.getExaminationDetailsByWorkflowId();
     }
 
   ngOnInit(): void {
-   
+    this.getNodeDetails();
   }
-  receiveChildData(data) {
-    this.lodgeDraftData = data;
+
+  navigateToExaminationList() {
+    this._location.back();
   }
-  // getLodgementDraftByWorkFlowId() {
-  //   this.loaderService.display(true);
-  //   this.restService.getLodgementDraftByWorkFlowId(/* this.workflowId */ 284).subscribe(payload => {
-  //     this.lodgeDraftData = payload.data;
-  //     this.draftId = this.lodgeDraftData?.draftId;
-  //     this.loaderService.display(false);
-  //   }, error => {
-  //     this.snackbar.openSnackBar('Unknown error while retreiving information.', 'Error');
-  //     this.loaderService.display(false);
-  //   });
-  // }
-  /* changeTab (event) {
+ 
+   changeTab (event) {
     switch (event.tab.textLabel) {
-      case 'Applicant Details':
+      case 'Lodgement Details':
             this.tabIndex = 0;
           break;
-      case 'Application Details':
+     /*  case 'Batch Management':
             this.tabIndex = 1;
-          break;
-      case 'Lodgement Document':
+          break; */
+      case 'Docket':
             this.tabIndex = 2;
           break;
-      case 'Payment Details':
+      case 'Request Flow':
             this.tabIndex = 3;
           break;
-      case 'Annexure':
+      case 'Referral Input':
             this.tabIndex = 4;
           break;
-      case 'Summary':
+      case 'Sign Approval Document':
             this.tabIndex = 5;
           break;
-      case 'Batch Details':
+      case 'Post Approval Process':
             this.tabIndex = 6;
           break;
-      case 'Numbering':
+      case 'Dispatch':
             this.tabIndex = 7;
           break;
-      case 'Request Flow':
+      case 'Decision':
             this.tabIndex = 8;
           break;
-      case 'Referral Input':
-            this.tabIndex = 9;
-          break;
-      case 'Dispatch':
-            this.tabIndex = 10;
-          break;
-      case 'Decision':
-            this.tabIndex = 11;
-          break;
   } 
- }*/
- /* getDatabyDraftId() {
-  debugger
-  this.restService.getLodgementDraftById(265).subscribe(payload => {
-    debugger;
-    this.data1 = payload.data;
-    this.loaderService.display(false);
-  }, () => {
-    this.snackbar.openSnackBar('Unknown error while retreiving information.', 'Error');
-    this.loaderService.display(false);
-  });
  }
 
- receiveChildData(data) {
-  this.data1 = data;
-} */
+  getNodeDetails() {
+  this.restService.getNodeDetails(this.examData.processId, this.examData.nodeId)
+      .subscribe((res: any) => {
+          switch (Number(res.FormID)) {
+            case EXAMINATIONFORM.DOCKET:
+                  this.docketTab = true;
+                  this.signApprovalTab = false;
+                  this.postApprovalTab = false;
+                  this.dispatchTab = false;
+                  break;
+
+            case EXAMINATIONFORM.SIGNAPPROVALDOCUMENT:
+                  this.docketTab = true;
+                  this.signApprovalTab = true;
+                  this.postApprovalTab = false;
+                  this.dispatchTab = false;
+                break;
+            case EXAMINATIONFORM.POSTAPPROVALPROCESS:
+                  this.docketTab = true;
+                  this.signApprovalTab = true;
+                  this.postApprovalTab = true;
+                  this.dispatchTab = false;
+                break;
+            case EXAMINATIONFORM.DISPATCH:
+                  this.docketTab = true;
+                  this.signApprovalTab = true;
+                  this.postApprovalTab = true;
+                  this.dispatchTab = true;
+                break;
+        }
+        this.nodeDetails = res;
+      });
+  }
+
+  getExaminationDetailsByWorkflowId(){
+    this.restService.getExaminationByWorkflowId(this.examData.workflowId).subscribe(examResponse=>{
+        this.examinationDetails = examResponse;
+    });
+  }
+
+  receiveChildBtachData(data){
+    this.batchDetails = data;
+  }
+  
+
 }

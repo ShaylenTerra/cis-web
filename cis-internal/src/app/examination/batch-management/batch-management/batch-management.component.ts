@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,16 +13,8 @@ import { RestcallService } from '../../../services/restcall.service';
 })
 export class BatchManagementComponent implements OnInit {
 
-  @Input() showOutcome;
-  @Input() tempData;
-  @Input() draftData;
-  @Input() preview;
   @Input() draftId;
-  @Input() provinceId;
-  @Input() readonly;
-  @Input() workflowId;
-  @Input() isTaskDetail;
-  @Input() hideData;
+  @Input() taskDetails;
   dataSource: any;
   columns = ['documentType', 'purposeType', 'count', 'totalCost'];
   batchcolumns = ['documentType', 'docNumberText'];
@@ -41,19 +33,20 @@ export class BatchManagementComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
+  @Output() outputFromChild: EventEmitter<any> = new EventEmitter();
 
   constructor(private loaderService: LoaderService, private restService: RestcallService) { }
 
   ngOnInit(): void {
-    this.loadInitialize();
+    //this.loadInitialize();
   }
 
   issueBatch() {
     debugger;
     const obj = {
-      'userId': 1442,
-      'provinceId':6,
-      'draftId': 265
+      'userId': this.taskDetails.userId,
+      'provinceId':this.taskDetails.provinceId,
+      'draftId': this.draftId
     };
     this.restService.issueBatchLodgement(obj).subscribe((res) => {
       this.loaderService.display(false);
@@ -103,8 +96,8 @@ export class BatchManagementComponent implements OnInit {
   loadInitialize() {
     this.loaderService.display(true);
     forkJoin([
-      this.restService.getDocumentSummary(265, 0),
-      this.restService.getBatchDetails(265),
+      this.restService.getDocumentSummary(this.draftId, 0),
+      this.restService.getBatchDetails(this.draftId),
       this.restService.getLodgementAllDocument(this.draftId)
     ]).subscribe(([docSummary, batchdetails]) => {
       if (docSummary.data.length > 0) {
@@ -119,6 +112,7 @@ export class BatchManagementComponent implements OnInit {
       }
       if (batchdetails.data !== null) {
         this.batchDetailsData = batchdetails.data;
+        this.outputFromChild.emit(this.batchDetailsData);
         this.batchDataSource = new MatTableDataSource(batchdetails.data.lodgementBatchSgDocuments);
         this.batchDataSource.sort = this.sort.toArray()[1];
         setTimeout(() => this.batchDataSource.sort = this.sort.toArray()[1]);
@@ -132,7 +126,10 @@ export class BatchManagementComponent implements OnInit {
   
 
   ngOnChanges() {
-    this.loadInitialize();
+    if(this.draftId!=undefined){
+      this.loadInitialize();
+    }
+    
   }
 
 

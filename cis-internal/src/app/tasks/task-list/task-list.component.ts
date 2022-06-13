@@ -351,7 +351,7 @@ export class TaskListComponent implements OnInit {
         } else if (taskDetail.processName === 'Lodgement Request') {
             this.router.navigate(['/lodgement/task-detail-lodgement'], { state: { lodgeData: taskDetail } });
         }else if(taskDetail.processName === 'Examination'){
-            this.router.navigate(['/examination/task-detail-examination'], { state: { resData: taskDetail } });
+            this.router.navigate(['/examination/task-detail-examination'], { state: { examData: taskDetail } });
         } 
         else {
             const filters = {

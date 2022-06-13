@@ -1766,9 +1766,19 @@ export class RestcallService extends BaseService {
 
     /* Examination Requests */
 
-    //getExaminationAllocatedUsers(){
-       // return this.get();
-    //}
+   saveExamination(examination){
+       const url = environment.uamBaseUrl + environment.saveExaminatiion;
+       return this.post(examination,url);
+   }
+       
+   getExaminationById(examination){
+    //const url = environment.uamBaseUrl + environment.getExaminationById;
+    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationById + examination);
+   }
+
+   getExaminationByWorkflowId(workflowId){
+    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationByWorkflowId + workflowId);
+   }
 
 }
 

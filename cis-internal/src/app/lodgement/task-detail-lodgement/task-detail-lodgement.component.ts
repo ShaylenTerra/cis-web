@@ -56,6 +56,7 @@ export class TaskDetailLodgementComponent implements OnInit {
     if (this.router.getCurrentNavigation().extras.state === undefined) {
       this.router.navigate(['/home']);
     }
+    debugger
     this.lodgeData = this.router.getCurrentNavigation().extras.state.lodgeData;
     this.processId = this.lodgeData?.processId
     this.processName = this.lodgeData?.processName;
@@ -98,6 +99,7 @@ export class TaskDetailLodgementComponent implements OnInit {
 
 
   navigateTaskProfile() {
+    debugger;
     this.router.navigate(['/task-profile'], { state: { taskDetail: this.lodgeData } });
   }
 

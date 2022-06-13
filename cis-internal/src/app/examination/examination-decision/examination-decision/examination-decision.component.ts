@@ -33,14 +33,26 @@ export class ExaminationDecisionComponent implements OnInit {
   @Input() draftId;
   decisionform: FormGroup;
   userId = JSON.parse(sessionStorage.getItem('userInfo')).userId;
+
   assignUser: any;
+  assignScrutinizer: any;
+
   notes = '';
   protected _onDestroySearchUser = new Subject<void>();
   users: IUser[];
+  scrutinizer: IUser[];
+  
   @ViewChild('searchUserSelect') searchUserSelect: MatSelect;
+
   public searchUserFilterCtrl: FormControl = new FormControl();
+  public searchScrutinizerFilterCtrl: FormControl = new FormControl();
+
   public assignedFilteredUsers: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  public assignedScrutinizerUsers: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+
   assignDecisionUser: any;
+  assignDecisionScrutinizer :any;
+
   tooltipText: any;
   nodeDetails: any;
   outLinks: any[] = [];
@@ -83,7 +95,7 @@ export class ExaminationDecisionComponent implements OnInit {
     }); 
   }
 
-/*   MarkAsPending(): void {
+  MarkAsPending(): void {
      const dialogRef = this.dialog.open(MarkAsPendingComponent, {
         width: '750px',
         data: { value: this.taskDetail },
@@ -226,6 +238,23 @@ employeedetails(): void {
   } 
 }
 
+/* employeedetails(): void {
+  if (this.assignUser === '') {
+     this.decisionform.get('assignedToUserId').markAsTouched();
+ } else {
+     const dialogRef = this.dialog.open(EmployeedetailsComponent, {
+         width: '750px',
+         data: this.assignUser.userId,
+         panelClass: 'custom-modalbox'
+     });
+     dialogRef.afterClosed().subscribe(async (resultCode) => {
+       if (resultCode !== 1) {
+         this.router.navigate(['/tasks/task-list']);
+       }
+     });
+ } 
+} */
+
 submitDecision() {
    this.loaderService.display(true);
   if (this.decisionform.invalid) {
@@ -277,12 +306,12 @@ addUserNotification() {
 get getAssignUser() {
    return this.decisionform.get('assignedToUserId');
 }
-*/
+
 getAllUserByUserType(roleid) {
    this.assignUser = '';
   this.notes = '';
   this.loaderService.display(true);
-  this.restService.getUserByRoleIdProvinceId(/* this.taskDetail.provinceId */6, roleid).subscribe(response => {
+  this.restService.getUserByRoleIdProvinceId(this.taskDetail.provinceId, roleid).subscribe(response => {
       this.users = response.data;
       this.assignedFilteredUsers.next(this.users.slice());
       this.loaderService.display(false);
@@ -297,6 +326,28 @@ getAllUserByUserType(roleid) {
               this.filterSeachUser();
           });
   }); 
+}
+
+getAllScrutinizerByUserType() {
+ let scrutinizerId = 2;
+ this.assignUser = '';
+ this.notes = '';
+ this.loaderService.display(true);
+ this.restService.getUserByRoleIdProvinceId(this.taskDetail.provinceId, scrutinizerId).subscribe(response => {
+     this.users = response.data;
+     this.assignedScrutinizerUsers.next(this.users.slice());
+     this.loaderService.display(false);
+     this.assignDecisionScrutinizer = this.users[0].userId;
+     this.assignedUserSelected(this.assignDecisionScrutinizer);
+     this.decisionform.patchValue({
+         assignedToUserId: this.assignDecisionScrutinizer
+     });
+     this.searchScrutinizerFilterCtrl.valueChanges
+         .pipe(takeUntil(this._onDestroySearchUser))
+         .subscribe(() => {
+             this.filterSeachUser();
+         });
+ }); 
 }
 
 protected filterSeachUser() {
@@ -314,24 +365,46 @@ protected filterSeachUser() {
       this.users.filter(value => (value.firstName + ' ' + value.surname).toLowerCase().indexOf(search) > -1)
   ); 
 }
+
+protected filterSeachScrutinizer() {
+  if (!this.users) {
+     return;
+ }
+ let search = this.searchScrutinizerFilterCtrl.value;
+ if (!search) {
+     this.assignedScrutinizerUsers.next(this.users.slice());
+     return;
+ } else {
+     search = search.toLowerCase();
+ }
+ this.assignedScrutinizerUsers.next(
+     this.users.filter(value => (value.firstName + ' ' + value.surname).toLowerCase().indexOf(search) > -1)
+ ); 
+}
  
-/* filterUsers(value: string) {
+ filterUsers(value: string) {
    const filterValue = value.toLowerCase();
   return this.users.filter(user => (user.firstName + ' ' + user.surname).toLowerCase().includes(filterValue)); 
 }
-*/
+
 assignedUserSelected(event) {
    this.assignUser = this.users.filter(x => x.userId === event)[0];
   this.tooltipText = this.assignUser.firstName !== undefined ? 'UserName: ' + this.assignUser.firstName + ' '
       + this.assignUser.surname + '\n' + 'User Type: ' + (this.assignUser.userType) : '';
  }
-/*
+
+assignedScrutinizerUserSelected(event) {
+  this.assignScrutinizer = this.users.filter(x => x.userId === event)[0];
+ this.tooltipText = this.assignScrutinizer.firstName !== undefined ? 'UserName: ' + this.assignScrutinizer.firstName + ' '
+     + this.assignScrutinizer.surname + '\n' + 'User Type: ' + (this.assignScrutinizer.userType) : '';
+}
+
 displayFn(user) {
   return user ? (user.firstName + ' ' + user.surname) : ''; 
 }
-*/
+
 getNodeDetails() {
-   this.restService.getNodeDetails(/* this.taskDetail.processId */284, /* this.taskDetail.nodeId */10)
+   this.restService.getNodeDetails( this.taskDetail.processId , this.taskDetail.nodeId)
       .subscribe((res: any) => {
           this.nodeDetails = res;
           // this.menuItems[1].title = res.formName;
@@ -351,7 +424,7 @@ onProcessChange(event) {
       actionTakenId: Number(event.value.Action)
   });
   this.decisionSelected = false;
-  this.restService.getNodeDetails(/* this.taskDetail.processId */284, event.value.NextNodeID)
+  this.restService.getNodeDetails(this.taskDetail.processId, event.value.NextNodeID)
       .subscribe((res: any) => {
           this.nodedetailsnext = res;
           this.formHeading = this.nodedetailsnext.formName;
@@ -367,7 +440,7 @@ onProcessChange(event) {
   }
  
   ngOnChanges() {
-     //this.getNodeDetails(); 
+     this.getNodeDetails(); 
   }
 
 }

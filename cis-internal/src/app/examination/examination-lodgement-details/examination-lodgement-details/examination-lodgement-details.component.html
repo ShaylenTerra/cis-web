@@ -50,11 +50,11 @@
                         </app-application-lodgement>
                     </mat-card>
                 </mat-expansion-panel>
-               <!--  <br> -->
+
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                     <mat-panel-title>
-                    Lodgement Document
+                     Summary
                     </mat-panel-title>
                     <mat-panel-description>
                         
@@ -63,20 +63,19 @@
                     <mat-card>
                         <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
                             <span class="col p-2">
-                                <p class="sub-heading">Lodgement Document</p>
+                                <p class="sub-heading">Summary</p>
                             </span>
                         </span>
-                        <!-- <app-lodgement-document [draftId]="lodgeData.draftId" [provinceId]="lodgeData.provinceId"
-                        (outputFromChild)="receiveChildData($event)" [readonly]="false" [showOutcome]="false" [tempData]="data.tempData" [preview]="preview">
-                        </app-lodgement-document>
-     -->
+                            <app-summary-lodgement [draftId]="draftId" [provinceId]="taskDetails.provinceId" [readonly]="readonly"
+                            [showOutcome]="true" [preview]="preview" [draftData]="lodgeDraftData">
+                            </app-summary-lodgement>
                     </mat-card>
-                </mat-expansion-panel>
-                <!-- <br> -->
+                </mat-expansion-panel>     
+
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                     <mat-panel-title>
-                    Payment Details
+                     Batch Details
                     </mat-panel-title>
                     <mat-panel-description>
                         
@@ -85,226 +84,12 @@
                     <mat-card>
                         <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
                             <span class="col p-2">
-                                <p class="sub-heading">Payment Details</p>
+                                <p class="sub-heading">Batch Details</p>
                             </span>
                         </span>
-                      <!--   <app-payment-details [draftId]="lodgeData.draftId" [provinceId]="lodgeData.provinceId"
-                            [readonly]="false" [showOutcome]="false" [preview]="preview">
-                        </app-payment-details> -->
-    
-                    </mat-card> 
-                </mat-expansion-panel>
-                <!-- <br> -->
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                    <mat-panel-title>
-                    Annexure
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        
-                    </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-card>
-                        <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
-                            <span class="col p-2">
-                                <p class="sub-heading">Annexure</p>
-                            </span>
-                        </span>
-                        <!-- <app-annexure-lodgement [draftData]="lodgeDraftData" [draftId]="lodgeData.draftId"
-                            [readonly]="readonly" [preview]="preview">
-                        </app-annexure-lodgement> -->
-    
+                        <app-batch-management (outputFromChild)="receiveChildBatchData($event)" [draftId]="draftId" [taskDetails]="taskDetails"></app-batch-management>
                     </mat-card>
-                </mat-expansion-panel>
-               <!--  <br> -->
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Document and estimated cost
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        
-                    </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-card>
-                        <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
-                            <span class="col p-2">
-                                <p class="sub-heading">Document and estimated cost</p>
-                            </span>
-                        </span>
-                        <span class="row mx-0 mt-2">
-                            <span class="col-12">
-                                <mat-card class="card-table-tasks" style="cursor: pointer; width: -webkit-fill-available">
-                                    <mat-card-content class="table-tasks" style="overflow-x: hidden;">
-                                        <!-- <div class="row"> -->
-                                        <table [dataSource]="dataSource" class="w-100" mat-table matSort
-                                            *ngIf="paymentDetailsData.length > 0 && paymentDetailsData !== undefined">
-    
-                                            <ng-container matColumnDef="documentType">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-left-radius: 8px;
-                                                    border-bottom-left-radius: 8px;width: 22%;">Document Type</th>
-                                                <td *matCellDef="let element" mat-cell>{{element?.documentType}}</td>
-                                                <td mat-footer-cell *matFooterCellDef>Total</td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="purposeType">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Purpose Type</th>
-                                                <td *matCellDef="let element" mat-cell>{{element?.purposeType}}</td>
-                                                <td mat-footer-cell *matFooterCellDef></td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="count">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>No Of Document
-                                                </th>
-                                                <td *matCellDef="let element" mat-cell>
-                                                    <div style="text-align: right;padding-right:25px;">
-                                                        {{element?.count}}
-                                                    </div>
-                                                </td>
-                                                <td mat-footer-cell *matFooterCellDef>
-                                                    <div style="text-align: right;padding-right:25px;">
-                                                        {{totalDoc}}
-                                                    </div>
-                                                </td>
-                                            </ng-container>
-                                            <!-- <ng-container matColumnDef="noOfPages">
-                                                                            <th *matHeaderCellDef mat-header-cell mat-sort-header>No Of Pages</th>
-                                                                            <td *matCellDef="let element" mat-cell>{{element.noOfPages}}</td>
-                                                                            <td mat-footer-cell *matFooterCellDef>11</td>
-                                                                        </ng-container> -->
-                                            <ng-container matColumnDef="totalCost">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="border-top-right-radius: 8px;
-                                                    border-bottom-right-radius: 8px;width: 15%;">Estimated Cost(R)
-                                                </th>
-                                                <td *matCellDef="let element" mat-cell>
-                                                    <div style="text-align: right;padding-right:3px;">
-                                                        {{element?.totalCost | number : '1.2-2'}}
-                                                    </div>
-                                                </td>
-                                                <td mat-footer-cell *matFooterCellDef>
-                                                    <div style="text-align: right;padding-right:3px;">{{totalAmount |
-                                                        number : '1.2-2'}}
-                                                    </div>
-                                                </td>
-                                            </ng-container>
-    
-                                            <tr *matHeaderRowDef="columns" mat-header-row></tr>
-                                            <tr *matRowDef="let myRowData; columns: columns" mat-row></tr>
-                                            <tr mat-footer-row *matFooterRowDef="columns; sticky: true"></tr>
-                                        </table>
-                                        <div fxLayoutAlign="center center" class="mt-4"
-                                            *ngIf="paymentDetailsData?.length === 0 || paymentDetailsData === undefined">
-                                            <p>No data available</p>
-                                        </div>
-                                    </mat-card-content>
-                                </mat-card>
-                                <!-- </div> -->
-                            </span>
-                        </span>
-    
-                    </mat-card>
-                </mat-expansion-panel>
-                <!-- <br> -->
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                    <mat-panel-title>
-                    Lodgement Document
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        
-                    </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-card>
-                        <span class="row mx-0 ml-0 mr-0" style="background-color: #F1F1F1;">
-                            <span class="col p-2">
-                                <p class="sub-heading">Lodgement Document</p>
-                            </span>
-                        </span>
-                        <span class="row mx-0 mt-2">
-                            <span class="col-12">
-                                <mat-card class="card-table-tasks" style="cursor: pointer; width: -webkit-fill-available">
-                                    <mat-card-content class="table-tasks" style="overflow-x: hidden;">
-                                        <table [dataSource]="lodgeDocumentDataSource"
-                                            *ngIf="(lodgementDocumentData !== undefined && lodgementDocumentData !== null) || lodgementDocumentData.length > 0"
-                                            class="table-margin w-100 m-0 inline-table" mat-table matSort>
-                                            <ng-container matColumnDef="documentName">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header style="padding-left: 10px; border-top-left-radius: 8px;
-                                                    border-bottom-left-radius: 8px;width: 13%;">Name
-                                                </th>
-                                                <td *matCellDef="let element, let i = index;" mat-cell>
-                                                    {{element?.documentName}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="documentType">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
-                                                <td *matCellDef="let element" mat-cell style="padding-left:3px; ">
-                                                    {{element?.documentType}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="purposeType">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Purpose Type</th>
-                                                <td *matCellDef="let element" mat-cell style="padding-left:3px; ">
-                                                    {{element?.purposeType}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="dated">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
-                                                <td *matCellDef="let element" mat-cell>
-                                                    {{element?.dated | date:'dd-MMM-yyyy'}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="notes">
-                                                <th *matHeaderCellDef mat-header-cell mat-sort-header>Notes</th>
-                                                <td *matCellDef="let element" mat-cell>
-                                                    {{element?.notes}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="Action" [hidden]="!preview">
-                                                <th *matHeaderCellDef mat-header-cell>Action</th>
-                                                <td *matCellDef=" let element" mat-cell style="cursor: pointer;">
-                                                    <div class="dropdown menu" style="float: right">
-                                                        <span matTooltip="More Options" [matMenuTriggerFor]="optionsMenu"
-                                                            #menuTrigger="matMenuTrigger" class="hover-display"
-                                                            [ngClass]="{ 'open': menuTrigger.menuOpen }">
-                                                            <img alt="" src="assets/images/Three dots.png" class="mb-3">
-                                                        </span>
-                                                        <mat-menu style="display: flex-end;" #optionsMenu="matMenu"
-                                                            [overlapTrigger]="true">
-                                                            <button mat-menu-item
-                                                                style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
-                                                                (click)="downloadDoc(element)">
-                                                                <mat-icon matTooltip="View Document" color="primary"
-                                                                    style="cursor: pointer; font-size: 25px; margin: 2px;">
-                                                                    visibility
-                                                                </mat-icon> View
-                                                            </button>
-                                                            <!-- <button mat-menu-item
-                                                                        style="cursor: pointer; margin: 2px;border:none;background-color: transparent;"
-                                                                        (click)="deleteDoc(element)">
-                                                                        <mat-icon matTooltip="Delete Document"
-                                                                            style="cursor: pointer; font-size: 25px; margin: 2px;">
-                                                                            delete
-                                                                        </mat-icon> Remove
-                                                                    </button> -->
-                                                        </mat-menu>
-                                                    </div>
-    
-                                                </td>
-                                            </ng-container>
-                                            <tr *matHeaderRowDef="lodgeDocumentcolumns" mat-header-row></tr>
-                                            <tr *matRowDef="let element; columns: lodgeDocumentcolumns" mat-row></tr>
-                                        </table>
-    
-                                        <div fxLayoutAlign="center center" class="mt-4" style="width: 100%;"
-                                            *ngIf="lodgementDocumentData?.length === 0 || lodgementDocumentData === undefined">
-                                            <p>No data available</p>
-                                        </div>
-                                    </mat-card-content>
-                                </mat-card>
-                            </span>
-                        </span>
-    
-                    </mat-card>
-                </mat-expansion-panel>
-                
+                </mat-expansion-panel>   
             </div>
         </div>
     </div>

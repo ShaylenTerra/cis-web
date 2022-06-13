@@ -94,6 +94,36 @@
                                             </mat-icon>
                                         </div>
                                     </div>
+                                   <!--  <div class="row">
+                                        <div class="col-md-10">
+                                            <mat-form-field appearance="outline" class="input-margin">
+                                                <mat-label>Assign to Scrutinizer</mat-label>
+                                                <mat-select [disabled]="decisionSelected"
+                                                    (selectionChange)="assignedScrutinizerUserSelected($event.value)"
+                                                    [(ngModel)]="assignDecisionScrutinizer"
+                                                    #searchUserSelect required>
+                                                    <mat-option>
+                                                        <ngx-mat-select-search [formControl]="searchUserFilterCtrl"
+                                                            [ngModelOptions]="{ standalone: true }"
+                                                            placeholderLabel="Search..."
+                                                            noEntriesFoundLabel="'No result found'">
+                                                        </ngx-mat-select-search>
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let x of assignedFilteredUsers | async"
+                                                        [value]="x.userId">
+                                                        {{x.firstName + ' ' + x.surname}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-1 icon">
+                                            <mat-icon aria-label="Button that shows a red tooltip"
+                                                class="multiline-tooltip t-button" matTooltip="{{tooltipText}}"
+                                                style="cursor: pointer;" (click)="employeedetails()">
+                                                error_outline
+                                            </mat-icon>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row  mx-0">

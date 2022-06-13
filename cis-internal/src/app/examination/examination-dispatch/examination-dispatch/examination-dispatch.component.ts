@@ -43,7 +43,7 @@ export class ExaminationDispatchComponent implements OnInit {
      }
 
      ngOnInit() {
-       //this.loadInitial();   
+       this.loadInitial();   
      }
 
      loadInitial() {
