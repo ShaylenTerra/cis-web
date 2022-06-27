@@ -527,16 +527,6 @@ export const environment = {
     getLodgementAllDocument: 'lodgement/getLodgementAllDocument?draftId=',
 
 
-    //documents
-    uploadDocument: 'examination/upload',
-    getMasterDocket: 'docket/getMasterDocketById?docketId=',
-    getDocketByExamId: 'docket/getDocketByExaminationId?examinationId=',
-    getDocketList: 'docket/getDocketList',
-    getDocketListByParentId: 'docket/getDocketListByParentId?parentId=',
-    updateDocket: 'docket/updateDocket?examinationId=',
-
-
-
     /* Examination */
      saveExaminatiion: 'examination/saveExamination',
      getExaminationById: 'examination/getExaminationById?examinationId=',
@@ -546,10 +536,12 @@ export const environment = {
      getDocketList: 'docket/getDocketList',
      getDocketListByParentId: 'docket/getDocketListByParentId?parentId=',
      getMasterDocketDetails: 'docket/getMasterDocketById',
-     updateDocket: 'docket/updateDocket',
+     //updateDocket: 'docket/updateDocket',
 
     uploadDocument: 'examination/upload',
     getMasterDocket: 'docket/getMasterDocketById?docketId=',
     getDocketByExamId: 'docket/getDocketByExaminationId?examinationId=',
+
+    updateDocket: 'docket/updateDocket?examinationId='
 
 };
