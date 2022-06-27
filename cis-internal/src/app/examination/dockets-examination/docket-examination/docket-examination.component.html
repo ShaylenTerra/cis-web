@@ -3,12 +3,258 @@
     <mat-panel-title>
     Diagram Docket
     </mat-panel-title>
-    <mat-panel-description>
-        
+    <mat-panel-description> 
     </mat-panel-description>
     </mat-expansion-panel-header>
     <mat-card>
+       
         
+        <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+         This is the tree node template for leaf nodes -->
+            <!-- There is inline padding applied to this node using styles.
+            This padding value depends on the mat-icon-button width. 
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                {{node.name}}
+            </mat-tree-node>
+             This is the tree node template for expandable nodes 
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                <div class="mat-tree-node">
+                <button mat-icon-button matTreeNodeToggle
+                        [attr.aria-label]="'Toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                </button>
+                {{node.name}}
+                </div>
+                 There is inline padding applied to this div using styles.
+                    This padding value depends on the mat-icon-button width.  
+                <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+                    role="group">
+                <ng-container matTreeNodeOutlet></ng-container>
+            </div>
+            </mat-nested-tree-node>
+        </mat-tree> -->
+
+
+        <form class="text-center border border-light p-5">
+            <p class="h4 mb-4">SURVEYOR-GENERAL:DIAGRAM EXAMINATION DOCKET</p>
+
+          <div class="form-row mb-4">
+              <div class="col">
+                <mat-form-field appearance="outline" >
+                    <mat-label>Batch Number </mat-label>
+                        <input  class="form-control" value="{{docketInfo.batchNo}}" matInput disabled >
+                </mat-form-field>
+              </div>
+
+          <div class="col">
+              <mat-form-field appearance="outline">
+                  <mat-label>SG Number </mat-label>
+                      <input class="form-control" value="{{docketInfo.sgNo}}" matInput disabled >
+              </mat-form-field>
+          </div>
+            
+          <div class="col">
+              <mat-form-field appearance="outline">
+                  <mat-label>Description </mat-label>
+                      <input  class="form-control" value="{{docketInfo.description}}" matInput disabled >
+              </mat-form-field>
+          </div>
+
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>SR Number </mat-label>
+                    <input  class="form-control" value="{{docketInfo.srNo}}" matInput disabled >
+            </mat-form-field>
+          </div>
+
+          </div>
+          
+
+          <div class="form-row mb-4">
+    
+            <div class="col">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Date Received </mat-label>
+                        <input type="text" class="form-control" value="{{docketInfo.dateReceived}}" matInput disabled >
+                </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>No of Dgms </mat-label>
+                    <input type="text" class="form-control" value="{{docketInfo.noOfDgms}}" matInput disabled >
+            </mat-form-field>
+            </div>
+            <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Plan Size acceptable </mat-label>
+                <input type="text" class="form-control" value="{{docketInfo.planSizeAcceptable}}" matInput disabled >
+        </mat-form-field>
+          </div>
+
+            
+
+            <div class="col">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Land Surveyor</mat-label>
+                        <input  class="form-control" value="{{docketInfo.landSurveyor}}" matInput disabled >
+                </mat-form-field>
+                
+              
+            </div>
+
+            <div class="col">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Company Name </mat-label>
+                        <input  class="form-control" value="{{docketInfo.companyName}}" matInput disabled >
+                </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="form-row mb-4">
+            <div class="col">
+              <mat-form-field appearance="outline" >
+                  <mat-label>Submited By </mat-label>
+                      <input  class="form-control" value="{{docketInfo.submittedBy}}" matInput disabled >
+              </mat-form-field>
+            </div>
+
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Returned To </mat-label>
+                    <input class="form-control" value="{{docketInfo.returnTo}}" matInput disabled >
+            </mat-form-field>
+        </div>
+          
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Recieved By </mat-label>
+                    <input  class="form-control" value="{{docketInfo.receivedBy}}" matInput disabled >
+            </mat-form-field>
+        </div>
+
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Checked By </mat-label>
+                  <input  class="form-control" value="{{docketInfo.checkedBy}}" matInput disabled >
+          </mat-form-field>
+        </div>
+
+          </div>
+
+          <div class="form-row mb-4">
+          <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Reference number </mat-label>
+                    <input  class="form-control" value="{{docketInfo.refNumber}}" matInput disabled >
+            </mat-form-field>
+          </div>
+
+      <div class="col">
+          <mat-form-field appearance="outline">
+              <mat-label>File reference </mat-label>
+                  <input class="form-control" value="{{docketInfo.fileReference}}" matInput disabled >
+          </mat-form-field>
+      </div>
+        
+      <div class="col">
+          <mat-form-field appearance="outline">
+              <mat-label>Examination fees </mat-label>
+                  <input  class="form-control" value="{{docketInfo.examinationFees}}" matInput disabled >
+          </mat-form-field>
+      </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Receipt number  </mat-label>
+                <input  class="form-control" value="{{docketInfo.recieptNo}}" matInput disabled >
+        </mat-form-field>
+      </div>
+
+          </div>
+             
+          <div class="form-row mb-4">
+            <div class="col">
+              <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>First Level examination</mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-card >
+                  <form class="text-center border border-light p-5">
+                    <div class="col">
+                        <table class="table">
+                          <thead>
+                          
+                            <tr>
+                              
+                              <th scope="col">Exam Items</th>
+                              <th scope="col">Examiner</th>
+                              <th scope="col" *ngIf="user == Scrutinizer">Scrutinizer</th> 
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of ExaminationItems">
+                          
+                              <td>{{item.name}}</td>
+                              <td>
+                                <input type="radio" id="{{item.docketListId}}" name="{{item.docketListId}}" value="Y" (change)="OnItemChange($event)">
+                                  <label for="{{item.docketListId}}" >Yes</label><br>
+                                <input type="radio" id="{{item.docketListId}}"  value="N" name="{{item.docketListId}}" (change)="OnItemChange($event)">
+                                  <label for="{{item.docketListId}}">No</label><br>
+                              </td>
+
+                              <td >
+                                <input type="radio" id="{{item.itemCode}}" value="Y" name="{{item.itemCode}}" (change)="OnItemChange($event)">
+                                  <label for="{{item.itemCode}}">Yes</label><br>
+                                <input type="radio" id="{{item.itemCode}}"  value="N" name="{{item.itemCode}}" (change)="OnItemChange($event)" >
+                                  <label for="{{item.itemCode}}">No</label><br>
+                              </td>
+                          
+                            </tr>
+                              
+                            
+                              
+                           
+                          </tbody>
+                        </table>
+                        
+                    </div>
+                    <button mat-raised-button (click)="convertArrayToJson()">Submit Exam</button>
+                  </form>  
+                </mat-card> 
+              </mat-expansion-panel>
+            </div>
+
+        <div class="col">
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Second Level examination</mat-panel-title>
+            
+            </mat-expansion-panel-header>
+            <mat-card>
+              <form class="text-center border border-light p-5">
+                <div>
+                  <section *ngFor="let prev of ExaminationItems">
+                    <mat-checkbox
+                        [value]="prev">{{prev.name}}
+                    </mat-checkbox>
+                  </section>
+                </div>
+              </form>  
+            </mat-card> 
+          </mat-expansion-panel>
+        </div>
+          
+        
+
+        </div>
+
+          </form>  
+     
+
+
     </mat-card>
 </mat-expansion-panel>
 

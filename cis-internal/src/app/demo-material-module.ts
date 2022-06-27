@@ -47,7 +47,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {PlatformModule} from '@angular/cdk/platform';
 import {ObserversModule} from '@angular/cdk/observers';
 import {PortalModule} from '@angular/cdk/portal';
-
+import {MatTree, MatTreeModule} from '@angular/material/tree';
 /**
  * NgModule that includes all Material modules that are required to serve the demo-app.
  */
@@ -93,7 +93,8 @@ import {PortalModule} from '@angular/cdk/portal';
         ObserversModule,
         OverlayModule,
         PlatformModule,
-        PortalModule
+        PortalModule,
+        MatTreeModule
     ]
 })
 export class DemoMaterialModule {

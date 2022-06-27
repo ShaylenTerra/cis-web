@@ -1767,18 +1767,50 @@ export class RestcallService extends BaseService {
     /* Examination Requests */
 
    saveExamination(examination){
-       const url = environment.uamBaseUrl + environment.saveExaminatiion;
-       return this.post(examination,url);
+        const url = environment.uamBaseUrl + environment.saveExaminatiion;
+        return this.post(examination,url);
    }
        
    getExaminationById(examination){
-    //const url = environment.uamBaseUrl + environment.getExaminationById;
-    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationById + examination);
+        return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationById + examination);
    }
 
    getExaminationByWorkflowId(workflowId){
-    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationByWorkflowId + workflowId);
+        return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationByWorkflowId + workflowId);
    }
+
+   /* Docket */
+
+   getDocketList(){
+        return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketList);
+   }
+
+   getDocketListWithParentId(parentId){
+        return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketListByParentId+parentId);
+   }
+
+   uploadDocument(file:File):Observable<any>{
+    debugger;
+    const formData = new FormData();
+    formData.append("File", file);
+    return this.http.post( environment.uamBaseUrl + environment.uploadDocument, formData);
+  }
+
+ getMasterDocketDetails(masterdocketId: number ):Observable<any>{
+    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getMasterDocket + masterdocketId);
+ }
+
+ getDocketListByID(parentId : number ){
+    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketListByParentId + parentId);
+ }
+
+updateDocket(examId:number, examList:any):Observable<any>{
+    const formData = new FormData();
+    
+    formData.append("examlist", examList);
+    var url= environment.uamBaseUrl + environment.updateDocket+examId
+return this.http.put(url,formData)
+}
 
 }
 

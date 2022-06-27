@@ -529,6 +529,16 @@ export const environment = {
     /* Examination */
      saveExaminatiion: 'examination/saveExamination',
      getExaminationById: 'examination/getExaminationById?examinationId=',
-     getExaminationByWorkflowId: 'examination/getExaminationByWorkflowId?workflowId='
+     getExaminationByWorkflowId: 'examination/getExaminationByWorkflowId?workflowId=',
+
+    /* Docket */
+     getDocketList: 'docket/getDocketList',
+     getDocketListByParentId: 'docket/getDocketListByParentId?parentId=',
+     getMasterDocketDetails: 'docket/getMasterDocketById',
+     updateDocket: 'docket/updateDocket',
+
+    uploadDocument: 'examination/upload',
+    getMasterDocket: 'docket/getMasterDocketById?docketId=',
+    getDocketByExamId: 'docket/getDocketByExaminationId?examinationId=',
 
 };
