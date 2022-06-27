@@ -5,16 +5,17 @@ export const environment = {
     
     //uamBaseUrl: 'http://dwappdemo.co.za:8092/api/v1/',
     //triggerUrl: 'http://dwappdemo.co.za:9092/',
-    uamBaseUrl: 'http://localhost:8089/api/v1/',
-    triggerUrl: 'http://localhost:8090/',
+    uamBaseUrl: 'http://localhost:8081/api/v1/',
+    triggerUrl: 'http://localhost:8092/',
     gisServerUrl: 'http://dwapps.co.za/CSGGIS',
 
     //tokenUrl: 'http://dwappdemo.co.za:8092/oauth/token',
-    tokenUrl: 'http://localhost:8089/oauth/token',
+    tokenUrl: 'http://localhost:8081/oauth/token',
     //workflowStudioUrl: 'http://localhost:9193/WSDev',
-    workflowStudioUrl: 'http://localhost:8002',
+    workflowStudioUrl: 'http://localhost:8001',
     //portalUrl: 'http://10.10.20.204/CIS-Portal/',
     portalUrl: 'http://10.1.15.216/CIS-Portal/',
+
 
     viewMapServerUrl: 'http://10.1.15.220:8088/ang_mapview/#/mapview?',
     searchMapServerUrl: 'http://10.1.15.220:8088/ang_propertyselector/?',
