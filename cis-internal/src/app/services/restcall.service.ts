@@ -1766,18 +1766,51 @@ export class RestcallService extends BaseService {
 
     /* Examination Requests */
 
+    //getExaminationAllocatedUsers(){
+       // return this.get();
+    //}
+    uploadDocument(file:File):Observable<any>{
+        debugger;
+        const formData = new FormData();
+        formData.append("File", file);
+        return this.http.post( environment.uamBaseUrl + environment.uploadDocument, formData);
+      }
+
+     getMasterDocketDetails(masterdocketId: number ):Observable<any>{
+
+        return this.get(new HttpParams(),environment.uamBaseUrl + environment.getMasterDocket + masterdocketId);
+    }
+
+    // getDocketDetails(examId: number):Observable<any>{
+
+    //     return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketByExamId + examId);
+    // }
+
    saveExamination(examination){
        const url = environment.uamBaseUrl + environment.saveExaminatiion;
        return this.post(examination,url);
    }
-       
+
    getExaminationById(examination){
     //const url = environment.uamBaseUrl + environment.getExaminationById;
     return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationById + examination);
    }
 
-   getExaminationByWorkflowId(workflowId){
+   getExaminationByWorkflowId(workflowId:number){
     return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationByWorkflowId + workflowId);
+   }
+
+   getDocketListByID(parentId : number ){
+    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketListByParentId + parentId);
+   }
+
+   updateDocket(examId:number, examList:any):Observable<any>{
+        const formData = new FormData();
+        
+        formData.append("examlist", examList);
+        var url= environment.uamBaseUrl + environment.updateDocket+examId
+    return this.http.put(url,formData)
+    
    }
 
 }
