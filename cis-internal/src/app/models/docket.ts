@@ -4,6 +4,7 @@ export class Dockets {
     scrutinizerName: string;
     paName : string;
   /*   examinerChecklist :examinerCheckList;
+    examinerChecklist :examinerCheckList;
     scrutinizerChecklist :  scrutinizerChecklist;
     paCheckList: paCheckList;
     designationNumbering : designationNumbering;

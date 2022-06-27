@@ -1,8 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit , OnChanges, SimpleChanges, Input} from '@angular/core';
+import { data } from 'jquery';
 import { DOCKET, DOCKETSHOW, EXAMINATIONFORM } from '../../../constants/enums';
 import { RestcallService } from '../../../services/restcall.service';
 import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule, MatTreeNestedDataSource} from '@angular/material/tree';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { NumberingComponent } from '../../../lodgement/numbering/numbering.component';
 
 class TreeNode {
   name: string;
@@ -36,10 +38,10 @@ class TreeNode {
 })
 export class DocketExaminationComponent implements OnInit,OnChanges {
   @Input() batchDetails; 
-  
+
   documentTypeObj: any;
   documentTypeArray: any[]=[];
-  
+
   diagram: boolean = false;
   generalplan: boolean = false;
   servitudeplan: boolean = false;
@@ -55,6 +57,8 @@ export class DocketExaminationComponent implements OnInit,OnChanges {
 
   docketList: any;
   docketByParentId: any;
+  // ExaminationItems =[{ name: 'Check fees' },
+  // {  name: 'certificte' }];
 
   ExaminationItems: any [];
   masterdocketId = 1;
@@ -72,6 +76,7 @@ export class DocketExaminationComponent implements OnInit,OnChanges {
 
   constructor(private restService: RestcallService) {  }
   hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
+
 
   ngOnChanges(){
     debugger;
@@ -104,21 +109,22 @@ export class DocketExaminationComponent implements OnInit,OnChanges {
         const type = this.documentTypeArray[j].toUpperCase();
         if(type.includes(DOCKET.DIAGRAM)){
            this.diagram = true;
-           this.parentID = 1;
+           this.parentID = 1
            this.getDocketListByID(this.parentID);
            this.setRadios();
+           
         }else if(type.includes(DOCKET.GENERALPLAN)){
            this.generalplan = true;
-           this.parentID = 5;
+           this.parentID = 5
         }else if(type.includes(DOCKET.SECTIONALTITLEPLAN)){
            this.sectionaltitleplan = true;
-           this.parentID = 3;        
+           this.parentID = 3 
         }else if(type.includes(DOCKET.SERVITUDEPLAN)){
           this.servitudeplan = true;
-          this.parentID = 6;
+          this.parentID = 6
         }else if(type.includes(DOCKET.SURVEYRECORD)){
           this.surveyrecord = true;
-          this.parentID = 2;
+          this.parentID = 2
         }
     }
   }
@@ -172,13 +178,15 @@ export class DocketExaminationComponent implements OnInit,OnChanges {
   }
 
 
-  getDocketListByID(parentID: number)
-  {
-    this.restService.getMasterDocketDetails(this.parentID).subscribe(payload=>{
+  getDocketListByID(parentID: number){
+    //this.restService.getMasterDocketDetails(this.parentID).subscribe(payload=>{
+  
+    this.restService.getDocketListByID(this.parentID).subscribe(payload=>{
       debugger;
       this.ExaminationItems=payload.data;
      });
   }
+  
 
   
   OnItemChange(e) {
@@ -213,5 +221,8 @@ export class DocketExaminationComponent implements OnInit,OnChanges {
     this.RadioDisable = false;
   }
 }
+
+
+  
 
 }

@@ -34,7 +34,14 @@
                                         </div>
                                        <!--  <button mat-button (click)="gotoExaminationDetails()">Proceed</button> -->
                                         <button mat-button (click)=" createExamination()">Create Examination</button>
- 
+                                        <label for="inputUserDocument" class="form-label">Upload Document</label>
+                                         <input  type="file" class="form-control" id="inputUserDocument" accept=".pdf,.doc"  (change)="onFileSelected($event)"#fileUpload>
+                                            <br>
+                                            <br>
+                                         <button mat-button (click)="gotoExaminationDetails()">Proceed</button>
+                                     <!-- <button mat-button (click)="save()">Proceed</button> -->
+                                        <button mat-button (click)=" createExamination()">Create Examination</button>
+
 
                                         <table [dataSource]="dataSourceLodgementList"
                                         *ngIf="dataSourceLodgement.length > 0 && dataSourceLodgement !== undefined"
@@ -45,7 +52,7 @@
                                                 Lodgement</th>
                                             <td *matCellDef="let element" class="cell-task" mat-cell
                                                 style="padding-left: 10px;color: blue;cursor: pointer;">
-                                                <mat-radio-button class="example-margin" value="element" (click)="selectLodgement(element)"></mat-radio-button>       
+                                                <mat-radio-button class="example-margin" value="element" (click)="selectLodgement(element)"></mat-radio-button>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="referenceNumber">
@@ -86,10 +93,10 @@
                                             <th *matHeaderCellDef mat-header-cell mat-sort-header> Status
                                             </th>
                                             <td *matCellDef="let element" class="cell-task" mat-cell>
-                                                <span [className]="element.internalStatusCaption === 'Approved' ? 's-Approved' : 
-                                                (element.internalStatusCaption === 'In Progress' ? 's-InProgress' : 
-                                                (element.internalStatusCaption === 'Pending' ? 's-pending' : 
-                                                (element.internalStatusCaption === 'Reserved' ? 's-Reserved' : 
+                                                <span [className]="element.internalStatusCaption === 'Approved' ? 's-Approved' :
+                                                (element.internalStatusCaption === 'In Progress' ? 's-InProgress' :
+                                                (element.internalStatusCaption === 'Pending' ? 's-pending' :
+                                                (element.internalStatusCaption === 'Reserved' ? 's-Reserved' :
                                                 's-completed')))">{{element.internalStatusCaption}}
                                                 </span>
                                             </td>
@@ -100,7 +107,7 @@
                                             </th>
                                             <td *matCellDef="let element" class="cell-task" mat-cell>
                                                 <span
-                                                    *ngIf="element.internalStatusCaption === 'Reserved' || 
+                                                    *ngIf="element.internalStatusCaption === 'Reserved' ||
                                                 element.internalStatusCaption === 'Canceled' ||element.internalStatusCaption === 'Deleted'? false : true">
                                                     {{element.triggeredOn |
                                                     dateDifference:serverDate}}
@@ -140,3 +147,6 @@
             </div>
         </div>
     </div>
+
+
+

@@ -5,14 +5,14 @@ export const environment = {
     
     //uamBaseUrl: 'http://dwappdemo.co.za:8092/api/v1/',
     //triggerUrl: 'http://dwappdemo.co.za:9092/',
-    uamBaseUrl: 'http://localhost:8081/api/v1/',
-    triggerUrl: 'http://localhost:8092/',
+    uamBaseUrl: 'http://localhost:8089/api/v1/',
+    triggerUrl: 'http://localhost:8090/',
     gisServerUrl: 'http://dwapps.co.za/CSGGIS',
 
     //tokenUrl: 'http://dwappdemo.co.za:8092/oauth/token',
-    tokenUrl: 'http://localhost:8081/oauth/token',
+    tokenUrl: 'http://localhost:8089/oauth/token',
     //workflowStudioUrl: 'http://localhost:9193/WSDev',
-    workflowStudioUrl: 'http://localhost:8001',
+    workflowStudioUrl: 'http://localhost:8002',
     //portalUrl: 'http://10.10.20.204/CIS-Portal/',
     portalUrl: 'http://10.1.15.216/CIS-Portal/',
 
@@ -525,6 +525,17 @@ export const environment = {
     getLdgDraftAcknowledement: 'lodgement/getLdgDraftAcknowledement?draftId=',
     getBatchDetails: 'lodgement/getBatchDetails?draftId=',
     getLodgementAllDocument: 'lodgement/getLodgementAllDocument?draftId=',
+
+
+    //documents
+    uploadDocument: 'examination/upload',
+    getMasterDocket: 'docket/getMasterDocketById?docketId=',
+    getDocketByExamId: 'docket/getDocketByExaminationId?examinationId=',
+    getDocketList: 'docket/getDocketList',
+    getDocketListByParentId: 'docket/getDocketListByParentId?parentId=',
+    updateDocket: 'docket/updateDocket?examinationId=',
+
+
 
     /* Examination */
      saveExaminatiion: 'examination/saveExamination',

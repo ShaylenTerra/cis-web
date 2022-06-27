@@ -7,7 +7,7 @@
                         class="fa fa-arrow-circle-left" aria-hidden="true"></i>
                     <h2><a style="color: blue; cursor: pointer !important;" (click)="navigateTaskProfile()">
                             {{examData?.referenceNo}} </a> - {{examData?.actionRequiredDescription}}
-                        {{examData?.name}} of {{examData?.provinceName}}</h2> 
+                        {{examData?.name}} of {{examData?.provinceName}}</h2>
                 </span>
             </span>
             <div class="row mx-0 tab-grid-remove">
@@ -18,6 +18,9 @@
                         </mat-tab>
                       <!--   <mat-tab label="Batch Management">
                            <app-batch-management></app-batch-management>
+                        </mat-tab>
+                        <mat-tab label="Docket">
+                            <app-docket-examination></app-docket-examination>
                         </mat-tab> -->
                         <mat-tab label="Docket" *ngIf="docketTab">
                             <app-docket-examination [batchDetails]="batchDetails"></app-docket-examination>

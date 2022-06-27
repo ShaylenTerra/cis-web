@@ -25,6 +25,14 @@ export class ExaminationListComponent implements OnInit {
   referenceNumber = '';
   triggerPayload: any;
   requestorData: any;
+  selectedFiles: any;
+  documentService: any;
+  fileUpload: File;
+  userSelected: any;
+  uploadedBy: string;
+  uploadedFor: any;
+  docType: any;
+  documentSelected: any;
 
   examination: any;
 
@@ -203,6 +211,22 @@ export class ExaminationListComponent implements OnInit {
         });
     }
   }
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+
+  // downloadDocument(item:any) {
+  //   debugger;
+  //    var val = item;
+  //    debugger;
+  //      this.documentService.downloadDocument(item.documentID, item.extension).subscribe(data=>{
+  //        alert(data.message);
+  //        this.rerender();
+  //      });
+  // }
+  // rerender() {
+  //   throw new Error('Method not implemented.');
+  // }
 
  /* Lodgement */
   refreshTable() {
@@ -267,5 +291,24 @@ export class ExaminationListComponent implements OnInit {
   }
 
 
+  onFileSelected(event: { target: { files: File[]; }; }) {
+    const file:File = event.target.files[0];
+    debugger;
+    if (file) {
+       this.fileUpload = file;
+    }
+  }
+  save(){
+    debugger;
+    this.fileUpload;
+    this.restService.uploadDocument(this.fileUpload).subscribe(data=>{
+       alert(data.message);
+       
+    });
+  }
+
+  getDocument(){
+      alert(this.documentSelected)
+  }
 
 }
