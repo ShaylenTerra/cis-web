@@ -52,6 +52,7 @@ export class TaskDetailsExaminationComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    debugger;
     this.getNodeDetails();
   }
 
@@ -92,6 +93,7 @@ export class TaskDetailsExaminationComponent implements OnInit {
  }
 
   getNodeDetails() {
+    debugger;
   this.restService.getNodeDetails(this.examData.processId, this.examData.nodeId)
       .subscribe((res: any) => {
           switch (Number(res.FormID)) {

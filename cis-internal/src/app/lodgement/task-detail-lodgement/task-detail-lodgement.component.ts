@@ -84,6 +84,7 @@ export class TaskDetailLodgementComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     const userInfoJson = JSON.parse(sessionStorage.getItem('userInfo'));
     this.userId = userInfoJson.userId;
     this.getNodeDetails();

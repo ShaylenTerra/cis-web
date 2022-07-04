@@ -534,15 +534,15 @@ export const environment = {
      getExaminationByWorkflowId: 'examination/getExaminationByWorkflowId?workflowId=',
 
     /* Docket */
-     getDocketList: 'docket/getDocketList',
-     getDocketListByParentId: 'docket/getDocketListByParentId?parentId=',
-     getMasterDocketDetails: 'docket/getMasterDocketById',
-     //updateDocket: 'docket/updateDocket',
-
     uploadDocument: 'examination/upload',
     getMasterDocket: 'docket/getMasterDocketById?docketId=',
     getDocketByExamId: 'docket/getDocketByExaminationId?examinationId=',
-
-    updateDocket: 'docket/updateDocket?examinationId='
+   
+    getDocketListByParentId: 'docket/getDocketListByParentId?parentId=',
+    getMasterDocketDetails: 'docket/getMasterDocketById',
+    getDocketList: 'docket/getDocketList',
+    updateDocket: 'docket/updateDocket?examinationId=',
+    //updateDocket: 'docket/updateDocket',
+    getDocketListByType: 'docket/getDocketListByType?typeId=',
 
 };

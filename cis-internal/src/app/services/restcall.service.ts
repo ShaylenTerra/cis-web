@@ -1806,20 +1806,24 @@ export class RestcallService extends BaseService {
         return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketListByParentId+parentId);
    }
 
-   
-updateDocket(examId:number, examList:any):Observable<any>{
-    const formData = new FormData();
-    
-    formData.append("examlist", examList);
-    var url= environment.uamBaseUrl + environment.updateDocket+examId
-return this.http.put(url,formData)
-}
+   updateDocket(examId:number, examList:any):Observable<any>{
+        const formData = new FormData();
+        
+        formData.append("examlist", examList);
+        var url= environment.uamBaseUrl + environment.updateDocket+examId
+        return this.http.put(url,formData)
+   }
+
    getExaminationByWorkflowId(workflowId:number){
-    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationByWorkflowId + workflowId);
+        return this.get(new HttpParams(),environment.uamBaseUrl + environment.getExaminationByWorkflowId + workflowId);
    }
 
    getDocketListByID(parentId : number ){
-    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketListByParentId + parentId);
+     return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketListByParentId + parentId);
+   }
+
+   getDocketListByType(typeId){
+    return this.get(new HttpParams(),environment.uamBaseUrl + environment.getDocketListByType + typeId);
    }
 
   /*  updateDocket(examId:number, examList:any):Observable<any>{

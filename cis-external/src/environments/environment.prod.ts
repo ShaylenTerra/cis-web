@@ -461,5 +461,23 @@ export const environment = {
     issueBatchLodgement: 'lodgement/issueBatch',
     getLdgDraftAcknowledement: 'lodgement/getLdgDraftAcknowledement?draftId=',
     getBatchDetails: 'lodgement/getBatchDetails?draftId=',
-    getLodgementAllDocument: 'lodgement/getLodgementAllDocument?draftId='
+    getLodgementAllDocument: 'lodgement/getLodgementAllDocument?draftId=',
+
+    /* Examination */
+    saveExaminatiion: 'examination/saveExamination',
+    getExaminationById: 'examination/getExaminationById?examinationId=',
+    getExaminationByWorkflowId: 'examination/getExaminationByWorkflowId?workflowId=',
+
+   /* Docket */
+   uploadDocument: 'examination/upload',
+   getMasterDocket: 'docket/getMasterDocketById?docketId=',
+   getDocketByExamId: 'docket/getDocketByExaminationId?examinationId=',
+  
+   getDocketListByParentId: 'docket/getDocketListByParentId?parentId=',
+   getMasterDocketDetails: 'docket/getMasterDocketById',
+   getDocketList: 'docket/getDocketList',
+   updateDocket: 'docket/updateDocket?examinationId=',
+   //updateDocket: 'docket/updateDocket',
+   getDocketListByType: 'docket/getDocketListByType?typeId=',
+
 };

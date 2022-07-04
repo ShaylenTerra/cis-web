@@ -1,0 +1,40 @@
+<div *ngFor="let parentList of diagramDocketArray">
+  <mat-accordion *ngIf="parentList.parentId==0">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title >
+            {{parentList.name}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div *ngFor="let childList of diagramDocketArray" style="width: 500px;text-align: left;">
+       
+        <mat-grid-list cols="2" rowHeight="100px" *ngIf="childList.parentId==parentList.docketListId">
+          <mat-grid-tile>
+              {{childList.name}} 
+          </mat-grid-tile>
+          <mat-grid-tile>
+            
+            <form class="example-form">
+              <mat-radio-group aria-label="Select an option" *ngIf="childList.control=='R'">
+                <mat-radio-button value="1">Yes </mat-radio-button>
+                <mat-radio-button value="2">No </mat-radio-button>
+              </mat-radio-group>
+            
+              <mat-form-field class="example-full-width" appearance="fill"  *ngIf="childList.control=='T'">
+                <mat-label>Fill In</mat-label>
+                <textarea matInput placeholder=""></textarea>
+              </mat-form-field>
+
+            </form>
+          
+          </mat-grid-tile>
+        
+        </mat-grid-list>
+            
+       
+      </div>
+      <button mat-button color="primary" (click)="updateDocketList(parentList,childList)">Update</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -1,46 +1,18 @@
+<br>
 <mat-expansion-panel  *ngIf="diagram">
     <mat-expansion-panel-header>
-    <mat-panel-title>
-    Diagram Docket
+      <br>
+      <mat-panel-title>
+      <p class="h4 mb-4">Surveyor-General:Diagram Examination Docket</p>
     </mat-panel-title>
     <mat-panel-description> 
     </mat-panel-description>
     </mat-expansion-panel-header>
     <mat-card>
-       
-        
-        <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
-         This is the tree node template for leaf nodes -->
-            <!-- There is inline padding applied to this node using styles.
-            This padding value depends on the mat-icon-button width. 
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-                {{node.name}}
-            </mat-tree-node>
-             This is the tree node template for expandable nodes 
-            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-                <div class="mat-tree-node">
-                <button mat-icon-button matTreeNodeToggle
-                        [attr.aria-label]="'Toggle ' + node.name">
-                    <mat-icon class="mat-icon-rtl-mirror">
-                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                    </mat-icon>
-                </button>
-                {{node.name}}
-                </div>
-                 There is inline padding applied to this div using styles.
-                    This padding value depends on the mat-icon-button width.  
-                <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
-                    role="group">
-                <ng-container matTreeNodeOutlet></ng-container>
-            </div>
-            </mat-nested-tree-node>
-        </mat-tree> -->
+      <!-- <form class="text-center border border-light p-5"> -->
+            
 
-
-        <form class="text-center border border-light p-5">
-            <p class="h4 mb-4">SURVEYOR-GENERAL:DIAGRAM EXAMINATION DOCKET</p>
-
-          <div class="form-row mb-4">
+<!--           <div class="form-row mb-4">
               <div class="col">
                 <mat-form-field appearance="outline" >
                     <mat-label>Batch Number </mat-label>
@@ -100,8 +72,6 @@
                     <mat-label>Land Surveyor</mat-label>
                         <input  class="form-control" value="{{docketInfo.landSurveyor}}" matInput disabled >
                 </mat-form-field>
-                
-              
             </div>
 
             <div class="col">
@@ -173,8 +143,8 @@
         </mat-form-field>
       </div>
 
-          </div>
-             
+          </div> -->
+               <!-- 
           <div class="form-row mb-4">
             <div class="col">
               <mat-expansion-panel [expanded]="true">
@@ -251,9 +221,10 @@
 
         </div>
 
-          </form>  
+          </form>   -->
      
 
+          <app-diagram-docket [diagramInformation]="docketInformation"></app-diagram-docket>
 
     </mat-card>
 </mat-expansion-panel>
@@ -313,4 +284,3 @@
         
     </mat-card>
 </mat-expansion-panel>
-

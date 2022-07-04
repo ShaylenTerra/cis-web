@@ -247,6 +247,7 @@ import { ExaminationDispatchComponent } from './examination/examination-dispatch
 import { ReferralInputExaminationComponent } from './examination/referral-input-examination/referral-input-examination/referral-input-examination.component';
 import { ExaminationRequestFlowComponent } from './examination/examination-request-flow/examination-request-flow/examination-request-flow.component';
 import { ExaminationReferenceNumberDialogComponent } from './examination/examination-dialog/examination-reference-number-dialog/examination-reference-number-dialog.component';
+import { DiagramDocketComponent } from './examination/dockets-examination/docket-types/diagram-docket/diagram-docket.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -461,7 +462,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ExaminationDispatchComponent,
         ReferralInputExaminationComponent,
         ExaminationRequestFlowComponent,
-        ExaminationReferenceNumberDialogComponent
+        ExaminationReferenceNumberDialogComponent,
+        DiagramDocketComponent
     ],
     imports: [
         BrowserModule,

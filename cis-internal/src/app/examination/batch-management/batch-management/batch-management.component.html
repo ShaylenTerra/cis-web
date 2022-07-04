@@ -1,10 +1,10 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <div class="row">
         <div Class="col-12 col-lg-12 mt-3">
 
             <mat-card class="card-table-tasks">
                 <mat-card-content class="table-tasks" style="overflow-x: hidden;">
-                    <!-- <div class="row"> -->
+                     <div class="row"> 
                     <div class="row">
                         <div Class="col-6 col-lg-6 mt-3">
                             <h3>Lodge Documents / Batch Details</h3>
@@ -43,7 +43,7 @@
                             <th *matHeaderCellDef mat-header-cell mat-sort-header>No Of Pages</th>
                             <td *matCellDef="let element" mat-cell>{{element.noOfPages}}</td>
                             <td mat-footer-cell *matFooterCellDef>11</td>
-                        </ng-container> -->
+                        </ng-container> 
                                 <ng-container matColumnDef="totalCost">
                                     <th *matHeaderCellDef mat-header-cell mat-sort-header
                                         style="width: 25%;border-top-right-radius: 8px;border-bottom-right-radius: 8px;">
@@ -74,7 +74,7 @@
                                     [hidden]="!readonly || !hideData || (batchDetailsData !== undefined || batchDetailsData?.lodgementBatchSgDocuments.length > 0)"
                                     style="height: 44px; width: 180px; margin-right: 5px;">Issue
                                     Number</button>
-                            </div>
+                            </div> 
                         </div>
                         <div Class="col-6 col-lg-6 mt-3"
                             *ngIf="batchDetailsData !== undefined && batchDetailsData?.lodgementBatchSgDocuments.length > 0">
@@ -109,17 +109,17 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <!-- <div class="col-12 col-lg-4 mt-3">
+         <div class="col-12 col-lg-4 mt-3">
             <mat-card class="scroll">
                 <mat-card-content>
 
                 </mat-card-content>
             </mat-card>
-        </div> -->
+        </div>
        
     </div>
 </div>
-<!-- <div>
+<div>
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
         <mat-panel-title>
@@ -171,3 +171,4 @@
         </mat-card>
     </mat-expansion-panel>
 </div> -->
+ 
